@@ -105,66 +105,12 @@ oferta: "Segundo Plato 1/2"
 app.factory('Categorys', function() {
   // Might use a resource here that returns a JSON array
 
-for (a in promociones) {
-    console.log(promociones.length)
-    var C = promociones.length
-
-
-
-}
-    console.log(IdUsuario)
- // Some fake testing data
+  for (a in promociones) {
+    console.log(promociones.length);
+    var C = promociones.length;
+  }  console.log(IdUsuario);
   var categorys = CategoryListName
-      /*[{
-    id: 0,
-    name: List_name[0],
-    cont_promo: C,
-    icon: 'E',
-    color : "icon_supermercado",
-    direc: List_name[0],
-    Facebook: IdUsuario,
-    face: "si"
-}, {
-    id: 1,
-    name:  List_name[1],
-    cont_promo: 'Hey, it\'s me....',
-    icon: 'F',
-      color : "icon_restaurante",
-      direc: List_name[1]
-  },{
-    id: 2,
-    name: List_name[2],
-    cont_promo: 'I should buy a boat',
-      super: "supermercados",
-    icon: 'G',
-      color : "icon_moda",
-      direc: List_name[2]
-  }, {
-    id: 3,
-    name:  List_name[3],
-    cont_promo: 'Look at my mukluks!',
-      super: "supermercados",
-    icon: 'H',
-      color : "icon_entretenimiento",
-      direc: List_name[3]
-  }, {
-    id: 4,
-    name:  List_name[4],
-    cont_promo: 'This is wicked good ice cream.',
-      super: "supermercados",
-    icon: 'I',
-      color : "icon_electronico",
-      direc: List_name[4]
-  }, {
-    id: 5,
-    name:  List_name[5],
-    cont_promo: 'Look at my mukluks!',
-      super: "supermercados",
-    icon: 'J',
-      color : "icon_otro",
-      direc: List_name[4]
-  }];
-*/
+
   return {
     all: function() {
       return categorys;
@@ -200,7 +146,7 @@ app.factory('Supermercados', function() {
       return null;
     }
   };
-})
+});
 
 app.factory('Entretenimiento', function() {
 
@@ -222,15 +168,14 @@ app.factory('Entretenimiento', function() {
       return null;
     }
   };
-})
+});
 
 app.factory('Moda', function() {
     for (a in promociones) {
-    console.log(promociones.length)
-    var C = promociones.length
-     console.log(name)
-
-}
+      console.log(promociones.length);
+      var C = promociones.length;
+      console.log(name);
+    }
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -249,7 +194,7 @@ app.factory('Moda', function() {
       return null;
     }
   };
-})
+});
 
 app.factory('Electronicos', function() {
 
@@ -309,45 +254,38 @@ app.factory('Paiz', function() {
   return {
     all: function(superId) {
 
-
-
-
     },
     get: function(superId) {
-        ALL = []
-        Category = [];
-         dato = [];
-        IdCategory = superId
-        for (c in PhotoPaiz){
-            // console.log(PhotoPaiz[c].Category)
-            if (superId === PhotoPaiz[c].Category){
-                Category.push(PhotoPaiz[c])
+      ALL = []
+      Category = [];
+       dato = [];
+      IdCategory = superId;
+      for (c in PhotoPaiz) {
+          // console.log(PhotoPaiz[c].Category)
+          if (superId === PhotoPaiz[c].Category) {
+              Category.push(PhotoPaiz[c]);
+          }
+      }
+      if (Category.length == 0) {
+        Category.push({oferta:"noHay"});
+      }
+      console.log(Category,"asdasd");
 
-            }
+      for (z in InfoShop) {
+        if (superId === InfoShop[z].name){
+          dato.push(InfoShop[z]);
         }
-        if (Category.length == 0){
+      }
+    console.log(dato , "s");
+    console.log(Category,"dato");
+    if (PhotoPaiz) {
+      ALL.push(Category)
+      ALL.push(dato)
+      console.log(ALL,"all")
+      return ALL;
+    }
 
-                Category.push({oferta:"noHay"})
-
-        }
-        console.log(Category,"asdasd")
-
-        for (z in InfoShop){
-            if (superId === InfoShop[z].name){
-                dato.push(InfoShop[z])
-            }
-
-        }
-     console.log(dato , "s")
-        console.log(Category,"dato")
-        if (PhotoPaiz){
-            ALL.push(Category)
-            ALL.push(dato)
-            console.log(ALL,"all")
-            return ALL;
-        }
-
-      return null;
+    return null;
     }
   };
 });
@@ -357,14 +295,12 @@ console.log("called Favorite");
 var favorites = AllFavorite;
   return {
     all: function() {
-        favorites = AllFavorite;
-        console.log("in favorite",favorites);
-        return favorites;
+      favorites = AllFavorite;
+      console.log("in favorite",favorites);
+      return favorites;
     },
     get: function() {
-
-          return favorites;
-
+      return favorites;
     }
   };
 });
@@ -375,28 +311,24 @@ console.log(AllPromotion);
 var promotio = AllPromotion;
   return {
     all: function(salvadosId) {
-        promotio = AllPromotion;
-        console.log("in promotion",promotio);
-
-        return promotio;
-
+      promotio = AllPromotion;
+      console.log("in promotion",promotio);
+      return promotio;
     },
     get: function() {
-
-          return promotio;
-
+      return promotio;
     }
   };
 });
 
 var Barra = []
 app.factory('Barra', function() {
-console.log("called Barra");
+  console.log("called Barra");
 
-       console.log(IdUsuario)
+  console.log(IdUsuario)
 
-       var Barras = {id:98789456};
-    console.log('asdasdasd',Barras)
+  var Barras = {id:98789456};
+  console.log('asdasdasd',Barras)
   return {
     all: function() {
 
@@ -407,15 +339,8 @@ console.log("called Barra");
          Barras = {id:98789456}
         console.log("in Barra",Barras);
         return Barras;
-
-
     }
-
   };
-
-
-
-
 });
 
 
@@ -429,7 +354,7 @@ console.log("called Barra");
 /***************call parse promotion*********************************/
 var Promo = Parse.Object.extend('Promotion');
 var promotion = new Parse.Query(Promo);
-console.log(promotion);
+
 var customer = new Parse.Query('Customer');
 var favorite = new Parse.Query('Favorite');
 var PromoSave = new Parse.Query('PromotionSaved')
