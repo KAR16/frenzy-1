@@ -40,8 +40,11 @@ function functionTool() {
        }
 /****************  AUTOCLICK FRENZY  ***********************/
 function check() {
-    setTimeout(function(){ 
-       document.getElementById("intervaloFrenzy").click(); 
+    setTimeout(function(){
+
+      // TODO Elimine click(), estaba dando error.
+      // Verificar que no rompa nada.
+       document.getElementById("intervaloFrenzy");
     }, 1000);
 };
 check()
@@ -61,7 +64,7 @@ function hola(parametro){
            document.getElementById(parametro).style.color="red";
 	   }
 	   else{document.getElementById(parametro).style.color="";}
-          
+
 };
 
 
@@ -80,11 +83,11 @@ function changeColorHeart (parametro,category){
                         //console.log("1",ct[j],j)
                 categ = ct[j]
                        //console.log("2",categ)
-            }else{   
+            }else{
                 categ = categ +" "+ct[j]
                        //console.log("3",categ)
                    }
-               }               
+               }
            }
        if (cssColor=="white"){
 
@@ -97,7 +100,7 @@ function changeColorHeart (parametro,category){
            //console.log("ID category en else", categ)
            document.getElementById(parametro).style.color="white";
            DeleteFavorite(IdUsuario,categ)
-       }         
+       }
 };
 
 /************************************************************/
@@ -114,13 +117,13 @@ function changeColorPinOfferts(id,IDPromotion){
                         //console.log("1",ct[j],j)
                 Promo = Pr[j]
                        //console.log("2",categ)
-            }else{   
+            }else{
                 Promo = Promo +" "+Pr[j]
                        //console.log("3",categ)
                    }
-               }               
+               }
            }
-      
+
        if (cssColorpinOfferts=="silver")
        {
            document.getElementById(id).style.color="purple";
@@ -131,7 +134,7 @@ function changeColorPinOfferts(id,IDPromotion){
        {
            document.getElementById(id).style.color="silver";
            DeletePromotion(IdUsuario,Promo)
-       }  
+       }
 };
 
 function SalvadosSaveAndDelete(id){
@@ -144,7 +147,7 @@ function SalvadosSaveAndDelete(id){
 	   else{
            document.getElementById(id).style.color="silver";
            DeletePromotion(IdUsuario,id)
-       }  
+       }
 }
 /************************************************************/
 /************  TAMAYO FUNCTION CHANCE COLOR PIN OFFERTS WITHOUT IMAGE**********/
@@ -160,15 +163,15 @@ function changeColorPinOffertsWithoutImage(id,IDPromotion){
                         //console.log("1",ct[j],j)
                 promo = pr[j]
                        //console.log("2",categ)
-            }else{   
+            }else{
                 promo = promo +" "+pr[j]
                        //console.log("3",categ)
                    }
-               }               
+               }
            }
        if (cssColorpinOffertsWithoutImage=="silver")
        {
-     
+
            document.getElementById(id).style.color="purple";
            SavePromotion(IdUsuario,promo)
 	   }
@@ -176,7 +179,7 @@ function changeColorPinOffertsWithoutImage(id,IDPromotion){
        {
            document.getElementById(id).style.color="silver";
            DeletePromotion(IdUsuario,promo)
-       }  
+       }
 };
 /************  TAMAYO FUNCTION CHANCE COLOR HEART FOLLOW **********/
 function changeColorHeartFollow(parametro){
@@ -188,7 +191,7 @@ function changeColorHeartFollow(parametro){
 	   else
        {
            document.getElementById("heartFollow").style.color="silver";
-       }  
+       }
 };
 
 
@@ -203,7 +206,7 @@ function changeColorPinSaved(parametro){
 	   else
        {
            document.getElementById("pinSaved").style.color="silver";
-       }  
+       }
 };
 
 /************  TAMAYO FUNCTION CHANCE COLOR PIN  FAVORITES  **********/
@@ -216,7 +219,7 @@ function changeColorPinFavorites(parametro){
 	   else
        {
            document.getElementById("pinFavorites").style.color="silver";
-       }  
+       }
 };
 
 /************  TAMAYO FUNCTION CHANCE COLOR PIN  YOUR FAVORITES  **********/
@@ -229,7 +232,7 @@ function changeColorPinYourFavorites(parametro){
 	   else
        {
            document.getElementById("pinYourFavorites").style.color="silver";
-       }  
+       }
 };
 /******************************************************/
 var myApp = angular.module('reallyCoolApp', ['ionic']);
@@ -276,8 +279,8 @@ $ionicConfigProvider.tabs.position('bottom');
     url: "/login",
     templateUrl: "templates/login.html",
       controller: 'loginCtrl',
-    
-  })     
+
+  })
 //********************************************************************************
   .state('app.favoritos', {
     url: "/favoritos",
@@ -307,7 +310,7 @@ $ionicConfigProvider.tabs.position('bottom');
         controller: 'AllPromotionCtrl'
       }
     }
-  })  
+  })
   //********************************************************************************
   .state('app.herramientas', {
     url: "/herramientas",
@@ -317,7 +320,7 @@ $ionicConfigProvider.tabs.position('bottom');
         controller: 'ChatsCtrl'
       }
     }
-  })  
+  })
 //********************************************************************************
   .state('app.browse', {
     url: "/ofertas/:superId",
@@ -328,8 +331,8 @@ $ionicConfigProvider.tabs.position('bottom');
       }
     }
   })
-  
-  
+
+
 //********************************************************************************
     .state('app.playlists', {
       url: "/playlists",
@@ -340,7 +343,7 @@ $ionicConfigProvider.tabs.position('bottom');
         }
       }
     })
-    
+
 //********************************************************************************
   .state('app.single', {
     url: "/playlists/Supermercado",
@@ -351,7 +354,7 @@ $ionicConfigProvider.tabs.position('bottom');
       }
     }
   })
-  
+
     .state('app.singles', {
     url: "/playlists/Restaurantes",
     views: {
@@ -361,7 +364,7 @@ $ionicConfigProvider.tabs.position('bottom');
       }
     }
   })
-  
+
     .state('app.singless', {
     url: "/playlists/Moda",
     views: {
@@ -371,7 +374,7 @@ $ionicConfigProvider.tabs.position('bottom');
       }
     }
   })
-  
+
       .state('app.singlesss', {
     url: "/playlists/Entretenimiento",
     views: {
@@ -420,7 +423,7 @@ $ionicConfigProvider.tabs.position('bottom');
 .controller('homeCtrl', ['$scope', '$state', function($scope, $state) {
   $scope.logout = function() {
     console.log('Logout');
-    /* 
+    /*
     facebookConnectPlugin.logout(
       function (success) {
         $state.go('login');
@@ -435,7 +438,7 @@ $ionicConfigProvider.tabs.position('bottom');
 
 .controller('loginCtrl', ['$scope', '$state', function($scope, $state) {
   var fbLogged = new Parse.Promise();
-    
+
   var fbLoginSuccess = function(response) {
     if (!response.authResponse){
       fbLoginError("Cannot find the authResponse");
@@ -466,19 +469,19 @@ $ionicConfigProvider.tabs.position('bottom');
     facebookConnectPlugin.login(['email','user_birthday',
 'user_hometown',
 'user_location'], fbLoginSuccess, fbLoginError);
-  
+
     fbLogged.then( function(authData) {
       console.log('Promised');
       return Parse.FacebookUtils.logIn(authData);
     })
     .then( function(userObject) {
-      facebookConnectPlugin.api('/me', null, 
+      facebookConnectPlugin.api('/me', null,
         function(response) {
           console.log(response);
-          
+
           IdUsuario = response.id
           //Heart()
-    
+
           userObject.set('name', response.name);
           userObject.set('email', response.email);
           userObject.set('birthday', response.birthday);
@@ -490,7 +493,7 @@ $ionicConfigProvider.tabs.position('bottom');
           console.log(error);
         }
       );
-        
+
       $state.go('app.playlists');
     }, function(error) {
       console.log(error);

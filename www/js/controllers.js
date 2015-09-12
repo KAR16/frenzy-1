@@ -7,11 +7,14 @@ angular.module('starter.controllers', ['ionic'])
   $scope.loginData = {};
 
   // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/browse.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+  // TODO cambie `browse.html` a `login.html`. Estaba dando error.
+  // Tambien comment out todo esto, parecia no estar haciendo nada.
+
+  // $ionicModal.fromTemplateUrl('templates/login.html', {
+  //   scope: $scope
+  // }).then(function(modal) {
+  //   $scope.modal = modal;
+  // });
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
@@ -135,7 +138,7 @@ angular.module('starter.controllers', ['ionic'])
 /****************************  tamayo  *****************************************/
 .controller('PaizCtrl', function($scope, $stateParams, Paiz) {
     //console.log("calling PaizCtrl");
-    
+
     $scope.chats = Paiz.get($stateParams.superId);
     $scope.popover = Paiz.all($stateParams.superId)
     console.log(Paiz);
@@ -154,7 +157,7 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
     //console.log("calling PaizCtrl");
-    
+
     //$scope.chats = AllFavorite.get($stateParams.superId);
     $scope.chats = AllFavorite.all();
     console.log("------------------------------------ en controler")
@@ -167,7 +170,7 @@ angular.module('starter.controllers', ['ionic'])
       $timeout(function() {
       $scope.chats = AllPromotion.all($stateParams.salvadosId);
     }, 2000);
-     
+
     //$scope.chats = AllFavorite.get($stateParams.superId);
     //$scope.chats = AllPromotion.all($stateParams.salvadosId);
     console.log("------------------------------------ en controler")
