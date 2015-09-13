@@ -194,10 +194,10 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('AllPromotionCtrl', function($scope, $stateParams, $timeout, AllPromotion) {
   //console.log("calling PaizCtrl");
-  $timeout(function() {
-    $scope.chats = AllPromotion.all($stateParams.salvadosId);
-  }, 2000);
 
+  $scope.$on('$ionicView.enter', function() {
+    $scope.chats = AllPromotion.all($stateParams.salvadosId);
+  });
   console.log("AllPromotionCtrl called");
   console.log(AllPromotion);
 })
