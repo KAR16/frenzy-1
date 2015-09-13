@@ -175,12 +175,20 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
-  //console.log("calling PaizCtrl");
+  console.log("Called AllFavoriteCtrl");
+  console.log(AllFavorite);
 
   //$scope.chats = AllFavorite.get($stateParams.superId);
-  $scope.chats = AllFavorite.all();
-  console.log("------------------------------------ en controler")
-  console.log(AllFavorite);
+
+
+  $scope.$on('$ionicView.enter', function() {
+    $scope.chats = AllFavorite.all();
+  });
+
+  $scope.getAllFavorites = function() {
+
+  };
+
 })
 
 
@@ -190,9 +198,7 @@ angular.module('starter.controllers', ['ionic'])
     $scope.chats = AllPromotion.all($stateParams.salvadosId);
   }, 2000);
 
-  //$scope.chats = AllFavorite.get($stateParams.superId);
-  //$scope.chats = AllPromotion.all($stateParams.salvadosId);
-  console.log("------------------------------------ en controler")
+  console.log("AllPromotionCtrl called");
   console.log(AllPromotion);
 })
 

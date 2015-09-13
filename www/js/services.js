@@ -291,18 +291,18 @@ app.factory('Paiz', function() {
 });
 
 app.factory('AllFavorite', function() {
-console.log("called Favorite");
-var favorites = AllFavorite;
-  return {
-    all: function() {
-      favorites = AllFavorite;
-      console.log("in favorite",favorites);
-      return favorites;
-    },
-    get: function() {
-      return favorites;
-    }
-  };
+  console.log("called Favorite");
+  var favorites = AllFavorite;
+    return {
+      all: function() {
+        favorites = AllFavorite;
+        console.log("in favorite",favorites);
+        return favorites;
+      },
+      get: function() {
+        return favorites;
+      }
+    };
 });
 
 app.factory('AllPromotion', function() {
@@ -666,30 +666,25 @@ function Heart(id){
 }
 
 
-function viewFavorite(){
-     AllFavorite = [];
+function viewFavorite() {
+  AllFavorite = [];
   favorite.each(function(results) {
 
-                for(b in results.attributes.CustomerID){
-                    if(results.attributes.UserID===IdUsuario){
-                        //console.log(results[x].attributes.CustomerID[b])
-                        for (c in PhotoPaiz){
-                            //console.log(PhotoPaiz[c])
-                            if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
-                                //console.log("find",results.attributes.CustomerID[b])
-                                AllFavorite.push(PhotoPaiz[c])
-                                //delete AllFavorite[c].Category
-
-
-                            }
-                        }
-                    }
-
-                }
-           console.log(AllFavorite, "aqui estoy 2")
+    for(b in results.attributes.CustomerID){
+      if(results.attributes.UserID===IdUsuario){
+          //console.log(results[x].attributes.CustomerID[b])
+        for (c in PhotoPaiz){
+          //console.log(PhotoPaiz[c])
+          if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
+              //console.log("find",results.attributes.CustomerID[b])
+              AllFavorite.push(PhotoPaiz[c])
+              //delete AllFavorite[c].Category
+          }
+        }
       }
-    );
-
+    }
+    console.log(AllFavorite, "aqui estoy 2");
+  });
 }
 
 
