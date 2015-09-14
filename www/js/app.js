@@ -129,10 +129,12 @@ function changeColorPinOfferts(id, IDPromotion) {
 
   if (cssColorpinOfferts == "silver") {
     document.getElementById(id).style.color = "purple";
+      console.log("guardo la promocion")
 
     SavePromotion(IdUsuario, Promo)
   } else {
     document.getElementById(id).style.color = "silver";
+      console.log("borro la promocion")
     DeletePromotion(IdUsuario, Promo)
   }
 };
@@ -465,6 +467,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             console.log(response);
 
             IdUsuario = response.id
+            viewPromotion()
               //Heart()
 
             userObject.set('name', response.name);

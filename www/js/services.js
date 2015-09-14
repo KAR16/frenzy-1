@@ -695,7 +695,7 @@ function viewPromotion(){
     var query = new Parse.Query(promotionSavedData);
 
     query.equalTo("UserID", IdUsuario);
-
+    console.log("entro")
     query.find({
         success: function(results) {
             for (var i = 0; i < results[0].attributes.PromotionID.length; i++){
@@ -825,6 +825,7 @@ function SavePromotion(UserId, PromotionId) {
    };
 
    Parse.Cloud.run('SavePromotion', {"Array":result});
+    viewPromotion()
 };
 
 function DeletePromotion(UserId, PromotionId) {
@@ -836,4 +837,5 @@ function DeletePromotion(UserId, PromotionId) {
    };
 
    Parse.Cloud.run('DeletePromotion', {"Array":result});
+    viewPromotion()
 };

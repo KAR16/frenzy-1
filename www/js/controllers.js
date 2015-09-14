@@ -192,7 +192,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 
-.controller('AllPromotionCtrl', function($scope, $stateParams, $timeout, AllPromotion) {
+.controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
   //console.log("calling PaizCtrl");
 
   $scope.$on('$ionicView.enter', function() {
