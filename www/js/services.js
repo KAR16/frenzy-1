@@ -386,8 +386,8 @@ promotion.find({
 
                             //console.log("esta disponible",results[x].attributes.Status)
                             if (results[x].attributes.Photo === null || results[x].attributes.Photo === undefined){
-
-                                     PhotoPaiz.push({nul:"sin",name:results[x].attributes.CategoryProduct,
+ 
+                                     PhotoPaiz.push({nul:"sin",name:results[x].attributes.Name,
                                                     presentation:results[x].attributes.Presentation,
                                                     description:results[x].attributes.PromotionDescription,
                                                     basePrice:results[x].attributes.BasePrice,
@@ -401,7 +401,7 @@ promotion.find({
                             }else{
 
                                    PhotoPaiz.push({nul:"con",photo:results[x].attributes.Photo._url,
-                                                    name:results[x].attributes.CategoryProduct,
+                                                    name:results[x].attributes.Name,
                                                 presentation:results[x].attributes.Presentation,
                                                 description:results[x].attributes.PromotionDescription,
                                                 basePrice:results[x].attributes.BasePrice,
@@ -473,6 +473,8 @@ query.find({
                 }
             }
         });
+      
+ 
 
 
 
@@ -588,7 +590,7 @@ Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:re
 };
 function Promotions(id){
     console.log(":DD",id)
-    console.log(PhotoPaiz)
+    console.log(PhotoPaiz,"photopaiz")
         PromoSave.find({
         success: function(results) {
 
@@ -604,7 +606,7 @@ function Promotions(id){
                                      console.log("-----------------")
                                      console.log( results[x].attributes.PromotionID[a])
                                      var cssColorpinOffer = document.getElementById(PhotoPaiz[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
-                                          if (cssColorpinOffer=="silver"){
+                                    if (cssColorpinOffer=="silver"){
                                 document.getElementById(PhotoPaiz[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
                                                }
                                     }
@@ -824,8 +826,12 @@ function SavePromotion(UserId, PromotionId) {
        'PromotionID': PromotionId
    };
 
-   Parse.Cloud.run('SavePromotion', {"Array":result});
-    viewPromotion()
+   var Savepromotion = Parse.Cloud.run('SavePromotion', {"Array":result});
+    
+    Savepromotion.then(function(){
+      viewPromotion()
+        });
+   
 };
 
 function DeletePromotion(UserId, PromotionId) {
@@ -836,6 +842,10 @@ function DeletePromotion(UserId, PromotionId) {
        'PromotionId':PromotionId
    };
 
-   Parse.Cloud.run('DeletePromotion', {"Array":result});
-    viewPromotion()
+   var Deletepromotion = Parse.Cloud.run('DeletePromotion', {"Array":result});
+    
+    Deletepromotion.then(function(){
+      viewPromotion()
+        });
+    
 };
