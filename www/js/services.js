@@ -269,19 +269,19 @@ app.factory('Paiz', function() {
       if (Category.length == 0) {
         Category.push({oferta:"noHay"});
       }
-      console.log(Category,"asdasd");
+      //console.log(Category,"asdasd");
 
       for (z in InfoShop) {
         if (superId === InfoShop[z].name){
           dato.push(InfoShop[z]);
         }
       }
-    console.log(dato , "s");
-    console.log(Category,"dato");
+    //console.log(dato , "s");
+    //console.log(Category,"dato");
     if (PhotoPaiz) {
       ALL.push(Category)
       ALL.push(dato)
-      console.log(ALL,"all")
+      //console.log(ALL,"all")
       return ALL;
     }
 
@@ -296,7 +296,7 @@ app.factory('AllFavorite', function() {
     return {
       all: function() {
         favorites = AllFavorite;
-        console.log("in favorite",favorites);
+        //console.log("in favorite",favorites);
         return favorites;
       },
       get: function() {
@@ -307,12 +307,12 @@ app.factory('AllFavorite', function() {
 
 app.factory('AllPromotion', function() {
 console.log("called promotion");
-console.log(AllPromotion);
+//console.log(AllPromotion);
 var promotio = AllPromotion;
   return {
     all: function(salvadosId) {
       promotio = AllPromotion;
-      console.log("in promotion",promotio);
+      //console.log("in promotion",promotio);
       return promotio;
     },
     get: function() {
@@ -420,7 +420,7 @@ promotion.find({
 
                 }
             }
-            console.log(promociones,"promocines")
+            //console.log(promociones,"promocines")
             return PhotoPaiz;
       },
       error: function(myObject, error) {
@@ -448,7 +448,7 @@ query.find({
             var pro = q.find({
                 success: function(results) {
                     for (a in results){
-                        console.log(results[a].attributes.CategoryApp,"resultados")
+                        //console.log(results[a].attributes.CategoryApp,"resultados")
                         CategoryListNameConteo.push({cont:results[a].attributes.CategoryApp})
                     }
                     // console.log(CategoryListNameConteo, "Category cont    ")
@@ -466,9 +466,9 @@ query.find({
             for (w in CategoryListName){
                 for(s in CategoryListNameConteo){
                     if(CategoryListName[w].name == CategoryListNameConteo[s].cont){
-                        console.log("lo encontro",CategoryListName[w].name)
+                       // console.log("lo encontro",CategoryListName[w].name)
                         CategoryListName[w].cont_promo = CategoryListName[w].cont_promo + 1
-                        console.log(    s, "Category names")
+                        // console.log(    s, "Category names")
                     }
                 }
             }
@@ -589,8 +589,8 @@ Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:re
     });
 };
 function Promotions(id){
-    console.log(":DD",id)
-    console.log(PhotoPaiz,"photopaiz")
+    //console.log(":DD",id)
+    //console.log(PhotoPaiz,"photopaiz")
         PromoSave.find({
         success: function(results) {
 
@@ -601,10 +601,10 @@ function Promotions(id){
                       for (a in results[x].attributes.PromotionID){
                             for (b in PhotoPaiz){
                                 if (results[x].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion && id === PhotoPaiz[b].Category){
-                                    console.log("Encontrado")
-                                     console.log(PhotoPaiz[b].ID)
-                                     console.log("-----------------")
-                                     console.log( results[x].attributes.PromotionID[a])
+                                    //console.log("Encontrado")
+                                    // console.log(PhotoPaiz[b].ID)
+                                     //console.log("-----------------")
+                                     //console.log( results[x].attributes.PromotionID[a])
                                      var cssColorpinOffer = document.getElementById(PhotoPaiz[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
                                     if (cssColorpinOffer=="silver"){
                                 document.getElementById(PhotoPaiz[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
@@ -685,7 +685,7 @@ function viewFavorite() {
         }
       }
     }
-    console.log(AllFavorite, "aqui estoy 2");
+   // console.log(AllFavorite, "aqui estoy 2");
   });
 }
 
@@ -731,9 +731,9 @@ function tiendaUrl(Url){
     window.open(z,'_blank')
 }
 function heartPopover(id){
-    console.log("exitoso", HeartPopover)
+/*    console.log("exitoso", HeartPopover)
     console.log("id",id)
-    console.log(dato)
+    console.log(dato)*/
 
 
     favorite.find({
