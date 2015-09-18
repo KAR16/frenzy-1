@@ -243,10 +243,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
+    debugCompile project(path: "com.phonegap.plugins.facebookconnect:status320206-FacebookLib", configuration: "debug")
+    releaseCompile project(path: "com.phonegap.plugins.facebookconnect:status320206-FacebookLib", configuration: "release")
     debugCompile project(path: "CordovaLib", configuration: "debug")
     releaseCompile project(path: "CordovaLib", configuration: "release")
-    debugCompile project(path: "com.phonegap.plugins.facebookconnect:FacebookLib", configuration: "debug")
-    releaseCompile project(path: "com.phonegap.plugins.facebookconnect:FacebookLib", configuration: "release")
     // SUB-PROJECT DEPENDENCIES END
 }
 

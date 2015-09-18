@@ -13,58 +13,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Media\"><param name=\"android-package\" value=\"org.apache.cordova.media.AudioHandler\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Vibration\"><param name=\"android-package\" value=\"org.apache.cordova.vibration.Vibration\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"FacebookConnectPlugin\"><param name=\"android-package\" value=\"org.apache.cordova.facebook.ConnectPlugin\" /></feature>",
                             "count": 1
                         },
@@ -87,59 +35,21 @@
                         {
                             "xml": "<access origin=\"https://*.akamaihd.net\" />",
                             "count": 1
-                        }
-                    ]
-                }
-            },
-            "AndroidManifest.xml": {
-                "parents": {
-                    "/*": [
+                        },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />",
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\" />",
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\" />",
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 3
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
-                        }
-                    ],
-                    "/manifest": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
-                            "count": 1
-                        }
-                    ],
-                    "application": [
-                        {
-                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/fb_app_id\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<activity android:label=\"@string/fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -158,58 +68,58 @@
                         }
                     ]
                 }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "application": [
+                        {
+                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/fb_app_id\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:label=\"@string/fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" onload=\"true\" value=\"org.apache.cordova.labs.keyboard.Keyboard\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
     "installed_plugins": {
         "com.ionic.keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.contacts": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.device-motion": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.dialogs": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.file-transfer": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.media": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
-        },
-        "org.apache.cordova.vibration": {
-            "PACKAGE_NAME": "com.ionicframework.armar580136"
+            "PACKAGE_NAME": "com.ionicframework.status320206"
         },
         "com.phonegap.plugins.facebookconnect": {
             "APP_ID": "426922250825103",
             "APP_NAME": "frenzy",
+            "PACKAGE_NAME": "com.ionicframework.status320206"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.status320206"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.status320206"
+        },
+        "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.status320206"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.status320206"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.status320206"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.armar580136"
         }
     },

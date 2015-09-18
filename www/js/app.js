@@ -450,11 +450,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $scope.login = function() {
     console.log('Login');
     if (!window.cordova) {
-      facebookConnectPlugin.browserInit('813128998755561');
+      facebookConnectPlugin.browserInit('426922250825103');
     }
-    facebookConnectPlugin.login(['email', 'user_birthday',
-      'user_hometown',
-      'user_location'
+    facebookConnectPlugin.login(['email', 'user_birthday'
     ], fbLoginSuccess, fbLoginError);
 
     fbLogged.then(function(authData) {
@@ -473,8 +471,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             userObject.set('name', response.name);
             userObject.set('email', response.email);
             userObject.set('birthday', response.birthday);
-            userObject.set('location', response.location);
-            userObject.set('hometown', response.hometown);
             userObject.save();
           },
           function(error) {

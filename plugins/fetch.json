@@ -1,16 +1,32 @@
 {
-    "org.apache.cordova.device": {
+    "cordova-plugin-device": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.device"
+            "id": "cordova-plugin-device"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.console": {
+    "cordova-plugin-console": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.console"
+            "id": "cordova-plugin-console"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen"
         },
         "is_top_level": true,
         "variables": {}
@@ -23,71 +39,13 @@
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.contacts": {
+    "cordova-plugin-keyboard": {
         "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.contacts"
-        }
-    },
-    "org.apache.cordova.device-motion": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.device-motion"
-        }
-    },
-    "org.apache.cordova.dialogs": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.dialogs"
-        }
-    },
-    "org.apache.cordova.file": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.file"
-        }
-    },
-    "org.apache.cordova.file-transfer": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.file-transfer"
-        }
-    },
-    "org.apache.cordova.inappbrowser": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.inappbrowser"
-        }
-    },
-    "org.apache.cordova.media": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.media"
-        }
-    },
-    "org.apache.cordova.network-information": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.network-information"
-        }
-    },
-    "org.apache.cordova.splashscreen": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.splashscreen"
-        }
-    },
-    "org.apache.cordova.statusbar": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.statusbar"
-        }
-    },
-    "org.apache.cordova.vibration": {
-        "source": {
-            "type": "local",
-            "path": "/home/cognits2015/intel/XDK/xdk/components/server/cordova-plugins/org.apache.cordova.vibration"
-        }
+            "type": "registry",
+            "id": "cordova-plugin-keyboard"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
     "com.phonegap.plugins.facebookconnect": {
         "source": {
@@ -100,5 +58,13 @@
             "APP_ID": "426922250825103",
             "APP_NAME": "frenzy"
         }
+    },
+    "cordova-plugin-inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
