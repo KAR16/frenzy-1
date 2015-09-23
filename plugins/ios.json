@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {},
+        "cordova-plugin-contacts": {},
+        "cordova-plugin-device": {},
+        "cordova-plugin-device-motion": {},
+        "cordova-plugin-splashscreen": {},
+        "org.apache.cordova.device": {},
+        "org.apache.cordova.splashscreen": {},
+        "cordova-plugin-whitelist": {},
+        "cordova-plugin-inappbrowser": {}
+    },
+    "dependent_plugins": {}
+}

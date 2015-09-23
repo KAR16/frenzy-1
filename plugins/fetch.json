@@ -1,8 +1,8 @@
 {
-    "cordova-plugin-device": {
+    "com.phonegap.plugins.facebookconnect": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-device"
+            "id": "com.phonegap.plugins.facebookconnect"
         },
         "is_top_level": true,
         "variables": {}
@@ -15,54 +15,50 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-contacts": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-whitelist"
+            "id": "cordova-plugin-contacts"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device-motion": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device-motion"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser"
         },
         "is_top_level": true,
         "variables": {}
     },
     "cordova-plugin-splashscreen": {
         "source": {
-            "type": "registry",
-            "id": "cordova-plugin-splashscreen"
+            "type": "local",
+            "path": "C:\\Users\\Merrick\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-splashscreen"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "com.ionic.keyboard": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "com.ionic.keyboard"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-keyboard": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-keyboard"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "com.phonegap.plugins.facebookconnect": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/phonegap/phonegap-facebook-plugin.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {
-            "APP_ID": "426922250825103",
-            "APP_NAME": "frenzy"
-        }
-    },
-    "cordova-plugin-inappbrowser": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-inappbrowser"
+            "id": "cordova-plugin-whitelist"
         },
         "is_top_level": true,
         "variables": {}

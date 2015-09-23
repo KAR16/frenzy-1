@@ -447,40 +447,44 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     fbLogged.reject(error);
   };
 
-  $scope.login = function() {
-    console.log('Login');
-    if (!window.cordova) {
-      facebookConnectPlugin.browserInit('426922250825103');
-    }
-    facebookConnectPlugin.login(['email', 'user_birthday'
-    ], fbLoginSuccess, fbLoginError);
+$scope.login = function() {
+   console.log('Login');
+   if (!window.cordova) {
+     facebookConnectPlugin.browserInit('426922250825103');
+   }
+   facebookConnectPlugin.login(['email', 'user_birthday',
+     'user_hometown',
+     'user_location'
+   ], fbLoginSuccess, fbLoginError);
 
-    fbLogged.then(function(authData) {
-        console.log('Promised');
-        return Parse.FacebookUtils.logIn(authData);
-      })
-      .then(function(userObject) {
-        facebookConnectPlugin.api('/me', null,
-          function(response) {
-            console.log(response);
+   fbLogged.then(function(authData) {
+       console.log('Promised');
+       return Parse.FacebookUtils.logIn(authData);
+     })
+     .then(function(userObject) {
+       facebookConnectPlugin.api('me?fields=id,name,birthday,location,hometown,email',
+         function(response) {
+           console.log(response);
 
-            IdUsuario = response.id
-            viewPromotion()
-              //Heart()
+           IdUsuario = response.id
+           viewPromotion()
+             //Heart()
 
-            userObject.set('name', response.name);
-            userObject.set('email', response.email);
-            userObject.set('birthday', response.birthday);
-            userObject.save();
-          },
-          function(error) {
-            console.log(error);
-          }
-        );
+           userObject.set('name', response.name);
+           userObject.set('email', response.email);
+           userObject.set('birthday', response.birthday);  
+           userObject.set('location', response.location);
+           userObject.set('hometown', response.hometown);
+           userObject.save();
+         },
+         function(error) {
+           console.log(error);
+         }
+       );
 
-        $state.go('app.playlists');
-      }, function(error) {
-        console.log(error);
-      });
-  };
+       $state.go('app.playlists');
+     }, function(error) {
+       console.log(error);
+     });
+ };
 }]);

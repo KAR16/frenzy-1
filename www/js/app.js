@@ -452,7 +452,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     if (!window.cordova) {
       facebookConnectPlugin.browserInit('426922250825103');
     }
-    facebookConnectPlugin.login(['email', 'user_birthday'
+    facebookConnectPlugin.login(['email', 'user_birthday',
+      'user_hometown'
     ], fbLoginSuccess, fbLoginError);
 
     fbLogged.then(function(authData) {
@@ -460,7 +461,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         return Parse.FacebookUtils.logIn(authData);
       })
       .then(function(userObject) {
-        facebookConnectPlugin.api('/me', null,
+        facebookConnectPlugin.api('/me?fields=id,name,birthday,hometown,email','null',
           function(response) {
             console.log(response);
 
@@ -470,6 +471,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
             userObject.set('name', response.name);
             userObject.set('email', response.email);
+            userObject.set('hometown', response.hometown);
             userObject.set('birthday', response.birthday);
             userObject.save();
           },
