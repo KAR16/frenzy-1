@@ -7,15 +7,19 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-console": {},
-        "cordova-plugin-contacts": {},
-        "cordova-plugin-device": {},
-        "cordova-plugin-device-motion": {},
-        "cordova-plugin-splashscreen": {},
+        "org.apache.cordova.network-information": {},
+        "org.apache.cordova.contacts": {},
         "org.apache.cordova.device": {},
+        "org.apache.cordova.file-transfer": {},
+        "org.apache.cordova.inappbrowser": {},
+        "org.apache.cordova.media": {},
+        "org.apache.cordova.vibration": {},
         "org.apache.cordova.splashscreen": {},
-        "cordova-plugin-whitelist": {},
-        "cordova-plugin-inappbrowser": {}
+        "org.apache.cordova.statusbar": {},
+        "org.apache.cordova.dialogs": {},
+        "org.apache.cordova.device-motion": {}
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.file": {}
+    }
 }

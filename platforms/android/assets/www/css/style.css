@@ -483,7 +483,7 @@ font-family: Iconos;
     height:1px;	
 }
 .pageFavoritesActualPrice{
-    font-size:15px;
+    font-size:21px;
 }
 .pageFavoritesSavingTitle{
     font-size:17px;
@@ -693,7 +693,7 @@ font-family: Iconos;
 	margin-left: -7px;
 }
 .categoriesAverageTitle{
-    font-size:12px;
+    font-size:11px;
     color:#78D9D8;
 }
 .categoriesHeartIcon{
@@ -856,7 +856,7 @@ font-family: Iconos;
     margin-top:-5px;
 }
 .pageOffertsActualPrice {
-    font-size:23px;
+    font-size:21px;
     margin-left:5px;
 }
 .pageOffertsBeforePrice {

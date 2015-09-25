@@ -303,7 +303,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/herramientas.html",
-            controller: 'ChatsCtrl'
+            controller: 'homeCtrl'
           }
         }
       })
@@ -409,14 +409,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 .controller('homeCtrl', ['$scope', '$state', function($scope, $state) {
   $scope.logout = function() {
     console.log('Logout');
-    /*
+    
     facebookConnectPlugin.logout(
       function (success) {
         $state.go('login');
       },
       function (failure) { console.log(failure) }
     );
-    */
+    
     Parse.User.logOut();
     $state.go('login');
   };
@@ -448,41 +448,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   };
 
   $scope.login = function() {
-    console.log('Login');
-    if (!window.cordova) {
-      facebookConnectPlugin.browserInit('426922250825103');
-    }
-    facebookConnectPlugin.login(['email', 'user_birthday',
-      'user_hometown'
-    ], fbLoginSuccess, fbLoginError);
+   console.log('Login');
+   if (!window.cordova) {
+     facebookConnectPlugin.browserInit('426922250825103');
+   }
+   facebookConnectPlugin.login(['email', 'user_birthday',
+     'user_hometown'
+   ], fbLoginSuccess, fbLoginError);
 
-    fbLogged.then(function(authData) {
-        console.log('Promised');
-        return Parse.FacebookUtils.logIn(authData);
-      })
-      .then(function(userObject) {
-        facebookConnectPlugin.api('/me?fields=id,name,birthday,hometown,email','null',
-          function(response) {
-            console.log(response);
+   fbLogged.then(function(authData) {
+       console.log('Promised');
+       return Parse.FacebookUtils.logIn(authData);
+     })
+     .then(function(userObject) {
+       facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,email',
+         function(response) {
+           console.log(response);
+           alert(JSON.stringify(response))
 
-            IdUsuario = response.id
-            viewPromotion()
-              //Heart()
+           IdUsuario = response.id
+           viewPromotion()
+             //Heart()
 
-            userObject.set('name', response.name);
-            userObject.set('email', response.email);
-            userObject.set('hometown', response.hometown);
-            userObject.set('birthday', response.birthday);
-            userObject.save();
-          },
-          function(error) {
-            console.log(error);
-          }
-        );
+           userObject.set('name', response.name);
+         userObject.set('email', response.email);
+          userObject.set('hometown', response.hometown);
+          userObject.set('birthday', response.birthday);
+          userObject.save();
+         },
+         function(error) {
+           console.log(error);
+           alert(JSON.stringify(error))
+         }
+       );
 
-        $state.go('app.playlists');
-      }, function(error) {
-        console.log(error);
-      });
-  };
+       $state.go('app.playlists');
+     }, function(error) {
+       console.log(error);
+     });
+ };
 }]);
