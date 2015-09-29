@@ -386,7 +386,7 @@ promotion.find({
 
                             //console.log("esta disponible",results[x].attributes.Status)
                             if (results[x].attributes.Photo === null || results[x].attributes.Photo === undefined){
- 
+
                                      PhotoPaiz.push({nul:"sin",name:results[x].attributes.Name,
                                                     presentation:results[x].attributes.Presentation,
                                                     description:results[x].attributes.PromotionDescription,
@@ -473,8 +473,8 @@ query.find({
                 }
             }
         });
-      
- 
+
+
 
 
 
@@ -827,11 +827,11 @@ function SavePromotion(UserId, PromotionId) {
    };
 
    var Savepromotion = Parse.Cloud.run('SavePromotion', {"Array":result});
-    
+
     Savepromotion.then(function(){
       viewPromotion()
         });
-   
+
 };
 
 function DeletePromotion(UserId, PromotionId) {
@@ -843,9 +843,9 @@ function DeletePromotion(UserId, PromotionId) {
    };
 
    var Deletepromotion = Parse.Cloud.run('DeletePromotion', {"Array":result});
-    
+
     Deletepromotion.then(function(){
       viewPromotion()
         });
-    
+
 };

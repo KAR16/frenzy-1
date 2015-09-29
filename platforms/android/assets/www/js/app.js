@@ -221,13 +221,13 @@ function changeColorPinYourFavorites(parametro) {
   }
 };
 /******************************************************/
-var myApp = angular.module('reallyCoolApp', ['ionic']);
+var myApp = angular.module('reallyCoolApp', ['ionic','ngCordova']);
 myApp.config(function($ionicConfigProvider) {
   // note that you can also chain configs
   $ionicConfigProvider.navBar.alignTitle('center');
 });
 /******************************************************/
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
   //****************************************************
   .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
@@ -409,90 +409,47 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 .controller('homeCtrl', ['$scope', '$state', function($scope, $state) {
   $scope.logout = function() {
     console.log('Logout');
-    /*
+
     facebookConnectPlugin.logout(
       function (success) {
         $state.go('login');
       },
       function (failure) { console.log(failure) }
     );
-    */
+
     Parse.User.logOut();
     $state.go('login');
   };
 }])
 
-.controller('loginCtrl', ['$scope', '$state', function($scope, $state) {
-  var fbLogged = new Parse.Promise();
+.controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
-  var fbLoginSuccess = function(response) {
-    if (!response.authResponse) {
-      fbLoginError("Cannot find the authResponse");
-      return;
+
+    //===============LOGIN WITH FB==========//
+    $scope.login = function() {
+      alert($cordovaFacebook);
+        alert(JSON.stringify($cordovaFacebook))
+        var permissions = ["public_profile", "email", "user_birthday"];
+        $cordovaFacebook.login(permissions)
+            .then(function(success) {
+                alert('success connection')
+                $cordovaFacebook.api("me?fields=id,name,email,birthday")
+                    .then(function(success) {
+                        alert('success api')
+
+                        $scope.socialLogin.email = success.email;
+                        $scope.socialLogin.displayName = success.name;
+                        $scope.socialLogin.facebook = success.id;
+                        alert(JSON.stringify($scope.socialLogin));
+
+                    }, function(error) {
+                        alert('error api')
+                        alert(JSON.stringify(error))
+                    });
+            }, function(error) {
+                alert('error connection')
+                alert(JSON.stringify(error))
+            });
     }
-    var expDate = new Date(
-      new Date().getTime() + response.authResponse.expiresIn * 1000
-    ).toISOString();
-
-    var authData = {
-      id: String(response.authResponse.userID),
-      access_token: response.authResponse.accessToken,
-      expiration_date: expDate
-    }
-    fbLogged.resolve(authData);
-    console.log(response);
-  };
-
-  var fbLoginError = function(error) {
-    fbLogged.reject(error);
-  };
-
-  $scope.login = function() {
-    console.log('Login');
-    if (!window.cordova) {
-      //facebookConnectPlugin.browserInit('426922250825103');
-    }
-       facebookConnectPlugin.browserInit('426922250825103');
-    facebookConnectPlugin.login(['email', 'user_birthday',
-      'user_hometown'
-    ], fbLoginSuccess, fbLoginError);
-
-    fbLogged.then(function(authData) {
-        console.log('Promised');
-        return Parse.FacebookUtils.logIn(authData);
-      })
-      .then(function(userObject) {
-        facebookConnectPlugin.api('/me','null',
-          function(response) {
-            console.log(response);
-
-            IdUsuario = response.id
-            viewPromotion()
-              //Heart()
-
-            userObject.set('name', response.name);
-            userObject.set('email', response.email);
-            userObject.set('hometown', response.hometown);
-            userObject.set('birthday', response.birthday);
-            userObject.save();
-          },
-          function(error) {
-            console.log(error);
-             IdUsuario = error.id
-            viewPromotion()
-              //Heart()
-
-            userObject.set('name', error.name);
-            userObject.set('email', error.email);
-            userObject.set('hometown', error.hometown);
-            userObject.set('birthday', error.birthday);
-            userObject.save();
-          }
-        );
-
-        $state.go('app.playlists');
-      }, function(error) {
-        console.log(error);
-      });
-  };
-}]);
+    //===============/LOGIN WITH FB==========//
+});
