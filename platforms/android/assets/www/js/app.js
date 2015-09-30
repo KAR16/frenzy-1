@@ -425,31 +425,204 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
 
+
+    alert('loginfb')
     //===============LOGIN WITH FB==========//
-    $scope.login = function() {
-      alert($cordovaFacebook);
-        alert(JSON.stringify($cordovaFacebook))
-        var permissions = ["public_profile", "email", "user_birthday"];
-        $cordovaFacebook.login(permissions)
-            .then(function(success) {
-                alert('success connection')
-                $cordovaFacebook.api("me?fields=id,name,email,birthday")
-                    .then(function(success) {
-                        alert('success api')
+    $scope.loginfb = function(){
+       var permissions = ["public_profile", "email", "user_birthday"];
+    //Browser Login
+    if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
 
-                        $scope.socialLogin.email = success.email;
-                        $scope.socialLogin.displayName = success.name;
-                        $scope.socialLogin.facebook = success.id;
-                        alert(JSON.stringify($scope.socialLogin));
+      Parse.FacebookUtils.logIn(null, {
+        success: function(user) {
+          console.log(user);
+          if (!user.existed()) {
+            alert("User signed up and logged in through Facebook!");
+          } else {
+            alert("User logged in through Facebook!");
+          }
+        },
+        error: function(user, error) {
+          alert("User cancelled the Facebook login or did not fully authorize.");
+        }
+      });
 
-                    }, function(error) {
-                        alert('error api')
-                        alert(JSON.stringify(error))
-                    });
-            }, function(error) {
-                alert('error connection')
-                alert(JSON.stringify(error))
-            });
     }
-    //===============/LOGIN WITH FB==========//
+    //Native Login
+    else {
+
+      $cordovaFacebook.login(permissions).then(function(success){
+
+        alert(success);
+
+        //Need to convert expiresIn format from FB to date
+        var expiration_date = new Date();
+        expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
+        expiration_date = expiration_date.toISOString();
+
+        var facebookAuthData = {
+          "id": success.authResponse.userID,
+          "access_token": success.authResponse.accessToken,
+          "expiration_date": expiration_date
+        };
+
+        Parse.FacebookUtils.logIn(facebookAuthData, {
+          success: function(user) {
+            alert(JSON.stringify(user));
+            if (!user.existed()) {
+              alert("User signed up and logged in through Facebook!");
+            } else {
+              alert("User logged in through Facebook!");
+            }
+          },
+          error: function(user, error) {
+            alert(JSON.stringify(error));
+            alert("User cancelled the Facebook login or did not fully authorize.");
+          }
+        });
+         $state.go('app.playlists');
+      }, function(error){
+        console.log(error);
+      });
+
+    }
+
+  };
+    // //===============/LOGIN WITH FB==========//
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .controller('loginCtrl', ['$scope', '$state', function($scope, $state,$cordovaFacebook) {
+//
+//   $scope.login = function() {
+//     alert("Entro al login")
+//        var permissions = ["public_profile", "email", "user_birthday"];
+//
+//        $cordovaFacebook.login(permissions)
+//            .then(function(success) {
+//              alert('primer then')
+  //                $cordovaFacebook.api("me?fields=id,name,email,birthday")
+  //                    .then(function(success) {
+  //                      alert('then success')
+  //                        $scope.socialLogin.email = success.email;
+  //                        $scope.socialLogin.displayName = success.name;
+  //                        $scope.socialLogin.facebook = success.id;
+  //
+  //                        });
+  //                    }, function(error) {
+  //                      alert('error')
+  //                        notify.noti({
+  //                            description: error
+//                        });
+//                    });
+//                     $state.go('app.playlists');
+//            }, function(error) {
+//              alert('error 2')
+//                notify.noti({
+//                    description: error
+//                });
+//            }
+  // var fbLogged = new Parse.Promise();
+  //
+  // var fbLoginSuccess = function(response) {
+  //   if (!response.authResponse) {
+  //     fbLoginError("Cannot find the authResponse");
+  //     return;
+  //   }
+  //   var expDate = new Date(
+  //     new Date().getTime() + response.authResponse.expiresIn * 1000
+  //   ).toISOString();
+  //
+  //   var authData = {
+  //     id: String(response.authResponse.userID),
+  //     access_token: response.authResponse.accessToken,
+  //     expiration_date: expDate
+  //   }
+  //   fbLogged.resolve(authData);
+  //   console.log(response);
+  // };
+  //
+  // var fbLoginError = function(error) {
+  //   fbLogged.reject(error);
+  // };
+
+ //  $scope.login = function() {
+ //   console.log('Login');
+ //   if (!window.cordova) {
+ //     facebookConnectPlugin.browserInit('426922250825103');
+ //   }
+ //   facebookConnectPlugin.login(['email', 'user_birthday',
+ //     'user_hometown'
+ //   ], fbLoginSuccess, fbLoginError);
+ //
+ //   fbLogged.then(function(authData) {
+ //       console.log('Promised');
+ //       return Parse.FacebookUtils.logIn(authData);
+ //     })
+ //     .then(function(userObject) {
+ //       facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,email',
+ //         function(response) {
+ //           console.log(response);
+ //           alert(JSON.stringify(response))
+ //
+ //           IdUsuario = response.id
+ //           viewPromotion()
+ //             //Heart()
+ //
+ //           userObject.set('name', response.name);
+ //         userObject.set('email', response.email);
+ //          userObject.set('hometown', response.hometown);
+ //          userObject.set('birthday', response.birthday);
+ //          userObject.save();
+ //         },
+ //         function(error) {
+ //           console.log(error);
+ //           alert(JSON.stringify(error))
+ //         }
+ //       );
+ //
+ //       $state.go('app.playlists');
+ //     }, function(error) {
+ //       console.log(error);
+ //     });
+ // };
+// }]);
