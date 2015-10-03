@@ -426,10 +426,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 
 
-    alert('loginfb')
+    //alert('loginfb')
     //===============LOGIN WITH FB==========//
     $scope.loginfb = function(){
-       var permissions = ["public_profile", "email", "user_birthday"];
+       var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
     //Browser Login
     if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
 
@@ -453,7 +453,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
       $cordovaFacebook.login(permissions).then(function(success){
 
-        alert(success);
+        //alert(success);
 
         //Need to convert expiresIn format from FB to date
         var expiration_date = new Date();
@@ -474,13 +474,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
             } else {
               alert("User logged in through Facebook!");
             }
+             $state.go('app.playlists');
           },
           error: function(user, error) {
             alert(JSON.stringify(error));
             alert("User cancelled the Facebook login or did not fully authorize.");
           }
         });
-         $state.go('app.playlists');
+
       }, function(error){
         console.log(error);
       });
