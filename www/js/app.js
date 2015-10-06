@@ -263,9 +263,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       //******** FACEBOOK *****
       .state('login', {
         url: "/login",
-        templateUrl: "templates/login.html",
-        controller: 'loginCtrl',
-
+        templateUrl: "templates/login.html"
       })
       //********************************************************************************
       .state('app.favoritos', {
@@ -410,12 +408,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   $scope.logout = function() {
     console.log('Logout');
 
-    facebookConnectPlugin.logout(
-      function (success) {
-        $state.go('login');
-      },
-      function (failure) { console.log(failure) }
-    );
+    // facebookConnectPlugin.logout(
+    //   function (success) {
+    //     $state.go('login');
+    //   },
+    //   function (failure) { console.log(failure) }
+    // );
 
     Parse.User.logOut();
     $state.go('login');
@@ -424,23 +422,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
+    $scope.currentUser = Parse.User.current();
+    console.log($scope.currentUser,"curent")
+    if ($scope.currentUser == null ){
+      alert("no hay sencion abierta")
 
 
+    }else{
+        console.log($scope.currentUser["attributes"].authData.facebook.id)
+        IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+        viewPromotion()
+
+        $state.go('app.playlists');
+    }
     //alert('loginfb')
     //===============LOGIN WITH FB==========//
     $scope.loginfb = function(){
-       var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
+      var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
     //Browser Login
     if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
 
       Parse.FacebookUtils.logIn(null, {
         success: function(user) {
-          console.log(user);
+          console.log(user.changed.authData.facebook.id);
+          IdUsuario = user.changed.authData.facebook.id
+          viewPromotion()
           if (!user.existed()) {
             alert("User signed up and logged in through Facebook!");
           } else {
             alert("User logged in through Facebook!");
           }
+
+          $state.go('app.playlists');
         },
         error: function(user, error) {
           alert("User cancelled the Facebook login or did not fully authorize.");
@@ -452,9 +465,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     else {
 
       $cordovaFacebook.login(permissions).then(function(success){
-
         //alert(success);
-
+        IdUsuario = success.authResponse.userID
+        viewPromotion()
         //Need to convert expiresIn format from FB to date
         var expiration_date = new Date();
         expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
@@ -468,7 +481,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
         Parse.FacebookUtils.logIn(facebookAuthData, {
           success: function(user) {
-            alert(JSON.stringify(user));
+            //alert(JSON.stringify(user));
             if (!user.existed()) {
               alert("User signed up and logged in through Facebook!");
             } else {
@@ -493,9 +506,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 });
 
 
-
-
-
+function cargar(){
+  alert("ya cargo")
+}
 
 
 

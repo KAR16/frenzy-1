@@ -19,13 +19,12 @@
             </p>
         </h1>
     </ion-header-bar>
-    <!--**********  BODY OF PAGE START  **********-->            
+    <!--**********  BODY OF PAGE START  **********-->
     <ion-content  nav-transition="none">
         <!--**********  LIST TO CREATE CATEGORIES FRENZY  **********-->
         <ion-list>
             <!--**********  LIST STYLE PAGE START  **********-->
           <ion-item href="#/app/playlists/{{category.direc}}" ng-repeat="category in categorys" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}" onclick = "Heart(id)">
-            
                 <div class="row">
                     <!--**********  COL WITH CATEGORIE'S ICON  **********-->
                     <div class="col col-10">
@@ -42,16 +41,16 @@
                         <div class="pageStartCuponsPromotions">
                             <!--*****  CUPONS TITLE  *****-->
                             <spam  class="pageStartCuponsPromotionsTitle">
-                                cupones {{category.cont_cupones}} 
+                                cupones {{category.cont_cupones}}
                             </spam>
                             <!--*****  PROMOTIONS TITLE  *****-->
                             <spam class="pageStartCuponsPromotionsTitle">
                                 promociones {{category.cont_promo}}
-                            </spam> 
+                            </spam>
                         </div>
-                        <!--**********  SEPARATION LINE  **********-->    
+                        <!--**********  SEPARATION LINE  **********-->
                         <div>
-                            <hr class="pageStartSeparationLine"> 
+                            <hr class="pageStartSeparationLine">
                         </div>
                     </div>
                 </div>
@@ -74,7 +73,7 @@
             <p class="arrow-up"></p><p class="arrow-up"></p>
             <p class="arrow-up"></p><p class="arrow-up"></p>
         </div>
-        <!--**********  PURPLE BOX  **********-->    
+        <!--**********  PURPLE BOX  **********-->
         <div class="pageStartBoxPurple">
             <!--**********  CLOCK ICON  **********-->
             <h4 class="home pageStartBoxPurpleIcon">
@@ -101,7 +100,6 @@
                 <p class="arrow-dow"></p><p class="arrow-dow"></p>
                 <p class="arrow-dow"></p><p class="arrow-dow"></p>
             </div>
-            <!--****************************************-->    
     </ion-content>
     <!--************************* FOOTHER  ******************************-->
  <ion-footer-bar align-title="left" class="bar-stable" style="background-color:#E6E7E8  ;border-style:none;">
