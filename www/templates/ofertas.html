@@ -19,20 +19,20 @@ hr     {
     <!--*****  SECOND TAB HEADER  *****-->
         <div class="row pageFavoritesSecondRow" style="height:35px;margin-top:0px;position:absolute; z-index:1;">
             <!--**********  OFFERTS  **********-->
-            <div class="col col-50">
+            <div class="col col-50" ng-repeat="s in chats[2]">
                 <a class="pageOffertsOffertsTitle"  >
                     <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
                     <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()">
-                        Ofertas (21)
+                        Ofertas ({{s.conteo}})
                     </p>
                     <!--**********  LINE DECORATION  **********-->
                     <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction">
                 </a>
             </div>
-        </div>                                  
+        </div>
 <!--**********  ICON POPOVER  *********-->
         <div ng-repeat="s in chats[1]">
-            <div class="row" style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" onclick="heartPopover(id)">
+            <div class="row" style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover(id)">
                 <div class="col col-66"></div>
                 <div class="col col-33">
                      <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl">
@@ -43,15 +43,15 @@ hr     {
                 </div>
             </div>
         </div>
-         
-	   
+
+
     <!--**********  CONTENT  **********-->
      <ion-content ng-controller="AppCtrl"  nav-transition="none">
 		 <div style="height:50px;"></div>
                               <!--*****  SECOND TAB HEADER  *****-->
-                            
+
         <!--**********  ICON POPOVER  *********-->
-       
+
         <!--************  OFFERTS BODY WITH IMAGE **************-->
         <div ng-repeat="super in chats[0] | filter: {nul : 'con'}"  >
             <div class="boxResponsiveWithImage">
@@ -61,18 +61,18 @@ hr     {
                 <div class="row" style="position:absolute;">
                     <div class="col col-25">
                         <p class="pageOffertsNameLabel">
-                            Ahorra 
+                            Ahorra
                         </p>
                         <p class="pageOffertsPriceLabel">
                             {{super.ahorro | currency: 'Q'}}
                         </p>
                     </div>
-                </div>            
-                <!--*****  IMAGE OFFERTS  *****--> 
+                </div>
+                <!--*****  IMAGE OFFERTS  *****-->
                 <img class="imageOffertsAndCupons relacion4-3" ng-src="{{super.photo}}" alt="pollo">
                 <!--*****  NAME OF OFFERTS  *****-->
                 <p class="open_sans overFlowText pageOffertsTitleWithImage">
-                    {{super.name }} - {{super.presentation}}
+                    {{super.name }}
                 </p>
                 <!--*****  OFFERTS DESCRIPTION  *****-->
                 <div class="ellipsify">
@@ -91,13 +91,14 @@ hr     {
                     <!--*****  ACTUAL PRICE  *****-->
                     <div class="col col-33">
                         <spam class="pageOffertsActualPrice">
-                            {{super.basePrice| currency: 'Q'}}
+                            {{super.promotionalPrice | currency: 'Q'}}
                         </spam>
                     </div>
                     <!--*****   BEFORE PRICE  *****-->
                     <div class="col col-33">
                         <spam class="pageOffertsBeforePrice">
-                            Antes{{super.promotionalPrice | currency: 'Q'}}
+
+                            Antes {{super.basePrice| currency: 'Q'}}
                         </spam>
                     </div>
                     <!--*****  ICONS  *****-->
@@ -108,8 +109,8 @@ hr     {
                         <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" onclick="changeColorPinOfferts(id,id)" style="color:silver">
                             W
                         </spam>
-                    </div>   
-                </div>        
+                    </div>
+                </div>
             </div>
         </div>
         <!--************  OFFERTS BODY WITHOUT IMAGE **************-->
@@ -129,7 +130,7 @@ hr     {
                                    {{super.ahorro | currency: 'Q'}}
                                 </p>
                             </div>
-                        </div> 
+                        </div>
                         <!--*****  LABEL IMAGE  *****-->
                         <img clas="offersLogo" src="img/logoOfertas.png" alt="image" style="height:75px; width:75px;">
                     </div>
@@ -157,13 +158,14 @@ hr     {
                     <!--*****  ACTUAL PRICE  *****-->
                     <div class="col col-33">
                         <spam class="pageOffertsActualPrice">
-                            {{super.basePrice| currency: 'Q'}}
+
+                            {{super.promotionalPrice | currency: 'Q'}}
                         </spam>
                     </div>
                     <!--*****   BEFORE PRICE  *****-->
                     <div class="col col-33">
                         <spam class="pageOffertsBeforePrice">
-                            Antes{{super.promotionalPrice | currency: 'Q'}}
+                            Antes {{super.basePrice| currency: 'Q'}}
                         </spam>
                     </div>
                     <!--*****  ICONS  *****-->
@@ -174,11 +176,11 @@ hr     {
                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" onclick="changeColorPinOffertsWithoutImage(id,id)" style="color:silver">
                             W
                         </spam>
-                    </div>   
+                    </div>
                 </div>
             </div>
-        </div> 
-         
+        </div>
+
 				<div class="pageOffertsBlanckDiv"></div>
     <div ng-repeat="super in chats[0]  | filter: {oferta : 'noHay'}">
           <div class="open_sans boxbox">
@@ -191,7 +193,7 @@ hr     {
             </p>
             <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
             <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
-            <p class="savedPageNoItemsDescription">para usarlos despues.</p>      
+            <p class="savedPageNoItemsDescription">para usarlos despues.</p>
           </div>
       </div>
         <!--*************  FIRST POPOVER CONTENT  ******************-->
@@ -200,11 +202,10 @@ hr     {
                 <!--*****  FIRST POPOVER CONTENT  *****-->
                 <ion-content >
                     <div class="list" ng-repeat="s in chats[1]">
-                        <a class="item " target="_blank" onclick="changeColorHeartFollow()" style="  text-align:right;
-    color:silver;">
-                            Seguir  
-                            <spam class="home pageOffertsPopoverIconsDescrpition" id="{{s.id}}" onclick="changeColorHeartFollow()" style="color:silver">
-                                B  
+                        <a class="item " target="_blank" onclick="changeColorHeartFollow()" style="  text-align:right; color:silver;">
+                            Seguir
+                            <spam class="home pageOffertsPopoverIconsDescrpition" id="{{s.id}}" onclick="changeColorHeartFollow(id)" style="color:{{heartMenu}}">
+                                B
                             </spam>
                         </a>
                         <a class="item" id = "{{s.cel}}" onclick="llamar(id)" target="_blank" style="text-align:right; color:silver;">
@@ -237,11 +238,11 @@ hr     {
                             <img  class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
                             <a class="secondPopoverFacebookTitle" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank');" style="text-decoration:none;">Amigos de facebook</a>
                         </div>
-                      <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');"> 
+                      <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');">
                             <p class="home secondPopoverMailIcon">
                                 V
-                            </p>                            
-                            <a href="sms:&body=www.frenzy.com" style="text-decoration:none;">           
+                            </p>
+                            <a href="sms:&body=www.frenzy.com" style="text-decoration:none;">
                                 <p class="secondPopoverMailTitle">
                                     Enviar mensajes de texto
                                 </p>
