@@ -158,7 +158,7 @@ font-family: Iconos;
    thus cause early wrapping on all lines. */
 .pre-dots{
     float: right;
-    height: 20px;  /* 2x line height (one less than visible lines) */
+    height: 18px;  /* 2x line height (one less than visible lines) */
 }
 .pre-dots-threeLines{
     float: right;
@@ -484,6 +484,7 @@ font-family: Iconos;
 }
 .pageFavoritesActualPrice{
     font-size:21px;
+    margin-left: 5px;
 }
 .pageFavoritesSavingTitle{
     font-size:17px;
@@ -533,6 +534,7 @@ font-family: Iconos;
     font-size:13px;
     margin-left:10px;
     color:#BDBDBD;
+    width: 90%;
 }
 .pageFavoritesBeforePrice{
     font-size:13px;
@@ -541,11 +543,15 @@ font-family: Iconos;
 }
 .pageFavoritesIcons{
     color:silver;
-    margin-left:10px;
+    margin-left:15px;
     margin-top:10px;
 }
 .pageFavoritesDivIcons{
     background-color:white;
+    	border-style: solid;
+border-top:1px solid #F1F2F2;
+     box-shadow: 3px 3px 2px #BDBDBD;
+    
 }
 /****************************************************************************/
 /****************************  YOUR FAVORITES STYLE  ************************/
@@ -760,7 +766,7 @@ font-family: Iconos;
     box-shadow: 0px 3px 10px 1px grey;    
 }
 .pageOffertsPriceIcons{
-    margin-top:10px;
+   height: 45px;
 }
 .boxResponsiveWithImage {
     height: calc(43vh *  1.33);
@@ -786,13 +792,15 @@ font-family: Iconos;
 [class*='relacion'] {
 }
 .boxResponsiveWithoutImage {
-    height: calc(17vh *  1.33);
-    width: 95%;
-    margin-left:10px;
+    background-color: white;
+    height: 150px;
+    width: 90%;
+    margin-left:18px;
     margin-top:15px;
     border-style:solid;
     border-width: 1px;
     border-color: #E6E6E6;
+    border-style: none;
     box-shadow: 3px 3px 2px #BDBDBD;
     
 }
@@ -849,12 +857,7 @@ font-family: Iconos;
     margin-top:-5px;
     color:#BDBDBD;
 }
-.pageOffertsHrBox   {
-    border:none;
-    background-color:#F2F2F2;
-    height:1px;
-    margin-top:-5px;
-}
+
 .pageOffertsActualPrice {
     font-size:21px;
     margin-left:5px;
@@ -884,7 +887,7 @@ font-family: Iconos;
 .pageOffertsTitleDescriptionWithoutImage {
     font-size:20px;
     margin-top:5px;
-    margin-left:10px;
+    margin-left:19px;
 }
 .pageOffertsDescriptionWithoutImage {
     font-size:13px;
@@ -926,7 +929,6 @@ font-family: Iconos;
 }
 .secondPopoverFacebookTitle{
     margin-left:10px;
-    margin-top:-30px;
     color:#A7A9AC; 
 }
 .secondPopoverMailIcon{
