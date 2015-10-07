@@ -247,7 +247,6 @@ app.factory('Restaurantes', function() {
 });
 
 var dato = [];
-var ContPromo = [];
 app.factory('Paiz', function() {
 //console.log("called Paiz");
   var paiz = Category;
@@ -260,7 +259,6 @@ app.factory('Paiz', function() {
       ALL = []
       Category = [];
        dato = [];
-       ContPromo = [];
       IdCategory = superId;
       for (c in PhotoPaiz) {
           // console.log(PhotoPaiz[c].Category)
@@ -270,10 +268,6 @@ app.factory('Paiz', function() {
       }
       if (Category.length == 0) {
         Category.push({oferta:"noHay"});
-      }else {
-      //  console.log(Category.length,"promociones existentes")
-        ContPromo.push({conteo:Category.length})
-
       }
       //console.log(Category,"asdasd");
 
@@ -282,12 +276,11 @@ app.factory('Paiz', function() {
           dato.push(InfoShop[z]);
         }
       }
-    console.log(dato , "s");
+    //console.log(dato , "s");
     //console.log(Category,"dato");
     if (PhotoPaiz) {
       ALL.push(Category)
       ALL.push(dato)
-      ALL.push(ContPromo)
       //console.log(ALL,"all")
       return ALL;
     }
@@ -380,7 +373,6 @@ customer = customer.limit(100);
 
 ///////////////////////////////////////////////////////////////////////////////////////////Customer
 //query limit hace la llamada de mas elementos
-
 promotion.find({
         success: function(results) {
           console.log('Promotion query success');
@@ -401,8 +393,7 @@ promotion.find({
                                                     promotionalPrice:results[x].attributes.PromotionalPrice,
                                                     ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
                                                     ,Category:results[x].attributes.Customer[i],
-                                                     ID:"pinOffertsWithoutImage"+x,IDpromotion: results[x].id,
-                                                     conteo:0
+                                                     ID:"pinOffertsWithoutImage"+x,IDpromotion: results[x].id
 
                                                                      });
                                 //console.log("iamgen no dispobible")
@@ -416,8 +407,7 @@ promotion.find({
                                                 promotionalPrice:results[x].attributes.PromotionalPrice,
                                                 ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
                                                 , Category:results[x].attributes.Customer[i],
-                                                ID:"pinOfferts"+x,IDpromotion: results[x].id,
-                                                conteo:0
+                                                ID:"pinOfferts"+x,IDpromotion: results[x].id
 
                                                                      });
                             }
@@ -432,11 +422,12 @@ promotion.find({
             //console.log(promociones,"promocines")
             return PhotoPaiz;
       },
-      error: function(myObject, error) {
-        // Error occureds
-        console.log('Promotion query error');
-        console.log(myObject);
-        console.log( error );
+      error: function handleParseError(err) {
+        switch (err.code) {
+          case Parse.Error.INVALID_SESSION_TOKEN:
+            Parse.User.logOut();
+            break;
+          }
       }
     });
 
@@ -462,9 +453,12 @@ query.find({
                     }
                     // console.log(CategoryListNameConteo, "Category cont    ")
                 },
-                error: function(error) {
-                    // Error occureds
-                    console.log(error);
+                error: function handleParseError(err) {
+                  switch (err.code) {
+                    case Parse.Error.INVALID_SESSION_TOKEN:
+                      Parse.User.logOut();
+                      break;
+                    }
                 }
             });
         CategoryListName.push({name: results[x].attributes.CategoryName,direc:results[x].attributes.CategoryName,cont_promo:0,icon: results[x].attributes.IconCategory,
@@ -520,9 +514,12 @@ Parse.Cloud.run('GetPromotions', {}, {
             }
         });
     },
-    error: function(error) {
-        /* Show error if call failed */
-        console.log(error);
+    error: function handleParseError(err) {
+      switch (err.code) {
+        case Parse.Error.INVALID_SESSION_TOKEN:
+          Parse.User.logOut();
+          break;
+        }
     }
 });
 
@@ -535,7 +532,7 @@ function AddPromotions(Array) {
         for (x in results) {
             var CountPromotions = 0;
             listaNameSuperConteo.push(results[x].attributes.Name)
-            InfoShop.push({cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,namecategory:results[x].attributes.CategoryApp});
+            InfoShop.push({cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x});
 
 
             if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -592,8 +589,8 @@ Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:re
                                   lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name});
             };
         };
-       //console.log(InfoShop)
-      //  console.log(Super)
+       console.log(InfoShop)
+        //console.log(Super)
 
     });
 };
@@ -627,9 +624,12 @@ function Promotions(id){
             //console.log(PhotoPaiz)
 
       },
-      error: function(myObject, error) {
-        // Error occureds
-        console.log( error );
+      error: function handleParseError(err) {
+        switch (err.code) {
+          case Parse.Error.INVALID_SESSION_TOKEN:
+            Parse.User.logOut();
+            break;
+          }
       }
     });
 }
@@ -654,7 +654,7 @@ function Heart(id){
                                      //console.log("s",id,"---",Categorys[a].names)
                                     if (id === Categorys[a].names){
                                         //console.log("se guardo",id,"---",Categorys[a])
-                                           document.getElementById(Categorys[a].ID+" "+Categorys[a].nameCategory).style.color="red";
+                                         document.getElementById(Categorys[a].ID+" "+Categorys[a].nameCategory).style.color="red";
                                         console.log(Categorys[a].ID,Categorys[a].nameCategory)
                                         //HeartPopover.push({id:Categorys[a].ID,name:Categorys[a].nameCategory})
                                     }
@@ -668,9 +668,12 @@ function Heart(id){
             //console.log(PhotoPaiz)
 
       },
-      error: function(myObject, error) {
-        // Error occureds
-        console.log( error );
+      error: function handleParseError(err) {
+        switch (err.code) {
+          case Parse.Error.INVALID_SESSION_TOKEN:
+            Parse.User.logOut();
+            break;
+          }
       }
     });
 
@@ -687,19 +690,14 @@ function viewFavorite() {
         for (c in PhotoPaiz){
           //console.log(PhotoPaiz[c])
           if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
-
               //console.log("find",results.attributes.CustomerID[b])
               AllFavorite.push(PhotoPaiz[c])
-
-
               //delete AllFavorite[c].Category
           }
         }
-
       }
     }
    // console.log(AllFavorite, "aqui estoy 2");
-     //console.log(AllFavorite.length)
   });
 }
 
@@ -724,9 +722,12 @@ function viewPromotion(){
                 };
             };
         },
-        error: function(error) {
-            // Error occureds
-            console.log(error);
+        error: function handleParseError(err) {
+          switch (err.code) {
+            case Parse.Error.INVALID_SESSION_TOKEN:
+              Parse.User.logOut();
+              break;
+            }
         }
     });
 
@@ -744,75 +745,73 @@ function tiendaUrl(Url){
     z = Url
     window.open(z,'_blank')
 }
-// function heartPopover(id){
-// /*    console.log("exitoso", HeartPopover)
-//     console.log("id",id)*/
-//     //console.log(dato)
-//
-//     favorite.find({
-//         success: function(results) {
-//             for (x in results) {
-//                 //console.log(results[x].attributes.CustomerID)
-//                 //console.log(results[x].attributes.UserID)
-//                 if (results[x].attributes.UserID===IdUsuario){
-//                   for (c in results[x].attributes.CustomerID) {
-//                     // console.log(id,'id')
-//                     // console.log(results[x].attributes.CustomerID[c],'custumer')
-//                     if ( id == results[x].attributes.CustomerID[c]) {
-//                       console.log(results[x].attributes.CustomerID[c],'lo encontro')
-//                       for (w in dato) {
-//                         console.log(dato[w].id)
-//                         if ($('#' + dato[w].id).css("display") != 'none') {
-//                           alert("show")
-//                           document.getElementById(dato[w].id).style.color="red";
-//                           }
-//
-//
-//                       }
-//                     //document.getElementById(id).style.color="red";
-//
-//
-//                     }
-//                   }
-//                   console.log("find user")
-//                   console.log(results[x].attributes)
-//
-//                 }else{
-//
-//                     console.log("the user no found")
-//                 }
-//             }
-//
-//
-//       },
-//       error: function(myObject, error) {
-//         // Error occureds
-//         console.log( error );
-//       }
-//     });
-//
-//     /*
-//     favorite.find({
-//         success: function(results) {
-//             for (x in results) {
-//                 //console.log(results[x].attributes.CustomerID)
-//                 //console.log(results[x].attributes.UserID)
-//                     if (results[x].attributes.UserID===IdUsuario){
-//                         console.log("find user")
-//                 }else{
-//
-//                     console.log("the user no found")
-//                 }
-//             }
-//
-//
-//       },
-//       error: function(myObject, error) {
-//         // Error occureds
-//         console.log( error );
-//       }
-//     });*/
-// }
+function heartPopover(id){
+/*    console.log("exitoso", HeartPopover)
+    console.log("id",id)
+    console.log(dato)*/
+
+
+    favorite.find({
+        success: function(results) {
+            for (x in results) {
+                //console.log(results[x].attributes.CustomerID)
+                //console.log(results[x].attributes.UserID)
+                if (results[x].attributes.UserID===IdUsuario){
+                        console.log("find user")
+                        for (c in results[x].attributes.CustomerID){
+                               for (s in dato){
+                                        if (dato[s].name == results[x].attributes.CustomerID[c]){
+                                            console.log("oli","Dato",dato[s].name,"ID",id)
+                                              var cssHeart = document.getElementById(dato[s].id).style.color
+                                                    if (cssHeart == "silver"){
+                                                        document.getElementById(dato[s].id).style.color="red";
+                                                    }
+
+
+
+                                        }
+                                    }
+
+                        }
+                }else{
+
+                    console.log("the user no found")
+                }
+            }
+
+
+      },
+      error: function handleParseError(err) {
+        switch (err.code) {
+          case Parse.Error.INVALID_SESSION_TOKEN:
+            Parse.User.logOut();
+            break;
+          }
+      }
+    });
+
+    /*
+    favorite.find({
+        success: function(results) {
+            for (x in results) {
+                //console.log(results[x].attributes.CustomerID)
+                //console.log(results[x].attributes.UserID)
+                    if (results[x].attributes.UserID===IdUsuario){
+                        console.log("find user")
+                }else{
+
+                    console.log("the user no found")
+                }
+            }
+
+
+      },
+      error: function(myObject, error) {
+        // Error occureds
+        console.log( error );
+      }
+    });*/
+}
 
 
 function SaveFavorite(UserId, CustomerId) {
