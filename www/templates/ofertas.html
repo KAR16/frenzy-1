@@ -32,7 +32,7 @@ hr     {
         </div>
 <!--**********  ICON POPOVER  *********-->
         <div ng-repeat="s in chats[1]">
-            <div class="row" style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover(id)">
+              <div class="row" style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
                 <div class="col col-66"></div>
                 <div class="col col-33">
                      <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl">

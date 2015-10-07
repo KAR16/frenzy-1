@@ -157,13 +157,15 @@ angular.module('starter.controllers', ['ionic'])
   /****************************  tamayo  *****************************************/
   .controller('PaizCtrl', function($scope, $stateParams, Paiz) {
     console.log("calling PaizCtrl");
+    var favorite = new Parse.Query('Favorite');
     $scope.$on('$ionicView.enter', function() {
       $scope.chats = Paiz.get($stateParams.superId);
       $scope.popover = Paiz.all($stateParams.superId);
       $scope.heartPopover = function(id){
       /*    console.log("exitoso", HeartPopover)
-          console.log("id",id)*/
+          */
           //console.log(dato)
+          console.log("id",id)
 
           favorite.find({
               success: function(results) {
@@ -173,7 +175,7 @@ angular.module('starter.controllers', ['ionic'])
                       if (results[x].attributes.UserID===IdUsuario){
                         for (c in results[x].attributes.CustomerID) {
                           // console.log(id,'id')
-                          // console.log(results[x].attributes.CustomerID[c],'custumer')
+                           console.log(results[x].attributes.CustomerID[c],'custumer')
                           if ( id == results[x].attributes.CustomerID[c]) {
                             console.log(results[x].attributes.CustomerID[c],'lo encontro')
                             for (w in dato) {
