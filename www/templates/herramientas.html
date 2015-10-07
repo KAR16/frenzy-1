@@ -13,7 +13,7 @@
             </p>
         </h1>
     </ion-header-bar>
-    <ion-content style="background-color:#F1F2F2;">
+    <ion-content class="pageFavoritesBodyColor">
     <!--****{ } ******************************************************************-->
     <style>
     .settingsCircleOne{
@@ -30,6 +30,7 @@
       background-color: #FF5252;
     }
     .settingsCircle {
+
       height: 50px;
       width: 50px;
       border-radius:23px;
@@ -37,6 +38,7 @@
     .settingsTermsTitle {
       margin-top: 15px;
       font-size: 20px;
+
     }
     .settingsRobotIcon{
       color:white;
@@ -76,9 +78,13 @@ input[id^="spoiler"] ~ .spoiler {
 input[id^="spoiler"]:checked + label + .spoiler{
   height: auto;
   opacity: 1;
+
 }
 /*******************************************************************************************/
     </style>
+
+
+
 
   <input type="checkbox" id="spoiler2" />
   <label for="spoiler2" >
@@ -104,6 +110,7 @@ input[id^="spoiler"]:checked + label + .spoiler{
 
   </label>
   <div class="spoiler">
+
 <p><b>Condiciones de Servicio ("Términos")</b></p>
 <p>
 Última actualización: 20 de agosto 2015
@@ -116,6 +123,7 @@ Su acceso y uso del Servicio está condicionado a la aceptación y cumplimiento 
 <p><b>
 Al acceder o utilizar el Servicio, usted acepta que quedará vinculado por estas Condiciones. Si no está de acuerdo con alguna parte de los términos, entonces no puede acceder al Servicio.
 </b></p>
+
 <p><b>
 Propiedad intelectual
 </b></p>
@@ -201,7 +209,6 @@ Si usted tiene alguna pregunta acerca de estos Términos, por favor póngase en 
 
 
 
-
   <input type="checkbox" id="spoiler" />
   <label for="spoiler">
 
@@ -262,6 +269,7 @@ Datos Personales: Cookie y Datos de uso
 
 </div>
 
+
   <input type="checkbox" id="spoiler3" />
   <label for="spoiler3">
      <!--******************* CONTACT US  ***************************************-->
@@ -310,7 +318,6 @@ Datos Personales: Cookie y Datos de uso
   <div class="row" ng-click="logout">
     <div class="col col-10"></div>
     <!--*************  CIRCLE AND ICON  *************************************-->
-
     <div class="col col-25">
       <div class="settingsCircle settingsCircleFour">
         <p class="home settingsRobotIcon" style=" padding-top: 20px;">S</p>
@@ -353,6 +360,10 @@ Datos Personales: Cookie y Datos de uso
  <ion-footer-bar align-title="left" class="bar-stable" style="background-color:#E6E7E8  ;border-style:none;">
   <div class="row home">
       <div class="col col-10"></div>
+
+
+
+
       <!--************  ICONO FOOTER HOME  ******************-->
       <div class="col col-25">
           <a href="#/app/playlists" style="color:#A7A9AC  ; text-decoration:none;" nav-transition="none">

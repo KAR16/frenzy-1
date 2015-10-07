@@ -701,6 +701,7 @@ function viewFavorite() {
    // console.log(AllFavorite, "aqui estoy 2");
      //console.log(AllFavorite.length)
   });
+
 }
 
 
