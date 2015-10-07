@@ -205,20 +205,37 @@ angular.module('starter.controllers', ['ionic'])
   $scope.chats = Barra.get();
 })
 
-.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
+.controller('AllFavoriteCtrl', function($scope, $stateParams) {
   console.log("Called AllFavoriteCtrl");
-  console.log(AllFavorite);
 
-  //$scope.chats = AllFavorite.get($stateParams.superId);
+  $scope.favoritesPromotions = [];
 
+  var favoriteQuery = new Parse.Query('Favorite');
+  favoriteQuery.equalTo("UserID", IdUsuario);
 
-  $scope.$on('$ionicView.enter', function() {
-    $scope.chats = AllFavorite.all();
+  var promotionQuery = new Parse.Query('Promotion');
+  promotionQuery.matchesKeyInQuery("Customer", "CustomerID", favoriteQuery);
+  promotionQuery.find({
+    success: function(results) {
+      console.log(results);
+
+      $scope.$apply(function() {
+
+        for(var i = 0; i < results.length; i++) {
+          $scope.favoritesPromotions.push(results[i].attributes);
+        }
+      });
+
+    },
+    error: function(error) {
+      console.log(error);
+    }
   });
 
-  $scope.getAllFavorites = function() {
+  $scope.$on('$ionicView.enter', function() {
 
-  };
+  });
+
 
 })
 

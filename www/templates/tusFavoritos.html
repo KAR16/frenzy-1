@@ -51,7 +51,7 @@
 
 		<div style="height:31px;"></div>
 
-        <div ng-repeat="favorite in chats">
+        <div ng-repeat="promotion in favoritesPromotions">
         <!--************  YOUR FAVORITES BODY  *******************-->
           <a href="#/app/herramientas" style="text-decoration:none;" nav-transition="none">
             <div class="row pageYourFavoritesGreyLine" style="margin-top:1px;">
@@ -62,7 +62,7 @@
               </div>
               <!--*****  NAME'S STABLISHMENT  *****-->
               <div class="col col-75" style="margin-top:-5px;">
-                <spam class="open_sans overFlowText pageYourFavoritesStablishmentName">{{favorite.Category}}</spam>
+                <spam class="open_sans overFlowText pageYourFavoritesStablishmentName">{{ promotion.Customer[0] }}</spam>
               </div>
               <!--*****  ICON ARROW RIGHT  *****-->
               <div class="col col-10 ">
@@ -72,19 +72,22 @@
           </a>
 
         <!--*****  SECOND ROW DESCRIPTION OF YOUR FAVORITE STABLISHMENT  *****-->
+        <!-- <div class="row row-border">
+          <img class="labelOfferts" src="{{ promotion.Photo.url() }}" alt="label">
+        </div> -->
         <div class="row row-border pageYourFavoritesWhiteBox">
             <div class="col col-80 pageYourFavoritesWhiteBoxTop">
                 <!--**********  OFFERT  **********-->
                 <p class="overFlowText pageYourFavoritesOffert">
-                    {{favorite.name}} - {{favorite.presentation}}
+                    {{ promotion.Name }} - {{ promotion.Presentation }}
                 </p>
                 <!--**********  PRICE OFFERT  **********-->
                 <p class="pageYourFavoritesPriceOffert">
-                    Oferta - {{favorite.promotionalPrice | currency: 'Q'}}
+                    Oferta - {{ promotion.PromotionalPrice | currency: 'Q' }}
                 </p>
                 <!--**********  OFFERT DESCRIPTION  **********-->
                 <p class="overFlowText pageYourFavoritesOffertDescription">
-                    {{favorite.description}}
+                    {{ promotion.PromotionDescription }}
                 </p>
             </div>
             <!--**********  PIN ICON**********-->

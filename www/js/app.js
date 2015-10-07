@@ -22,7 +22,6 @@ function functionHeart() {
   document.getElementById("heart").style.color = "#FF5252 ";
   document.getElementById("star").style.color = "#A7A9AC ";
   document.getElementById("tool").style.color = "#A7A9AC ";
-  viewFavorite()
 }
 
 //********  STAR

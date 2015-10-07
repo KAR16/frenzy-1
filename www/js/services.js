@@ -386,14 +386,16 @@ promotion.find({
                             //console.log("esta disponible",results[x].attributes.Status)
                             if (results[x].attributes.Photo === null || results[x].attributes.Photo === undefined){
 
-                                     PhotoPaiz.push({nul:"sin",name:results[x].attributes.Name,
-                                                    presentation:results[x].attributes.Presentation,
-                                                    description:results[x].attributes.PromotionDescription,
-                                                    basePrice:results[x].attributes.BasePrice,
-                                                    promotionalPrice:results[x].attributes.PromotionalPrice,
-                                                    ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
-                                                    ,Category:results[x].attributes.Customer[i],
-                                                     ID:"pinOffertsWithoutImage"+x,IDpromotion: results[x].id
+                                     PhotoPaiz.push({nul:"sin",
+                                        name: results[x].attributes.Name,
+                                        presentation: results[x].attributes.Presentation,
+                                        description: results[x].attributes.PromotionDescription,
+                                        basePrice: results[x].attributes.BasePrice,
+                                        promotionalPrice: results[x].attributes.PromotionalPrice,
+                                        ahorro: results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice,
+                                        Category: results[x].attributes.Customer[i],
+                                       ID: "pinOffertsWithoutImage"+x,
+                                       IDpromotion: results[x].id
 
                                                                      });
                                 //console.log("iamgen no dispobible")
@@ -678,29 +680,6 @@ function Heart(id){
     });
 
 }
-
-
-function viewFavorite() {
-  AllFavorite = [];
-  favorite.each(function(results) {
-
-    for(b in results.attributes.CustomerID){
-      if(results.attributes.UserID===IdUsuario){
-          //console.log(results[x].attributes.CustomerID[b])
-        for (c in PhotoPaiz){
-          //console.log(PhotoPaiz[c])
-          if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
-              //console.log("find",results.attributes.CustomerID[b])
-              AllFavorite.push(PhotoPaiz[c])
-              //delete AllFavorite[c].Category
-          }
-        }
-      }
-    }
-   // console.log(AllFavorite, "aqui estoy 2");
-  });
-}
-
 
 function viewPromotion(){
     AllPromotion = [];
