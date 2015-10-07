@@ -157,65 +157,40 @@ angular.module('starter.controllers', ['ionic'])
   /****************************  tamayo  *****************************************/
   .controller('PaizCtrl', function($scope, $stateParams, Paiz) {
     console.log("calling PaizCtrl");
-    var favorite = new Parse.Query('Favorite');
+
     $scope.$on('$ionicView.enter', function() {
       $scope.chats = Paiz.get($stateParams.superId);
       $scope.popover = Paiz.all($stateParams.superId);
+
+      $scope.heartMenu = "silver";
+
+
       $scope.heartPopover = function(id){
       /*    console.log("exitoso", HeartPopover)
           */
           //console.log(dato)
-          console.log("id",id)
+          console.log("id",id);
+          console.log("userId", IdUsuario);
+
+          var favorite = new Parse.Query('Favorite');
+          favorite.equalTo("UserID", IdUsuario);
+          favorite.equalTo("CustomerID", id);
 
           favorite.find({
-              success: function(results) {
-                  for (x in results) {
-                      //console.log(results[x].attributes.CustomerID)
-                      //console.log(results[x].attributes.UserID)
-                      if (results[x].attributes.UserID===IdUsuario){
-                        for (c in results[x].attributes.CustomerID) {
-                          // console.log(id,'id')
-                           console.log(results[x].attributes.CustomerID[c],'custumer')
-                          if ( id == results[x].attributes.CustomerID[c]) {
-                            console.log(results[x].attributes.CustomerID[c],'lo encontro')
-                            for (w in dato) {
-                              console.log(dato[w].id)
-                              if ($('#' + dato[w].id).css("display") != 'none') {
-                                alert("show")
-                                $scope.heartMenu = 'red'
-                                document.getElementById(dato[w].id).style.color="red";
-                                }
-
-
-                            }
-                          //document.getElementById(id).style.color="red";
-
-
-                          }
-                        }
-                        console.log("find user")
-                        console.log(results[x].attributes)
-
-                      }else{
-
-                          console.log("the user no found")
-                      }
-                  }
-
-
+            success: function(results) {
+              // If result is returned with with at least one element
+              // then it is true
+              if ( results.length > 0 ) {
+                $scope.heartMenu = "red";
+              }
             },
             error: function(myObject, error) {
               // Error occureds
               console.log( error );
             }
           });
-
       }
-
     });
-
-
-
     console.log(Paiz);
   })
   /****************************  tamayo  final*****************************************/

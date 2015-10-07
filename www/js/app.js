@@ -264,7 +264,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       .state('login', {
         url: "/login",
         templateUrl: "templates/login.html"
-
       })
       //********************************************************************************
       .state('app.favoritos', {
@@ -422,6 +421,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
+
     $scope.currentUser = Parse.User.current();
     console.log($scope.currentUser,"curent")
     if ($scope.currentUser == null ){
@@ -452,6 +452,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           } else {
             alert("User logged in through Facebook!");
           }
+
           $state.go('app.playlists');
         },
         error: function(user, error) {
@@ -462,6 +463,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     }
     //Native Login
     else {
+
       $cordovaFacebook.login(permissions).then(function(success){
         //alert(success);
         IdUsuario = success.authResponse.userID
@@ -502,8 +504,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   };
     // //===============/LOGIN WITH FB==========//
 });
-
-
 
 
 function cargar(){
