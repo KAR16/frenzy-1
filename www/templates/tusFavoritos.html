@@ -53,7 +53,7 @@
 
         <div ng-repeat="favorite in chats">
         <!--************  YOUR FAVORITES BODY  *******************-->
-          <a href="#/app/herramientas" style="text-decoration:none;" nav-transition="none">
+          <a href="#/app/herramientas" style="text-decoration:none;" nav-transition="none" ng-if="chats[$index].Category != chats[$index - 1].Category">
             <div class="row pageYourFavoritesGreyLine" style="margin-top:1px;">
               <!--*****  FIRST ROW NAME OF YOUR FAVORITE STABLISHMENT  *****-->
               <!--*****  ICON HEART COLOR RED  *****-->
