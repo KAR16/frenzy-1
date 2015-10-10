@@ -143,6 +143,9 @@ angular.module('starter.controllers', ['ionic'])
 .controller('ElectronicosCtrl', function($scope, Electronicos) {
   $scope.chats = Electronicos.all();
 })
+.controller('OtrosCtrl', function($scope, Otros) {
+  $scope.chats = Otros.all();
+})
 
 .controller('CategoryCtrl', function($scope, Categorys) {
     // With the new view caching in Ionic, Controllers are only called
@@ -199,7 +202,15 @@ angular.module('starter.controllers', ['ionic'])
   $scope.chat = Categorys.get($stateParams.chatId);
 })
 
+.controller('OurfavoritesCtrl', function($scope, OurFavorites) {
+  $scope.ourFavorites = OurFavorites.all
 
+
+  $scope.ColorPin = function(){
+    console.log("entro asdjalksjdl ")
+    console.log("photopaiz",PhotoPaiz)
+  };
+})
 
 .controller('BarraCtrl', function($scope, Barra) {
   $scope.chats = Barra.get();
@@ -208,13 +219,44 @@ angular.module('starter.controllers', ['ionic'])
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
   console.log("Called AllFavoriteCtrl");
   console.log(AllFavorite);
+  $scope.$on('$ionicView.enter', function() {
+    $scope.chats = AllFavorite.all();
+    var PromoSaves = new Parse.Query('PromotionSaved')
+    PromoSaves.equalTo("UserID", IdUsuario);
+    PromoSaves.find({
+      success: function(results) {
+        // If result is returned with with at least one element
+        // then it is true
+        console.log(results[0].attributes)
+        for (a in results[0].attributes.PromotionID){
+              for (b in PhotoPaiz){
+                //console.log(PhotoPaiz[b])
+                  if (results[0].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion){
+                      console.log("Encontrado")
+                      console.log( PhotoPaiz[b].IDpromotion,"bbbbbbbb")
+                       //document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
+                       //console.log("-----------------")
+                       //console.log( results[x].attributes.PromotionID[a])
+                      var cssColorpinOffer = document.getElementById(PhotoPaiz[b].IDpromotion).style.color;
+                      if (cssColorpinOffer=="silver"){
+                        document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
+                                 }
+                   }
+              }
+        }
+      },
+      error: function(myObject, error) {
+        // Error occureds
+        console.log( error );
+      }
+    });
+  });
+
 
   //$scope.chats = AllFavorite.get($stateParams.superId);
 
 
-  $scope.$on('$ionicView.enter', function() {
-    $scope.chats = AllFavorite.all();
-  });
+
 
   $scope.getAllFavorites = function() {
 
