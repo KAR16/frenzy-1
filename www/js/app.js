@@ -271,7 +271,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         views: {
           'menuContent': {
             templateUrl: "templates/favoritos.html",
-            controller: 'ChatsCtrl'
+            controller: 'OurfavoritesCtrl'
           }
         }
       })
@@ -373,6 +373,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         views: {
           'menuContent': {
             templateUrl: "templates/categories/electronicos.html",
+            controller: 'ElectronicosCtrl'
+          }
+        }
+      })
+      .state('app.singlesssss', {
+        url: "/playlists/Otros",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/categories/others.html",
             controller: 'ElectronicosCtrl'
           }
         }

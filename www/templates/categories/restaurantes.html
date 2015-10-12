@@ -15,7 +15,7 @@
     <ion-content class="backgroundCategories"  nav-transition="none">
             <div class="col">
                 <!--*****  BOXES ENLINE BLOCK  *****-->
-                <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="super in chats">
+                <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="super in chats | filter: {oferta : 'existe'}">
                     <!--*****  BOXES DESIGN  *****-->
                     <div class="categoriesBoxes categoriesBoxesRestaurant col col-100">
                         <!--*****  IMAGE CATEGORY SUPERMARKETS  *****-->
@@ -52,6 +52,20 @@
                         </div>
                     </div>
                 </div>
+                <div ng-repeat="super in chats  | filter: {oferta : 'noHay'}">
+                      <div class="open_sans boxbox">
+                        <p class="savedPageNoItemBlankSpace">
+                            f
+                        </p>
+                          <p class="home savedPageNoItemsIcon">f</p>
+                        <p class="savedPageNoItemsTitle">
+                            Uh-uH
+                        </p>
+                        <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
+                        <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
+                        <p class="savedPageNoItemsDescription">para usarlos despues.</p>
+                      </div>
+                  </div>
            </div>
     </ion-content>
        <!--************************* FOOTHER  ******************************-->

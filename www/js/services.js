@@ -11,6 +11,7 @@ var Restaurantes = [];
 var Modas = [];
 var Entretenimientos = [];
 var Electronico = [];
+var Otro = []; 
 var listPromoSuper = [];
 var name = "";
 var nameRestaurantes = "";
@@ -135,6 +136,9 @@ app.factory('Supermercados', function() {
 
   return {
     all: function() {
+      if (Super.length == 0) {
+        Super.push({oferta:"noHay"});
+      }
       return supermercados;
     },
     get: function(chatId) {
@@ -157,6 +161,9 @@ app.factory('Entretenimiento', function() {
 
   return {
     all: function() {
+      if (Entretenimientos.length == 0) {
+        Entretenimientos.push({oferta:"noHay"});
+      }
       return entretenimiento;
     },
     get: function(chatId) {
@@ -183,6 +190,9 @@ app.factory('Moda', function() {
 
   return {
     all: function() {
+      if (Modas.length == 0) {
+        Modas.push({oferta:"noHay"});
+      }
       return moda;
     },
     get: function(chatId) {
@@ -205,6 +215,9 @@ app.factory('Electronicos', function() {
 
   return {
     all: function() {
+      if (Electronico.length == 0) {
+        Electronico.push({oferta:"noHay"});
+      }
       return electronicos;
     },
     get: function(chatId) {
@@ -233,6 +246,9 @@ app.factory('Restaurantes', function() {
 
   return {
     all: function() {
+      if (Restaurantes.length == 0) {
+        Restaurantes.push({oferta:"noHay"});
+      }
       return restaurantes;
     },
     get: function(chatId) {
@@ -246,6 +262,29 @@ app.factory('Restaurantes', function() {
   };
 });
 
+app.factory('Otros', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var OTros = otro;
+
+  return {
+    all: function() {
+      if (otro.length == 0) {
+        otro.push({oferta:"noHay"});
+      }
+      return restaurantes;
+    },
+    get: function(chatId) {
+      for (var i = 0; i < restaurantes.length; i++) {
+        if (restaurantes[i].id === parseInt(chatId)) {
+          return restaurantes[i];
+        }
+      }
+      return null;
+    }
+  };
+});
 var dato = [];
 var ContPromo = [];
 app.factory('Paiz', function() {
@@ -300,6 +339,7 @@ app.factory('Paiz', function() {
 app.factory('AllFavorite', function() {
   console.log("called Favorite");
   var favorites = AllFavorite;
+  console.log(AllFavorite,"asdasd");
     return {
       all: function() {
         favorites = AllFavorite;
@@ -346,6 +386,48 @@ app.factory('Barra', function() {
          Barras = {id:98789456}
         console.log("in Barra",Barras);
         return Barras;
+    }
+  };
+});
+
+var AllourFavorites = [];
+app.factory('OurFavorites', function() {
+  AllourFavorites = [];
+  var OurFavorites = PhotoPaiz
+  var Customer = new Parse.Query('Customer');
+
+  console.log(PhotoPaiz,"photopaiz")
+  return {
+    all: function() {
+      for (a in PhotoPaiz) {
+        if (PhotoPaiz[a].Our_Favorites === true ) {
+          AllourFavorites.push(PhotoPaiz[a]);
+          Customer.equalTo("Name",PhotoPaiz[a].Category);
+          Customer.find({
+            success: function(results) {
+              for (i in AllourFavorites) {
+                console.log(AllourFavorites[i].Category)
+                  console.log(i,"i ")
+
+                  //console.log(AllourFavorites[i])
+                  console.log(results, "results")
+
+              }
+
+              // If result is returned with with at least one element
+              console.log(results[0].attributes.Logo._url,"result")
+            },
+            error: function(myObject, error) {
+              // Error occureds
+              console.log( error );
+            }
+          });
+        }
+      }
+      var OurFavorites = AllourFavorites
+      return OurFavorites
+    },get: function(){
+
     }
   };
 });
@@ -555,7 +637,7 @@ function AddPromotions(Array) {
                 Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp})
 
                 Super.push({id:x, name: listSupermercado[x], promo: CountPromotions,promedio:average,
-                            lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name});
+                            lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'});
 
 
 
@@ -565,7 +647,7 @@ function AddPromotions(Array) {
                 listNameSupermercado.push(name.split(" ").join("_"));
 Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp})
                 Restaurantes.push({id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-                                    lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name});
+                                    lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'});
 
             }else if ("Moda" == results[x].attributes.CategoryApp){
                 name = results[x].attributes.Name;
@@ -573,7 +655,7 @@ Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:re
                 listNameSupermercado.push(name.split(" ").join("_"));
                 Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp})
                 Modas.push({id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-                            lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name});
+                            lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'});
 
             }else if ("Entretenimiento" == results[x].attributes.CategoryApp){
                 name = results[x].attributes.Name;
@@ -581,7 +663,7 @@ Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:re
                 listNameSupermercado.push(name.split(" ").join("_"));
                 Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp})
                 Entretenimientos.push({id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-                                       lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name});
+                                       lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'});
 
             }else if ("Electrónicos" == results[x].attributes.CategoryApp){
                 name = results[x].attributes.Name;
@@ -589,7 +671,7 @@ Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:re
                 listNameSupermercado.push(name.split(" ").join("_"));
 Categorys.push({nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp})
                 Electronico.push({id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-                                  lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name});
+                                  lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'});
             };
         };
        //console.log(InfoShop)
