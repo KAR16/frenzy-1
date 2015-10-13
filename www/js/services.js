@@ -810,7 +810,7 @@ function viewPromotion(){
                     if (results[0].attributes.PromotionID[i] === promociones[x].id) {
                         AllPromotion.push(promociones[x].attributes);
                         AllPromotion[con]["PromotionId"] = promociones[x].id;
-                      //  AllPromotion[con]["oferta"] = "existe";
+                       AllPromotion[con]["oferta"] = "existe";
                         con = con + 1;
                     };
                 };
