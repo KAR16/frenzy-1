@@ -11,7 +11,7 @@ var Restaurantes = [];
 var Modas = [];
 var Entretenimientos = [];
 var Electronico = [];
-var Otro = []; 
+var Otro = [];
 var listPromoSuper = [];
 var name = "";
 var nameRestaurantes = "";
@@ -342,8 +342,11 @@ app.factory('AllFavorite', function() {
   console.log(AllFavorite,"asdasd");
     return {
       all: function() {
+        if (AllFavorite.length == 0) {
+          AllFavorite.push({oferta:"noHay"});
+        }
         favorites = AllFavorite;
-        //console.log("in favorite",favorites);
+        console.log("in favorite",favorites);
         return favorites;
       },
       get: function() {
@@ -358,8 +361,12 @@ console.log("called promotion");
 var promotio = AllPromotion;
   return {
     all: function(salvadosId) {
+      if (AllPromotion.length == 0) {
+        AllPromotion.push({oferta:"noHay"});
+      }
       promotio = AllPromotion;
-      //console.log("in promotion",promotio);
+
+      console.log("in promotion",promotio);
       return promotio;
     },
     get: function() {
@@ -468,6 +475,7 @@ promotion.find({
           console.log('Promotion query success');
             for (x in results) {
                promociones.push(results[x])
+               //console.log(results[x],"asdasd")
                 listPromoSuper.push(results[x].attributes.Customer)
                 for (i in results[x].attributes.Customer){
                         //console.log(results[x].attributes.Customer[i]);
@@ -771,7 +779,8 @@ function viewFavorite() {
           if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
 
               //console.log("find",results.attributes.CustomerID[b])
-              AllFavorite.push(PhotoPaiz[c])
+              AllFavorite.push(PhotoPaiz[c]);
+              AllFavorite[c]["oferta"] = "existe";
 
 
               //delete AllFavorite[c].Category
@@ -801,6 +810,7 @@ function viewPromotion(){
                     if (results[0].attributes.PromotionID[i] === promociones[x].id) {
                         AllPromotion.push(promociones[x].attributes);
                         AllPromotion[con]["PromotionId"] = promociones[x].id;
+                        AllPromotion[con]["oferta"] = "existe";
                         con = con + 1;
                     };
                 };

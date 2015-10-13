@@ -51,9 +51,9 @@
 
 		<div style="height:31px;"></div>
 
-        <div ng-repeat="favorite in chats">
+        <div ng-repeat="favorite in chats | filter: {oferta : 'existe'}">
         <!--************  YOUR FAVORITES BODY  *******************-->
-          <a href="#/app/herramientas" style="text-decoration:none;" nav-transition="none" ng-if="chats[$index].Category != chats[$index - 1].Category">
+          <a style="text-decoration:none;" nav-transition="none" ng-if="chats[$index].Category != chats[$index - 1].Category">
             <div class="row pageYourFavoritesGreyLine" style="margin-top:1px;">
               <!--*****  FIRST ROW NAME OF YOUR FAVORITE STABLISHMENT  *****-->
               <!--*****  ICON HEART COLOR RED  *****-->
@@ -95,6 +95,20 @@
             </div>
         </div>
         </div>
+        <div ng-repeat="favorite in chats  | filter: {oferta : 'noHay'}">
+              <div class="open_sans boxbox">
+                <p class="savedPageNoItemBlankSpace">
+                    f
+                </p>
+                  <p class="home savedPageNoItemsIcon">f</p>
+                <p class="savedPageNoItemsTitle">
+                    Uh-uH
+                </p>
+                <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
+                <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
+                <p class="savedPageNoItemsDescription">para usarlos despues.</p>
+              </div>
+          </div>
 
    </ion-content>
     <!--************************* FOOTHER  ******************************-->
