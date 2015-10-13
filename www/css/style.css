@@ -951,3 +951,18 @@ border-top:1px solid #F1F2F2;
 .pageOffertsBlanckDiv {
 	height: 25px;
 }
+/****************************************/
+/********  SETTINGS STYLE  **************/
+.settingsTermsTitle{
+    color:black;
+}
+.settingsBoxHide{
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 3px 3px 2px #BDBDBD;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
