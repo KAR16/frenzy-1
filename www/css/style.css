@@ -763,7 +763,7 @@ border-top:1px solid #F1F2F2;
     width: 50px;
     margin-left: 20px;
     border-style:none;
-    box-shadow: 0px 3px 10px 1px grey;    
+    box-shadow: 2px 2px 1px #6E6E6E;   
 }
 .pageOffertsPriceIcons{
    height: 45px;
