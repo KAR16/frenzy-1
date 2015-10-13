@@ -492,7 +492,7 @@ promotion.find({
                                                     ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
                                                     ,Category:results[x].attributes.Customer[i],
                                                      ID:"pinOffertsWithoutImage"+x,IDpromotion: results[x].id,
-                                                     conteo:0
+                                                     conteo:0,oferta:"existe"
 
                                                                      });
                                 //console.log("iamgen no dispobible")
@@ -507,7 +507,7 @@ promotion.find({
                                                 ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
                                                 , Category:results[x].attributes.Customer[i],
                                                 ID:"pinOfferts"+x,IDpromotion: results[x].id,
-                                                conteo:0
+                                                conteo:0,oferta:"existe"
 
                                                                      });
                             }
@@ -780,7 +780,7 @@ function viewFavorite() {
 
               //console.log("find",results.attributes.CustomerID[b])
               AllFavorite.push(PhotoPaiz[c]);
-              AllFavorite[c]["oferta"] = "existe";
+
 
 
               //delete AllFavorite[c].Category
@@ -810,7 +810,7 @@ function viewPromotion(){
                     if (results[0].attributes.PromotionID[i] === promociones[x].id) {
                         AllPromotion.push(promociones[x].attributes);
                         AllPromotion[con]["PromotionId"] = promociones[x].id;
-                        AllPromotion[con]["oferta"] = "existe";
+                      //  AllPromotion[con]["oferta"] = "existe";
                         con = con + 1;
                     };
                 };
