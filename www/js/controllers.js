@@ -125,25 +125,55 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 .controller('SupermercadoCtrl', function($scope, Supermercados) {
+  var dimensions = {
+    name: 'supermarketMenu'
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.chats = Supermercados.all();
 })
 
 .controller('RestaurantesCtrl', function($scope, Restaurantes) {
+  var dimensions = {
+    name: 'restaurantMenu'
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.chats = Restaurantes.all();
 })
 
 .controller('ModaCtrl', function($scope, Moda) {
+  var dimensions = {
+    name: 'fashionMenu'
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.chats = Moda.all();
 })
 
 .controller('EntretenimientoCtrl', function($scope, Entretenimiento) {
+  var dimensions = {
+    name: 'entertainmentMenu'
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.chats = Entretenimiento.all();
 })
 
 .controller('ElectronicosCtrl', function($scope, Electronicos) {
+  var dimensions = {
+    name: 'electronicsMenu'
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.chats = Electronicos.all();
 })
 .controller('OtrosCtrl', function($scope, Otros) {
+  var dimensions = {
+    name: 'othersMenu'
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.chats = Otros.all();
 })
 
@@ -154,12 +184,22 @@ angular.module('starter.controllers', ['ionic'])
     // listen for the $ionicView.enter event:
     //$scope.$on('$ionicView.enter', function(e) {
     //});
+    var dimensions = {
+      name: 'categoriesMenu'
+    };
+    Parse.Analytics.track("view", dimensions);
+
     $scope.categorys = Categorys.all();
 
   })
   /****************************  tamayo  *****************************************/
   .controller('PaizCtrl', function($scope, $stateParams, Paiz) {
     console.log("calling PaizCtrl");
+
+    var dimensions = {
+      name: $stateParams.superId,
+    };
+    Parse.Analytics.track("view", dimensions);
 
     $scope.$on('$ionicView.enter', function() {
       $scope.chats = Paiz.get($stateParams.superId);
@@ -203,7 +243,12 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 .controller('OurfavoritesCtrl', function($scope, OurFavorites) {
-  $scope.ourFavorites = OurFavorites.all
+  $scope.ourFavorites = OurFavorites.all;
+
+  var dimensions = {
+    name: 'frenzyFavorites',
+  };
+  Parse.Analytics.track("view", dimensions);
 
 
   $scope.ColorPin = function(){
@@ -219,6 +264,13 @@ angular.module('starter.controllers', ['ionic'])
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
   console.log("Called AllFavoriteCtrl");
   console.log(AllFavorite);
+
+  var dimensions = {
+    name: 'userFavorites',
+  };
+  Parse.Analytics.track("view", dimensions);
+
+
   $scope.$on('$ionicView.enter', function() {
     $scope.chats = AllFavorite.all();
     var PromoSaves = new Parse.Query('PromotionSaved')
@@ -267,6 +319,10 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
   //console.log("calling PaizCtrl");
+  var dimensions = {
+    name: 'allPromotions',
+  };
+  Parse.Analytics.track("view", dimensions);
 
   $scope.$on('$ionicView.enter', function() {
     $scope.chats = AllPromotion.all($stateParams.salvadosId);
@@ -277,6 +333,11 @@ angular.module('starter.controllers', ['ionic'])
 
 
 .controller('AccountCtrl', function($scope) {
+  var dimensions = {
+    name: 'settings',
+  };
+  Parse.Analytics.track("view", dimensions);
+
   $scope.settings = {
     enableFriends: true
   };
