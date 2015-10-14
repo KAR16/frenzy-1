@@ -406,6 +406,7 @@ app.factory('OurFavorites', function() {
   console.log(PhotoPaiz,"photopaiz")
   return {
     all: function() {
+      AllourFavorites = [];
       for (a in PhotoPaiz) {
         if (PhotoPaiz[a].Our_Favorites === true ) {
           console.log("entro")
@@ -420,7 +421,7 @@ app.factory('OurFavorites', function() {
                   //console.log(AllourFavorites[i])
                   console.log(results, "results")
 
-              } 
+              }
 
               // If result is returned with with at least one element
               console.log(results[0].attributes.Logo._url,"result")
