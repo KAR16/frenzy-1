@@ -56,15 +56,15 @@ function goBack() {
 }
 /************* SETTINGS PAGE HIDE TEXT FUNCTION ***********************/
 
-document.write('<style type="text/css">div.cp_oculta{display: none;}</style>');  
-function MostrarOcultar(capa,enlace)  
-{  
-    if (document.getElementById)  
-    {  
-        var aux = document.getElementById(capa).style;  
-        aux.display = aux.display? "":"block";  
-    }  
-} 
+document.write('<style type="text/css">div.cp_oculta{display: none;}</style>');
+function MostrarOcultar(capa,enlace)
+{
+    if (document.getElementById)
+    {
+        var aux = document.getElementById(capa).style;
+        aux.display = aux.display? "":"block";
+    }
+}
 
 /////////////////////////////////////////////////////////
 //function favoritos
@@ -457,6 +457,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     //alert('loginfb')
     //===============LOGIN WITH FB==========//
     $scope.loginfb = function(){
+        console.log("login")
       var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
     //Browser Login
     if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){

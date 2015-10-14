@@ -53,7 +53,7 @@ hr{
 
 
              <div class="col col-50">
-                <a class="pageFavoritesYourFavorites" nav-transition="none" href="#/app/tusFavoritos" ng-click="ColorPin()" >
+                <a class="pageFavoritesYourFavorites" nav-transition="none" href="#/app/tusFavoritos"  >
                     <!--**********  TITLE AND FUNCTION YOUR FAVORITES  **********-->
                     <p class="pageFavoritesOurFavoritesTitle" id="cuponsFunction" style="color:#D8D8D8">
                         Tus Favoritos
@@ -97,9 +97,9 @@ hr{
 		</style>
         <ion-slide-box>
         <!--**********  SLIDER CONTENT  **********-->
-            <ion-slide>
+            <ion-slide ng-repeat="s in ourFavorites">
             <!--**********  SLIDER BOXES  **********-->
-               <div class="nuevoDivContenedor">
+               <div class="nuevoDivContenedor" >
 				    <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
                     <!--*****  PRICE LABEL OFFERTS  *****-->
                     <div class="row pageFavoritesBoxPriceLabel">
@@ -108,12 +108,12 @@ hr{
                                 Ahorra
                             </p>
                             <p class="pageFavoritesSavingPrice" style="margin-top:-10px;">
-                                Q.21
+                                Q{{s.ahorro}}
                             </p>
                         </div>
                     </div>
                     <!--*****  MAIN IMAGE FAVORITE PAGE  *****-->
-                    <img class="imagenCajaNueva" src="img/700x700.jpg" alt="nissan">
+                    <img class="imagenCajaNueva" src="{{s.PhotoFavorite._url}}" alt="nissan">
                      <!--***** ESTABLISHMENT LOGO  *****-->
                     <div class="pageFavoritesEstablishmentLogo" style="">
                         <img class="logoEstablishment" src="img/dominosPizza.jpeg" alt="label">
@@ -128,7 +128,7 @@ hr{
                    <div style=" height:32%; background-color:;">
                        <div style="height:30%;">
                        		<p class="pageFavoritesDescriptionTitle open_sans">
-                            Pizza con orilla de queso
+                            {{s.name}}
                         </p>
                        </div>
                         <!--**********  DESCRIPTION  **********-->
@@ -138,7 +138,7 @@ hr{
                             <div class="pre-dots"></div>
                             <div class="dots">&hellip;</div>
                             <p class="pageFavoritesDescription open_sans">
-                                Llevate el combo de una pizza grande de especialidad con orilla rellena de queso +2tl coca cola
+                                {{s.description}}
                             </p>
                             <span class="hidedots1"></span>
                             <div class="hidedots2"></div>
@@ -154,13 +154,13 @@ hr{
                         <!--*****  ACTUAL PRICE  *****-->
                         <div class="col col-33">
                             <spam class="pageFavoritesActualPrice">
-                                Q.129
+                                Q{{s.promotionalPrice}}
                             </spam>
                         </div>
                         <!--*****   BEFORE PRICE  *****-->
                         <div class="col col-33">
                             <spam class="pageFavoritesActualPrice" style="color:silver;font-size:17px;">
-                                Q.175
+                                Q{{s.basePrice}}
                             </spam>
                         </div>
                         <!--*****  ICONS  *****-->
@@ -168,7 +168,7 @@ hr{
                               <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
                             O
                         </spam>
-                            <spam class="pageFavoritesIcons home" id="pinFavoritesWithoutImage" onclick="changeColorPinFavoritesWithoutImage()" style="color:silver"> W </spam>
+                            <spam class="pageFavoritesIcons home" id="{{s.IDpromotion}}" onclick="changeColorPinFavoritesWithoutImage()" style="color:silver"> W </spam>
                         </div>
                     </div>
 
@@ -204,7 +204,7 @@ hr{
                             <p class="home secondPopoverMailIcon">
                                 V
                             </p>
-                            <a href="sms:&body=www.frenzy.com.gt" style="text-decoration:none;">
+                            <a href="sms:&body=www.frenzy.com" style="text-decoration:none;">
                                 <p class="secondPopoverMailTitle">
                                     Enviar mensajes de texto
                                 </p>

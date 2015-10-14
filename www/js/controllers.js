@@ -243,18 +243,42 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 .controller('OurfavoritesCtrl', function($scope, OurFavorites) {
-  $scope.ourFavorites = OurFavorites.all;
+  $scope.ourFavorites = OurFavorites.all();
+  var PromoSaves = new Parse.Query('PromotionSaved')
+  PromoSaves.equalTo("UserID", IdUsuario);
+  PromoSaves.find({
+    success: function(results) {
+      // If result is returned with with at least one element
+      // then it is true
+      console.log(results[0].attributes)
+      for (a in results[0].attributes.PromotionID){
+            for (b in PhotoPaiz){
+              //console.log(PhotoPaiz[b])
+                if (results[0].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion){
+                    console.log("Encontrado")
+                    console.log( PhotoPaiz[b].IDpromotion,"bbbbbbbb")
+                     //document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
+                     //console.log("-----------------")
+                     //console.log( results[x].attributes.PromotionID[a])
+                    var cssColorpinOffer = document.getElementById(PhotoPaiz[b].IDpromotion).style.color;
+                    if (cssColorpinOffer=="silver"){
+                      document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
+                               }
+                 }
+            }
+      }
+    },
+    error: function(myObject, error) {
+      // Error occureds
+      console.log( error );
+    }
+  });
 
   var dimensions = {
     name: 'frenzyFavorites',
   };
   Parse.Analytics.track("view", dimensions);
 
-
-  $scope.ColorPin = function(){
-    console.log("entro asdjalksjdl ")
-    console.log("photopaiz",PhotoPaiz)
-  };
 })
 
 .controller('BarraCtrl', function($scope, Barra) {
