@@ -408,6 +408,7 @@ app.factory('OurFavorites', function() {
     all: function() {
       for (a in PhotoPaiz) {
         if (PhotoPaiz[a].Our_Favorites === true ) {
+          console.log("entro")
           AllourFavorites.push(PhotoPaiz[a]);
           Customer.equalTo("Name",PhotoPaiz[a].Category);
           Customer.find({
@@ -419,7 +420,7 @@ app.factory('OurFavorites', function() {
                   //console.log(AllourFavorites[i])
                   console.log(results, "results")
 
-              }
+              } 
 
               // If result is returned with with at least one element
               console.log(results[0].attributes.Logo._url,"result")
@@ -431,6 +432,7 @@ app.factory('OurFavorites', function() {
           });
         }
       }
+      console.log(AllourFavorites)
       var OurFavorites = AllourFavorites
       return OurFavorites
     },get: function(){
@@ -492,7 +494,11 @@ promotion.find({
                                                     ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
                                                     ,Category:results[x].attributes.Customer[i],
                                                      ID:"pinOffertsWithoutImage"+x,IDpromotion: results[x].id,
-                                                     conteo:0,oferta:"existe"
+                                                     conteo:0,
+                                                     oferta:"existe",
+                                                Our_Favorites:results[x].attributes.OurFavorite,
+                                                PhotoFavorite: results[x].attributes.PhotoFavorite,
+                                                Logo:""
 
                                                                      });
                                 //console.log("iamgen no dispobible")
@@ -507,7 +513,11 @@ promotion.find({
                                                 ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
                                                 , Category:results[x].attributes.Customer[i],
                                                 ID:"pinOfferts"+x,IDpromotion: results[x].id,
-                                                conteo:0,oferta:"existe"
+                                                conteo:0,
+                                                oferta:"existe",
+                                                Our_Favorites:results[x].attributes.OurFavorite,
+                                                PhotoFavorite: results[x].attributes.PhotoFavorite,
+                                                Logo:""
 
                                                                      });
                             }
