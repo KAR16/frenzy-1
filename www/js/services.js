@@ -411,17 +411,19 @@ app.factory('OurFavorites', function() {
         if (PhotoPaiz[a].Our_Favorites === true ) {
           console.log("entro")
           AllourFavorites.push(PhotoPaiz[a]);
+
           Customer.equalTo("Name",PhotoPaiz[a].Category);
           Customer.find({
             success: function(results) {
               for (i in AllourFavorites) {
-                console.log(AllourFavorites[i].Category)
+                console.log(AllourFavorites[i].Category,"category")
                   console.log(i,"i ")
-
+                   AllourFavorites[i]["logo"] = results[0].attributes.Logo._url;
                   //console.log(AllourFavorites[i])
                   console.log(results, "results")
 
               }
+              console.log(AllourFavorites)
 
               // If result is returned with with at least one element
               console.log(results[0].attributes.Logo._url,"result")
@@ -433,7 +435,6 @@ app.factory('OurFavorites', function() {
           });
         }
       }
-      console.log(AllourFavorites)
       var OurFavorites = AllourFavorites
       return OurFavorites
     },get: function(){
