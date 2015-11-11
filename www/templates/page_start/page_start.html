@@ -1,0 +1,113 @@
+<ion-view >
+    <!--**********  BODY OF PAGE START  **********-->
+    <ion-content  nav-transition="none">
+        <!--**********  LIST TO CREATE CATEGORIES FRENZY  **********-->
+        <ion-list>
+            <!--**********  LIST STYLE PAGE START  **********-->
+            <ion-item href="#/app/playlists/{{category.direc}}" ng-repeat="category in categorys" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}" onclick = "Heart(id)">
+                <div class="row">
+                    <!--**********  COL WITH CATEGORIE'S ICON  **********-->
+                    <div class="col col-10">
+                        <!--**********  ICON CATEGORIES  **********-->
+                        <div  class="pageStartIconsStyleGeneraly pageStartIconCategories home {{category.color}}">
+                            <div class="home iconoMenu">{{category.icon}}</div>
+                        </div>
+                    </div>
+                    <!--**********  COL WITH NAME, CUPONS AND PROMOTIONS  **********-->
+                    <div class="col col-90 pageStartColWithNameCuponsPromotions">
+                        <!--*****  NAME OF CATEGORIES  *****-->
+                        <p class = "pageStartCategoriesName open_sans" style="color:black;font-size:16px;font-weight:bolder;">
+                            {{category.name}}
+                        </p>
+                        <!--*****  COUPONS AND PROMOTIONS  *****-->
+                        <div class="pageStartCuponsPromotions">
+                            <!--*****  CUPONS TITLE  *****-->
+                            <spam  class="pageStartCuponsPromotionsTitle">
+                                cupones {{category.cont_cupones}}
+                            </spam>
+                            <!--*****  PROMOTIONS TITLE  *****-->
+                            <spam class="pageStartCuponsPromotionsTitle">
+                                promociones {{category.cont_promo}}
+                            </spam>
+                        </div>
+                        <!--**********  SEPARATION LINE  **********-->
+                        <div>
+                            <hr class="pageStartSeparationLine">
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <br>
+        <!--**********  TRIANGLES TOP  **********-->
+        <div class="row">
+            <p class="arrow-up-left"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+            <p class="arrow-up"></p>
+        </div>
+        <!--**********  PURPLE BOX  **********-->
+        <div class="pageStartBoxPurple">
+            <!--**********  CLOCK ICON  **********-->
+            <h4 class="home pageStartBoxPurpleIcon">
+                c
+            </h4>
+            <h4 class="open_sans pageStartBoxPurpleTitle">
+                Espera por nuevas promociones..!!
+            </h4>
+        </div>
+        <!--**********  TRIANGLES DOWN  **********-->
+        <div class="row">
+            <p class="arrow-dow-left"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+            <p class="arrow-dow"></p>
+        </div>
+    </ion-content>
+</ion-view>

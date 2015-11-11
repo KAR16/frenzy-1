@@ -1,0 +1,161 @@
+.mainFrenzyTitle {
+    font-size: 65px;
+}
+
+.iconoMenu {
+    color: white;
+    text-align: center;
+    margin-top: 11px;
+    font-size: 35px;
+    padding-top: 19px;
+}
+
+.pageStartColWithNameCuponsPromotions {
+    margin-left: 45px;
+}
+
+.pageStartCategoriesName {
+    margin-top: -15px;
+}
+
+.pageStartCuponsPromotions {
+    margin-top: -1px;
+}
+
+.pageStartCuponsPromotionsTitle {
+    font-size: 13px;
+}
+
+.pageStartSeparationLine {
+    margin-top: 5px;
+    height: 0.1px;
+    color: #F1F2F2;
+    border-style: solid;
+}
+
+.icon_supermercado {
+    background-color: #00BAB9;
+}
+
+.icon_restaurante {
+    background-color: #FF5252;
+}
+
+.icon_moda {
+    background-color: #FFD922;
+}
+
+.icon_entretenimiento {
+    background-color: #9C28B0;
+}
+
+.icon_electronico {
+    background-color: #3F51B5;
+}
+
+.icon_otro {
+    background-color: #00DDC1;
+}
+
+.imagen {
+    height: 175px;
+    width: 175px;
+}
+
+.pageStartIconsStyleGeneraly {
+    height: 50px;
+    width: 50px;
+    margin-top: -15px;
+    border-radius: 23px;
+}
+
+.icon_supermercado {
+    background-color: #00BAB9;
+}
+
+.icon_restaurante {
+    background-color: #FF5252;
+}
+
+.icon_moda {
+    background-color: #FFD922;
+}
+
+.icon_entretenimiento {
+    background-color: #9C28B0;
+}
+
+.icon_electronico {
+    background-color: #3F51B5;
+}
+
+.icon_otro {
+    background-color: #00DDC1;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 12px 10px;
+    border-color: transparent transparent #9C28B0 transparent;
+}
+
+.arrow-up-left {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 0 0 12px;
+    border-color: transparent transparent transparent #9c28b0;
+    margin-left: -5px;
+}
+
+.arrow-dow-left {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 12px 0 0;
+    border-color: #9c28b0 transparent transparent transparent;
+    margin-left: -5px;
+}
+
+.arrow-dow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 10px 0 10px;
+    border-color: #9C28B0 transparent transparent transparent;
+}
+
+.pageStartBoxPurple {
+    background-color: #9C28B0;
+    height: 200px;
+    width: 100%;
+    margin-top: -27px;
+    margin-bottom: -5px;
+}
+
+.pageStartBoxPurpleIcon {
+    padding-top: 60px;
+    font-size: 50px;
+    text-align: center;
+    color: #00DDC1;
+}
+
+.pageStartBoxPurpleTitle {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin-top: -10px;
+}
+
+.pageStartListStyle {
+    height:65px;
+    border:none;
+    border:dislplay;
+    margin-top:10px;
+}
+
+.pageStartIconCategories {
+    margin-top:-30px;
+}

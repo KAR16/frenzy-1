@@ -1,0 +1,260 @@
+<style>
+    .bar.bar-positive    {
+    box-shadow: 0 0 0px white;
+    }
+    hr     {
+    margin-bottom:-10px;
+    font-weight:lighter;
+    height: 3px;
+    background-color: white;
+    }
+</style>
+<ion-view>
+    <!--******************************************************-->
+    <!--*****  SECOND TAB HEADER  *****-->
+    <div class="row pageFavoritesSecondRow" style="height:35px;margin-top:44px;position:absolute; z-index:1;">
+        <!--**********  OFFERTS  **********-->
+        <div class="col col-33" ng-repeat="s in chats[2]">
+            <a class="pageOffertsOffertsTitle">
+                <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
+                <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()">
+                    Ofertas ({{s.conteo}})
+                </p>
+                <!--**********  LINE DECORATION  **********-->
+                <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction">
+            </a>
+        </div>
+        <!--**********  CUPONS  **********-->
+        <div class="col col-33"  ng-repeat="s in chats[1]">
+            <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/cupones/{{s.name}}" >
+                <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
+                <p class="pageFavoritesOurFavoritesTitle"style="color:#D8D8D8">
+                    Cupones ({{Cupcon}})
+                </p>
+                <!--**********  LINE DECORATION  **********-->
+                <hr class="pageFavoritesLineDecoration" style="background-color:#D8D8D8">
+            </a>
+        </div>
+        <!--**********  ICON POPOVER  *********-->
+        <div class="col col-33">
+            <div ng-repeat="s in chats[1]">
+                <div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
+                    <div>
+                        <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl">
+                            <p class="pageOffertsPopoverSimbol" style="vertical-aling:middle;">
+                                N
+                            </p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--**********  CONTENT  **********-->
+    <ion-content class="pageFavoritesBodyColor" ng-controller="AppCtrl"  nav-transition="none">
+        <div style="height:75px;"></div>
+        <!--************  OFFERTS BODY WITH IMAGE **************-->
+        <div ng-repeat="super in chats[0] | filter: {nul : 'con'}"  >
+            <div class="nuevoDivContenedor">
+                <div>
+                    <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+                </div>
+                <!--*****  PRICE LABEL OFFERTS  *****-->
+                <div class="row pageFavoritesBoxPriceLabel">
+                    <div class="col col-25">
+                        <p class="pageFavoritesSavingTitle">
+                            Ahorra
+                        </p>
+                        <p class="pageFavoritesSavingPrice" style="margin-top:-10px; font-size:16px;">
+                            {{super.ahorro | currency: 'Q'}}
+                        </p>
+                    </div>
+                </div>
+                <!--*****  MAIN IMAGE FAVORITE PAGE  href="#/app/descripcionOfertas" *****-->
+                <a>
+                <!--******* SIZE OF PHOTO OFFERS 400x250  ************-->
+                <img class="imageOffertsAndCupons" ng-src="{{super.photo}}" alt="pollo" style="height:200px;">
+                </a>
+                <!--**********  TITLE DESCRIPTION  **********-->
+                <div style=" height:40%; background-color:;">
+                    <div style="height:30%;">
+                        <p class="pageFavoritesDescriptionTitle open_sans">
+                            {{super.name }}
+                        </p>
+                    </div>
+                    <!--**********  DESCRIPTION  **********-->
+                    <div class="ellipsify cajaTexto" style="height:50px;ckground-color:; ">
+                        <div class="ellipsify">
+                            <div class="pre-dots"></div>
+                            <div class="dots">&hellip;</div>
+                            <p class="pageFavoritesDescription open_sans">
+                                {{super.description}}
+                            </p>
+                            <span class="hidedots1"></span>
+                            <div class="hidedots2"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--*****  DIV TO PRICE AND ICONS  *****-->
+                <div class="row pageFavoritesDivIcons open_sans" style="height:38px; background-color:;" >
+                    <!--*****  ACTUAL PRICE  *****-->
+                    <div class="col col-33">
+                        <spam class="pageFavoritesActualPrice">
+                            Q.{{super.promotionalPrice}}
+                        </spam>
+                    </div>
+                    <!--*****   BEFORE PRICE  *****-->
+                    <div class="col col-33">
+                        <spam class="pageFavoritesBeforePrice" style="color:silver;font-size:15px;">
+                            Antes Q.{{super.basePrice}}
+                        </spam>
+                    </div>
+                    <!--*****  ICONS  *****-->
+                    <div class="col col-33">
+                        <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
+                            O
+                        </spam>
+                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" onclick="changeColorPinOfferts(id,id)" style="color:silver">
+                            W
+                        </spam>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--************  OFFERTS BODY WITHOUT IMAGE **************-->
+        <div class = "withoutImage" ng-repeat="super in chats[0] | filter: {nul : 'sin'}">
+            <div class="boxResponsiveWithoutImage">
+                <!--*****  NAME OF OFFERTS  *****-->
+                <div class="row">
+                    <div class="col col-25">
+                        <div class="row pageOffertsWithoutImageLabelTitle">
+                            <!--*****  WITHOUT IMAGE LABEL TITLE  *****-->
+                            <div class="col col-20">
+                                <p class="pageOffertsTitleLabelWithoutImage">
+                                    Ahorra
+                                </p>
+                                <!--*****  WITHOUT IMAGE PRICE LABEL  *****-->
+                                <p class="pageOffertsPriceLabelWithoutImage">
+                                    Q.{{super.ahorro}}
+                                </p>
+                            </div>
+                        </div>
+                        <!--*****  LABEL IMAGE  *****-->
+                        <img clas="offersLogo" src="img/logoOfertas.png" alt="image" style="height:75px; width:75px;">
+                    </div>
+                    <!--*****  DESCRIPTION BOX WITHOUT IMAGE  *****-->
+                    <div class="col col-75">
+                        <p class="open_sans pageOffertsTitleDescriptionWithoutImage overFlowText">
+                            {{super.name }}
+                        </p>
+                        <!--*****  OFFERTS DESCRIPTION  *****-->
+                        <div class="ellipsifyThreeLines" style="background-color:; height:px; margin-left:10px;">
+                            <div class="pre-dots-threeLines-offerts"></div>
+                            <div class="dots-threeLines">&hellip;</div>
+                            <p class="pageFavoritesDescription open_sans">
+                                {{super.description}} ljlkj alo supermercados ahorra a lo loco con frenzy y luego tienes que decir alo alo alo
+                            </p>
+                            <span class="hidedots1"></span>
+                            <div class="hidedots2"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--*****  DIV TO PRICE AND ICONS  *****-->
+                <div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;
+                    border-top:1px solid #F1F2F2;">
+                    <!--*****  ACTUAL PRICE  *****-->
+                    <div class="col col-33">
+                        <spam class="pageOffertsActualPrice">
+                            Q.{{super.promotionalPrice}}
+                        </spam>
+                    </div>
+                    <!--*****   BEFORE PRICE  *****-->
+                    <div class="col col-33">
+                        <spam class="pageOffertsBeforePrice">
+                            Antes Q.{{super.basePrice}}
+                        </spam>
+                    </div>
+                    <!--*****  ICONS  *****-->
+                    <div class="col col-33">
+                        <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
+                            O
+                        </spam>
+                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" onclick="changeColorPinOffertsWithoutImage(id,id)" style="color:silver">
+                            W
+                        </spam>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pageOffertsBlanckDiv"></div>
+        <div ng-repeat="super in chats[0]  | filter: {oferta : 'noHay'}">
+            <div class="open_sans boxbox">
+                <p class="savedPageNoItemBlankSpace">
+                    f
+                </p>
+                <p class="home savedPageNoItemsIcon">f</p>
+                <p class="savedPageNoItemsTitle">
+                    Uh-uH
+                </p>
+                <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
+                <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
+                <p class="savedPageNoItemsDescription">para usarlos despues.</p>
+            </div>
+        </div>
+        <!--*************  FIRST POPOVER CONTENT  ******************-->
+        <script id="templates/popover.html" type="text/ng-template" >
+            <ion-popover-view  class="firstPopoverStyle" style="height:170px; width:180px; margin-top:20px;">
+                <!--*****  FIRST POPOVER CONTENT  *****-->
+                <ion-content>
+                    <div class="list" ng-repeat="s in chats[1]">
+                        <a class="item " target="_blank" onclick="changeColorHeartFollow()" style="  text-align:right; color:silver;">
+                            Seguir
+                            <spam class="home pageOffertsPopoverIconsDescrpition" id="{{s.id}}" onclick="changeColorHeartFollow(id)" style="color:{{heartMenu}}">
+                                B
+                            </spam>
+                        </a>
+                        <a class="item" id = "{{s.cel}}" ng-click="call({{s.cel}})" target="_blank" style="text-align:right; color:silver;">
+                            Llamar
+                            <spam class="home pageOffertsPopoverIconsDescrpition">
+                                Q
+                            </spam>
+                        </a>
+                        <a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}')" target="_blank" style="text-align:right; color:silver;">
+                            Ir a pagina Web
+                            <spam class="home pageOffertsPopoverIconsDescrpition">
+                                R
+                            </spam>
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-popover-view>
+        </script>
+        <!--**********  SECOND POP OVER SHARE  **********-->
+        <script id="templates/popoverNew.html" type="text/ng-template">
+            <ion-popover-view style="height:150px; width:250px;">
+                <!--***** MAIN CONTENT SECOND POPOVER *****-->
+                <div class="secondPopoverTextAling" style="text-aling:center;">
+                    <spam class="secondPopoverTitle">Compartir Oferta</spam>
+                </div>
+                <hr class="secondPopoverHr">
+                <div>
+                    <div>
+                        <img  class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
+                       <a class="secondPopoverFacebookTitle" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open('http://www.facebook.com/sharer.php?s=100&p[url]=http://www.frenzy.com.gt/&p[title]=jose alejandro tamayo&p[summary]=
+descripcion_contenido&p[images][0]=url_imagen');" style="text-decoration:none;">Amigos de facebook4</a>
+                    </div>
+                  <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');">
+                        <p class="home secondPopoverMailIcon">
+                            V
+                        </p>
+                        <a href="sms:&body=www.frenzy.com" style="text-decoration:none;">
+                            <p class="secondPopoverMailTitle">
+                                Enviar mensajes de texto
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </ion-popover-view>
+        </script>
+    </ion-content>
+</ion-view>

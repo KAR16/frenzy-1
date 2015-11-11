@@ -1,11 +1,12 @@
 <ion-view  view-title="Supermercado">
+    
     <!--**********  ESTABLISHMENTS  **********-->
     <ion-content class="backgroundCategories"  nav-transition="none">
         <div class="col">
             <!--*****  BOXES ENLINE BLOCK  *****-->
-            <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="super in chats | filter: {oferta : 'existe'}">
+            <div class="col col-50 categoriesBoxesEnlineBlock"  ng-repeat="super in chats | filter: {oferta : 'existe'}">
                 <!--*****  BOXES DESIGN  *****-->
-                <div class="categoriesBoxes categoriesBoxesSupermarket col col-100">
+                <div class="categoriesBoxes categoriesBoxesEntertaiment col col-100">
                     <!--*****  LINK ONLY FOR THE IMAGE  *****-->
                     <a href="#/app/ofertas/{{super.NameCategory}}" id = "{{super.NameCategory}}" onclick="Promotions(id)" >
                     <img class="imageCategoryBoxes" ng-src="{{super.name}}" alt="image">
@@ -18,7 +19,7 @@
                                 {{super.promo}}
                             </spam>
                             <!--***** OFFERTS NAME  *****-->
-                            <spam class="categoriesOffertsTitle">
+                            <spam class="categoriesOffertsTitle" style="color:#C5C3C3;">
                                 ofertas
                             </spam>
                             <br>
@@ -27,7 +28,7 @@
                                 Q{{super.promedio}}
                             </spam>
                             <!--*****  PROMOTIONS NAME  *****-->
-                            <spam class="categoriesAverageTitle">
+                            <spam class="categoriesAverageTitle" style="color:#C5C3C3;">
                                 promedio
                             </spam>
                         </div>

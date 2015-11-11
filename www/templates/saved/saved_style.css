@@ -1,0 +1,66 @@
+.savedPageBoxStyle {
+    border-style: solid;
+    border-color: #E6E6E6;
+    border-bottom-width: 1px;
+    height: 100px;
+}
+
+.savedPageImage {
+    height: 50px;
+    width: 55px;
+    margin-left: 5px;
+    margin-top: 13px;
+    border-style: solid;
+    border-color: #F1F2F2;
+    border-width: 1px;
+    border-radius: 4px;
+}
+
+.savedPageIcon {
+    font-size: 30px;
+    margin-top: 50px;
+    margin-left: -35px;
+}
+
+.savedPageTitleDescription {
+    font-size: 17px;
+    font-weight: bold;
+    width: 95%;
+    margin-top: 12px;
+}
+
+.savedPageOffert {
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+.savedPageDescription {
+    font-size: 12px;
+    color: #848484;
+    margin-top: -10px;
+    width: 85%;
+}
+
+.savedPageNoItemBlankSpace {
+    color: white;
+}
+
+.savedPageNoItemsIcon {
+    font-size: 70px;
+    margin-top: 125px;
+    ;
+    text-align: center;
+    color: #9C28B0;
+}
+
+.savedPageNoItemsTitle {
+    font-size: 25px;
+    margin-top: 7%;
+    text-align: center;
+}
+
+.savedPageNoItemsDescription {
+    color: silver;
+    text-align: center;
+    margin-bottom: -3px;
+}

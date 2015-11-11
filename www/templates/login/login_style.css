@@ -1,0 +1,16 @@
+/* Background Color #3F51B5 per Login with Facebook in Frenzy */
+.pageLoginFacebookColor{
+    background-color:#3F51B5;
+}
+/* BoxShadow bottom */
+.pageLoginFacebookButtonStyle{
+    height:10px;
+    width:200px;
+    box-shadow: 0.1px 0.1px 0.1px 0.3px #848484;
+}
+/* Width, Height and Center of the Facebook Image */
+.pageLoginFacebookImage{
+    height:50px;
+    width:120px;
+    margin-top:-3px;
+}

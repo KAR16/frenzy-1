@@ -1,0 +1,82 @@
+.backgroundCategories {
+	background-color: #F1F2F2;
+}
+
+.categoriesBoxes {
+    background-size: auto auto;
+    color: #212121 ;
+    width: 100%;
+    height: 185px;
+    box-shadow: 3px 3px 2px #BDBDBD ;
+}
+
+.categoriesOffertsPrice {
+    color:white;
+    font-size:12px;
+	margin-left: -7px;
+}
+
+.categoriesOffertsTitle {
+    font-size:13px;
+    color:#78D9D8;
+}
+
+.categoriesAveragePrice {
+    color:white;
+    font-size:12px;
+    font-weight: bolder;
+	margin-left: -7px;
+}
+
+.categoriesAverageTitle {
+    font-size:11px;
+    color:#78D9D8;
+}
+
+.categoriesHeartIcon {
+    margin-top:20px;
+}
+
+.categoriesBoxesSupermarket {
+    background: linear-gradient(white 70%, #00BAB9 25%);
+    background: -webkit-linear-gradient(white 65%, #00BAB9 35%);
+    background: -o-linear-gradient(white 65%, #00BAB9 35%);
+}
+
+.categoriesBoxesRestaurant {
+    background: linear-gradient(white 70%, #FF5252 25%);
+    background: -webkit-linear-gradient(white 65%, #FF5252 35%);
+    background: -o-linear-gradient(white 65%, #FF5252 35%);
+}
+
+.categoriesBoxesFashion {
+    background: linear-gradient(white 70%, #FFD922 25%);
+    background: -webkit-linear-gradient(white 65%, #FFD922 35%);
+    background: -o-linear-gradient(white 65%, #FFD922 35%);
+}
+
+.categoriesBoxesEntertaiment {
+    background: linear-gradient(white 70%, #9C28B0 25%);
+    background: -webkit-linear-gradient(white 65%, #9C28B0 35%);
+    background: -o-linear-gradient(white 65%, #9C28B0 35%);
+}
+
+.categoriesBoxesElectronic {
+    background: linear-gradient(white 70%, #3F51B5 25%);
+    background: -webkit-linear-gradient(white 65%, #3F51B5 35%);
+    background: -o-linear-gradient(white 65%, #3F51B5 35%);
+}
+
+.imageCategoryBoxes {
+    width: auto;
+    height: 110px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.categoriesBoxesEnlineBlock {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
