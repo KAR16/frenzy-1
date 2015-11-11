@@ -310,7 +310,7 @@ app.factory('OurFavorites', function() {
 		},get: function(){}
 	};
 });
-// ************* CUPONS APP FACTORY *************
+// ************* COUPONS APP FACTORY *************
 app.factory('Cupons', function() {
 	return {
 		all: function(salvadosId) {
@@ -336,7 +336,7 @@ app.factory('Cupons', function() {
 					DatoCupon.push(InfoShop[z]);
 				}
 			}
-			// INSTEAD ALL CUPON IN ALL CUPON VARIABLE
+			// INSTEAD ALL COUPON IN ALL COUPON VARIABLE
 			allCupon = AllCupon;
 
 			if (PhotoPaiz) {
@@ -373,7 +373,6 @@ var PromoSave = new Parse.Query('PromotionSaved')
 var Cupon = new Parse.Query('Cupon');
 
 // ************* CALL DATA PARSE *************
-//var query = new Parse.Query('AppCategory');
 //query limit hace la llamada de mas elementos
 var cup = Cupon.find({
 	success: function(results) {
@@ -529,59 +528,7 @@ prom.then(function(){
 // ************* CATEGORY LIST NAME VARIABLE *************
 var CategoryListName = [];
 var CategoryListNameConteo = [];
-// query = query.limit(100);
-// query.find({
-// 	success: function(results) {
-// 		// cycle through the results
-// 		var PromotionS = Parse.Object.extend("Promotion");
-// 		var q = new Parse.Query(PromotionS);
-// 		for ( x in results) {
-// 			List_name.push(results[x].attributes.CategoryName)
-// 			q.equalTo("CategoryApp", results[x].attributes.CategoryName);
-// 			var pro = q.find({
-// 				success: function(results) {
-// 					for (a in results){
-// 						if (results[a].attributes.Status === true) {
-// 							CategoryListNameConteo.push({cont:results[a].attributes.CategoryApp})
-// 						}
-// 					}
-// 				},
-// 				error: function(error) {
-// 					// Error occureds
-// 					console.log(error);
-// 				}
-// 			});
-// 			CategoryListName.push({
-// 				name: results[x].attributes.CategoryName,direc:results[x].attributes.CategoryName,cont_promo:0,icon: results[x].attributes.IconCategory,
-// 				color : results[x].attributes.ColorCategory, cont_cupones:0
-// 			})
-// 			name  = results[x].attributes.CategoryName
-// 		}
-// 		pro.then(function(){
-//
-// 			for (w in CategoryListName){
-// 				for (i in Cupons) {
-// 					if(CategoryListName[w].name == Cupons[i].Categoryapp){
-// 						CategoryListName[w].cont_cupones = CategoryListName[w].cont_cupones + 1
-// 					}
-// 				}
-// 				for(s in CategoryListNameConteo){
-//
-// 					if(CategoryListName[w].name == CategoryListNameConteo[s].cont){
-// 						CategoryListName[w].cont_promo = CategoryListName[w].cont_promo + 1
-// 					}
-//
-// 				}
-// 			}
-//
-//
-// 		});
-// 	},
-// 	error: function(myObject, error) {
-// 		// Error occured
-// 		console.log( error );
-// 	}
-// });
+
 // *************** CALL GET PROMOTIONS FUNCTION IN PARSE CLOUD CODE ***************
 Parse.Cloud.run('GetPromotions', {}, {
     success: function(result) {
@@ -627,14 +574,6 @@ function AddPromotions(Array) {
 				namecategory:results[x].attributes.CategoryApp,id:results[x].id
 			});
 
-			// if (results[x].attributes.Name in Array.Quantities[0]) {
-			// 	CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-			// 	average = Array.averageSavingscustomer[results[x].attributes.Name];
-			// } else {
-			// 	CountPromotions = 0;
-			// 	average = 0;
-			// };
-
 			if ("Supermercado" ==  results[x].attributes.CategoryApp){
 				name = results[x].attributes.Name;
 				listaNameSuperComparar.push(results[x].attributes.Name);
@@ -643,10 +582,6 @@ function AddPromotions(Array) {
 				Categorys.push({
 					nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 				})
-				// Super.push({
-				// 	id:x, name: listSupermercado[x], promo: CountPromotions,promedio:average,
-				// 	lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'
-				// });
 			}else if("Restaurantes" == results[x].attributes.CategoryApp){
 				name = results[x].attributes.Name;
 				listSupermercado.push(results[x].attributes.Logo._url);
@@ -654,10 +589,6 @@ function AddPromotions(Array) {
 				Categorys.push({
 					nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 				})
-				// Restaurantes.push({
-				// 	id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-				// 	lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'
-				// });
 			}else if ("Moda" == results[x].attributes.CategoryApp){
 				name = results[x].attributes.Name;
 				listSupermercado.push(results[x].attributes.Logo._url);
@@ -665,10 +596,6 @@ function AddPromotions(Array) {
 				Categorys.push({
 					nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 				})
-				// Modas.push({
-				// 	id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-				// 	lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'
-				// });
 			}else if ("Entretenimiento" == results[x].attributes.CategoryApp){
 			name = results[x].attributes.Name;
 				listSupermercado.push(results[x].attributes.Logo._url);
@@ -676,10 +603,6 @@ function AddPromotions(Array) {
 				Categorys.push({
 					nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 				})
-				// Entretenimientos.push({
-				// 	id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-				// 	lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'
-				// });
 			}else if ("Electrónicos" == results[x].attributes.CategoryApp){
 				name = results[x].attributes.Name;
 				listSupermercado.push(results[x].attributes.Logo._url);
@@ -687,10 +610,6 @@ function AddPromotions(Array) {
 				Categorys.push({
 					nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 				})
-				// Electronico.push({
-				// 	id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-				// 	lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name,oferta : 'existe'
-				// });
 			};
 		};
 	});
