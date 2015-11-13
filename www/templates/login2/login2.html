@@ -11,13 +11,13 @@
         <h3 class="subTitle open_sans" >Correo electronico</h3>
         <!--*****  MAIL INPUT BOX  *****-->
         <label class="item item-input inputBox">
-          <input type="text" placeholder="correo@ejemplo.com">
+          <input type="text" placeholder="correo@ejemplo.com" ng-model='user.email'>
         </label>
         <!--*****  PASSWORD TITLE  *****-->
-        <h3 class="subTitle open_sans" >Correo electronico</h3>
+        <h3 class="subTitle open_sans" >Contraseña</h3>
         <!--*****  PASSSWORD INPUT BOX  *****-->
         <label class="item item-input inputBox">
-          <input type="text" placeholder="Contraseña">
+          <input type="password" placeholder="Contraseña" ng-model='user.password'>
         </label>
         <!--*****  GENDER CHOICE  *****-->
         <!--*****  GENDER TITLE  *****-->
@@ -35,11 +35,11 @@
         <h3 class="subTitle open_sans">Fecha de nacimiento  </h3>
         <!--*****  BIRTHDAY INPUT  *****-->
         <label class="item item-input dateBox">
-          <input type="date">
+          <input type="date" ng-model='user.birthday'>
         </label>
         <!--*****  ENTER BUTTON  *****-->
         <center>
-          <div class="enterButton">
+          <div class="enterButton" ng-click='register()'>
             <h3 class="enterButtonTitle open_sans">Entrar</h3>
           </div>
         </center>

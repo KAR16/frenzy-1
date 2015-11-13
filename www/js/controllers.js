@@ -21,6 +21,60 @@ angular.module('starter.controllers', ['ionic'])
 		}, 1000);
 	};
 })
+// -------------------- LOGIN WITHOUT FACEBOOK ------------------------
+// ******************* REGISTER FACEBOOK *******************
+.controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
+    $scope.user = {};
+    $scope.error = {};
+
+    $scope.register = function() {
+
+        // TODO: add age verification step
+
+        $scope.loading = $ionicLoading.show({
+            content: 'Sending',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+				var dateBirthday = $scope.user.birthday;
+	       dateBirthday = dateBirthday.toLocaleDateString()
+
+        var user = new Parse.User();
+        user.set("username", $scope.user.email);
+        user.set("password", $scope.user.password);
+        user.set("email", $scope.user.email);
+        user.set("birthday", dateBirthday);
+
+        user.signUp(null, {
+            success: function(user) {
+                $ionicLoading.hide();
+                $rootScope.user = user;
+                $rootScope.isLoggedIn = true;
+                $state.go('app.playlists', {
+                    clear: true
+                });
+            },
+            error: function(user, error) {
+                $ionicLoading.hide();
+                if (error.code === 125) {
+                    $scope.error.message = 'Please specify a valid email ' +
+                        'address';
+                } else if (error.code === 202) {
+                    $scope.error.message = 'The email address is already ' +
+                        'registered';
+                } else {
+                    $scope.error.message = error.message;
+                }
+                $scope.$apply();
+            }
+        });
+    };
+})
+
+
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope) {
 	var dimensions = {

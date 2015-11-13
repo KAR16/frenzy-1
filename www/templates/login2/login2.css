@@ -10,7 +10,8 @@
   width: 80%;
   margin-left: 10%;
   margin-right: 10%;
-  box-shadow: 3px 3px 2px #4b4c4d;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px #6b739e ;
 }
 .box{
   background-color: white;
@@ -19,7 +20,8 @@
   width: 80%;
   margin-left: 10%;
   margin-right: 10%;
-  box-shadow: 3px 3px 2px #4b4c4d;
+  border-radius: 4px;
+box-shadow: 2px 2px 2px #6b739e ;
 }
 .Image{
   height: 80px;;
