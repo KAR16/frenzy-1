@@ -1,0 +1,70 @@
+<ion-view>
+  <ion-content class="BackgroundColor" ng-app="ionicApp">
+    <!---->
+    <!--*****  MAIN BOX  *****-->
+    <div class="box">
+      <!--*****  ICON IMAGE  *****-->
+      <center><img class="Image" src="img/images.jpg" alt="" /></center>
+        <!--*****  TITLE  *****-->
+        <h2 class="Title open_sans">Crea una cuenta</h2>
+        <!--*****  MAIL TITLE  *****-->
+        <h3 class="subTitle open_sans" >Correo electronico</h3>
+        <!--*****  MAIL INPUT BOX  *****-->
+        <label class="item item-input inputBox">
+          <input type="text" placeholder="correo@ejemplo.com">
+        </label>
+        <!--*****  PASSWORD TITLE  *****-->
+        <h3 class="subTitle open_sans" >Correo electronico</h3>
+        <!--*****  PASSSWORD INPUT BOX  *****-->
+        <label class="item item-input inputBox">
+          <input type="text" placeholder="Contraseña">
+        </label>
+        <!--*****  GENDER CHOICE  *****-->
+        <!--*****  GENDER TITLE  *****-->
+        <h3 class="subTitle open_sans" >Genero</h3>
+        <!--*****  MALE  *****-->
+        <div class="item item-input inputBox2">
+          <h3 class="inputBox2Title">Masculino</h3>
+        </div>
+        <!--*****  FEMALE  *****-->
+        <div class="item item-input inputBox2">
+          <h3 class="inputBox2Title">Femenina</h3>
+        </div>
+        <!--*****  BIRTHDAY  *****-->
+        <!--*****  BIRTHDAY TITLE  *****-->
+        <h3 class="subTitle open_sans">Fecha de nacimiento  </h3>
+        <!--*****  BIRTHDAY INPUT  *****-->
+        <label class="item item-input dateBox">
+          <input type="date">
+        </label>
+        <!--*****  ENTER BUTTON  *****-->
+        <center>
+          <div class="enterButton">
+            <h3 class="enterButtonTitle open_sans">Entrar</h3>
+          </div>
+        </center>
+        <!--*****  SECOND TITLE  *****-->
+        <h3 class="secondTitle">Entra con una cuenta existente o facebook</h3>
+    </div>
+    <!--********************************************************************-->
+    <!--*****  LOGIN BUTTON  *****-->
+    <!--*****  LOGIN  *****-->
+    <div class="secondDiv" ng-controller="loginCtrl">
+      <a href="#/login" nav-transition="none">
+        <div class="item item-input loginBox">
+          <center>
+            <h3 class="loginTitle" style="font-size:16px;">Iniciar sesion</h3>
+          </center>
+          </div>
+      </a>
+      <!--*****  FACEBOOK  *****-->
+      <a  ng-click="loginfb()">
+        <buttom class="item item-input loginBox2">
+          <center>
+            <h3 class="loginTitle2" style="font-size:19px;">facebook</h3>
+          </center>
+        </buttom>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

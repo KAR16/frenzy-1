@@ -1,0 +1,146 @@
+.BackgroundColor{
+  background-color: #3F51B5;
+  height: 100%;
+​
+}
+.box2{
+  background-color: white;
+  margin-top: 30px;
+  height: 335px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  box-shadow: 3px 3px 2px #4b4c4d;
+}
+.box{
+  background-color: white;
+  margin-top: 30px;
+  height: 490px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  box-shadow: 3px 3px 2px #4b4c4d;
+}
+.Image{
+  height: 80px;;
+  width: 60px;
+  margin-top: 15px;
+}
+.Title{
+  font-size: 20px;
+  text-align: center;
+  margin-top: -5px;
+  color: #263147;
+}
+.subTitle{
+  font-size: 15px;
+  color: #263147;
+  margin-left: 25px;
+  margin-top: 8px;
+}
+.inputBox{
+  background-color: #E6E7E8;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 15px;
+  margin-top: -8px;
+}
+.inputBox2{
+  width: 40%;
+  height: 40px;
+  display: inline-block;
+  background-color: #E6E7E8;
+  border-radius: 15px;
+  margin-left: 5%;
+}
+.inputBox2Title{
+  color:black;
+  font-weight: bolder;
+  padding-top: 5px;
+}
+.dateBox{
+  background-color: #E6E7E8;
+  border-radius: 15px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: -5px;
+}
+.enterButton{
+  background-color: #FF5252;
+  height: 30px;
+  width: 150px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border-bottom: solid;
+  border-color: red;
+}
+
+.enterButton2{
+  background-color: #FF5252;
+  height: 30px;
+  width: 150px;
+  margin-top: 0px;
+  border-radius: 10px;
+  border-bottom: solid;
+  border-color: red;
+}
+.enterButtonTitle{
+  color:white;
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
+  padding-top: 3px;
+}
+.secondTitle{
+  font-size: 13px;
+  color:white;
+  font-weight: bolder;
+  margin-left: 3px;
+  margin-top: 25px;
+}
+.secondTitle2{
+  font-size: 13px;
+  color:white;
+  font-weight: bolder;
+  margin-left: 3px;
+  margin-top: 30px;
+}
+.loginButton{
+  width: 40%;
+  height: 40px;
+  display: inline-block;
+  background-color: #E6E7E8;
+  border-radius: 15px;
+  margin-left: 5%;
+}
+.secondDiv{
+  margin-left: 10%;
+  margin-top: 10px;
+}
+.loginBox{
+  background-color: #00DDC1;
+  width: 43%;
+  height: 35px;
+  display: inline-block;
+  margin-top: 25px;
+  border-radius: 10px;
+  border:none;
+}
+.loginBox2{
+  background-color: white;
+  width: 43%;
+  height: 35px;
+  display: inline-block;
+  margin-top: 25px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.loginTitle{
+  color: white;
+  font-weight: bolder;
+  padding-top: 2px;
+}
+.loginTitle2{
+  color: #2c4271;
+  font-weight: bolder;
+}
