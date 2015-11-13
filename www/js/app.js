@@ -228,7 +228,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   // ******** FACEBOOK *****
 	.state('login2', {
 		url: "/login2",
-		templateUrl: "templates/login2/login2.html"
+		templateUrl: "templates/login2/login2.html",
+    controller: "RegisterController"
 	})
 	// ******* FAVORITE *******
 	.state('app.favoritos', {
