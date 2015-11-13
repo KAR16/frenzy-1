@@ -88,7 +88,7 @@ angular.module('starter.controllers', ['ionic'])
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
       colorIconsFoother = []
-      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','frenzy']);
+     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','frenzy_title.png']);
   });
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
@@ -101,7 +101,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','Favoritos']);
+      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','frenzy_title.png']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
@@ -118,7 +118,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','Tus Favoritos']);
+       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','frenzy_title.png']);
     });
 })
 // *************************** SAVED CONTROLLER ***************************
@@ -134,7 +134,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','Salvados']);
+        colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','frenzy_title.png']);
     });
 })
 //*************************** TOOLS CONTROLLER ***************************
@@ -142,7 +142,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','Herramientas']);
+         colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','frenzy_title.png']);
     });
 })
 // ********************* SUPERMARKET CONTROLLER ***************************
@@ -220,7 +220,7 @@ angular.module('starter.controllers', ['ionic'])
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
       colorIconsFoother = []
-      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Supermercados']);
+    colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Supermercados','','none',]);
   });
 })
 // *********************** RESTAURANTS CONTROLLER *************************
@@ -299,10 +299,10 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Restaurantes']);
+         colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Restaurantes','','none']);
     });
 })
-// ************************* FASION CONTROLLER ****************************
+// ************************* FASHION CONTROLLER ****************************
 .controller('ModaCtrl', function($scope) {
 	var dimensions = {
 		name: 'fashionMenu'
@@ -379,7 +379,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Moda']);
+      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Moda','','none']);
     });
 })
 // ************************** ENTERTAINMENT CONTROLLER ********************
@@ -457,7 +457,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Entretenimiento']);
+      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Entretenimiento','','none']);
     });
 })
 // *************************** ELECTRONICS CONTROLLER *********************
@@ -535,7 +535,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Electronicos']);
+        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Electronicos','','none']);
     });
 })
 // *************************** OTHERS CONTROLLER **************************
@@ -548,7 +548,7 @@ angular.module('starter.controllers', ['ionic'])
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
 	$scope.$on('$ionicView.enter', function() {
 			colorIconsFoother = []
-			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Otros']);
+			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Otros','','none']);
 	});
 })
 // *************************  OFFERS CONTROLLER	***************************
@@ -591,11 +591,13 @@ angular.module('starter.controllers', ['ionic'])
 			});
 		}
 	});
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Ofertas']);
-    });
+	//***** FUNCTION FOOTER CHANCE COLOR  *****
+	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
+	$scope.categoryNameCoupon = Paiz.get($stateParams.superId);
+	$scope.$on('$ionicView.enter', function() {
+			colorIconsFoother = []
+			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
+	});
 })
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
@@ -642,11 +644,13 @@ angular.module('starter.controllers', ['ionic'])
 			});
 		}
 	});
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Cupones']);
-    });
+	//***** FUNCTION FOOTER CHANCE COLOR  *****
+ //***** SCOPE $ON TO REFRESH MENU CONTROLLER
+ $scope.categoryNameCoupon = Cupons.all($stateParams.CuponID);
+ $scope.$on('$ionicView.enter', function() {
+		 colorIconsFoother = []
+		 colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
+ });
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
@@ -659,7 +663,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Cupones']);
+          colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.cupons[0].Category,'','none']);
     });
 })
 //*********************  MENU CONTROLLER  *******************************
