@@ -1,0 +1,78 @@
+<style>
+    .bar.bar-positive    {
+    box-shadow: 0 0 0px white;
+    }
+</style>
+<ion-view>
+    <!--**********  SALVED PAGE  **********-->
+    <ion-content >
+        <!--**********  MAIN BOXES  **********-->
+        <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {oferta : 'existe'}">
+            <!--**********  IMAGE ESTABLISHMENT  **********-->
+            <div class="col col-20">
+                <img class="savedPageImage" alt="pizza" src="{{promotion.Photo._url}}">
+            </div>
+            <div class="col col-80">
+                <!--**********  TITLE OFFERT  **********-->
+                <p class="savedPageTitleDescription overFlowText">
+                    {{promotion.Name}}
+                </p>
+                <!--**********  PRICE OFFERT  **********-->
+                <p class="savedPageOffert">
+                    Oferta - {{promotion.PromotionalPrice | currency: 'Q'}}
+                </p>
+                <!--**********  DESCRIPTION OFFERT  **********-->
+                <p class="savedPageDescription overFlowText">
+                    {{promotion.PromotionDescription}}
+                </p>
+            </div>
+            <!--**********  PIN ICON  **********-->
+            <div class="col col-10 home">
+                <p class="savedPageIcon" id="{{promotion.PromotionId}}" onclick="SalvadosSaveAndDelete(id)" style="color:purple">
+                    W
+                </p>
+            </div>
+        </div>
+        <!--**********  CUPONS  **********-->
+        <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {cupon : 'existe'}">
+            <!--**********  IMAGE ESTABLISHMENT  **********-->
+            <div class="col col-20">
+                <img class="savedPageImage" alt="pizza" src="{{promotion.PhotoCupon._url}}">
+            </div>
+            <div class="col col-80">
+                <!--**********  TITLE OFFERT  **********-->
+                <p class="savedPageTitleDescription overFlowText">
+                    {{promotion.Presentation}}
+                </p>
+                <!--**********  PRICE OFFERT  **********-->
+                <p class="savedPageOffert">
+                    Cupon - {{promotion.Canjea | currency: 'Q'}}
+                </p>
+                <!--**********  DESCRIPTION OFFERT  **********-->
+                <p class="savedPageDescription overFlowText">
+                    {{promotion.description}}
+                </p>
+            </div>
+            <!--**********  PIN ICON  **********-->
+            <div class="col col-10 home">
+                <p class="savedPageIcon" id="{{promotion.PromotionId}}" onclick="SalvadosSaveAndDelete(id)" style="color:purple">
+                    W
+                </p>
+            </div>
+        </div>
+        <div ng-repeat="promotion in chats  | filter: {oferta : 'noHay'}">
+            <div class="open_sans boxbox">
+                <p class="savedPageNoItemBlankSpace">
+                    f
+                </p>
+                <p class="home savedPageNoItemsIcon">f</p>
+                <p class="savedPageNoItemsTitle">
+                    Uh-uH
+                </p>
+                <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
+                <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
+                <p class="savedPageNoItemsDescription">para usarlos despues.</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

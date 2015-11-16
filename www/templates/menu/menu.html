@@ -1,0 +1,67 @@
+<style>
+	.row{
+		font-size:30px;
+	}
+
+	.bar.bar-positive {
+		border-color: #00BAB9;
+		background-color: #00BAB9;
+		border-style:none;
+		box-shadow: 0 0 5px #888888;
+		background-image: linear-gradient(0deg, #00BAB9  , #00BAB9   50%, transparent 50%);
+		color: #fff;
+	}
+	.bar.bar-positive .title {
+		color: white;
+		margin-top:3px;
+	}
+	.bar.bar-positive.bar-footer {
+		background-image: linear-gradient(180deg, #00BAB9  , #00BAB9   50%, transparent 50%);
+	}
+</style>
+<ion-side-menus  enable-menu-with-back-views="false">
+	<ion-side-menu-content >
+		<!--***** barra de contenido principal class="barraMenu" *****-->
+		<!--***** visualizacion contenido menu principal *****-->
+		<ion-nav-view   name="menuContent">
+            <!--************  HEADER AND BACK BUTTON  <a href="#/app/playlists">***************-->
+            <ion-header-bar align-title="center" class="bar-positive">
+                <i class="icon ion-chevron-left backButtomStyle" onclick="goBack()"  nav-transition="none"></i>
+                <h1 class="title" style="font-weight: bolder;">{{footerChangeColor[0][4]}}</h1><h1></h1>
+									<center>
+										<img class="" style="display:{{footerChangeColor[0][6]}};" src="img/{{footerChangeColor[0][5]}}">
+									</center>
+            </ion-header-bar>
+    	    <!--************************* FOOTHER  ******************************-->
+			<ion-footer-bar align-title="left" class="bar-stable" style="background-color:#E6E7E8  ;border-style:none;">
+					<div class="row home">
+							<div class="col col-10"></div>
+							<!--************  ICONO FOOTER HOME  ******************-->
+							<div class="col col-25">
+									<a href="#/app/playlists" style="color:{{footerChangeColor[0][0]}}; text-decoration:none;" nav-transition="none">
+											<div>A</div>
+									</a>
+							</div>
+							<!--************  ICONO FOOTER HEART  ******************-->
+							<div class="col col-25">
+									<a href="#/app/favoritos" style="color:{{footerChangeColor[0][1]}}; text-decoration:none;" nav-transition="none" onclick="viewFavorite()">
+											<div>B</div>
+									</a>
+							</div>
+							<!--************  ICONO FOOTER STAR onclick="viewPromotion()" ******************-->
+							<div class="col col-25" >
+									<a href="#/app/salvados" style="color:{{footerChangeColor[0][2]}}; text-decoration:none;" nav-transition="none" >
+											<div id = "{{chats}}">W</div>
+									</a>
+							</div>
+							<!--************  ICONO FOOTER TOOL  ******************-->
+							<div class="col col-25">
+									<a href="#/app/herramientas" style="color:{{footerChangeColor[0][3]}}; text-decoration:none;" nav-transition="none">
+											<div>D</div>
+									</a>
+							</div>
+					</div>
+			</ion-footer-bar>
+		</ion-nav-view>
+	</ion-side-menu-content>
+</ion-side-menus>

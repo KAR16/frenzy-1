@@ -1,0 +1,68 @@
+.row-border {
+    border-width: thin;
+    border-color: #E6E7E8;
+    border-bottom-style: solid;
+}
+
+.pageOurFavoritesOurFavoritesTitle {
+    color: #D8D8D8;
+}
+
+.pageYourFavoritesLineDecoration {
+    background-color: #D8D8D8;
+}
+
+.pageYourFavoritesGreyLine {
+    background-color: #E6E7E8;
+    height: 35px;
+}
+
+.pageYourFavoritesIconHeart {
+    margin-left: 10px;
+    font-size: 27px;
+    color: #FF5252;
+}
+
+.pageYourFavoritesStablishmentName {
+    margin-left: 15px;
+    font-size: 15px;
+    color: black;
+}
+
+.pageYourFavoritesIconArrow {
+    margin-left: 20px;
+    font-size: 25px;
+    padding-top: 25px;
+    color: #A7A9AC;
+}
+
+.pageYourFavoritesWhiteBox {
+    height: 100px;
+}
+
+.pageYourFavoritesWhiteBoxTop {
+    margin-top: 15px;
+}
+
+.pageYourFavoritesOffert {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pageYourFavoritesPriceOffert {
+    font-size: 11px;
+    margin-top: -8px;
+}
+
+.pageYourFavoritesOffertDescription {
+    font-size: 11px;
+    color: #A4A4A4;
+    margin-top: -8px;
+}
+
+.pageYourFavoritesIconPin {
+    color: silver;
+    margin-top: 45px;
+    margin-left: 25px;
+    font-size: 30px;
+}

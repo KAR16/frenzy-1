@@ -5,29 +5,29 @@
             <!--*****  BOXES ENLINE BLOCK  *****-->
             <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="super in chats | filter: {oferta : 'existe'}">
                 <!--*****  BOXES DESIGN  *****-->
-                <div class="categoriesBoxes categoriesBoxesSupermarket col col-100">
+                <div class="categoriesBoxes categoriesBoxesFashion col col-100">
                     <!--*****  LINK ONLY FOR THE IMAGE  *****-->
-                    <a href="#/app/ofertas/{{super.NameCategory}}" id = "{{super.NameCategory}}" onclick="Promotions(id)" >
+                    <a href="#/app/ofertas/{{super.NameCategory}}" id = "{{super.NameCategory}}" onclick="Promotions(id)">
                     <img class="imageCategoryBoxes" ng-src="{{super.name}}" alt="image">
                     </a>
                     <div class="row">
                         <!--*****  GREEN BOX FOR PROMOTIONS AND OFFERTS  *****-->
                         <div class="col col-80" style="margin-top:-5px;">
                             <!--*****  OFFERTS COUNT  *****-->
-                            <spam class="categoriesOffertsPrice">
+                            <spam class="categoriesOffertsPrice" style="color:black;">
                                 {{super.promo}}
                             </spam>
                             <!--***** OFFERTS NAME  *****-->
-                            <spam class="categoriesOffertsTitle">
+                            <spam class="categoriesOffertsTitle" style="color:#846464;">
                                 ofertas
                             </spam>
                             <br>
                             <!--*****  PROMOTIONS COUNT  *****-->
-                            <spam class="categoriesAveragePrice">
+                            <spam class="categoriesAveragePrice" style="color:black;">
                                 Q{{super.promedio}}
                             </spam>
                             <!--*****  PROMOTIONS NAME  *****-->
-                            <spam class="categoriesAverageTitle">
+                            <spam class="categoriesAverageTitle" style="color:#846464;">
                                 promedio
                             </spam>
                         </div>
