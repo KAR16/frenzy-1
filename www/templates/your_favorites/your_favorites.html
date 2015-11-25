@@ -28,8 +28,10 @@
             </a>
         </div>
     </div>
+    <!-- if your code is uploader on ios you need to add this code of css in the line number 34 -->
+    <!-- style="margin-top:-10px" -->
     <!--*****  SECOND TAB HEADER  *****-->
-    <ion-content ng-controller="AllFavoriteCtrl" >
+    <ion-content ng-controller="AllFavoriteCtrl">
         <div style="height:31px;"></div>
         <div ng-repeat="favorite in chats | filter: {oferta : 'existe'}">
             <!--************  YOUR FAVORITES BODY  *******************-->

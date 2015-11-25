@@ -1,53 +1,63 @@
-<ion-view>
-  <ion-content class="BackgroundColor" ng-app="ionicApp">
-    <!---->
-    <!--*****  MAIN BOX  *****-->
-    <div class="box2">
-      <!--*****  ICON IMAGE  *****-->
-      <center><img class="Image" src="img/images.jpg" alt="" /></center>
-        <!--*****  TITLE  *****-->
-        <h2 class="Title open_sans">Crea una cuenta</h2>
-        <!--*****  MAIL TITLE  *****-->
-        <h3 class="subTitle open_sans" >Correo electronico</h3>
-        <!--*****  MAIL INPUT BOX  *****-->
-        <label class="item item-input inputBox">
-          <input type="text" placeholder="correo@ejemplo.com">
-        </label>
-        <!--*****  PASSWORD TITLE  *****-->
-        <h3 class="subTitle open_sans" >Correo electronico</h3>
-        <!--*****  PASSSWORD INPUT BOX  *****-->
-        <label class="item item-input inputBox">
-          <input type="text" placeholder="Contraseña">
-        </label>
-​
-        <!--*****  ENTER BUTTON  *****-->
-        <center>
-          <div class="enterButton2">
-            <h3 class="enterButtonTitle open_sans">Entrar</h3>
+<ion-view class="BackgroundColor">
+  <ion-content ng-app="ionicApp">
+    <!--*****  row for main div  *****-->
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80 mainDiv">
+        <!--*****  row from icon penguin  *****-->
+        <div class="row">
+          <div class="col col-25"></div>
+          <div class="col col-50">
+            <!--*****  penguin icon-->
+            <p class="home penguin">i</p>
+            <!--***** title  *****-->
+            <p class="title">Inicia sesion</p>
           </div>
-        </center>
-        <!--*****  SECOND TITLE  *****-->
-        <h3 class="secondTitle2">Crea una cuenta o entra con facebook</h3>
-    </div>
-    <!--********************************************************************-->
-    <!--*****  LOGIN BUTTON  *****-->
-    <!--*****  LOGIN  *****-->
-    <div class="secondDiv" ng-controller="loginCtrl">
-      <a href="#/login2" nav-transition="none">
-        <div class="item item-input loginBox">
-          <center>
-            <h3 class="loginTitle" style="font-size:16px;">Registrate</h3>
-          </center>
+          <div class="col col-25"></div>
         </div>
-      </a>
-      <!--*****  FACEBOOK  *****-->
-      <a  ng-click="loginfb()">
-        <buttom class="item item-input loginBox2">
-          <center>
-            <h3 class="loginTitle2" style="font-size:19px; text-align:center;">facebook</h3>
-          </center>
-        </buttom>
-      </a>
+        <!--*****  row main body  *****-->
+        <div class="row">
+          <div class="col col-100 open_sans">
+            <!--*****  mail  *****-->
+            <p class="subtitle">Correo electronico</p>
+            <!--*****  MAIL INPUT BOX  *****-->
+            <label class="item item-input inputBox">
+              <input type="email" ng-model="user.username" placeholder="correo@ejemplo.com">
+            </label>
+            <!--*****  password  *****-->
+            <!--*****  PASSWORD TITLE  *****-->
+            <p class="subtitle2" >Contraseña</p>
+            <!--*****  PASSSWORD INPUT BOX  *****-->
+            <label class="item item-input inputBox">
+              <input type="password" ng-model="user.password">
+            </label>
+            <center>
+              <div class="enterButton" ng-click='login()'>
+                <h3 class="enterButtonTitle open_sans">Entrar</h3>
+              </div>
+            </center>
+          </div>
+        </div>
+      </div>
+      <div class="col col-10"></div>
+    </div>
+    <div class="row" ng-controller="loginCtrl">
+      <div class="col col-10"></div>
+      <div class="col col-80" ng-controller="loginCtrl">
+        <p class="subtitle3 open_sans">Crea una cuenta o inicia sesion con Facebook</p>
+        <div class="row">
+          <!-- ng-click="loginfb()"** href="#/app/playlists"-->
+          <div class="col col-50 facebookButon" ng-click="loginfb()">
+            <p class="facebookTitle">Facebook</p>
+          </div>
+          <div class="col col-50 singupButon">
+            <a href="#/login2" nav-transition="none" style="text-decoration:none;">
+              <p class="singupTitle open_sans">Registrate</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col col-10"></div>
     </div>
   </ion-content>
 </ion-view>

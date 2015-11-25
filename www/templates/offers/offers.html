@@ -25,16 +25,18 @@
             </a>
         </div>
         <!--**********  CUPONS  **********-->
-        <div class="col col-33"  ng-repeat="s in chats[1]">
-            <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/cupones/{{s.name}}" >
+        <div class="col col-33"  ng-repeat="s in chats[3] | filter: {Validar : 'existe'}">
+            <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/cupones/{{s.t}}" >
                 <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
                 <p class="pageFavoritesOurFavoritesTitle"style="color:#D8D8D8">
-                    Cupones ({{Cupcon}})
+                    Cupones ({{s.cont}})
                 </p>
                 <!--**********  LINE DECORATION  **********-->
                 <hr class="pageFavoritesLineDecoration" style="background-color:#D8D8D8">
             </a>
         </div>
+        <!--***** blank space  *****-->
+        <div style="margin-left:100px;" ng-repeat="s in chats[3] | filter: {Validar : 'no'}"></div>
         <!--**********  ICON POPOVER  *********-->
         <div class="col col-33">
             <div ng-repeat="s in chats[1]">
@@ -240,8 +242,7 @@
                 <div>
                     <div>
                         <img  class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
-                       <a class="secondPopoverFacebookTitle" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open('http://www.facebook.com/sharer.php?s=100&p[url]=http://www.frenzy.com.gt/&p[title]=jose alejandro tamayo&p[summary]=
-descripcion_contenido&p[images][0]=url_imagen');" style="text-decoration:none;">Amigos de facebook4</a>
+                       <a class="secondPopoverFacebookTitle" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open('http://www.facebook.com/share.php?u=http://www.frenzy.com.gt/','_blank');" style="text-decoration:none;">Amigos de facebook</a>  
                     </div>
                   <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');">
                         <p class="home secondPopoverMailIcon">
