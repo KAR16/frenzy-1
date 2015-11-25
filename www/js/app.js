@@ -6,13 +6,13 @@ function reload() {
     PromoSavess.find({
 		success: function(results) {
 			for (a in results[0].attributes.PromotionID){
-				for (b in PhotoPaiz){
-					if (results[0].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion){
-						if (PhotoPaiz[b].ColorPin === "silver") {
-							PhotoPaiz[b].ColorPin  = "purple";
+				for (b in CurrentPromotion){
+					if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+						if (CurrentPromotion[b].ColorPin === "silver") {
+							CurrentPromotion[b].ColorPin  = "purple";
 						}
 					}else {
-						PhotoPaiz[b].ColorPin  = "silver";
+						CurrentPromotion[b].ColorPin  = "silver";
 					}
 				}
 			}
@@ -223,7 +223,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
-		templateUrl: "templates/login/login.html"
+		templateUrl: "templates/login/login.html",
+    controller: "LoginController"
 	})
   // ******** FACEBOOK *****
 	.state('login2', {
@@ -261,7 +262,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-	// ******* SETTINGS *******
+  // ******* SETTINGS *******
 	.state('app.herramientas', {
 		url: "/herramientas",
 		views: {
@@ -271,6 +272,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
+
 	// ******* OFFERS *******
 	.state('app.browse', {
 		url: "/ofertas/:superId",
@@ -400,68 +402,102 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
 }])
-// ********************* LOGOUT SESSION OF PARSE ACCOUNT *********************
-.controller('homeCtrl', ['$scope', '$state', function($scope, $state) {
-	$scope.logout = function() {
-		Parse.User.logOut();
-		$state.go('login');
-	};
+
+.controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
+  $scope.logout = function() {
+
+    Parse.User.logOut();
+    $state.go('login');
+  };
+  // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+  $scope.$on('$ionicView.enter', function() {
+      colorIconsFoother = []
+        colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','Z','','none']);
+  });
 }])
-// ********************* LOGIN WITH FACEBOOK *********************
+
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
-	$scope.currentUser = Parse.User.current();
-	// ******* LOGIN VALIDATION *******
-	if ($scope.currentUser == null ){
-    console.log($scope.currentUser);
-  } else {
-		IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-		viewPromotion()
-		$state.go('app.playlists');
-	}
-	//===============LOGIN WITH FB==========//
-	$scope.loginfb = function(){
-		var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
-		// ******* Browser Login *******
-		if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
-			Parse.FacebookUtils.logIn(null, {
-				success: function(user) {
-					IdUsuario = user.changed.authData.facebook.id
-					viewPromotion()
-					if (!user.existed()) {} else {}
-					$state.go('app.playlists');
-				},
-				error: function(user, error) {}
-			});
-		}
-		// ******* Native Login *******
-		else {
-			$cordovaFacebook.login(permissions).then(function(success){
 
-				IdUsuario = success.authResponse.userID
-				viewPromotion()
-				//Need to convert expiresIn format from FB to date
-				var expiration_date = new Date();
-				expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
-				expiration_date = expiration_date.toISOString();
+    $scope.currentUser = Parse.User.current();
+    console.log($scope.currentUser,"curent")
+    if ($scope.currentUser == null ){
 
-				var facebookAuthData = {
-					"id": success.authResponse.userID,
-					"access_token": success.authResponse.accessToken,
-					"expiration_date": expiration_date
-				};
 
-				Parse.FacebookUtils.logIn(facebookAuthData, {
-					success: function(user) {
-						if (!user.existed()) {} else {}
-						$state.go('app.playlists');
-					},
-					error: function(user, error) {
-						alert(JSON.stringify(error));
-					}
-				});
-			}, function(error){
-				console.log(error);
-			});
-		}
-	};
+
+    }else{
+        console.log($scope.currentUser["attributes"].authData.facebook.id)
+        IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+        viewPromotion()
+
+        $state.go('app.playlists');
+    }
+    //alert('loginfb')
+    //===============LOGIN WITH FB==========//
+    $scope.loginfb = function(){
+        console.log("login")
+      var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
+    //Browser Login
+    if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
+
+      Parse.FacebookUtils.logIn(null, {
+        success: function(user) {
+          console.log(user.changed.authData.facebook.id);
+          IdUsuario = user.changed.authData.facebook.id
+          viewPromotion()
+          if (!user.existed()) {
+
+          } else {
+
+          }
+
+          $state.go('app.playlists');
+        },
+        error: function(user, error) {
+
+        }
+      });
+
+    }
+    //Native Login
+    else {
+
+      $cordovaFacebook.login(permissions).then(function(success){
+        //alert(success);
+        IdUsuario = success.authResponse.userID
+        viewPromotion()
+        //Need to convert expiresIn format from FB to date
+        var expiration_date = new Date();
+        expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
+        expiration_date = expiration_date.toISOString();
+
+        var facebookAuthData = {
+          "id": success.authResponse.userID,
+          "access_token": success.authResponse.accessToken,
+          "expiration_date": expiration_date
+        };
+
+        Parse.FacebookUtils.logIn(facebookAuthData, {
+          success: function(user) {
+            //alert(JSON.stringify(user));
+            if (!user.existed()) {
+
+            } else {
+
+            }
+             $state.go('app.playlists');
+          },
+          error: function(user, error) {
+            alert(JSON.stringify(error));
+
+          }
+        });
+
+      }, function(error){
+        console.log(error);
+      });
+
+    }
+
+  };
+    // //===============/LOGIN WITH FB==========//
 });

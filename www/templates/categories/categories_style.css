@@ -1,3 +1,7 @@
+/*** if your code is uplodader on ios you need to add this code on .backgroundCategories**/
+/**
+	margin-top:-10px;
+**/
 .backgroundCategories {
 	background-color: #F1F2F2;
 }

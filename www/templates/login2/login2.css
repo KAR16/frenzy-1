@@ -1,71 +1,70 @@
 .BackgroundColor{
   background-color: #3F51B5;
   height: 100%;
-​
 }
-.box2{
+/** if your code is upload on ios you need to add margin-top: 35px instead 10px **/
+.mainDiv{
   background-color: white;
-  margin-top: 30px;
-  height: 335px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-top: 10px;
   border-radius: 4px;
-  box-shadow: 2px 2px 2px #6b739e ;
+  box-shadow: 2px 2px 2px #64718f;
 }
-.box{
-  background-color: white;
-  margin-top: 30px;
-  height: 490px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  border-radius: 4px;
-box-shadow: 2px 2px 2px #6b739e ;
-}
-.Image{
-  height: 80px;;
-  width: 60px;
-  margin-top: 15px;
-}
-.Title{
-  font-size: 20px;
+.penguin{
+  font-size: 85px;
+  padding-top: 30px;
   text-align: center;
-  margin-top: -5px;
+  color:#3F51B5;
+}
+.title{
+  color:black;
+  font-size: 17px;
+  padding-top: 10px;
+  text-align: center;
+}
+.subtitle{
+  font-weight: bolder;
+  font-size: 17px;
   color: #263147;
 }
-.subTitle{
-  font-size: 15px;
+.subtitle2{
   color: #263147;
-  margin-left: 25px;
+  font-size: 17px;
   margin-top: 8px;
 }
 .inputBox{
   background-color: #E6E7E8;
-  width: 90%;
-  margin-left: 5%;
-  border-radius: 15px;
+  border-radius: 12px;
+  height: 33px;
   margin-top: -8px;
 }
-.inputBox2{
-  width: 40%;
-  height: 40px;
-  display: inline-block;
-  background-color: #E6E7E8;
-  border-radius: 15px;
-  margin-left: 5%;
+.genderTitle{
+  color: #263147;
+  font-size: 17px;
+  margin-top: -8px;
 }
-.inputBox2Title{
-  color:black;
-  font-weight: bolder;
-  padding-top: 5px;
+.genderRow{
+  margin-top: -8px;
+}
+.genderBoxMale{
+  background-color: #E6E7E8;
+  border-radius: 12px;
+  text-align: center;
+}
+.genderBoxFemale{
+  background-color: #E6E7E8;
+  border-radius: 12px;
+  margin-left: 7px;
+  text-align: center;
+}
+.dateTitle{
+  color: #263147;
+  font-size: 17px;
+  margin-top: 8px;
 }
 .dateBox{
   background-color: #E6E7E8;
-  border-radius: 15px;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: -5px;
+  border-radius: 12px;
+  height: 33px;
 }
 .enterButton{
   background-color: #FF5252;
@@ -76,73 +75,38 @@ box-shadow: 2px 2px 2px #6b739e ;
   border-bottom: solid;
   border-color: red;
 }
-
-.enterButton2{
-  background-color: #FF5252;
-  height: 30px;
-  width: 150px;
-  margin-top: 0px;
-  border-radius: 10px;
-  border-bottom: solid;
-  border-color: red;
-}
 .enterButtonTitle{
-  color:white;
-  font-size: 20px;
-  font-weight: bolder;
-  text-align: center;
-  padding-top: 3px;
-}
-.secondTitle{
-  font-size: 13px;
-  color:white;
-  font-weight: bolder;
-  margin-left: 3px;
-  margin-top: 25px;
-}
-.secondTitle2{
-  font-size: 13px;
-  color:white;
-  font-weight: bolder;
-  margin-left: 3px;
-  margin-top: 30px;
-}
-.loginButton{
-  width: 40%;
-  height: 40px;
-  display: inline-block;
-  background-color: #E6E7E8;
-  border-radius: 15px;
-  margin-left: 5%;
-}
-.secondDiv{
-  margin-left: 10%;
-  margin-top: 10px;
-}
-.loginBox{
-  background-color: #00DDC1;
-  width: 43%;
-  height: 35px;
-  display: inline-block;
-  margin-top: 25px;
-  border-radius: 10px;
-  border:none;
-}
-.loginBox2{
-  background-color: white;
-  width: 43%;
-  height: 35px;
-  display: inline-block;
-  margin-top: 25px;
-  border-radius: 10px;
-  margin-left: 10px;
-}
-.loginTitle{
   color: white;
-  font-weight: bolder;
+  font-size: 20px;
   padding-top: 2px;
 }
-.loginTitle2{
-  color: #2c4271;
+.subtitle3{
+  color: white;
+  font-size: 17px;
+  margin-top: 8px;
+}
+.facebookButon{
+  background-color:white;
+  height: 35px;
+  border-radius: 12px;
+  border:none;
+}
+.facebookTitle{
+  font-size: 19px;
   font-weight: bolder;
+  color: #3F51B5;
+  text-align: center;
+  padding-top: 2px;
+}
+.singupButon{
+  background-color: #00BAB9;
+  border-radius: 12px;
+  height: 35px;
+  margin-left: 5px;
+}
+.singupTitle{
+  text-align: center;
+  font-size: 16px;
+  padding-top: 2px;
+  color: white;
 }

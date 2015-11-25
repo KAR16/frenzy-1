@@ -26,6 +26,23 @@ angular.module('starter.controllers', ['ionic'])
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
     $scope.user = {};
     $scope.error = {};
+    // Object styles for Option Gender Button to Register Account
+    $scope.genderMaleBStyle = {};
+    $scope.genderFemaleleBStyle = {};
+    // Gender variable for to save in Parse
+    $scope.optionGender = '';
+
+    $scope.genderMaleStyle= function(){
+    	$scope.genderMaleBStyle = {'background-color':'#48D1CC'};
+    	$scope.genderFemaleleBStyle = {};
+    	$scope.optionGender = 'male';
+    }
+
+	$scope.genderFemaleleStyle= function(){
+    	$scope.genderFemaleleBStyle = {'background-color':'#48D1CC'};
+    	$scope.genderMaleBStyle = {};
+    	$scope.optionGender = 'female';
+    }
 
     $scope.register = function() {
 
@@ -39,14 +56,15 @@ angular.module('starter.controllers', ['ionic'])
             showDelay: 0
         });
 
-				var dateBirthday = $scope.user.birthday;
-	       dateBirthday = dateBirthday.toLocaleDateString()
+		var dateBirthday = $scope.user.birthday;
+		dateBirthday = dateBirthday.toLocaleDateString()
 
         var user = new Parse.User();
         user.set("username", $scope.user.email);
         user.set("password", $scope.user.password);
         user.set("email", $scope.user.email);
         user.set("birthday", dateBirthday);
+        user.set("gender",$scope.optionGender);
 
         user.signUp(null, {
             success: function(user) {
@@ -74,6 +92,65 @@ angular.module('starter.controllers', ['ionic'])
     };
 })
 
+// ************************ LOGIN WITHOUT FACEBOOK **********************************
+.controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
+    $scope.user = {
+        username: null,
+        password: null
+    };
+
+    $scope.error = {};
+		$scope.currentUser = Parse.User.current();
+		// ******* LOGIN VALIDATION *******
+		if ($scope.currentUser == null ){
+			console.log($scope.currentUser);
+		} else {
+			console.log($scope.currentUser.id);
+			if ($scope.currentUser["attributes"].authData == undefined) {
+				console.log("este si casi psy ");
+				IdUsuario = String($scope.currentUser.id)
+			}else {
+				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+				console.log("facebook");
+			}
+			viewPromotion()
+			$state.go('app.playlists');
+		}
+
+    $scope.login = function() {
+        $scope.loading = $ionicLoading.show({
+            content: 'Logging in',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+        var user = $scope.user;
+        Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
+            success: function(user) {
+                $ionicLoading.hide();
+                $rootScope.user = user;
+                $rootScope.isLoggedIn = true;
+                $state.go('app.playlists', {
+                    clear: true
+                });
+            },
+            error: function(user, err) {
+                $ionicLoading.hide();
+                // The login failed. Check error to see why.
+                if (err.code === 101) {
+                    $scope.error.message = 'Invalid login credentials';
+                } else {
+                    $scope.error.message = 'An unexpected error has ' +
+                        'occurred, please try again.';
+                }
+                $scope.$apply();
+            }
+        });
+    };
+
+})
 
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope) {
@@ -83,6 +160,8 @@ angular.module('starter.controllers', ['ionic'])
 	Parse.Analytics.track("view", dimensions);
 
 	var query = new Parse.Query('AppCategory');
+	CategoryListName = [];
+	CategoryListNameConteo=[];
 	query = query.limit(100);
 	query.find({
 		success: function(results) {
@@ -142,7 +221,7 @@ angular.module('starter.controllers', ['ionic'])
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
       colorIconsFoother = []
-     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','frenzy_title.png']);
+     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','Z','','none','none']);
   });
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
@@ -155,7 +234,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','frenzy_title.png']);
+      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
@@ -172,7 +251,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','frenzy_title.png']);
+       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
     });
 })
 // *************************** SAVED CONTROLLER ***************************
@@ -188,17 +267,10 @@ angular.module('starter.controllers', ['ionic'])
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-        colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','frenzy_title.png']);
+      colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','Z','','none']);
     });
 })
-//*************************** TOOLS CONTROLLER ***************************
-.controller('toolsCtrl', function($scope, $stateParams){
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = []
-         colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','frenzy_title.png']);
-    });
-})
+
 // ********************* SUPERMARKET CONTROLLER ***************************
 .controller('SupermercadoCtrl', function($scope) {
 	var dimensions = {
@@ -237,7 +309,7 @@ angular.module('starter.controllers', ['ionic'])
 			}
 	});
 	function AddPromotionsSupermercado(Array) {
-			customer1.find().then(function(results) {
+		var cust = customer1.find().then(function(results) {
 				for (x in results) {
 					var CountPromotions = 0;
 					if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -255,8 +327,9 @@ angular.module('starter.controllers', ['ionic'])
 							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 						})
 						Super.push({
-							id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'
+							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
+							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
+							colorHeart: "white"
 						});
 					}
 				};
@@ -264,13 +337,35 @@ angular.module('starter.controllers', ['ionic'])
 					Super.push({oferta:"noHay"});
 				}
 			});
+
+			cust.then(function(){
+				var FavoriteHeart = new Parse.Query('Favorite')
+				FavoriteHeart.equalTo("UserID", IdUsuario);
+				FavoriteHeart.find({
+					success: function(results) {
+						for (a in results[0].attributes.CustomerID){
+							for (b in Super){
+								if (results[0].attributes.CustomerID[a] === Super[b].NameCategory){
+									if (Super[b].colorHeart === "white") {
+										Super[b].colorHeart  = "red";
+									}
+								}
+							}
+						}
+					},
+					error: function(myObject, error) {
+						// Error occureds
+						console.log( error );
+					}
+				});
+			});
 	}
 
 	setTimeout(function() {
 		$scope.$apply(function() {
 			$scope.chats = Super;
 		});
-	}, 1500);
+	}, 2000);
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
       colorIconsFoother = []
@@ -316,7 +411,7 @@ angular.module('starter.controllers', ['ionic'])
 	    }
 	});
 	function AddPromotionsRestaurantes(Array) {
-			customer2.find().then(function(results) {
+			var cust2 = customer2.find().then(function(results) {
 				for (x in results) {
 					var CountPromotions = 0;
 					if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -334,8 +429,9 @@ angular.module('starter.controllers', ['ionic'])
 							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 						})
 						Restaurantes.push({
-							id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'
+							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
+							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
+							colorHeart: "white"
 						});
 					}
 				};
@@ -343,13 +439,35 @@ angular.module('starter.controllers', ['ionic'])
 					Restaurantes.push({oferta:"noHay"});
 				}
 			});
+
+			cust2.then(function(){
+				var FavoriteHeart2 = new Parse.Query('Favorite')
+				FavoriteHeart2.equalTo("UserID", IdUsuario);
+				FavoriteHeart2.find({
+					success: function(results) {
+						for (a in results[0].attributes.CustomerID){
+							for (b in Restaurantes){
+								if (results[0].attributes.CustomerID[a] === Restaurantes[b].NameCategory){
+									if (Restaurantes[b].colorHeart === "white") {
+										Restaurantes[b].colorHeart  = "red";
+									}
+								}
+							}
+						}
+					},
+					error: function(myObject, error) {
+						// Error occureds
+						console.log( error );
+					}
+				});
+		  });
 	}
 
 	setTimeout(function() {
 		$scope.$apply(function() {
 			$scope.chats = Restaurantes;
 		});
-	}, 1500);
+	}, 2000);
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
@@ -395,7 +513,7 @@ angular.module('starter.controllers', ['ionic'])
 			}
 	});
 	function AddPromotionsModa(Array) {
-			customer3.find().then(function(results) {
+			var cust3 = customer3.find().then(function(results) {
 				for (x in results) {
 					var CountPromotions = 0;
 					if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -413,8 +531,9 @@ angular.module('starter.controllers', ['ionic'])
 							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 						})
 						Modas.push({
-							id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'
+							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
+							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
+							colorHeart: "white"
 						});
 					}
 				};
@@ -422,13 +541,37 @@ angular.module('starter.controllers', ['ionic'])
 					Modas.push({oferta:"noHay"});
 				}
 			});
+
+
+			cust3.then(function(){
+				var FavoriteHeart3 = new Parse.Query('Favorite')
+				FavoriteHeart3.equalTo("UserID", IdUsuario);
+				FavoriteHeart3.find({
+					success: function(results) {
+						for (a in results[0].attributes.CustomerID){
+							for (b in Modas){
+								if (results[0].attributes.CustomerID[a] === Modas[b].NameCategory){
+									console.log(Modas[b].NameCategory);
+									if (Modas[b].colorHeart === "white") {
+										Modas[b].colorHeart  = "red";
+									}
+								}
+							}
+						}
+					},
+					error: function(myObject, error) {
+						// Error occureds
+						console.log( error );
+					}
+				});
+			});
 	}
 
 	setTimeout(function () {
 		$scope.$apply(function () {
 			$scope.chats = Modas
 		});
-	}, 1500);
+	}, 2000);
 
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
@@ -474,7 +617,7 @@ angular.module('starter.controllers', ['ionic'])
 			}
 	});
 	function AddPromotionsEntretenimiento(Array) {
-			customer4.find().then(function(results) {
+			var cust4 = customer4.find().then(function(results) {
 				for (x in results) {
 					var CountPromotions = 0;
 					if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -492,8 +635,9 @@ angular.module('starter.controllers', ['ionic'])
 							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 						})
 						Entretenimientos.push({
-							id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'
+							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
+							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
+							colorHeart: "white"
 						});
 					}
 				};
@@ -501,13 +645,35 @@ angular.module('starter.controllers', ['ionic'])
 					Entretenimientos.push({oferta:"noHay"});
 				}
 			});
+
+			cust4.then(function(){
+				var FavoriteHeart4 = new Parse.Query('Favorite')
+				FavoriteHeart4.equalTo("UserID", IdUsuario);
+				FavoriteHeart4.find({
+					success: function(results) {
+						for (a in results[0].attributes.CustomerID){
+							for (b in Entretenimientos){
+								if (results[0].attributes.CustomerID[a] === Entretenimientos[b].NameCategory){
+									if (Entretenimientos[b].colorHeart === "white") {
+										Entretenimientos[b].colorHeart  = "red";
+									}
+								}
+							}
+						}
+					},
+					error: function(myObject, error) {
+						// Error occureds
+						console.log( error );
+					}
+				});
+			});
 	}
 
 	setTimeout(function() {
 		$scope.$apply(function() {
 				$scope.chats = Entretenimientos;
 		});
-	}, 1500);
+	}, 2000);
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
@@ -552,7 +718,7 @@ angular.module('starter.controllers', ['ionic'])
 			}
 	});
 	function AddPromotionsElectronicos(Array) {
-			customer5.find().then(function(results) {
+		var cust5 =	customer5.find().then(function(results) {
 				for (x in results) {
 					var CountPromotions = 0;
 					if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -570,8 +736,9 @@ angular.module('starter.controllers', ['ionic'])
 							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
 						})
 						Electronico.push({
-							id:x,name: listSupermercado[x], promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe'
+							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
+							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
+							colorHeart: "white"
 						});
 					}
 				};
@@ -579,13 +746,35 @@ angular.module('starter.controllers', ['ionic'])
 					Electronico.push({oferta:"noHay"});
 				}
 			});
+
+			cust5.then(function(){
+				var FavoriteHeart5 = new Parse.Query('Favorite')
+				FavoriteHeart5.equalTo("UserID", IdUsuario);
+				FavoriteHeart5.find({
+					success: function(results) {
+						for (a in results[0].attributes.CustomerID){
+							for (b in Electronico){
+								if (results[0].attributes.CustomerID[a] === Electronico[b].NameCategory){
+									if (Electronico[b].colorHeart === "white") {
+										Electronico[b].colorHeart  = "red";
+									}
+								}
+							}
+						}
+					},
+					error: function(myObject, error) {
+						// Error occureds
+						console.log( error );
+					}
+				});
+			});
 	}
 
 	setTimeout(function() {
 		$scope.$apply(function() {
 				$scope.chats = Electronico;
 		});
-	}, 1500);
+	}, 2000);
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
@@ -593,12 +782,107 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // *************************** OTHERS CONTROLLER **************************
-.controller('OtrosCtrl', function($scope, Otros) {
+.controller('OtrosCtrl', function($scope) {
+
+
 	var dimensions = {
 		name: 'othersMenu'
 	};
+
 	Parse.Analytics.track("view", dimensions);
-	$scope.chats = Otros.all();
+	var customer6 = new Parse.Query('Customer');
+	Parse.Cloud.run('GetPromotions', {}, {
+		success: function(result) {
+				/* Call GetQuantityPromotions function in Parse Cloud Code and
+				send result like parameter */
+				Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
+						success: function(result) {
+								/* Call GetAverageSavings function in Parse Cloud Code and
+								send result like parameter */
+								Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
+										success: function(result) {
+												/* Call AddPromotions function and send result like parameter */
+												AddPromotionsOtros(result);
+										},
+										error: function(error) {
+												/* Show error if call failed */
+												console.log(error);
+										}
+								});
+						},
+						error: function(error) {
+								/* Show error if call failed */
+								console.log(error);
+						}
+				});
+		},
+		error: function(error) {
+				/* Show error if call failed */
+				console.log(error);
+		}
+	});
+
+	function AddPromotionsOtros(Array) {
+	var cust6 =	customer6.find().then(function(results) {
+		Otro = [];
+		console.log(Otro,"asdasd");
+			for (x in results) {
+				var CountPromotions = 0;
+				if (results[x].attributes.Name in Array.Quantities[0]) {
+					CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
+					average = Array.averageSavingscustomer[results[x].attributes.Name];
+				} else {
+					CountPromotions = 0;
+					average = 0;
+				};
+				if("Otros" == results[x].attributes.CategoryApp){
+					name = results[x].attributes.Name;
+					listSupermercado.push(results[x].attributes.Logo._url);
+					listNameSupermercado.push(name.split(" ").join("_"));
+					Categorys.push({
+						nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
+					})
+					Otro.push({
+						id:x,name:results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
+						lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
+						colorHeart: "white"
+					});
+				}
+			};
+			console.log(Otro,"otro");
+			if (Otro.length == 0) {
+				Otro.push({oferta:"noHay"});
+			}
+		});
+
+		cust6.then(function(){
+			var FavoriteHeart6 = new Parse.Query('Favorite')
+			FavoriteHeart6.equalTo("UserID", IdUsuario);
+			FavoriteHeart6.find({
+				success: function(results) {
+					for (a in results[0].attributes.CustomerID){
+						for (b in Otro){
+							if (results[0].attributes.CustomerID[a] === Otro[b].NameCategory){
+								if (Otro[b].colorHeart === "white") {
+									Otro[b].colorHeart  = "red";
+								}
+							}
+						}
+					}
+				},
+				error: function(myObject, error) {
+					// Error occureds
+					console.log( error );
+				}
+			});
+		});
+	}
+
+	setTimeout(function() {
+		$scope.$apply(function() {
+				$scope.Others = Otro;
+		});
+	}, 2000);
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
 	$scope.$on('$ionicView.enter', function() {
 			colorIconsFoother = []
@@ -650,6 +934,7 @@ angular.module('starter.controllers', ['ionic'])
 	$scope.categoryNameCoupon = Paiz.get($stateParams.superId);
 	$scope.$on('$ionicView.enter', function() {
 			colorIconsFoother = []
+			console.log($scope.categoryNameCoupon[0][0].Category);
 			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
 	});
 })

@@ -22,7 +22,7 @@ var conteoPromociones = [];
 var conteoPromo = {};
 var total = 0;
 // ********* PHOTO *********
-var PhotoPaiz = [];
+var CurrentPromotion = [];
 // ********* CATEGORIES VARIABLE *********
 var Category = [];
 var IdCategory;
@@ -207,16 +207,18 @@ app.factory('Paiz', function() {
 			ContPromo = [];
 			IdCategory = superId;
 			Cupcont=[];
+			var validar = "existe"
 
 			for (a in Cupons) {
 				if (superId == Cupons[a].Category) {
 					Cupcont.push(Cupons[a])
+
 				}
 			}
 
-			for (c in PhotoPaiz) {
-				if (superId === PhotoPaiz[c].Category) {
-					Category.push(PhotoPaiz[c]);
+			for (c in CurrentPromotion) {
+				if (superId === CurrentPromotion[c].Category) {
+					Category.push(CurrentPromotion[c]);
 				}
 			}
 
@@ -232,10 +234,17 @@ app.factory('Paiz', function() {
 				}
 			}
 
-			if (PhotoPaiz) {
+			if (CurrentPromotion) {
+				if (Cupcont.length == 0) {
+					validar = "no"
+					console.log("no hay nada");
+				}
+				console.log(Cupcont.length,"conteo");
 				ALL.push(Category)
 				ALL.push(dato)
 				ALL.push(ContPromo)
+				console.log(dato[0].name,"archivo");
+				ALL.push([{cont:Cupcont.length,t:dato[0].name,Validar:validar}])
 				return ALL;
 			}
 			return null;
@@ -281,16 +290,16 @@ var AllourFavorites = [];
 
 app.factory('OurFavorites', function() {
 	AllourFavorites = [];
-	var OurFavorites = PhotoPaiz
+	var OurFavorites = CurrentPromotion
 	var Customer = new Parse.Query('Customer');
 
 	return {
 		all: function() {
 			AllourFavorites = [];
-			for (a in PhotoPaiz) {
-				if (PhotoPaiz[a].Our_Favorites === true ) {
-					AllourFavorites.push(PhotoPaiz[a]);
-					Customer.equalTo("Name",PhotoPaiz[a].Category);
+			for (a in CurrentPromotion) {
+				if (CurrentPromotion[a].Our_Favorites === true ) {
+					AllourFavorites.push(CurrentPromotion[a]);
+					Customer.equalTo("Name",CurrentPromotion[a].Category);
 					var cust = Customer.find({
 						success: function(results) {
 							for (i in AllourFavorites) {
@@ -339,7 +348,7 @@ app.factory('Cupons', function() {
 			// INSTEAD ALL COUPON IN ALL COUPON VARIABLE
 			allCupon = AllCupon;
 
-			if (PhotoPaiz) {
+			if (CurrentPromotion) {
 				CuponALL.push(allCupon)
 				CuponALL.push(DatoCupon)
 				CuponALL.push(ContCupon)
@@ -392,6 +401,8 @@ var cup = Cupon.find({
 							description:results[x].attributes.PromotionDescription,
 							customer:results[x].attributes.Customer[i],
 							PhotoCupon:results[x].attributes.PhotoCupon,
+							Publication_Date:results[x].attributes.PublicationDate,
+							End_Date:results[x].attributes.EndDate,
 							IDCupon:results[x].id,
 							Categoryapp:results[x].attributes.CategoryApp
 						});
@@ -408,6 +419,8 @@ var cup = Cupon.find({
 							description:results[x].attributes.PromotionDescription,
 							customer:results[x].attributes.Customer[i],
 							PhotoCupon:results[x].attributes.PhotoCupon,
+							Publication_Date:results[x].attributes.PublicationDate,
+							End_Date:results[x].attributes.EndDate,
 							IDCupon:results[x].id,
 							Categoryapp:results[x].attributes.CategoryApp
 						});
@@ -415,7 +428,9 @@ var cup = Cupon.find({
 				}
 			}
 		}
+		console.log(Cupons)
 	},
+
 	error: function(myObject, error) {
 		// Error occured
 		console.log( error );
@@ -452,7 +467,7 @@ customer = customer.limit(100);
 
 var prom = promotion.find({
 	success: function(results) {
-		PhotoPaiz = [];
+		CurrentPromotion = [];
 
 		for (x in results) {
 			promociones.push(results[x])
@@ -460,7 +475,7 @@ var prom = promotion.find({
 			for (i in results[x].attributes.Customer){
 				if (true === results[x].attributes.Status){
 					if (results[x].attributes.Photo === null || results[x].attributes.Photo === undefined){
-						PhotoPaiz.push({nul:"sin",name:results[x].attributes.Name,
+						CurrentPromotion.push({nul:"sin",name:results[x].attributes.Name,
 							presentation:results[x].attributes.Presentation,
 							description:results[x].attributes.PromotionDescription,
 							basePrice:results[x].attributes.BasePrice,
@@ -476,7 +491,7 @@ var prom = promotion.find({
 							ColorPin: "silver"
 						});
 					}else{
-						PhotoPaiz.push({nul:"con",photo:results[x].attributes.Photo._url,
+						CurrentPromotion.push({nul:"con",photo:results[x].attributes.Photo._url,
 							name:results[x].attributes.Name,
 							presentation:results[x].attributes.Presentation,
 							description:results[x].attributes.PromotionDescription,
@@ -496,7 +511,7 @@ var prom = promotion.find({
 				}
 			}
 		}
-		return PhotoPaiz;
+		return CurrentPromotion;
 	},
 	error: function(myObject, error) {
 		// Error occureds
@@ -510,10 +525,10 @@ prom.then(function(){
 	PromoSavess.find({
 		success: function(results) {
 			for (a in results[0].attributes.PromotionID){
-				for (b in PhotoPaiz){
-					if (results[0].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion){
-						if (PhotoPaiz[b].ColorPin === "silver") {
-							PhotoPaiz[b].ColorPin  = "purple";
+				for (b in CurrentPromotion){
+					if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+						if (CurrentPromotion[b].ColorPin === "silver") {
+							CurrentPromotion[b].ColorPin  = "purple";
 						}
 					}
 				}
@@ -621,11 +636,11 @@ function Promotions(id){
 			for (x in results) {
 				if (results[x].attributes.UserID === IdUsuario){
 					for (a in results[x].attributes.PromotionID){
-						for (b in PhotoPaiz){
-							if (results[x].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion && id === PhotoPaiz[b].Category){
-								var cssColorpinOffer = document.getElementById(PhotoPaiz[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
+						for (b in CurrentPromotion){
+							if (results[x].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion && id === CurrentPromotion[b].Category){
+								var cssColorpinOffer = document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
 								if (cssColorpinOffer=="silver"){
-									document.getElementById(PhotoPaiz[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
+									document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
 								}
 							}
 						}
@@ -670,9 +685,9 @@ function viewFavorite() {
 	favorite.each(function(results) {
 		for(b in results.attributes.CustomerID){
 			if(results.attributes.UserID===IdUsuario){
-				for (c in PhotoPaiz){
-					if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
-						AllFavorite.push(PhotoPaiz[c]);
+				for (c in CurrentPromotion){
+					if (CurrentPromotion[c].Category === results.attributes.CustomerID[b]){
+						AllFavorite.push(CurrentPromotion[c]);
 					}
 				}
 			}

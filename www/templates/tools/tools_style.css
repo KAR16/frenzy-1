@@ -68,3 +68,13 @@ input[id^="spoiler"]:checked + label + .spoiler {
     height: auto;
     opacity: 1;
 }
+.settingsBoxHide{
+  width: 86%;
+  margin-left: 7%;
+  margin-right: 7%;
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 2px 2px 2px 2px grey;
+}
