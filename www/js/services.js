@@ -470,10 +470,11 @@ var prom = promotion.find({
 		CurrentPromotion = [];
 
 		for (x in results) {
-			promociones.push(results[x])
+
 			listPromoSuper.push(results[x].attributes.Customer)
 			for (i in results[x].attributes.Customer){
 				if (true === results[x].attributes.Status){
+						promociones.push(results[x])
 					if (results[x].attributes.Photo === null || results[x].attributes.Photo === undefined){
 						CurrentPromotion.push({nul:"sin",name:results[x].attributes.Name,
 							presentation:results[x].attributes.Presentation,
@@ -706,6 +707,7 @@ function viewPromotion(){
 
 			for (var i = 0; i < results[0].attributes.PromotionID.length; i++){
 				for(x in promociones) {
+
 					if (results[0].attributes.PromotionID[i] === promociones[x].id) {
 						AllPromotion.push(promociones[x].attributes);
 						AllPromotion[con]["PromotionId"] = promociones[x].id;

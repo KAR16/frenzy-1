@@ -90,10 +90,12 @@ function changeColorPinOfferts(id, IDPromotion) {
 		document.getElementById(id).style.color = "purple";
 		SavePromotion(IdUsuario, Promo)
 		reload()
+    viewPromotion()
 	} else {
 		document.getElementById(id).style.color = "silver";
 		DeletePromotion(IdUsuario, Promo)
 		reload()
+    viewPromotion()
 	}
 	reload()
 };

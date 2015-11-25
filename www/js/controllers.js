@@ -109,11 +109,12 @@ angular.module('starter.controllers', ['ionic'])
 			if ($scope.currentUser["attributes"].authData == undefined) {
 				console.log("este si casi psy ");
 				IdUsuario = String($scope.currentUser.id)
+				        viewPromotion()
 			}else {
 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+				        viewPromotion()
 				console.log("facebook");
 			}
-			viewPromotion()
 			$state.go('app.playlists');
 		}
 		$scope.forgot = function() {
@@ -162,6 +163,7 @@ angular.module('starter.controllers', ['ionic'])
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
+								viewPromotion()
                 $state.go('app.playlists', {
                     clear: true
                 });
