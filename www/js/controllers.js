@@ -43,11 +43,20 @@ angular.module('starter.controllers', ['ionic'])
     	$scope.genderMaleBStyle = {};
     	$scope.optionGender = 'female';
     }
-
+	$scope.Alert = function () {
+		alert("call function")
+		if ($scope.user.email == undefined ) {
+			alert("No puede estar vacio, porfavor ingrese un correo")
+		}else if($scope.user.password == undefined) {
+				alert("No puede estar vacio, porfavor ingrese una contraseña")
+			}else {
+				$scope.ValidarEmail = "none"
+				$scope.Validarpassword = "none"
+				$scope.register()
+			}
+	}
     $scope.register = function() {
-
         // TODO: add age verification step
-
         $scope.loading = $ionicLoading.show({
             content: 'Sending',
             animation: 'fade-in',
@@ -80,11 +89,14 @@ angular.module('starter.controllers', ['ionic'])
                 if (error.code === 125) {
                     $scope.error.message = 'Please specify a valid email ' +
                         'address';
+										alert("Por favor, indique una dirección de correo electrónico válida")
                 } else if (error.code === 202) {
                     $scope.error.message = 'The email address is already ' +
                         'registered';
+										alert('La dirección de correo electrónico ya está registrado')
                 } else {
                     $scope.error.message = error.message;
+										alert(error.message)
                 }
                 $scope.$apply();
             }
