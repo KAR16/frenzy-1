@@ -80,9 +80,10 @@ angular.module('starter.controllers', ['ionic'])
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
-                $state.go('app.playlists', {
+                $state.go('login', {
                     clear: true
                 });
+								alert("Se envio una confirmacion a tu correo electronico")
             },
             error: function(user, error) {
                 $ionicLoading.hide();
@@ -171,15 +172,24 @@ angular.module('starter.controllers', ['ionic'])
 
         var user = $scope.user;
         Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
-            success: function(user) {
-                $ionicLoading.hide();
-                $rootScope.user = user;
-                $rootScope.isLoggedIn = true;
-								viewPromotion()
-                $state.go('app.playlists', {
-                    clear: true
-                });
-            },
+					success: function(user) {
+						console.log(user);
+						if (user.attributes.emailVerified == false) {
+							$ionicLoading.hide();
+							$rootScope.user = user;
+							$rootScope.isLoggedIn = true;
+							console.log("no se ha verificado su correo");
+							alert("no se ha verificado su correo")
+						}else {
+							$ionicLoading.hide();
+							$rootScope.user = user;
+							$rootScope.isLoggedIn = true;
+							$state.go('app.playlists', {
+									clear: true
+							});
+						}
+
+					},
             error: function(user, err) {
                 $ionicLoading.hide();
                 // The login failed. Check error to see why.
