@@ -330,6 +330,7 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* SUPERMARKET CONTROLLER ***************************
 .controller('SupermercadoCtrl', function($scope) {
+	Super=[]
 	var dimensions = {
 		name: 'supermarketMenu'
 	};
@@ -638,6 +639,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ************************** ENTERTAINMENT CONTROLLER ********************
 .controller('EntretenimientoCtrl', function($scope) {
+	Entretenimientos=[]
 	var dimensions = {
 		name: 'entertainmentMenu'
 	};
@@ -739,6 +741,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 // *************************** ELECTRONICS CONTROLLER *********************
 .controller('ElectronicosCtrl', function($scope) {
+	Electronico=[]
 	var dimensions = {
 		name: 'electronicsMenu'
 	};

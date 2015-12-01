@@ -228,6 +228,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   templateUrl: "templates/tutorial/tutorial.html",
   controller:"tutorialController"
 })
+// ******** TUTORIAL2 *****
+  .state('tutorial2', {
+    url: "/tutorial2",
+    templateUrl: "templates/tutorial2/tutorial2.html",
+    controller:"tutorial2Controller"
+  })
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
@@ -415,15 +421,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   console.log("HOLA MUNdo");
   $scope.slideChanged = function(index) {
     switch(index) {
-        case 0:
-          console.log('I am on slide 1');
-          break;
-        case 1:
-          console.log('I am on slide 2');
-          break;
-        case 2:
-          console.log('I am on slide 3');
-          break;
         case 3:
           console.log('I am on slide 4');
           $state.go('login2');
@@ -436,17 +433,34 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   $scope.currentUser = Parse.User.current();
   console.log($scope.currentUser,"curent")
   if ($scope.currentUser == null ){
-
-
-
-  }else{
-      console.log($scope.currentUser["attributes"].authData.facebook.id)
-      IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-      viewPromotion()
-
-      $state.go('app.playlists');
-  }
+  			console.log($scope.currentUser);
+  		} else {
+  			console.log($scope.currentUser.id);
+  			if ($scope.currentUser["attributes"].authData == undefined) {
+  				console.log("este si casi psy ");
+  				IdUsuario = String($scope.currentUser.id)
+  				        viewPromotion()
+  			}else {
+  				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+  				        viewPromotion()
+  				console.log("facebook");
+  			}
+  			$state.go('app.playlists');
+  		}
 }])
+/*************************  TUTORIAL NO.2 ******************************/
+.controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
+  console.log("HOLA MUNdo");
+  $scope.slideChanged = function(index) {
+    switch(index) {
+        case 3:
+          console.log('I am on slide 4');
+          $state.go('app.herramientas');
+          break;
+      }
+    }
+}])
+
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
   $scope.logout = function() {
