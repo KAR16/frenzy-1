@@ -44,7 +44,6 @@ angular.module('starter.controllers', ['ionic'])
     	$scope.optionGender = 'female';
     }
 	$scope.Alert = function () {
-		alert("call function")
 		if ($scope.user.email == undefined ) {
 			alert("No puede estar vacio, porfavor ingrese un correo")
 		}else if($scope.user.password == undefined) {
@@ -56,6 +55,11 @@ angular.module('starter.controllers', ['ionic'])
 			}
 	}
     $scope.register = function() {
+			var dateBirthday = $scope.user.birthday;
+			if (dateBirthday) {
+	//			alert("tiene algo ")
+					dateBirthday = dateBirthday.toLocaleDateString()
+			}
         // TODO: add age verification step
         $scope.loading = $ionicLoading.show({
             content: 'Sending',
@@ -64,9 +68,6 @@ angular.module('starter.controllers', ['ionic'])
             maxWidth: 200,
             showDelay: 0
         });
-
-		var dateBirthday = $scope.user.birthday;
-		dateBirthday = dateBirthday.toLocaleDateString()
 
         var user = new Parse.User();
         user.set("username", $scope.user.email);
@@ -81,8 +82,10 @@ angular.module('starter.controllers', ['ionic'])
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
                 $state.go('login', {
+
                     clear: true
                 });
+								Parse.User.logOut();
 								alert("Se envio una confirmacion a tu correo electronico")
             },
             error: function(user, error) {

@@ -110,3 +110,13 @@
   padding-top: 2px;
   color: white;
 }
+.termsLogin{
+  color:white;
+  font-weight: bolder;
+  text-align: center;
+}
+.forgotYourPassword{
+  color:white;
+  font-weight: bolder;
+  text-decoration: underline;
+}

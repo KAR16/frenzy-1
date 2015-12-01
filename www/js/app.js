@@ -222,6 +222,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/menu/menu.html",
 		controller: 'menuCtrl'
 	})
+  // ******** TUTORIAL *****
+.state('tutorial', {
+  url: "/tutorial",
+  templateUrl: "templates/tutorial/tutorial.html",
+  controller:"tutorialController"
+})
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
@@ -396,7 +402,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/login');
+	$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -404,13 +410,53 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
 }])
+/*************************  TUTORIAL  ******************************/
+.controller('tutorialController', ['$scope', '$state', function($scope, $state) {
+  console.log("HOLA MUNdo");
+  $scope.slideChanged = function(index) {
+    switch(index) {
+        case 0:
+          console.log('I am on slide 1');
+          break;
+        case 1:
+          console.log('I am on slide 2');
+          break;
+        case 2:
+          console.log('I am on slide 3');
+          break;
+        case 3:
+          console.log('I am on slide 4');
+          $state.go('login2');
+          break;
+      }
+    }
+  function doSomething(){
+  	console.log("hola");
+  }
+  $scope.currentUser = Parse.User.current();
+  console.log($scope.currentUser,"curent")
+  if ($scope.currentUser == null ){
 
+
+
+  }else{
+      console.log($scope.currentUser["attributes"].authData.facebook.id)
+      IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+      viewPromotion()
+
+      $state.go('app.playlists');
+  }
+}])
+/******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
   $scope.logout = function() {
 
     Parse.User.logOut();
     $state.go('login');
   };
+
+
+
   // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
       colorIconsFoother = []
