@@ -21,18 +21,18 @@
             <!--*****  mail  *****-->
             <p class="subtitle">Correo electronico</p>
             <!--*****  MAIL INPUT BOX  *****-->
-            <label class="item item-input inputBox">
-              <input type="email" ng-model="user.email" placeholder="correo@ejemplo.com">
+            <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
+              <input type="email" ng-model="user.email" placeholder="correo@ejemplo.com" >
             </label>
             <!--*****  password  *****-->
             <!--*****  PASSWORD TITLE  *****-->
             <p class="subtitle2" >Contraseña</p>
             <!--*****  PASSSWORD INPUT BOX  *****-->
-            <label class="item item-input inputBox">
+            <label class="item item-input inputBox" style="border:{{Validarpassword}}" >
               <input type="password" ng-model="user.password">
             </label>
 ​            <!--*****  GENDER DIV  *****-->
-            <p class="genderTitle">Genero</p>
+            <p class="genderTitle">Genero (*)</p>
             <!--*****  MALE  *****-->
             <div class="row genderRow">
               <div class="col col-50 genderBoxMale item item-input" value="set background" ng-click="genderMaleStyle()" ng-style="genderMaleBStyle">
@@ -44,13 +44,13 @@
               </div>
             </div>
             <!--*****  BIRTHDAY TITLE  *****-->
-            <p class="dateTitle">Fecha de nacimiento  </p>
+            <p class="dateTitle">Fecha de nacimiento (*)</p>
             <!--*****  BIRTHDAY INPUT  *****-->
             <label class="item item-input dateBox">
               <input type="date" ng-model='user.birthday'>
             </label>
             <center>
-              <div class="enterButton" ng-click='register()'>
+              <div class="enterButton" ng-click='Alert()'>
                 <h3 class="enterButtonTitle open_sans">Entrar</h3>
               </div>
             </center>
@@ -59,6 +59,15 @@
       </div>
       <div class="col col-10"></div>
     </div>
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80">
+        <p class="loginTitle8">
+          Inicia secion con Facebook o con una cuenta existente
+        </p>
+      </div>
+      <div class="col col-10"></div>
+    </div>  
     <div class="row" ng-controller="loginCtrl">
       <div class="col col-10"></div>
       <div class="col col-80" ng-controller="loginCtrl">
@@ -72,6 +81,15 @@
             </a>
           </div>
         </div>
+      </div>
+      <div class="col col-10"></div>
+    </div>
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80">
+        <p class="termsLogin">
+          * Los campos genero y fecha de nacimiento no son obligatorios, te recomendamos llenarlos para una mayor satisfacción en nuestra aplicación
+        </p>
       </div>
       <div class="col col-10"></div>
     </div>

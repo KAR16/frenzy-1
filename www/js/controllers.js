@@ -43,11 +43,24 @@ angular.module('starter.controllers', ['ionic'])
     	$scope.genderMaleBStyle = {};
     	$scope.optionGender = 'female';
     }
-
+	$scope.Alert = function () {
+		if ($scope.user.email == undefined ) {
+			alert("No puede estar vacio, porfavor ingrese un correo")
+		}else if($scope.user.password == undefined) {
+				alert("No puede estar vacio, porfavor ingrese una contraseña")
+			}else {
+				$scope.ValidarEmail = "none"
+				$scope.Validarpassword = "none"
+				$scope.register()
+			}
+	}
     $scope.register = function() {
-
+			var dateBirthday = $scope.user.birthday;
+			if (dateBirthday) {
+	//			alert("tiene algo ")
+					dateBirthday = dateBirthday.toLocaleDateString()
+			}
         // TODO: add age verification step
-
         $scope.loading = $ionicLoading.show({
             content: 'Sending',
             animation: 'fade-in',
@@ -55,9 +68,6 @@ angular.module('starter.controllers', ['ionic'])
             maxWidth: 200,
             showDelay: 0
         });
-
-		var dateBirthday = $scope.user.birthday;
-		dateBirthday = dateBirthday.toLocaleDateString()
 
         var user = new Parse.User();
         user.set("username", $scope.user.email);
@@ -71,20 +81,26 @@ angular.module('starter.controllers', ['ionic'])
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
-                $state.go('app.playlists', {
+                $state.go('login', {
+
                     clear: true
                 });
+								Parse.User.logOut();
+								alert("Se envio una confirmacion a tu correo electronico")
             },
             error: function(user, error) {
                 $ionicLoading.hide();
                 if (error.code === 125) {
                     $scope.error.message = 'Please specify a valid email ' +
                         'address';
+										alert("Por favor, indique una dirección de correo electrónico válida")
                 } else if (error.code === 202) {
                     $scope.error.message = 'The email address is already ' +
                         'registered';
+										alert('La dirección de correo electrónico ya está registrado')
                 } else {
                     $scope.error.message = error.message;
+										alert(error.message)
                 }
                 $scope.$apply();
             }
@@ -159,15 +175,24 @@ angular.module('starter.controllers', ['ionic'])
 
         var user = $scope.user;
         Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
-            success: function(user) {
-                $ionicLoading.hide();
-                $rootScope.user = user;
-                $rootScope.isLoggedIn = true;
-								viewPromotion()
-                $state.go('app.playlists', {
-                    clear: true
-                });
-            },
+					success: function(user) {
+						console.log(user);
+						if (user.attributes.emailVerified == false) {
+							$ionicLoading.hide();
+							$rootScope.user = user;
+							$rootScope.isLoggedIn = true;
+							console.log("no se ha verificado su correo");
+							alert("no se ha verificado su correo")
+						}else {
+							$ionicLoading.hide();
+							$rootScope.user = user;
+							$rootScope.isLoggedIn = true;
+							$state.go('app.playlists', {
+									clear: true
+							});
+						}
+
+					},
             error: function(user, err) {
                 $ionicLoading.hide();
                 // The login failed. Check error to see why.
@@ -305,6 +330,7 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* SUPERMARKET CONTROLLER ***************************
 .controller('SupermercadoCtrl', function($scope) {
+	Super=[]
 	var dimensions = {
 		name: 'supermarketMenu'
 	};
@@ -613,6 +639,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ************************** ENTERTAINMENT CONTROLLER ********************
 .controller('EntretenimientoCtrl', function($scope) {
+	Entretenimientos=[]
 	var dimensions = {
 		name: 'entertainmentMenu'
 	};
@@ -714,6 +741,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 // *************************** ELECTRONICS CONTROLLER *********************
 .controller('ElectronicosCtrl', function($scope) {
+	Electronico=[]
 	var dimensions = {
 		name: 'electronicsMenu'
 	};

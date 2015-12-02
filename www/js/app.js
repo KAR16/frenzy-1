@@ -222,6 +222,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/menu/menu.html",
 		controller: 'menuCtrl'
 	})
+  // ******** TUTORIAL *****
+.state('tutorial', {
+  url: "/tutorial",
+  templateUrl: "templates/tutorial/tutorial.html",
+  controller:"tutorialController"
+})
+// ******** TUTORIAL2 *****
+  .state('tutorial2', {
+    url: "/tutorial2",
+    templateUrl: "templates/tutorial2/tutorial2.html",
+    controller:"tutorial2Controller"
+  })
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
@@ -396,7 +408,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/login');
+	$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -404,13 +416,61 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
 }])
+/*************************  TUTORIAL  ******************************/
+.controller('tutorialController', ['$scope', '$state', function($scope, $state) {
+  console.log("HOLA MUNdo");
+  $scope.slideChanged = function(index) {
+    switch(index) {
+        case 3:
+          console.log('I am on slide 4');
+          $state.go('login2');
+          break;
+      }
+    }
+  function doSomething(){
+  	console.log("hola");
+  }
+  $scope.currentUser = Parse.User.current();
+  console.log($scope.currentUser,"curent")
+  if ($scope.currentUser == null ){
+  			console.log($scope.currentUser);
+  		} else {
+  			console.log($scope.currentUser.id);
+  			if ($scope.currentUser["attributes"].authData == undefined) {
+  				console.log("este si casi psy ");
+  				IdUsuario = String($scope.currentUser.id)
+  				        viewPromotion()
+  			}else {
+  				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+  				        viewPromotion()
+  				console.log("facebook");
+  			}
+  			$state.go('app.playlists');
+  		}
+}])
+/*************************  TUTORIAL NO.2 ******************************/
+.controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
+  console.log("HOLA MUNdo");
+  $scope.slideChanged = function(index) {
+    switch(index) {
+        case 3:
+          console.log('I am on slide 4');
+          $state.go('app.herramientas');
+          break;
+      }
+    }
+}])
 
+/******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
   $scope.logout = function() {
 
     Parse.User.logOut();
     $state.go('login');
   };
+
+
+
   // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
       colorIconsFoother = []
