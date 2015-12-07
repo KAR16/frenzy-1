@@ -1021,6 +1021,32 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
+
+	// For to update QuantityExchanged
+	var CuponClassExchanged = new Parse.Object.extend("Cupon");
+	var cuponClassExchanged = new CuponClassExchanged();
+	var query = new Parse.Query("Cupon");
+
+	$scope.countCoupon = function(id){
+			query.equalTo("objectId",id)
+			query.find({
+				success: function(results){
+					if(results == false) {
+							alert("No hay cupones para canjear sorry :c	!!")
+					}
+					else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
+									cuponClassExchanged.id = id;
+									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+									cuponClassExchanged.save();
+						} else {
+									cuponClassExchanged.id = id;
+									cuponClassExchanged.set("Status", false);
+									cuponClassExchanged.save();
+						}
+				}
+			})
+	}
+
 		/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
 						or hide it  ****/
@@ -1035,7 +1061,8 @@ angular.module('starter.controllers', ['ionic'])
 		z = Url;
 		window.open(z);
 	}
-	$scope.llenar1=function(){
+	$scope.llenar1=function(id){
+		$scope.countCoupon(id);
 		displayNoneInline=[{none:"none",inline:"inline"}];
   };
   $scope.llenar2=function(){
@@ -1074,6 +1101,36 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
+
+		// For to update QuantityExchanged
+		var CuponClassExchanged = new Parse.Object.extend("Cupon");
+		var cuponClassExchanged = new CuponClassExchanged();
+		var query = new Parse.Query("Cupon");
+		query.equalTo("objectId",$stateParams.DescriptionID)
+		query.equalTo("Status",true)
+
+		$scope.countCoupon = function(){
+				query.find({
+					success: function(results){
+						if(results == false) {
+						alert("No hay cupones para canjear sorry :c	!!")
+					} else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
+								cuponClassExchanged.id = $stateParams.DescriptionID;
+								cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+								cuponClassExchanged.save();
+								console.log(parseInt(results[0].attributes.QuantityExchanged)+1)
+								alert("Has cambiado tu compon!!")
+					} else if(parseInt(results[0].attributes.QuantityExchanged) === parseInt(results[0].attributes.QuantityCoupons)){
+								cuponClassExchanged.id = $stateParams.DescriptionID;
+								cuponClassExchanged.set("Status", false);
+								console.log(parseInt(results[0].attributes.QuantityExchanged))
+								cuponClassExchanged.save();
+								alert("No hay cupones para canjear sorry :c	!!")
+					}
+					}
+				})
+		}
+
 		/*****  noneDisplay equalTo displayNoneInline for
 		 				call the list and show or hide barcode image
 						in DescriptionCupons  *****/
