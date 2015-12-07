@@ -110,7 +110,27 @@ angular.module('starter.controllers', ['ionic'])
 
 // ************************ LOGIN WITHOUT FACEBOOK **********************************
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
-    $scope.user = {
+		Parse.Cloud.run('verifyFinalizedPromotions',{}, {
+			success: function(result) {
+				//result is 'Hello world!'
+				console.log(result)
+			},
+				error: function(error) {
+				console.log(error)
+			}
+		});
+
+		Parse.Cloud.run('verifyFinalizedCoupons',{}, {
+			success: function(result) {
+				//result is 'Hello world!'
+				console.log(result)
+			},
+				error: function(error) {
+				console.log(error)
+			}
+		});
+
+		$scope.user = {
         username: null,
         password: null
     };
@@ -120,6 +140,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ******* LOGIN VALIDATION *******
 		if ($scope.currentUser == null ){
 			console.log($scope.currentUser);
+
 		} else {
 			console.log($scope.currentUser.id);
 			if ($scope.currentUser["attributes"].authData == undefined) {
