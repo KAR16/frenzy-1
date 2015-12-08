@@ -1041,12 +1041,15 @@ angular.module('starter.controllers', ['ionic'])
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
 
+
+
 	// For to update QuantityExchanged
 	var CuponClassExchanged = new Parse.Object.extend("Cupon");
 	var cuponClassExchanged = new CuponClassExchanged();
 	var query = new Parse.Query("Cupon");
 
 	$scope.countCoupon = function(id){
+
 		query.equalTo("objectId",id)
 		var couponCash =	query.find({
 				success: function(results){
@@ -1070,10 +1073,12 @@ angular.module('starter.controllers', ['ionic'])
 				}
 			})
 			couponCash.then(function(){
+				$scope.cupons[0][0].QuantityExchanged +=1;
+				console.log($scope.cupons[0][0].QuantityExchanged);
 				var couponPages="#/app/descripcionCupones/";
 				// IdPromotion with redirection page
 				couponPages = couponPages+id;
-					 location.href=couponPages;
+				location.href=couponPages;
 			});
 	}
 
