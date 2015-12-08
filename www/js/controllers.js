@@ -975,6 +975,8 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: $stateParams.superId,
 	};
+	//*************** Url *******************************
+
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
 		a = cell.toString();
@@ -989,6 +991,15 @@ angular.module('starter.controllers', ['ionic'])
 
 	Parse.Analytics.track("view", dimensions);
 	$scope.$on('$ionicView.enter', function() {
+		// Redirection page variable to coupons
+		var couponPage="#/app/cupones/"
+		idRoute = Paiz.get($stateParams.superId);
+		// IdPromotion with redirection page
+		couponPage = couponPage+$stateParams.superId
+		// Validate if doesn't existing a promotion then redirection to coupons page.
+		if (idRoute[2][0].conteo == 0) {
+			location.href=couponPage
+		}
 		$scope.chats = Paiz.get($stateParams.superId);
 		$scope.popover = Paiz.all($stateParams.superId);
 		$scope.heartMenu = "silver";
@@ -1070,6 +1081,7 @@ angular.module('starter.controllers', ['ionic'])
   };
 	/*****  functions *****/
 	$scope.$on('$ionicView.enter', function() {
+
 		$scope.cupons = Cupons.all($stateParams.CuponID);
 		$scope.heartMenu = "silver";
 		$scope.ConteoPro = ContPromo

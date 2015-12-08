@@ -223,7 +223,9 @@ app.factory('Paiz', function() {
 			}
 
 			if (Category.length == 0) {
+				ContPromo.push({conteo:Category.length})
 				Category.push({oferta:"noHay"});
+
 			} else {
 				ContPromo.push({conteo:Category.length})
 			}
