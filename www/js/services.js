@@ -223,7 +223,9 @@ app.factory('Paiz', function() {
 			}
 
 			if (Category.length == 0) {
+				ContPromo.push({conteo:Category.length})
 				Category.push({oferta:"noHay"});
+
 			} else {
 				ContPromo.push({conteo:Category.length})
 			}
@@ -404,7 +406,10 @@ var cup = Cupon.find({
 							Publication_Date:results[x].attributes.PublicationDate,
 							End_Date:results[x].attributes.EndDate,
 							IDCupon:results[x].id,
-							Categoryapp:results[x].attributes.CategoryApp
+							Categoryapp:results[x].attributes.CategoryApp,
+							TypeCoupon:results[x].attributes.TypeCoupon,
+							QuantityCoupons:results[x].attributes.QuantityCoupons,
+							QuantityExchanged:results[x].attributes.QuantityExchanged
 						});
 					}else{
 						Cupons.push({nul:"con",
@@ -422,7 +427,10 @@ var cup = Cupon.find({
 							Publication_Date:results[x].attributes.PublicationDate,
 							End_Date:results[x].attributes.EndDate,
 							IDCupon:results[x].id,
-							Categoryapp:results[x].attributes.CategoryApp
+							Categoryapp:results[x].attributes.CategoryApp,
+							TypeCoupon:results[x].attributes.TypeCoupon,
+							QuantityCoupons:results[x].attributes.QuantityCoupons,
+							QuantityExchanged:results[x].attributes.QuantityExchanged
 						});
 					}
 				}

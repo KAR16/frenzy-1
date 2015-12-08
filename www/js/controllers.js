@@ -110,7 +110,27 @@ angular.module('starter.controllers', ['ionic'])
 
 // ************************ LOGIN WITHOUT FACEBOOK **********************************
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
-    $scope.user = {
+		Parse.Cloud.run('verifyFinalizedPromotions',{}, {
+			success: function(result) {
+				//result is 'Hello world!'
+				console.log(result)
+			},
+				error: function(error) {
+				console.log(error)
+			}
+		});
+
+		Parse.Cloud.run('verifyFinalizedCoupons',{}, {
+			success: function(result) {
+				//result is 'Hello world!'
+				console.log(result)
+			},
+				error: function(error) {
+				console.log(error)
+			}
+		});
+
+		$scope.user = {
         username: null,
         password: null
     };
@@ -120,6 +140,7 @@ angular.module('starter.controllers', ['ionic'])
 		// ******* LOGIN VALIDATION *******
 		if ($scope.currentUser == null ){
 			console.log($scope.currentUser);
+
 		} else {
 			console.log($scope.currentUser.id);
 			if ($scope.currentUser["attributes"].authData == undefined) {
@@ -954,6 +975,8 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: $stateParams.superId,
 	};
+	//*************** Url *******************************
+
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
 		a = cell.toString();
@@ -968,6 +991,23 @@ angular.module('starter.controllers', ['ionic'])
 
 	Parse.Analytics.track("view", dimensions);
 	$scope.$on('$ionicView.enter', function() {
+		// Redirection page variable to coupons
+		var couponPage="#/app/cupones/"
+		idRoute = Paiz.get($stateParams.superId);
+
+		console.log("idRoute");
+		console.log(idRoute);
+		// IdPromotion with redirection page
+		couponPage = couponPage+$stateParams.superId
+		// Validate if doesn't existing a promotion then redirection to coupons page.
+		if (idRoute[2][0].conteo == 0 && idRoute[3][0].cont == 0) {
+			$('.pageFavoritesSecondRow').css("display","none");
+		} else if(idRoute[2][0].conteo == 0){
+			location.href=couponPage
+				$('.pageFavoritesSecondRow').show();;
+		}else {
+				$('.pageFavoritesSecondRow').show();
+		}
 		$scope.chats = Paiz.get($stateParams.superId);
 		$scope.popover = Paiz.all($stateParams.superId);
 		$scope.heartMenu = "silver";
@@ -1000,6 +1040,32 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
+
+	// For to update QuantityExchanged
+	var CuponClassExchanged = new Parse.Object.extend("Cupon");
+	var cuponClassExchanged = new CuponClassExchanged();
+	var query = new Parse.Query("Cupon");
+
+	$scope.countCoupon = function(id){
+			query.equalTo("objectId",id)
+			query.find({
+				success: function(results){
+					if(results == false) {
+							alert("No hay cupones para canjear sorry :c	!!")
+					}
+					else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
+									cuponClassExchanged.id = id;
+									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+									cuponClassExchanged.save();
+						} else {
+									cuponClassExchanged.id = id;
+									cuponClassExchanged.set("Status", false);
+									cuponClassExchanged.save();
+						}
+				}
+			})
+	}
+
 		/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
 						or hide it  ****/
@@ -1014,7 +1080,8 @@ angular.module('starter.controllers', ['ionic'])
 		z = Url;
 		window.open(z);
 	}
-	$scope.llenar1=function(){
+	$scope.llenar1=function(id){
+		$scope.countCoupon(id);
 		displayNoneInline=[{none:"none",inline:"inline"}];
   };
   $scope.llenar2=function(){
@@ -1022,6 +1089,7 @@ angular.module('starter.controllers', ['ionic'])
   };
 	/*****  functions *****/
 	$scope.$on('$ionicView.enter', function() {
+
 		$scope.cupons = Cupons.all($stateParams.CuponID);
 		$scope.heartMenu = "silver";
 		$scope.ConteoPro = ContPromo
@@ -1053,6 +1121,36 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
+
+		// For to update QuantityExchanged
+		var CuponClassExchanged = new Parse.Object.extend("Cupon");
+		var cuponClassExchanged = new CuponClassExchanged();
+		var query = new Parse.Query("Cupon");
+		query.equalTo("objectId",$stateParams.DescriptionID)
+		query.equalTo("Status",true)
+
+		$scope.countCoupon = function(){
+				query.find({
+					success: function(results){
+						if(results == false) {
+						alert("No hay cupones para canjear sorry :c	!!")
+					} else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
+								cuponClassExchanged.id = $stateParams.DescriptionID;
+								cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+								cuponClassExchanged.save();
+								console.log(parseInt(results[0].attributes.QuantityExchanged)+1)
+								alert("Has cambiado tu compon!!")
+					} else if(parseInt(results[0].attributes.QuantityExchanged) === parseInt(results[0].attributes.QuantityCoupons)){
+								cuponClassExchanged.id = $stateParams.DescriptionID;
+								cuponClassExchanged.set("Status", false);
+								console.log(parseInt(results[0].attributes.QuantityExchanged))
+								cuponClassExchanged.save();
+								alert("No hay cupones para canjear sorry :c	!!")
+					}
+					}
+				})
+		}
+
 		/*****  noneDisplay equalTo displayNoneInline for
 		 				call the list and show or hide barcode image
 						in DescriptionCupons  *****/
