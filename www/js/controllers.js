@@ -994,11 +994,19 @@ angular.module('starter.controllers', ['ionic'])
 		// Redirection page variable to coupons
 		var couponPage="#/app/cupones/"
 		idRoute = Paiz.get($stateParams.superId);
+
+		console.log("idRoute");
+		console.log(idRoute);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
 		// Validate if doesn't existing a promotion then redirection to coupons page.
-		if (idRoute[2][0].conteo == 0) {
+		if (idRoute[2][0].conteo == 0 && idRoute[3][0].cont == 0) {
+			$('.pageFavoritesSecondRow').css("display","none");
+		} else if(idRoute[2][0].conteo == 0){
 			location.href=couponPage
+				$('.pageFavoritesSecondRow').show();;
+		}else {
+				$('.pageFavoritesSecondRow').show();
 		}
 		$scope.chats = Paiz.get($stateParams.superId);
 		$scope.popover = Paiz.all($stateParams.superId);
