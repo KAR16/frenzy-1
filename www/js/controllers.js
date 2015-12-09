@@ -1041,29 +1041,45 @@ angular.module('starter.controllers', ['ionic'])
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
 
+
+
 	// For to update QuantityExchanged
 	var CuponClassExchanged = new Parse.Object.extend("Cupon");
 	var cuponClassExchanged = new CuponClassExchanged();
 	var query = new Parse.Query("Cupon");
 
 	$scope.countCoupon = function(id){
-			query.equalTo("objectId",id)
-			query.find({
+
+		query.equalTo("objectId",id)
+		var couponCash =	query.find({
 				success: function(results){
 					if(results == false) {
 							alert("No hay cupones para canjear sorry :c	!!")
+							couponFunction()
 					}
 					else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
 									cuponClassExchanged.id = id;
 									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 									cuponClassExchanged.save();
+									couponFunction()
+									alert("Has cambiado tu cupon!!");
 						} else {
 									cuponClassExchanged.id = id;
 									cuponClassExchanged.set("Status", false);
 									cuponClassExchanged.save();
+									couponFunction()
+									alert("No hay cupones para canjear sorry :c	!!")
 						}
 				}
 			})
+			couponCash.then(function(){
+				$scope.cupons[0][0].QuantityExchanged +=1;
+				console.log($scope.cupons[0][0].QuantityExchanged);
+				var couponPages="#/app/descripcionCupones/";
+				// IdPromotion with redirection page
+				couponPages = couponPages+id;
+				location.href=couponPages;
+			});
 	}
 
 		/*****  fill displayNoneInline list to call after
@@ -1113,14 +1129,19 @@ angular.module('starter.controllers', ['ionic'])
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
  //***** SCOPE $ON TO REFRESH MENU CONTROLLER
- $scope.categoryNameCoupon = Cupons.all($stateParams.CuponID);
+
  $scope.$on('$ionicView.enter', function() {
+	  	$scope.categoryNameCoupon = Cupons.all($stateParams.CuponID);
 		 colorIconsFoother = []
 		 colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
  });
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
+
+		$scope.reloadpage = function(){
+			$scope.cupons[0].QuantityExchanged +=1
+		}
 
 		// For to update QuantityExchanged
 		var CuponClassExchanged = new Parse.Object.extend("Cupon");
@@ -1130,35 +1151,42 @@ angular.module('starter.controllers', ['ionic'])
 		query.equalTo("Status",true)
 
 		$scope.countCoupon = function(){
-				query.find({
+				var couponCash2 = query.find({
 					success: function(results){
 						if(results == false) {
 						alert("No hay cupones para canjear sorry :c	!!")
+
 					} else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 								cuponClassExchanged.save();
-								console.log(parseInt(results[0].attributes.QuantityExchanged)+1)
-								alert("Has cambiado tu compon!!")
+
+								alert("Has cambiado tu cupon!!")
 					} else if(parseInt(results[0].attributes.QuantityExchanged) === parseInt(results[0].attributes.QuantityCoupons)){
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("Status", false);
-								console.log(parseInt(results[0].attributes.QuantityExchanged))
 								cuponClassExchanged.save();
+
 								alert("No hay cupones para canjear sorry :c	!!")
 					}
 					}
 				})
+
+				couponCash2.then(function(){
+					console.log("entro al then");
+							couponFunction()
+				});
 		}
 
 		/*****  noneDisplay equalTo displayNoneInline for
 		 				call the list and show or hide barcode image
 						in DescriptionCupons  *****/
-		colorIconsFoother=$scope.$on('$ionicView.enter', function() {});[];
-		$scope.noneDisplay=displayNoneInline;
-		$scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
+		// colorIconsFoother=$scope.$on('$ionicView.enter', function() {});[];
+
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
+			$scope.noneDisplay=displayNoneInline;
+			$scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
         colorIconsFoother = []
           colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.cupons[0].Category,'','none']);
     });
