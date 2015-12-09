@@ -563,3 +563,15 @@
         transform: rotate(360deg);
     }
 }
+
+
+
+.spinner svg {
+    width: 70px;
+    height: 70px; 
+}
+
+.loading-container .loading {
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+}

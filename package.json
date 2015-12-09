@@ -24,7 +24,5 @@
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.device-orientation"
   ],
-  "cordovaPlatforms": [
-    "android"
-  ]
+  "cordovaPlatforms": []
 }
