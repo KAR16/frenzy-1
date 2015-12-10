@@ -575,3 +575,11 @@
     background-color: rgba(0, 0, 0, 0);
     color: #fff;
 }
+
+.pageStartBoxPurple{
+    display: none;
+}
+
+.flechitas {
+    display: none;
+}

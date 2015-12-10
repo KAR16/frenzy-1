@@ -641,31 +641,6 @@ function AddPromotions(Array) {
 		};
 	});
 };
-// *************** PROMOTIONS FUNCTION ***************
-function Promotions(id){
-	PromoSave.find({
-		success: function(results) {
-			for (x in results) {
-				if (results[x].attributes.UserID === IdUsuario){
-					for (a in results[x].attributes.PromotionID){
-						for (b in CurrentPromotion){
-							if (results[x].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion && id === CurrentPromotion[b].Category){
-								var cssColorpinOffer = document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
-								if (cssColorpinOffer=="silver"){
-									document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		error: function(myObject, error) {
-			// Error occureds
-			console.log( error );
-		}
-	});
-}
 // *************** HEART POPOVER FUNCTION ***************
 var HeartPopover = [];
 function Heart(id){
