@@ -239,13 +239,10 @@ app.factory('Paiz', function() {
 			if (CurrentPromotion) {
 				if (Cupcont.length == 0) {
 					validar = "no"
-					console.log("no hay nada");
 				}
-				console.log(Cupcont.length,"conteo");
 				ALL.push(Category)
 				ALL.push(dato)
 				ALL.push(ContPromo)
-				console.log(dato[0].name,"archivo");
 				ALL.push([{cont:Cupcont.length,t:dato[0].name,Validar:validar}])
 				return ALL;
 			}
