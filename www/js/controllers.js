@@ -1,6 +1,7 @@
 /*****  GLOBAL LISTS  *****/
 var displayNoneInline = []
 var colorIconsFoother = []
+var pix = "170px"
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic'])
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicPopover) {
@@ -285,6 +286,7 @@ angular.module('starter.controllers', ['ionic'])
 				$ionicLoading.hide();
 				$('.pageStartBoxPurple').show();
 				$('.flechitas').show();
+
 			});
 		},
 		error: function(myObject, error) {
@@ -300,7 +302,7 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.$apply(function() {
 			$scope.categorys = CategoryListName
 		});
-	}, 500);
+	}, 0);
       colorIconsFoother = []
      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','Z','','none','none']);
   });
@@ -1153,6 +1155,10 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: $stateParams.superId,
 	};
+	// Pixels quantity of Popover for height div
+	$scope.pix = Paiz.get($stateParams.superId);
+	console.log($scope.pix);
+	$scope.pixels = $scope.pix[1][0].pixels;
 
 	$scope.reload = function () {
 	    var PromoSavess = new Parse.Query('PromotionSaved')
