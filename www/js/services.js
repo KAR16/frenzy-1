@@ -231,8 +231,17 @@ app.factory('Paiz', function() {
 			}
 
 			for (z in InfoShop) {
+
 				if (superId === InfoShop[z].name){
-					dato.push(InfoShop[z]);
+					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
+				}else if (InfoShop[z].cel == undefined) {
+					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
+				}else if (InfoShop[z].url == undefined) {
+						dato.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
+				}else {
+						dato.push(InfoShop[z]);
+					}
 				}
 			}
 
@@ -500,7 +509,8 @@ var prom = promotion.find({
 							Our_Favorites:results[x].attributes.OurFavorite,
 							PhotoFavorite: results[x].attributes.PhotoFavorite,
 							Logo:"",
-							ColorPin: "silver"
+							ColorPin: "silver",
+							ShopOnline:results[x].attributes.ShopOnline
 						});
 					}else{
 						CurrentPromotion.push({nul:"con",photo:results[x].attributes.Photo._url,
@@ -517,7 +527,8 @@ var prom = promotion.find({
 							Our_Favorites:results[x].attributes.OurFavorite,
 							PhotoFavorite: results[x].attributes.PhotoFavorite,
 							Logo:"",
-							ColorPin: "silver"
+							ColorPin: "silver",
+							ShopOnline:results[x].attributes.ShopOnline
 						});
 					}
 				}
@@ -598,7 +609,7 @@ function AddPromotions(Array) {
 			listaNameSuperConteo.push(results[x].attributes.Name)
 			InfoShop.push({
 				cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
-				namecategory:results[x].attributes.CategoryApp,id:results[x].id
+				namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
 			});
 
 			if ("Supermercado" ==  results[x].attributes.CategoryApp){

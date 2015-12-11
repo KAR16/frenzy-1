@@ -106,16 +106,22 @@
                         </spam>
                     </div>
                     <!--*****   BEFORE PRICE  *****-->
-                    <div class="col col-33">
+                    <div class="col col-25">
                         <spam class="pageFavoritesBeforePrice" style="color:silver;font-size:15px;">
                             Antes Q.{{super.basePrice}}
                         </spam>
                     </div>
                     <!--*****  ICONS  *****-->
-                    <div class="col col-33">
+                    <!-- Share Facebook Icon -->
+                    <div class="col col-35">
                         <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
                             O
                         </spam>
+                        <!-- Url Shop online Icon -->
+                        <spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{super.ShopOnline}}')">
+                            J
+                        </spam>
+                        <!-- Pin Icon -->
                         <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver">
                             W
                         </spam>
@@ -177,11 +183,17 @@
                         </spam>
                     </div>
                     <!--*****  ICONS  *****-->
-                    <div class="col col-33">
+                    <!-- Share Facebook Icon -->
+                    <div class="col col-35">
                         <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
                             O
                         </spam>
-                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOffertsWithoutImage('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver">
+                        <!-- Url Shop online Icon -->
+                        <spam class="home pageOffertsShareIcon" ng-click="shopUrl('{{super.ShopOnline}}')" ng-controller="PopoverNewCtrl">
+                            J
+                        </spam>
+                        <!-- Pin Icon -->
+                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver">
                             W
                         </spam>
                     </div>
@@ -205,7 +217,7 @@
         </div>
         <!--*************  FIRST POPOVER CONTENT  ******************-->
         <script id="templates/popover.html" type="text/ng-template" >
-            <ion-popover-view  class="firstPopoverStyle" style="height:170px; width:180px; margin-top:20px;">
+            <ion-popover-view  class="firstPopoverStyle" style="height:{{pixels}}; width:180px; margin-top:20px;">
                 <!--*****  FIRST POPOVER CONTENT  *****-->
                 <ion-content>
                     <div class="list" ng-repeat="s in chats[1]">
@@ -216,15 +228,15 @@
                             </spam>
                         </a>
                         <a class="item" id = "{{s.cel}}" ng-click="call({{s.cel}})" target="_blank" style="text-align:right; color:silver;">
-                            Llamar
+                            {{s.call}}
                             <spam class="home pageOffertsPopoverIconsDescrpition">
-                                Q
+                                {{s.callIcon}}
                             </spam>
                         </a>
-                        <a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}')" target="_blank" style="text-align:right; color:silver;">
-                            Ir a pagina Web
+                        <a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}')" target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
+                            {{s.webUrl}}
                             <spam class="home pageOffertsPopoverIconsDescrpition">
-                                R
+                                {{s.webUrlIcon}}
                             </spam>
                         </a>
                     </div>
