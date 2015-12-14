@@ -218,6 +218,11 @@ app.factory('Paiz', function() {
 
 			for (c in CurrentPromotion) {
 				if (superId === CurrentPromotion[c].Category) {
+					if (CurrentPromotion[c].ShopOnline == undefined) {
+							CurrentPromotion[c].Display = "none"
+							CurrentPromotion[c].colPrice = "33"
+							CurrentPromotion[c].colPricePromo = "33"
+					}
 					Category.push(CurrentPromotion[c]);
 				}
 			}
@@ -510,7 +515,11 @@ var prom = promotion.find({
 							PhotoFavorite: results[x].attributes.PhotoFavorite,
 							Logo:"",
 							ColorPin: "silver",
-							ShopOnline:results[x].attributes.ShopOnline
+							ShopOnline:results[x].attributes.ShopOnline,
+							IconShopOnline: "J",
+							Display: "",
+							colPrice:"25",
+							colPricePromo:"35"
 						});
 					}else{
 						CurrentPromotion.push({nul:"con",photo:results[x].attributes.Photo._url,
@@ -528,7 +537,11 @@ var prom = promotion.find({
 							PhotoFavorite: results[x].attributes.PhotoFavorite,
 							Logo:"",
 							ColorPin: "silver",
-							ShopOnline:results[x].attributes.ShopOnline
+							ShopOnline:results[x].attributes.ShopOnline,
+							IconShopOnline: "J",
+							Display: "",
+							colPrice:"25",
+							colPricePromo:"35"
 						});
 					}
 				}
