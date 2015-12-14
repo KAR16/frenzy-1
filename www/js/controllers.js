@@ -226,6 +226,15 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
+	/******************* backbutton *******************/
+	
+document.addEventListener("backbutton", yourCallbackFunction, false);
+function yourCallbackFunction() {
+   if(state == login){ //aquí verifica el state
+exitapp(); //aquí ejecuta tu función de cerrar el app
+   }
+}
+/********************************************************/
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
@@ -1526,6 +1535,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/menu/menu.html",
 		controller: 'menuCtrl'
 	})
+	// ******** SPLASH *****
+.state('splash', {
+	url: "/splash",
+	templateUrl: "templates/splash/splash.html",
+	controller:"splashController"
+})
   // ******** TUTORIAL *****
 	.state('tutorial', {
 		url: "/tutorial",
@@ -1711,13 +1726,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/tutorial');
+	$urlRouterProvider.otherwise('/splash');
 })
 // ############## //
 //  Controllers   //
 // ############## //
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
+}])
+/*************************  SPLASH  ******************************/
+.controller('splashController', ['$scope', '$state', function($scope, $state) {
+	function doSomething(){
+	}
+	$scope.currentUser = Parse.User.current();
+	if ($scope.currentUser == null ){
+		$state.go('tutorial')
+			} else {
+				if ($scope.currentUser["attributes"].authData == undefined) {
+					IdUsuario = String($scope.currentUser.id)
+							viewPromotion()
+				}else {
+					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+							viewPromotion()
+				}
+				$state.go('app.playlists');
+			}
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
@@ -1728,20 +1761,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           break;
       }
     }
-  function doSomething(){
-  }
-  $scope.currentUser = Parse.User.current();
-  if ($scope.currentUser == null ){
-  		} else {
-  			if ($scope.currentUser["attributes"].authData == undefined) {
-  				IdUsuario = String($scope.currentUser.id)
-			        viewPromotion()
-  			}else {
-  				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-			        viewPromotion()
-  			}
-  			$state.go('app.playlists');
-  		}
+		document.addEventListener("backbutton", yourCallbackFunction, false);
+
+
+		function yourCallbackFunction() {
+		   if(state == login){ //aquí verifica el state
+		exitapp(); //aquí ejecuta tu función de cerrar el app
+		   }
+		}
 }])
 /*************************  TUTORIAL NO.2 ******************************/
 .controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
