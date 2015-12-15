@@ -227,7 +227,7 @@ angular.module('starter.controllers', ['ionic'])
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
 	/******************* backbutton *******************/
-	
+
 document.addEventListener("backbutton", yourCallbackFunction, false);
 function yourCallbackFunction() {
    if(state == login){ //aquí verifica el state
@@ -1318,6 +1318,9 @@ exitapp(); //aquí ejecuta tu función de cerrar el app
 	var CuponClassExchanged = new Parse.Object.extend("Cupon");
 	var cuponClassExchanged = new CuponClassExchanged();
 	var query = new Parse.Query("Cupon");
+	$scope.pix = Cupons.all($stateParams.CuponID);
+	console.log($scope.pix);
+	$scope.pixels = $scope.pix[1][0].pixels;
 
 	$scope.countCoupon = function(id){
 

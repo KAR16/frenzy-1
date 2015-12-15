@@ -101,14 +101,14 @@
                 <!--*****  DIV TO PRICE AND ICONS  *****-->
                 <div class="row pageFavoritesDivIcons open_sans" style="height:40px;text-align:super" >
                     <!--*****  ACTUAL PRICE  *****-->
-                    <div class="col col-33"  >
+                    <div class="col-33"  >
                         <spam class="pageFavoritesActualPrice">
                             Q.{{super.promotionalPrice}}
                         </spam>
                     </div>
                     <!--*****   BEFORE PRICE  *****-->
-                  <div class="col col-{{super.colPrice}}" style="vertical-align:top;text-align:super">
-                    <table style="line-height:10px;margin:auto;margin-top:-5px">
+                  <div class="col-25" style="vertical-align:top;text-align:center">
+                    <table style="line-height:10px;margin:auto;margin-top:-5px;text-align:center">
                       <tr>
                         <td>  <spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
                               Antes
@@ -123,24 +123,19 @@
                           </td>
                       </tr>
                     </table>
-
-                          <!--<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;margin-left:-10px;">
-                            Antes Q.{{super.basePrice}}
-                        </spam>-->
-
                     </div>
                     <!--*****  ICONS  *****-->
                     <!-- Share Facebook Icon -->
-                    <div class="col col-{{super.colPricePromo}}">
+                    <div class="col-35" style="text-align:center">
                       <!-- Url Shop online Icon -->
-                      <spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{super.ShopOnline}}')" style="display:{{super.Display}}" style="font-size: 22px;">
+                      <spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{super.ShopOnline}}')" style="display:{{super.Display}};font-size: 23px;">
                           {{super.IconShopOnline}}
                       </spam>
-                        <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size: 22px;">
+                        <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
                             O
                         </spam>
                         <!-- Pin Icon -->
-                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver;font-size: 22px;">
+                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver;font-size:23px;">
                             W
                         </spam>
                     </div>
@@ -189,29 +184,41 @@
                 <div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;
                     border-top:1px solid #F1F2F2;">
                     <!--*****  ACTUAL PRICE  *****-->
-                    <div class="col col-33">
-                        <spam class="pageOffertsActualPrice">
+                    <div class="col-33"  >
+                        <spam class="pageFavoritesActualPrice">
                             Q.{{super.promotionalPrice}}
                         </spam>
                     </div>
                     <!--*****   BEFORE PRICE  *****-->
-                    <div class="col col-33">
-                        <spam class="pageOffertsBeforePrice">
-                            Antes Q.{{super.basePrice}}
-                        </spam>
+                  <div class="col-25" style="vertical-align:top;text-align:center">
+                    <table style="line-height:10px;margin:auto;margin-top:-5px;text-align:center">
+                      <tr>
+                        <td>  <spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
+                              Antes
+                          </spam>
+                        </td>
+                        </tr>
+                          <tr>
+                            <td>
+                            <spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
+                              Q.{{super.basePrice}}
+                            </spam>
+                          </td>
+                      </tr>
+                    </table>
                     </div>
                     <!--*****  ICONS  *****-->
                     <!-- Share Facebook Icon -->
-                    <div class="col col-35">
-                        <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
+                    <div class="col-35" style="text-align:center">
+                      <!-- Url Shop online Icon -->
+                      <spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{super.ShopOnline}}')" style="display:{{super.Display}};font-size: 23px;">
+                          {{super.IconShopOnline}}
+                      </spam>
+                        <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
                             O
                         </spam>
-                        <!-- Url Shop online Icon -->
-                        <spam class="home pageOffertsShareIcon" ng-click="shopUrl('{{super.ShopOnline}}')" ng-controller="PopoverNewCtrl">
-                            J
-                        </spam>
                         <!-- Pin Icon -->
-                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver">
+                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}')" style="color:silver;font-size:23px;">
                             W
                         </spam>
                     </div>
