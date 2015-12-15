@@ -222,6 +222,8 @@ app.factory('Paiz', function() {
 							CurrentPromotion[c].Display = "none"
 							CurrentPromotion[c].colPrice = "33"
 							CurrentPromotion[c].colPricePromo = "33"
+					}else {
+						CurrentPromotion[c].Display = "";
 					}
 					Category.push(CurrentPromotion[c]);
 				}
@@ -343,6 +345,11 @@ app.factory('Cupons', function() {
 
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].Category) {
+					if (Cupons[a].ShopOnline == undefined) {
+							Cupons[a].Display = "none"
+					}else {
+						Cupons[a].Display = ""
+					}
 					AllCupon.push(Cupons[a])
 				}
 			}
@@ -355,9 +362,18 @@ app.factory('Cupons', function() {
 
 			for (z in InfoShop) {
 				if (salvadosId === InfoShop[z].name){
-					DatoCupon.push(InfoShop[z]);
+					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
+				}else if (InfoShop[z].cel == undefined) {
+					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
+				}else if (InfoShop[z].url == undefined) {
+						DatoCupon.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
+				}else {
+						DatoCupon.push(InfoShop[z]);
+					}
 				}
 			}
+
 			// INSTEAD ALL COUPON IN ALL COUPON VARIABLE
 			allCupon = AllCupon;
 
@@ -423,7 +439,9 @@ function couponFunction() {
 								Categoryapp:results[x].attributes.CategoryApp,
 								TypeCoupon:results[x].attributes.TypeCoupon,
 								QuantityCoupons:results[x].attributes.QuantityCoupons,
-								QuantityExchanged:results[x].attributes.QuantityExchanged
+								QuantityExchanged:results[x].attributes.QuantityExchanged,
+								ShopOnline:results[x].attributes.ShopOnline,
+								Display:"",
 							});
 						}else{
 							Cupons.push({nul:"con",
@@ -444,7 +462,9 @@ function couponFunction() {
 								Categoryapp:results[x].attributes.CategoryApp,
 								TypeCoupon:results[x].attributes.TypeCoupon,
 								QuantityCoupons:results[x].attributes.QuantityCoupons,
-								QuantityExchanged:results[x].attributes.QuantityExchanged
+								QuantityExchanged:results[x].attributes.QuantityExchanged,
+								ShopOnline:results[x].attributes.ShopOnline,
+								Display:"",
 							});
 						}
 					}
@@ -518,8 +538,6 @@ var prom = promotion.find({
 							ShopOnline:results[x].attributes.ShopOnline,
 							IconShopOnline: "j",
 							Display: "",
-							colPrice:"25",
-							colPricePromo:"35"
 						});
 					}else{
 						CurrentPromotion.push({nul:"con",photo:results[x].attributes.Photo._url,
@@ -540,8 +558,6 @@ var prom = promotion.find({
 							ShopOnline:results[x].attributes.ShopOnline,
 							IconShopOnline: "j",
 							Display: "",
-							colPrice:"25",
-							colPricePromo:"35"
 						});
 					}
 				}
