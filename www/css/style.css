@@ -125,7 +125,7 @@
 
 .ellipsify {
     line-height: 18px;
-    height: 32px;
+    height: 36px;
     /* 3x line height */
     width: 100%;
     overflow: hidden;
@@ -568,7 +568,7 @@
 
 .spinner svg {
     width: 70px;
-    height: 70px; 
+    height: 70px;
 }
 
 .loading-container .loading {

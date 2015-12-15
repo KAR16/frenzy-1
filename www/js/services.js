@@ -516,7 +516,7 @@ var prom = promotion.find({
 							Logo:"",
 							ColorPin: "silver",
 							ShopOnline:results[x].attributes.ShopOnline,
-							IconShopOnline: "J",
+							IconShopOnline: "j",
 							Display: "",
 							colPrice:"25",
 							colPricePromo:"35"
@@ -538,7 +538,7 @@ var prom = promotion.find({
 							Logo:"",
 							ColorPin: "silver",
 							ShopOnline:results[x].attributes.ShopOnline,
-							IconShopOnline: "J",
+							IconShopOnline: "j",
 							Display: "",
 							colPrice:"25",
 							colPricePromo:"35"
