@@ -1154,7 +1154,7 @@ exitapp(); //aquí ejecuta tu función de cerrar el app
 			$scope.$apply(function() {
 				$scope.Others = Otro;
 			});
-		}, 2000);
+		}, 1000);
 			colorIconsFoother = []
 			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Otros','','none']);
 	});
@@ -1376,6 +1376,17 @@ exitapp(); //aquí ejecuta tu función de cerrar el app
   $scope.llenar2=function(){
     displayNoneInline=[{none:"inline",inline:"none"}];
   };
+	// ************ FUNCTION CHANGE COLOR PIN CUPON *************
+	$scope.changeColorPinCupon = function (id) {
+		var cssColorCuponPin = document.getElementById(id).style.color;
+		if (cssColorCuponPin == "silver") {
+			document.getElementById(id).style.color = "purple";
+			saveCuponFavorite(IdUsuario, id)
+		} else {
+			deleteFavoriteCupon(IdUsuario, id)
+			document.getElementById(id).style.color = "silver";
+		}
+	};
 	/*****  functions *****/
 	$scope.$on('$ionicView.enter', function() {
 

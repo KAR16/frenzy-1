@@ -12,3 +12,16 @@ function MostrarOcultar(capa,enlace){
 		aux.display = aux.display? "":"block";
 	}
 }
+/**********  PAGE_START EXIT APP FUNCTION  *****************/
+document.addEventListener("backbutton", onBackKeyDown, false);
+	function onBackKeyDown() {
+		if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
+			if (confirm("Desea salir de frenzy!") == true) {
+				navigator.app.exitApp();
+	    }
+			else{
+				$state.go('app.playlists');
+			}
+		}
+	}
+/***********************************************************/
