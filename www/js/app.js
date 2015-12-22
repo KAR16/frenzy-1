@@ -25,3 +25,12 @@ document.addEventListener("backbutton", onBackKeyDown, false);
 		}
 	}
 /***********************************************************/
+/**********  PAGE_START EXIT APP FUNCTION  *****************/
+// document.addEventListener("backbutton", onBackKeyDown, false);
+// 	function onBackKeyDown() {
+//
+// 		if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
+// 			navigator.app.exitApp();
+// 		}
+// 	}
+/***********************************************************/

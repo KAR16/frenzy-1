@@ -226,15 +226,6 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
-	/******************* backbutton *******************/
-
-document.addEventListener("backbutton", yourCallbackFunction, false);
-function yourCallbackFunction() {
-   if(state == login){ //aquí verifica el state
-exitapp(); //aquí ejecuta tu función de cerrar el app
-   }
-}
-/********************************************************/
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
@@ -1497,7 +1488,7 @@ exitapp(); //aquí ejecuta tu función de cerrar el app
 		$scope.footerChangeColor=colorIconsFoother;
 	});
 })
-//*****************	CONTROLLER POPOVER	*******************************
+//*****************	POPOVER CONTROLLER FOR OFFERS	*******************************
 .controller('PopoverCtrl', function($scope, $ionicPopover) {
 	$ionicPopover.fromTemplateUrl('templates/popover.html', {
 		scope: $scope,
@@ -1506,6 +1497,17 @@ exitapp(); //aquí ejecuta tu función de cerrar el app
 		$scope.message = 'hello';
 	});
 })
+//*****************	POPOVER CONTROLLER FOR COUPONS	*******************************
+.controller('PopoverCtrl2', function($scope, $ionicPopover) {
+	$ionicPopover.fromTemplateUrl('templates/popover2.html', {
+		scope: $scope,
+	}).then(function(popover) {
+		$scope.popover = popover;
+		$scope.message = 'hello';
+	});
+})
+
+
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
 	$ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
@@ -1775,14 +1777,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           break;
       }
     }
-		document.addEventListener("backbutton", yourCallbackFunction, false);
-
-
-		function yourCallbackFunction() {
-		   if(state == login){ //aquí verifica el state
-		exitapp(); //aquí ejecuta tu función de cerrar el app
-		   }
-		}
 }])
 /*************************  TUTORIAL NO.2 ******************************/
 .controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {

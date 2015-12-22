@@ -39,7 +39,7 @@ hr     {
 				<div ng-repeat="s in cupons[1]">
 					<div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
 						<div>
-							 <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl">
+							 <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl2">
 								<p class="pageOffertsPopoverSimbol" style="vertical-aling:middle;">
 									N
 								</p>
@@ -80,7 +80,7 @@ hr     {
 							</p>
 					   	</div>
 						<!--**********  DESCRIPTION  **********-->
-						<div class="ellipsify cajaTexto" style="height:50px;ckground-color:; ">
+						<div class="ellipsify cajaTexto" style="height:50px;">
 							<div class="ellipsify">
 								<div class="pre-dots"></div>
 								<div class="dots">&hellip;</div>
@@ -94,9 +94,9 @@ hr     {
 					</div>
 				  </a>
 				 <!--*****  DIV TO PRICE AND ICONS  *****-->
-				<div class="row pageFavoritesDivIcons open_sans" style="height:38px; background-color:;" >
+				<div class="row pageFavoritesDivIcons open_sans" style="height:38px;align-items:center">
 					<!--*****  ACTUAL PRICE  *****-->
-					<div class="col-25">
+					<div class="col-25" style="text-align:center;align-items:center;margin-left:5px">
 						<a class="textDecorationNone" ng-click="llenar1('{{cupon.IDCupon}}')">
 							<spam class="pageOffertExchance" style="color:#3F51B5; font-size:16px;">
 						  		CANJEAR
@@ -104,13 +104,13 @@ hr     {
 						</a>
 					</div>
 					<!--*****   BEFORE PRICE  *****-->
-					<div class="col-33" style="vertical-align:top;text-align:center">
+					<div class="col-33"  style="text-align:center;align-items:center">
 						<spam class="" style="color:silver;margin-top:-5px; font-size:17px;">
 						   <!-- (7 dias) -->
 						</spam>
 					</div>
 					<!--*****  ICONS  *****-->
-					<div class="col-33" style="word-spacing:-30px;text-align:center">
+					<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
 						<!-- Url Shop online Icon -->
 						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}')" style="display:{{cupon.Display}};font-size:23px;">
 								j
@@ -168,24 +168,23 @@ hr     {
 				</a>
 				<!--*****  DIVIDER LINE  *****-->
 				<!--*****  DIV TO PRICE AND ICONS  *****-->
-				<div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;
-				border-top:1px solid #F1F2F2;margin-top:5px;">
+				<div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;border-top:1px solid #F1F2F2;margin-top:5px;height:38px;align-items:center">
 				<!--*****  ACTUAL PRICE  *****-->
 				<div class="col-25">
-					<a class="textDecorationNone" ng-click="llenar1('{{cupon.IDCupon}}')">
+					<a class="textDecorationNone" ng-click="llenar1('{{cupon.IDCupon}}')" style="text-align:center;align-items:center;margin-left:5px">
 						<spam class="pageOffertExchance" style="color:#3F51B5; font-size:16px;">
 								CANJEAR
 						</spam>
 					</a>
 				</div>
 				<!--*****   BEFORE PRICE  *****-->
-				<div class="col-33" style="vertical-align:top;text-align:center">
+				<div class="col-33"  style="text-align:center;align-items:center">
 					<spam class="" style="color:silver;margin-top:-5px; font-size:17px;">
 						 <!-- (7 dias) -->
 					</spam>
 				</div>
 				<!--*****  ICONS  *****-->
-				<div class="col-33" style="word-spacing:-30px;text-align:center">
+				<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
 					<!-- Url Shop online Icon -->
 					<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}')" style="display:{{cupon.Display}};font-size:23px;">
 							j
@@ -267,7 +266,7 @@ hr     {
 			</div>
 		</div>
 		<!--*************  FIRST POPOVER CONTENT  ******************-->
-		<script id="templates/popover.html" type="text/ng-template" >
+		<script id="templates/popover2.html" type="text/ng-template" >
 			<ion-popover-view  class="firstPopoverStyle" style="height:{{pixels}};width:180px; margin-top:20px;">
 				<!--*****  FIRST POPOVER CONTENT  *****-->
 				<ion-content >
