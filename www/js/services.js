@@ -218,6 +218,13 @@ app.factory('Paiz', function() {
 
 			for (c in CurrentPromotion) {
 				if (superId === CurrentPromotion[c].Category) {
+					if (CurrentPromotion[c].ShopOnline == undefined) {
+							CurrentPromotion[c].Display = "none"
+							CurrentPromotion[c].colPrice = "33"
+							CurrentPromotion[c].colPricePromo = "33"
+					}else {
+						CurrentPromotion[c].Display = "";
+					}
 					Category.push(CurrentPromotion[c]);
 				}
 			}
@@ -231,21 +238,27 @@ app.factory('Paiz', function() {
 			}
 
 			for (z in InfoShop) {
+
 				if (superId === InfoShop[z].name){
-					dato.push(InfoShop[z]);
+					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
+				}else if (InfoShop[z].cel == undefined) {
+					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
+				}else if (InfoShop[z].url == undefined) {
+						dato.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
+				}else {
+						dato.push(InfoShop[z]);
+					}
 				}
 			}
 
 			if (CurrentPromotion) {
 				if (Cupcont.length == 0) {
 					validar = "no"
-					console.log("no hay nada");
 				}
-				console.log(Cupcont.length,"conteo");
 				ALL.push(Category)
 				ALL.push(dato)
 				ALL.push(ContPromo)
-				console.log(dato[0].name,"archivo");
 				ALL.push([{cont:Cupcont.length,t:dato[0].name,Validar:validar}])
 				return ALL;
 			}
@@ -332,6 +345,11 @@ app.factory('Cupons', function() {
 
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].Category) {
+					if (Cupons[a].ShopOnline == undefined) {
+							Cupons[a].Display = "none"
+					}else {
+						Cupons[a].Display = ""
+					}
 					AllCupon.push(Cupons[a])
 				}
 			}
@@ -344,9 +362,18 @@ app.factory('Cupons', function() {
 
 			for (z in InfoShop) {
 				if (salvadosId === InfoShop[z].name){
-					DatoCupon.push(InfoShop[z]);
+					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
+				}else if (InfoShop[z].cel == undefined) {
+					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
+				}else if (InfoShop[z].url == undefined) {
+						DatoCupon.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
+				}else {
+						DatoCupon.push(InfoShop[z]);
+					}
 				}
 			}
+
 			// INSTEAD ALL COUPON IN ALL COUPON VARIABLE
 			allCupon = AllCupon;
 
@@ -412,7 +439,9 @@ function couponFunction() {
 								Categoryapp:results[x].attributes.CategoryApp,
 								TypeCoupon:results[x].attributes.TypeCoupon,
 								QuantityCoupons:results[x].attributes.QuantityCoupons,
-								QuantityExchanged:results[x].attributes.QuantityExchanged
+								QuantityExchanged:results[x].attributes.QuantityExchanged,
+								ShopOnline:results[x].attributes.ShopOnline,
+								Display:"",
 							});
 						}else{
 							Cupons.push({nul:"con",
@@ -433,7 +462,9 @@ function couponFunction() {
 								Categoryapp:results[x].attributes.CategoryApp,
 								TypeCoupon:results[x].attributes.TypeCoupon,
 								QuantityCoupons:results[x].attributes.QuantityCoupons,
-								QuantityExchanged:results[x].attributes.QuantityExchanged
+								QuantityExchanged:results[x].attributes.QuantityExchanged,
+								ShopOnline:results[x].attributes.ShopOnline,
+								Display:"",
 							});
 						}
 					}
@@ -503,7 +534,10 @@ var prom = promotion.find({
 							Our_Favorites:results[x].attributes.OurFavorite,
 							PhotoFavorite: results[x].attributes.PhotoFavorite,
 							Logo:"",
-							ColorPin: "silver"
+							ColorPin: "silver",
+							ShopOnline:results[x].attributes.ShopOnline,
+							IconShopOnline: "j",
+							Display: "",
 						});
 					}else{
 						CurrentPromotion.push({nul:"con",photo:results[x].attributes.Photo._url,
@@ -520,7 +554,10 @@ var prom = promotion.find({
 							Our_Favorites:results[x].attributes.OurFavorite,
 							PhotoFavorite: results[x].attributes.PhotoFavorite,
 							Logo:"",
-							ColorPin: "silver"
+							ColorPin: "silver",
+							ShopOnline:results[x].attributes.ShopOnline,
+							IconShopOnline: "j",
+							Display: "",
 						});
 					}
 				}
@@ -601,7 +638,7 @@ function AddPromotions(Array) {
 			listaNameSuperConteo.push(results[x].attributes.Name)
 			InfoShop.push({
 				cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
-				namecategory:results[x].attributes.CategoryApp,id:results[x].id
+				namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
 			});
 
 			if ("Supermercado" ==  results[x].attributes.CategoryApp){
@@ -644,31 +681,6 @@ function AddPromotions(Array) {
 		};
 	});
 };
-// *************** PROMOTIONS FUNCTION ***************
-function Promotions(id){
-	PromoSave.find({
-		success: function(results) {
-			for (x in results) {
-				if (results[x].attributes.UserID === IdUsuario){
-					for (a in results[x].attributes.PromotionID){
-						for (b in CurrentPromotion){
-							if (results[x].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion && id === CurrentPromotion[b].Category){
-								var cssColorpinOffer = document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
-								if (cssColorpinOffer=="silver"){
-									document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		error: function(myObject, error) {
-			// Error occureds
-			console.log( error );
-		}
-	});
-}
 // *************** HEART POPOVER FUNCTION ***************
 var HeartPopover = [];
 function Heart(id){

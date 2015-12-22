@@ -1,6 +1,7 @@
 /*****  GLOBAL LISTS  *****/
 var displayNoneInline = []
 var colorIconsFoother = []
+var pix = "170px"
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic'])
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicPopover) {
@@ -139,18 +140,13 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.currentUser = Parse.User.current();
 		// ******* LOGIN VALIDATION *******
 		if ($scope.currentUser == null ){
-			console.log($scope.currentUser);
-
 		} else {
-			console.log($scope.currentUser.id);
 			if ($scope.currentUser["attributes"].authData == undefined) {
-				console.log("este si casi psy ");
 				IdUsuario = String($scope.currentUser.id)
 				        viewPromotion()
 			}else {
 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
 				        viewPromotion()
-				console.log("facebook");
 			}
 			$state.go('app.playlists');
 		}
@@ -197,19 +193,17 @@ angular.module('starter.controllers', ['ionic'])
         var user = $scope.user;
         Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
 					success: function(user) {
-						console.log(user);
 						if (user.attributes.emailVerified == false) {
 							$ionicLoading.hide();
 							$rootScope.user = user;
 							$rootScope.isLoggedIn = true;
-							console.log("no se ha verificado su correo");
 							alert("no se ha verificado su correo")
 						}else {
 							$ionicLoading.hide();
 							$rootScope.user = user;
 							$rootScope.isLoggedIn = true;
 							$state.go('app.playlists', {
-									clear: true
+							clear: true
 							});
 						}
 
@@ -231,11 +225,17 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('CategoryCtrl', function($scope) {
+.controller('CategoryCtrl', function($scope, $ionicLoading) {
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
 	Parse.Analytics.track("view", dimensions);
+
+	// Loading scope
+	$scope.loading = $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+	});
 
 	var query = new Parse.Query('AppCategory');
 	CategoryListName = [];
@@ -283,6 +283,10 @@ angular.module('starter.controllers', ['ionic'])
 						}
 					}
 				}
+				$ionicLoading.hide();
+				$('.pageStartBoxPurple').show();
+				$('.flechitas').show();
+
 			});
 		},
 		error: function(myObject, error) {
@@ -291,13 +295,14 @@ angular.module('starter.controllers', ['ionic'])
 		}
 	});
 
-	setTimeout(function() {
+
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+  $scope.$on('$ionicView.enter', function() {
+  		setTimeout(function() {
 		$scope.$apply(function() {
 			$scope.categorys = CategoryListName
 		});
-	}, 1500);
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-  $scope.$on('$ionicView.enter', function() {
+	}, 0);
       colorIconsFoother = []
      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','Z','','none','none']);
   });
@@ -339,6 +344,46 @@ angular.module('starter.controllers', ['ionic'])
 	};
 	Parse.Analytics.track("view", dimensions);
 
+	$scope.reload = function () {
+	    var PromoSavess = new Parse.Query('PromotionSaved')
+	    PromoSavess.equalTo("UserID", IdUsuario);
+	    PromoSavess.find({
+			success: function(results) {
+				for (a in results[0].attributes.PromotionID){
+					for (b in CurrentPromotion){
+						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+							if (CurrentPromotion[b].ColorPin === "silver") {
+								CurrentPromotion[b].ColorPin  = "purple";
+							}
+						}else {
+							CurrentPromotion[b].ColorPin  = "silver";
+						}
+					}
+				}
+			},
+			error: function(myObject, error) {
+				// Error occureds
+				console.log( error );
+			}
+		});
+	}
+
+
+	// ************ DELETE AND SAVE PIN ************
+	$scope.SalvadosSaveAndDelete = function (id) {
+		var pin = document.getElementById(id).style.color;
+		if (pin == "silver") {
+			document.getElementById(id).style.color = "purple";
+			SavePromotion(IdUsuario, id)
+			$scope.reload()
+		} else {
+			document.getElementById(id).style.color = "silver";
+			DeletePromotion(IdUsuario, id)
+			$scope.reload()
+		}
+		$scope.reload()
+	}
+
 	$scope.$on('$ionicView.enter', function() {
 		$scope.chats = AllPromotion.all($stateParams.salvadosId);
 	});
@@ -350,11 +395,31 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 // ********************* SUPERMARKET CONTROLLER ***************************
-.controller('SupermercadoCtrl', function($scope) {
+.controller('SupermercadoCtrl', function($scope, $ionicLoading) {
 	Super=[]
 	var dimensions = {
 		name: 'supermarketMenu'
 	};
+	// Loading scope
+	$scope.loading = $ionicLoading.show({
+      noBackdrop: true,
+      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+  });
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
 	Parse.Analytics.track("view", dimensions);
 	var customer1 = new Parse.Query('Customer');
 	Parse.Cloud.run('GetPromotions', {}, {
@@ -369,6 +434,7 @@ angular.module('starter.controllers', ['ionic'])
 											success: function(result) {
 													/* Call AddPromotions function and send result like parameter */
 													AddPromotionsSupermercado(result);
+
 											},
 											error: function(error) {
 													/* Show error if call failed */
@@ -437,25 +503,46 @@ angular.module('starter.controllers', ['ionic'])
 						console.log( error );
 					}
 				});
+				$ionicLoading.hide();
 			});
 	}
 
-	setTimeout(function() {
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+  $scope.$on('$ionicView.enter', function() {
+  		setTimeout(function() {
 		$scope.$apply(function() {
 			$scope.chats = Super;
 		});
-	}, 2000);
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-  $scope.$on('$ionicView.enter', function() {
+	}, 1000);
       colorIconsFoother = []
     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Supermercados','','none',]);
   });
 })
 // *********************** RESTAURANTS CONTROLLER *************************
-.controller('RestaurantesCtrl', function($scope) {
+.controller('RestaurantesCtrl', function($scope, $ionicLoading) {
+
 	var dimensions = {
 		name: 'restaurantMenu'
 	};
+
+	$scope.loading = $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FF5252; fill: #FF5252;"></ion-spinner>'
+	});
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
 	Parse.Analytics.track("view", dimensions);
 	var customer2 = new Parse.Query('Customer');
 	Restaurantes = []
@@ -539,25 +626,46 @@ angular.module('starter.controllers', ['ionic'])
 						console.log( error );
 					}
 				});
+			$ionicLoading.hide();
 		  });
 	}
 
-	setTimeout(function() {
-		$scope.$apply(function() {
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+    $scope.$on('$ionicView.enter', function() {
+		setTimeout(function() {
+			$scope.$apply(function() {
 			$scope.chats = Restaurantes;
 		});
-	}, 2000);
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
+	}, 1000);
         colorIconsFoother = []
-         colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Restaurantes','','none']);
+		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Restaurantes','','none']);
     });
 })
 // ************************* FASHION CONTROLLER ****************************
-.controller('ModaCtrl', function($scope) {
+.controller('ModaCtrl', function($scope, $ionicLoading) {
 	var dimensions = {
 		name: 'fashionMenu'
 	};
+
+	$scope.loading = $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFD922; fill: #FFD922;"></ion-spinner>'
+	});
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
 	Parse.Analytics.track("view", dimensions);
 	var customer3 = new Parse.Query('Customer');
 	Modas = []
@@ -630,7 +738,6 @@ angular.module('starter.controllers', ['ionic'])
 						for (a in results[0].attributes.CustomerID){
 							for (b in Modas){
 								if (results[0].attributes.CustomerID[a] === Modas[b].NameCategory){
-									console.log(Modas[b].NameCategory);
 									if (Modas[b].colorHeart === "white") {
 										Modas[b].colorHeart  = "red";
 									}
@@ -643,27 +750,47 @@ angular.module('starter.controllers', ['ionic'])
 						console.log( error );
 					}
 				});
+				$ionicLoading.hide();
 			});
 	}
 
-	setTimeout(function () {
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+    $scope.$on('$ionicView.enter', function() {
+    setTimeout(function () {
 		$scope.$apply(function () {
 			$scope.chats = Modas
 		});
-	}, 2000);
-
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
+	}, 1000);
         colorIconsFoother = []
       colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Moda','','none']);
     });
 })
 // ************************** ENTERTAINMENT CONTROLLER ********************
-.controller('EntretenimientoCtrl', function($scope) {
+.controller('EntretenimientoCtrl', function($scope, $ionicLoading) {
 	Entretenimientos=[]
 	var dimensions = {
 		name: 'entertainmentMenu'
 	};
+
+	$scope.loading = $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #9C28B0; fill: #9C28B0;"></ion-spinner>'
+	});
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
 	Parse.Analytics.track("view", dimensions);
 		var customer4 = new Parse.Query('Customer');
 	Parse.Cloud.run('GetPromotions', {}, {
@@ -746,26 +873,47 @@ angular.module('starter.controllers', ['ionic'])
 						console.log( error );
 					}
 				});
+				$ionicLoading.hide();
 			});
 	}
 
-	setTimeout(function() {
-		$scope.$apply(function() {
-				$scope.chats = Entretenimientos;
-		});
-	}, 2000);
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
+		setTimeout(function() {
+			$scope.$apply(function() {
+				$scope.chats = Entretenimientos;
+			});
+		}, 1000);
         colorIconsFoother = []
       colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Entretenimiento','','none']);
     });
 })
 // *************************** ELECTRONICS CONTROLLER *********************
-.controller('ElectronicosCtrl', function($scope) {
+.controller('ElectronicosCtrl', function($scope, $ionicLoading) {
 	Electronico=[]
 	var dimensions = {
 		name: 'electronicsMenu'
 	};
+
+	$scope.loading = $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #3F51B5; fill: #3F51B5;"></ion-spinner>'
+	});
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
 	Parse.Analytics.track("view", dimensions);
 		var customer5 = new Parse.Query('Customer');
 	Parse.Cloud.run('GetPromotions', {}, {
@@ -848,26 +996,59 @@ angular.module('starter.controllers', ['ionic'])
 						console.log( error );
 					}
 				});
+				$ionicLoading.hide();
 			});
 	}
 
-	setTimeout(function() {
-		$scope.$apply(function() {
-				$scope.chats = Electronico;
-		});
-	}, 2000);
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
+		setTimeout(function() {
+			$scope.$apply(function() {
+				$scope.chats = Electronico;
+			});
+		}, 1000);
         colorIconsFoother = []
         colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Electronicos','','none']);
     });
 })
 // *************************** OTHERS CONTROLLER **************************
-.controller('OtrosCtrl', function($scope) {
-
+.controller('OtrosCtrl', function($scope, $ionicLoading) {
 
 	var dimensions = {
 		name: 'othersMenu'
+	};
+
+	$scope.loading = $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00DDC1; fill: #00DDC1;"></ion-spinner>'
+	});
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
 	};
 
 	Parse.Analytics.track("view", dimensions);
@@ -906,7 +1087,6 @@ angular.module('starter.controllers', ['ionic'])
 	function AddPromotionsOtros(Array) {
 	var cust6 =	customer6.find().then(function(results) {
 		Otro = [];
-		console.log(Otro,"asdasd");
 			for (x in results) {
 				var CountPromotions = 0;
 				if (results[x].attributes.Name in Array.Quantities[0]) {
@@ -930,7 +1110,6 @@ angular.module('starter.controllers', ['ionic'])
 					});
 				}
 			};
-			console.log(Otro,"otro");
 			if (Otro.length == 0) {
 				Otro.push({oferta:"noHay"});
 			}
@@ -956,16 +1135,17 @@ angular.module('starter.controllers', ['ionic'])
 					console.log( error );
 				}
 			});
+			$ionicLoading.hide();
 		});
 	}
 
-	setTimeout(function() {
-		$scope.$apply(function() {
-				$scope.Others = Otro;
-		});
-	}, 2000);
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
 	$scope.$on('$ionicView.enter', function() {
+		setTimeout(function() {
+			$scope.$apply(function() {
+				$scope.Others = Otro;
+			});
+		}, 1000);
 			colorIconsFoother = []
 			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Otros','','none']);
 	});
@@ -975,7 +1155,67 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: $stateParams.superId,
 	};
-	//*************** Url *******************************
+	// Pixels quantity of Popover for height div
+	$scope.pix = Paiz.get($stateParams.superId);
+	console.log($scope.pix);
+	$scope.pixels = $scope.pix[1][0].pixels;
+
+	$scope.reload = function () {
+	    var PromoSavess = new Parse.Query('PromotionSaved')
+	    PromoSavess.equalTo("UserID", IdUsuario);
+	    PromoSavess.find({
+			success: function(results) {
+				for (a in results[0].attributes.PromotionID){
+					for (b in CurrentPromotion){
+						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+							if (CurrentPromotion[b].ColorPin === "silver") {
+								CurrentPromotion[b].ColorPin  = "purple";
+							}
+						}else {
+							CurrentPromotion[b].ColorPin  = "silver";
+						}
+					}
+				}
+			},
+			error: function(myObject, error) {
+				// Error occureds
+				console.log( error );
+			}
+		});
+	}
+
+	// ************ FUNCTION CHANGE COLOR PIN OFFERTS ************
+	$scope.changeColorPinOfferts = function (id, IDPromotion) {
+		var cssColorpinOfferts = document.getElementById(id+" "+IDPromotion).style.color;
+
+		if (cssColorpinOfferts == "silver") {
+			document.getElementById(id+" "+IDPromotion).style.color = "purple";
+			SavePromotion(IdUsuario, IDPromotion)
+			$scope.reload()
+	    viewPromotion()
+		} else {
+			document.getElementById(id+" "+IDPromotion).style.color = "silver";
+			DeletePromotion(IdUsuario, IDPromotion)
+			$scope.reload()
+	    viewPromotion()
+		}
+		$scope.reload()
+	};
+	// *********** FUNCTION CHANGE COLOR PIN OFFERTS WITHOUT IMAGE **********
+	$scope.changeColorPinOffertsWithoutImage = function (id, IDPromotion) {
+		var cssColorpinOffertsWithoutImage = document.getElementById(id+" "+IDPromotion).style.color;
+
+		if (cssColorpinOffertsWithoutImage == "silver") {
+			document.getElementById(id+" "+IDPromotion).style.color = "purple";
+			SavePromotion(IdUsuario, IDPromotion)
+			$scope.reload()
+		} else {
+			document.getElementById(id+" "+IDPromotion).style.color = "silver";
+			DeletePromotion(IdUsuario, IDPromotion)
+			$scope.reload()
+		}
+	};
+
 
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
@@ -988,15 +1228,39 @@ angular.module('starter.controllers', ['ionic'])
 		z = Url;
 		window.open(z);
 	}
+	// *************** PROMOTIONS FUNCTION ***************
+	$scope.Promotions =function (id){
+		PromoSave.find({
+			success: function(results) {
+				for (x in results) {
+					if (results[x].attributes.UserID === IdUsuario){
+						for (a in results[x].attributes.PromotionID){
+							for (b in CurrentPromotion){
+								if (results[x].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion && id === CurrentPromotion[b].Category){
+									var cssColorpinOffer = document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
+									if (cssColorpinOffer=="silver"){
+										document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			error: function(myObject, error) {
+				// Error occureds
+				console.log( error );
+			}
+		});
+	}
 
 	Parse.Analytics.track("view", dimensions);
 	$scope.$on('$ionicView.enter', function() {
-		// Redirection page variable to coupons
-		var couponPage="#/app/cupones/"
-		idRoute = Paiz.get($stateParams.superId);
 
-		console.log("idRoute");
-		console.log(idRoute);
+		$scope.Promotions($stateParams.superId);
+		// Redirection page variable to coupons
+		var couponPage="#/app/cupones/";
+		idRoute = Paiz.get($stateParams.superId);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
 		// Validate if doesn't existing a promotion then redirection to coupons page.
@@ -1004,10 +1268,11 @@ angular.module('starter.controllers', ['ionic'])
 			$('.pageFavoritesSecondRow').css("display","none");
 		} else if(idRoute[2][0].conteo == 0){
 			location.href=couponPage
-				$('.pageFavoritesSecondRow').show();;
+			$('.pageFavoritesSecondRow').show();;
 		}else {
-				$('.pageFavoritesSecondRow').show();
+			$('.pageFavoritesSecondRow').show();
 		}
+
 		$scope.chats = Paiz.get($stateParams.superId);
 		$scope.popover = Paiz.all($stateParams.superId);
 		$scope.heartMenu = "silver";
@@ -1033,56 +1298,55 @@ angular.module('starter.controllers', ['ionic'])
 	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
 	$scope.categoryNameCoupon = Paiz.get($stateParams.superId);
 	$scope.$on('$ionicView.enter', function() {
-			colorIconsFoother = []
-			console.log($scope.categoryNameCoupon[0][0].Category);
-			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
+		colorIconsFoother = []
+		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
 
-
-
 	// For to update QuantityExchanged
 	var CuponClassExchanged = new Parse.Object.extend("Cupon");
 	var cuponClassExchanged = new CuponClassExchanged();
 	var query = new Parse.Query("Cupon");
+	$scope.pix = Cupons.all($stateParams.CuponID);
+	console.log($scope.pix);
+	$scope.pixels = $scope.pix[1][0].pixels;
 
 	$scope.countCoupon = function(id){
 
 		query.equalTo("objectId",id)
 		var couponCash =	query.find({
-				success: function(results){
-					if(results == false) {
-							alert("No hay cupones para canjear sorry :c	!!")
-							couponFunction()
-					}
-					else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
-									cuponClassExchanged.id = id;
-									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-									cuponClassExchanged.save();
-									couponFunction()
-									alert("Has cambiado tu cupon!!");
-						} else {
-									cuponClassExchanged.id = id;
-									cuponClassExchanged.set("Status", false);
-									cuponClassExchanged.save();
-									couponFunction()
-									alert("No hay cupones para canjear sorry :c	!!")
-						}
+			success: function(results){
+				if(results == false) {
+					alert("No hay cupones para canjear sorry :c	!!")
+					couponFunction()
 				}
-			})
-			couponCash.then(function(){
-				$scope.cupons[0][0].QuantityExchanged +=1;
-				console.log($scope.cupons[0][0].QuantityExchanged);
-				var couponPages="#/app/descripcionCupones/";
-				// IdPromotion with redirection page
-				couponPages = couponPages+id;
-				location.href=couponPages;
-			});
+				else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
+					cuponClassExchanged.id = id;
+					cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+					cuponClassExchanged.save();
+					couponFunction()
+					alert("Has cambiado tu cupon!!");
+				} else {
+					cuponClassExchanged.id = id;
+					cuponClassExchanged.set("Status", false);
+					cuponClassExchanged.save();
+					couponFunction()
+					alert("No hay cupones para canjear sorry :c	!!")
+				}
+			}
+		})
+		couponCash.then(function(){
+			$scope.cupons[0][0].QuantityExchanged +=1;
+			var couponPages="#/app/descripcionCupones/";
+			// IdPromotion with redirection page
+			couponPages = couponPages+id;
+			location.href=couponPages;
+		});
 	}
 
-		/*****  fill displayNoneInline list to call after
+	/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
 						or hide it  ****/
 	// *************** CALL PHONE FUNCTION ***************
@@ -1103,6 +1367,17 @@ angular.module('starter.controllers', ['ionic'])
   $scope.llenar2=function(){
     displayNoneInline=[{none:"inline",inline:"none"}];
   };
+	// ************ FUNCTION CHANGE COLOR PIN CUPON *************
+	$scope.changeColorPinCupon = function (id) {
+		var cssColorCuponPin = document.getElementById(id).style.color;
+		if (cssColorCuponPin == "silver") {
+			document.getElementById(id).style.color = "purple";
+			saveCuponFavorite(IdUsuario, id)
+		} else {
+			deleteFavoriteCupon(IdUsuario, id)
+			document.getElementById(id).style.color = "silver";
+		}
+	};
 	/*****  functions *****/
 	$scope.$on('$ionicView.enter', function() {
 
@@ -1139,9 +1414,28 @@ angular.module('starter.controllers', ['ionic'])
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
 
-		$scope.reloadpage = function(){
-			$scope.cupons[0].QuantityExchanged +=1
+	$scope.reloadpage = function(){
+		$scope.cupons[0].QuantityExchanged +=1
+	}
+	// ***************  EXCHANGE BUTTON DISPLAY NONE********************
+	$scope.buttonCash = function(){
+		$('.botonCanjear').click(function(){
+			$(this).hide();
+			$('.exchangeBoxBarCode').show();
+		})
+	}
+
+	// ************ FUNCTION CHANGE COLOR PIN CUPON *************
+	$scope.changeColorPinCupon = function (id) {
+		var cssColorCuponPin = document.getElementById(id).style.color;
+		if (cssColorCuponPin == "silver") {
+			document.getElementById(id).style.color = "purple";
+			saveCuponFavorite(IdUsuario, id)
+		} else {
+			deleteFavoriteCupon(IdUsuario, id)
+			document.getElementById(id).style.color = "silver";
 		}
+	};
 
 		// For to update QuantityExchanged
 		var CuponClassExchanged = new Parse.Object.extend("Cupon");
@@ -1160,21 +1454,18 @@ angular.module('starter.controllers', ['ionic'])
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 								cuponClassExchanged.save();
-
 								alert("Has cambiado tu cupon!!")
 					} else if(parseInt(results[0].attributes.QuantityExchanged) === parseInt(results[0].attributes.QuantityCoupons)){
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("Status", false);
 								cuponClassExchanged.save();
-
 								alert("No hay cupones para canjear sorry :c	!!")
 					}
 					}
 				})
 
 				couponCash2.then(function(){
-					console.log("entro al then");
-							couponFunction()
+					couponFunction()
 				});
 		}
 
@@ -1197,7 +1488,7 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.footerChangeColor=colorIconsFoother;
 	});
 })
-//*****************	CONTROLLER POPOVER	*******************************
+//*****************	POPOVER CONTROLLER FOR OFFERS	*******************************
 .controller('PopoverCtrl', function($scope, $ionicPopover) {
 	$ionicPopover.fromTemplateUrl('templates/popover.html', {
 		scope: $scope,
@@ -1206,6 +1497,17 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.message = 'hello';
 	});
 })
+//*****************	POPOVER CONTROLLER FOR COUPONS	*******************************
+.controller('PopoverCtrl2', function($scope, $ionicPopover) {
+	$ionicPopover.fromTemplateUrl('templates/popover2.html', {
+		scope: $scope,
+	}).then(function(popover) {
+		$scope.popover = popover;
+		$scope.message = 'hello';
+	});
+})
+
+
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
 	$ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
@@ -1214,5 +1516,355 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.popover = popover;
 		$scope.message = 'cheers';
 	});
+});
+// ************************  ROUTES WITH LOGIN AND TUTORIAL CONTROLLERS ********************
+// ************************ CONTROLLER ROUTER ************************
+var myApp = angular.module('reallyCoolApp', ['ionic','ngCordova']);
+myApp.config(function($ionicConfigProvider) {
+	// note that you can also chain configs
+	$ionicConfigProvider.navBar.alignTitle('center');
+});
+// ************************ MODULE SERVICES ************************
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
+
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+	$ionicConfigProvider.tabs.position('bottom');
 })
-//$scope.$on('$ionicView.enter', function() {});
+// ************************ CORDOVA PLUGINS START LOAD ************************
+.run(function($ionicPlatform) {
+	$ionicPlatform.ready(function() {
+		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+		}
+		if (window.StatusBar) {
+			StatusBar.styleLightContent();
+		}
+	});
+})
+// ************************ ROUTER PROVIDER CONFIGURATION ************************
+.config(function($stateProvider, $urlRouterProvider) {
+	$stateProvider
+	// ************************ INITIAL ************************
+	.state('app', {
+		url: "/app",
+		abstract: true,
+		templateUrl: "templates/menu/menu.html",
+		controller: 'menuCtrl'
+	})
+	// ******** SPLASH *****
+.state('splash', {
+	url: "/splash",
+	templateUrl: "templates/splash/splash.html",
+	controller:"splashController"
+})
+  // ******** TUTORIAL *****
+	.state('tutorial', {
+		url: "/tutorial",
+		templateUrl: "templates/tutorial/tutorial.html",
+		controller:"tutorialController"
+})
+// ******** TUTORIAL2 *****
+	.state('tutorial2', {
+		url: "/tutorial2",
+		templateUrl: "templates/tutorial2/tutorial2.html",
+		controller:"tutorial2Controller"
+  })
+	// ******** FACEBOOK *****
+	.state('login', {
+		url: "/login",
+		templateUrl: "templates/login/login.html",
+    	controller: "LoginController"
+	})
+  // ******** FACEBOOK *****
+	.state('login2', {
+		url: "/login2",
+		templateUrl: "templates/login2/login2.html",
+    	controller: "RegisterController"
+	})
+	// ******* FAVORITE *******
+	.state('app.favoritos', {
+		url: "/favoritos",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/favorite/favorites.html",
+				controller: 'OurfavoritesCtrl'
+			}
+		}
+	})
+	// ******* YOUR FAVORITE
+	.state('app.tusFavoritos', {
+		url: "/tusFavoritos",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/your_favorites/your_favorites.html",
+				controller: 'AllFavoriteCtrl'
+			}
+		}
+	})
+	// ******* SAVED *******
+	.state('app.salvados', {
+		url: "/salvados",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/saved/saved.html",
+				controller: 'AllPromotionCtrl'
+			}
+		}
+	})
+  // ******* SETTINGS *******
+	.state('app.herramientas', {
+		url: "/herramientas",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/tools/tools.html",
+				controller: 'toolsCtrl'
+			}
+		}
+	})
+	// ******* OFFERS *******
+	.state('app.browse', {
+		url: "/ofertas/:superId",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/offers/offers.html",
+				controller: 'PaizCtrl'
+			}
+		}
+	})
+	// ******* PLAYLIST *******
+	.state('app.playlists', {
+		url: "/playlists",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/page_start/page_start.html",
+				controller: 'CategoryCtrl'
+			}
+		}
+	})
+	// ******* SUPERMARKET CATEGORIES *******
+	.state('app.single', {
+		url: "/playlists/Supermercado",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/supermarkets.html",
+				controller: 'SupermercadoCtrl'
+			}
+		}
+	})
+	// ******* RESTAURANT'S CATEGORIES *******
+	.state('app.singles', {
+		url: "/playlists/Restaurantes",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/restaurants.html",
+				controller: 'RestaurantesCtrl'
+			}
+		}
+	})
+	// ******* FASHION CATEGORIES *******
+	.state('app.singless', {
+		url: "/playlists/Moda",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/fashion.html",
+				controller: 'ModaCtrl'
+			}
+		}
+	})
+	// ******* ENTERTAINMENT CATEGORIES *******
+	.state('app.singlesss', {
+		url: "/playlists/Entretenimiento",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/entertainment.html",
+				controller: 'EntretenimientoCtrl'
+			}
+		}
+	})
+	// ******* ELECTRONICS CATEGORIES *******
+	.state('app.singlessss', {
+		url: "/playlists/Electrónicos",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/electronics.html",
+				controller: 'ElectronicosCtrl'
+			}
+		}
+	})
+	// ******* OTHER CATEGORIES *******
+	.state('app.singlesssss', {
+		url: "/playlists/Otros",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/others.html",
+				controller: 'OtrosCtrl'
+			}
+		}
+	})
+	// ****************  OFFERS  *************
+	.state('ofertas', {
+		url: "/ofertas",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/offers/offers.html",
+				controller: 'PaizCtrl'
+			}
+		}
+	})
+	// ****************  CUPONS  *************
+	.state('app.cupones', {
+		url: "/cupones/:CuponID",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/coupon/coupon.html",
+				controller: 'CuponCtrl'
+			}
+		}
+	})
+	// ****************  OFFERTS DESCRIPTION  *************
+	.state('app.descripcionOfertas', {
+		url: "/descripcionOfertas",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/offer_description/offerDescription.html",
+				controller: 'homeCtrl'
+			}
+		}
+	})
+	//****************  CUPONS DESCRIPTION  *************
+	.state('app.descripcionCupones', {
+		url: "/descripcionCupones/:DescriptionID",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/coupon_description/couponDescription.html",
+				controller: 'DescriptionCuponCtrl'
+			}
+		}
+	});
+	// if none of the above states are matched, use this as the fallback
+	$urlRouterProvider.otherwise('/splash');
+})
+// ############## //
+//  Controllers   //
+// ############## //
+.controller('rootCtrl', ['$state', function($state) {
+  $state.go('app.playlists');
+}])
+/*************************  SPLASH  ******************************/
+.controller('splashController', ['$scope', '$state', function($scope, $state) {
+	function doSomething(){
+	}
+	$scope.currentUser = Parse.User.current();
+	if ($scope.currentUser == null ){
+		$state.go('tutorial')
+			} else {
+				if ($scope.currentUser["attributes"].authData == undefined) {
+					IdUsuario = String($scope.currentUser.id)
+							viewPromotion()
+				}else {
+					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+							viewPromotion()
+				}
+				$state.go('app.playlists');
+			}
+}])
+/*************************  TUTORIAL  ******************************/
+.controller('tutorialController', ['$scope', '$state', function($scope, $state) {
+  $scope.slideChanged = function(index) {
+    switch(index) {
+        case 3:
+          $state.go('login2');
+          break;
+      }
+    }
+}])
+/*************************  TUTORIAL NO.2 ******************************/
+.controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
+  $scope.slideChanged = function(index) {
+    switch(index) {
+        case 3:
+          $state.go('app.herramientas');
+          break;
+      }
+    }
+}])
+
+/******************************************************/
+.controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
+
+	$scope.logout = function() {
+		Parse.User.logOut();
+		$state.go('login');
+	};
+
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+	$scope.$on('$ionicView.enter', function() {
+		colorIconsFoother = []
+		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','Z','','none']);
+	});
+}])
+
+.controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
+
+    $scope.currentUser = Parse.User.current();
+    if ($scope.currentUser == null ){
+    }else{
+        IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+        viewPromotion()
+        $state.go('app.playlists');
+    }
+    //===============LOGIN WITH FB==========//
+    $scope.loginfb = function(){
+  	var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
+    //Browser Login
+    if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
+
+      Parse.FacebookUtils.logIn(null, {
+        success: function(user) {
+          IdUsuario = user.changed.authData.facebook.id
+          viewPromotion()
+          if (!user.existed()) {
+          } else {
+          }
+          $state.go('app.playlists');
+        },
+        error: function(user, error) {
+        }
+      });
+    }
+    //Native Login
+    else {
+      $cordovaFacebook.login(permissions).then(function(success){
+        //alert(success);
+        IdUsuario = success.authResponse.userID
+        viewPromotion()
+        //Need to convert expiresIn format from FB to date
+        var expiration_date = new Date();
+        expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
+        expiration_date = expiration_date.toISOString();
+
+        var facebookAuthData = {
+          "id": success.authResponse.userID,
+          "access_token": success.authResponse.accessToken,
+          "expiration_date": expiration_date
+        };
+
+        Parse.FacebookUtils.logIn(facebookAuthData, {
+          success: function(user) {
+            //alert(JSON.stringify(user));
+            if (!user.existed()) {
+            } else {
+            }
+             $state.go('app.playlists');
+          },
+          error: function(user, error) {
+            alert(JSON.stringify(error));
+          }
+        });
+      }, function(error){
+        console.log(error);
+      });
+    }
+  };
+    // //===============/LOGIN WITH FB==========//
+});

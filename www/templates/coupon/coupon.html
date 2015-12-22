@@ -39,7 +39,7 @@ hr     {
 				<div ng-repeat="s in cupons[1]">
 					<div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
 						<div>
-							 <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl">
+							 <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl2">
 								<p class="pageOffertsPopoverSimbol" style="vertical-aling:middle;">
 									N
 								</p>
@@ -80,7 +80,7 @@ hr     {
 							</p>
 					   	</div>
 						<!--**********  DESCRIPTION  **********-->
-						<div class="ellipsify cajaTexto" style="height:50px;ckground-color:; ">
+						<div class="ellipsify cajaTexto" style="height:50px;">
 							<div class="ellipsify">
 								<div class="pre-dots"></div>
 								<div class="dots">&hellip;</div>
@@ -94,29 +94,34 @@ hr     {
 					</div>
 				  </a>
 				 <!--*****  DIV TO PRICE AND ICONS  *****-->
-				<div class="row pageFavoritesDivIcons open_sans" style="height:38px; background-color:;" >
+				<div class="row pageFavoritesDivIcons open_sans" style="height:38px;align-items:center">
 					<!--*****  ACTUAL PRICE  *****-->
-					<div class="col col-33">
+					<div class="col-25" style="text-align:center;align-items:center;margin-left:5px">
 						<a class="textDecorationNone" ng-click="llenar1('{{cupon.IDCupon}}')">
-							<spam class="pageOffertExchance" style="color:#3F51B5; font-size:20px;">
+							<spam class="pageOffertExchance" style="color:#3F51B5; font-size:16px;">
 						  		CANJEAR
 							</spam>
 						</a>
 					</div>
 					<!--*****   BEFORE PRICE  *****-->
-					<div class="col col-33">
-						<spam class="pageFavoritesActualPrice" style="color:silver;margin-top:-5px; font-size:17px;">
-						   (7 dias)
+					<div class="col-33"  style="text-align:center;align-items:center">
+						<spam class="" style="color:silver;margin-top:-5px; font-size:17px;">
+						   <!-- (7 dias) -->
 						</spam>
 					</div>
 					<!--*****  ICONS  *****-->
-					<div class="col col-33">
-						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
-							O
+					<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
+						<!-- Url Shop online Icon -->
+						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}')" style="display:{{cupon.Display}};font-size:23px;">
+								j
 						</spam>
-						<spam class="pageFavoritesIcons home"  id="{{cupon.IDCupon}}" onclick="changeColorPinCupon(id)" style="color:{{cupon.ColorPinCupon}}">
-							W
-						</spam>
+							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
+									O
+							</spam>
+							<!-- Pin Icon -->
+							<spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}};font-size:23px;">
+							 W
+						 </spam>
 					</div>
 				</div>
 			</div>
@@ -163,38 +168,42 @@ hr     {
 				</a>
 				<!--*****  DIVIDER LINE  *****-->
 				<!--*****  DIV TO PRICE AND ICONS  *****-->
-				<div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;
-				border-top:1px solid #F1F2F2;margin-top:5px;">
-					<!--*****  ACTUAL PRICE  *****-->
-					<div class="col col-33">
-						<a  class="textDecorationNone" ng-click="llenar1('{{cupon.IDCupon}}')">
-							<spam class="pageOffertExchance" style="color:#3F51B5; font-size:20px;">
-
-						  CANJEAR
+				<div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;border-top:1px solid #F1F2F2;margin-top:5px;height:38px;align-items:center">
+				<!--*****  ACTUAL PRICE  *****-->
+				<div class="col-25">
+					<a class="textDecorationNone" ng-click="llenar1('{{cupon.IDCupon}}')" style="text-align:center;align-items:center;margin-left:5px">
+						<spam class="pageOffertExchance" style="color:#3F51B5; font-size:16px;">
+								CANJEAR
 						</spam>
-						</a>
-					</div>
-					<!--*****   BEFORE PRICE  *****-->
-					<div class="col col-33">
-						<spam class="pageOffertsBeforePrice" style="margin-top:-5px; font-size:17px;">
-						   (7 dias)
+					</a>
+				</div>
+				<!--*****   BEFORE PRICE  *****-->
+				<div class="col-33"  style="text-align:center;align-items:center">
+					<spam class="" style="color:silver;margin-top:-5px; font-size:17px;">
+						 <!-- (7 dias) -->
+					</spam>
+				</div>
+				<!--*****  ICONS  *****-->
+				<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
+					<!-- Url Shop online Icon -->
+					<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}')" style="display:{{cupon.Display}};font-size:23px;">
+							j
+					</spam>
+						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
+								O
 						</spam>
-					</div>
-					<!--*****  ICONS  *****-->
-					<div class="col col-33">
-						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
-							O
-						</spam>
-					   <spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" onclick="changeColorPinCupon(id)" style="color:{{cupon.ColorPinCupon}}">
-							W
-						</spam>
-					</div>
+						<!-- Pin Icon -->
+						<spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}};font-size:23px;">
+						 W
+					 </spam>
+				</div>
 				</div>
 			</div>
 		</div>
 		<div class="pageOffertsBlanckDiv"></div>
 		<!--**************  BOX RED STYLE MISSING OFFERTS  ***************-->
 		<!--**********  TRIANGLES TOP  **********-->
+		<!--
 		<div class="row">
 			<p class="arrow-up-left2"></p><p class="arrow-up2"></p>
 			<p class="arrow-up2"></p><p class="arrow-up2"></p>
@@ -209,11 +218,12 @@ hr     {
 			<p class="arrow-up2"></p><p class="arrow-up2"></p>
 			<p class="arrow-up2"></p><p class="arrow-up2"></p>
 			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-		</div>
+		</div>-->
 		<!--**********  PURPLE BOX  **********-->
-		<div class="pageOffertsBoxRedStyle">
-			<!--**********  CLOCK ICON  **********-->
-			<h4 class="home clownStyle">
+		<!-- Not found Content -->
+	<!--	<div class="pageOffertsBoxRedStyle">-->
+			<!-- **********  CLOCK ICON  **********-->
+		<!--	<h4 class="home clownStyle">
 				P
 			</h4>
 			<h4 class="open_sans pageStartBoxPurpleTitle" style="margin-top:-20px;">
@@ -222,9 +232,9 @@ hr     {
 			<h4 class="open_sans pageStartBoxPurpleTitle ">
 				quieres.?
 			</h4>
-		</div>
+		</div>-->
 		<!--**********  TRIANGLES DOWN  **********-->
-		<div class="row">
+	<!--	<div class="row">
 			<p class="arrow-dow-left2"></p><p class="arrow-dow2"></p>
 			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
 			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
@@ -239,7 +249,7 @@ hr     {
 			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
 			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
 			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-		</div>
+		</div>-->
 		<!--*************************************************** -->
 		<div ng-repeat="super in cupons[0]  | filter: {oferta : 'noHay'}">
 			<div class="open_sans boxbox">
@@ -256,8 +266,8 @@ hr     {
 			</div>
 		</div>
 		<!--*************  FIRST POPOVER CONTENT  ******************-->
-		<script id="templates/popover.html" type="text/ng-template" >
-			<ion-popover-view  class="firstPopoverStyle" style="height:170px; width:180px; margin-top:20px;">
+		<script id="templates/popover2.html" type="text/ng-template" >
+			<ion-popover-view  class="firstPopoverStyle" style="height:{{pixels}};width:180px; margin-top:20px;">
 				<!--*****  FIRST POPOVER CONTENT  *****-->
 				<ion-content >
 					<div class="list" ng-repeat="s in cupons[1]" >
@@ -268,15 +278,15 @@ hr     {
 							</spam>
 						</a>
 						<a class="item" id = "{{s.cel}}" ng-click="call({{s.cel}})" target="_blank" style="text-align:right; color:silver;">
-							Llamar
+						{{s.call}}
 							<spam class="home pageOffertsPopoverIconsDescrpition">
-								Q
+							  {{s.callIcon}}
 							</spam>
 						</a>
-						<a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}')" target="_blank" style="text-align:right; color:silver;">
-							Ir a pagina Web
+						<a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}')" target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
+							  {{s.webUrl}}
 							<spam class="home pageOffertsPopoverIconsDescrpition">
-								R
+							{{s.webUrlIcon}}
 							</spam>
 						</a>
 					</div>

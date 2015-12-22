@@ -11,7 +11,7 @@
                     <div class="categoriesBoxes categoriesBoxesElectronic col col-100">
                         <!--*****  IMAGE CATEGORY SUPERMARKETS  *****-->
                         <!--*****  LINK ONLY FOR THE IMAGE  *****-->
-                        <a href="#/app/ofertas/{{super.NameCategory}}" id = "{{super.NameCategory}}" onclick="Promotions(id)">
+                        <a href="#/app/ofertas/{{super.NameCategory}}" id = "{{super.NameCategory}}">
                             <img class="imageCategoryBoxes" ng-src="{{super.name}}" alt="image">
                         </a>
                         <div class="row">
@@ -38,7 +38,7 @@
                             <!--*****  SECOND ROW TO HEART ICON  *****-->
                             <div class="col col-20 categoriesHeartIcon">
                                 <!--*****  HEART ICON  *****-->
-                                <div class="home" id="{{super.lastText}} {{super.NameCategory}}"  name = "{{super.NameCategory}}" onclick="changeColorHeart(id,id)" style="color:{{super.colorHeart}}">B</div>
+                                <div class="home" id="{{super.lastText}} {{super.NameCategory}}"  name = "{{super.NameCategory}}" ng-click="changeColorHeart('{{super.lastText}}','{{super.NameCategory}}')" style="color:{{super.colorHeart}}">B</div>
                             </div>
                         </div>
                     </div>
