@@ -4,30 +4,30 @@
         <!--**********  LIST TO CREATE CATEGORIES FRENZY  **********-->
         <ion-list>
             <!--**********  LIST STYLE PAGE START  **********-->
-            <ion-item href="#/app/playlists/{{category.direc}}" ng-repeat="category in categorys" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}">
+            <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categorys" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}">
                 <div class="row">
                     <!--**********  COL WITH CATEGORIE'S ICON  **********-->
                     <div class="col col-10">
                         <!--**********  ICON CATEGORIES  **********-->
-                        <div  class="pageStartIconsStyleGeneraly pageStartIconCategories home {{category.color}}">
-                            <div class="home iconoMenu">{{category.icon}}</div>
+                        <div  class="pageStartIconsStyleGeneraly pageStartIconCategories home {{category.ColorCategory}}">
+                            <div class="home iconoMenu">{{category.IconCategory}}</div>
                         </div>
                     </div>
                     <!--**********  COL WITH NAME, CUPONS AND PROMOTIONS  **********-->
                     <div class="col col-90 pageStartColWithNameCuponsPromotions">
                         <!--*****  NAME OF CATEGORIES  *****-->
                         <p class = "pageStartCategoriesName open_sans" style="color:black;font-size:16px;font-weight:bolder;">
-                            {{category.name}}
+                            {{category.CategoryName}}
                         </p>
                         <!--*****  COUPONS AND PROMOTIONS  *****-->
                         <div class="pageStartCuponsPromotions">
                             <!--*****  CUPONS TITLE  *****-->
                             <spam  class="pageStartCuponsPromotionsTitle">
-                                cupones {{category.cont_cupones}}
+                                cupones {{category.QuantityCoupon}}
                             </spam>
                             <!--*****  PROMOTIONS TITLE  *****-->
                             <spam class="pageStartCuponsPromotionsTitle">
-                                promociones {{category.cont_promo}}
+                                promociones {{category.QuantityPromotion}}
                             </spam>
                         </div>
                         <!--**********  SEPARATION LINE  **********-->
