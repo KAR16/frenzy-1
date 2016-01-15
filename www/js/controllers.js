@@ -236,66 +236,16 @@ angular.module('starter.controllers', ['ionic'])
 		noBackdrop: true,
 		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
 	});
-
-	var query = new Parse.Query('AppCategory');
 	CategoryListName = [];
-	CategoryListNameConteo=[];
-	query = query.limit(100);
-	query.find({
-		success: function(results) {
-			// cycle through the results
-			var PromotionS = Parse.Object.extend("Promotion");
-			var q = new Parse.Query(PromotionS);
-			for ( x in results) {
-				List_name.push(results[x].attributes.CategoryName)
-				q.equalTo("CategoryApp", results[x].attributes.CategoryName);
-				var pro = q.find({
-					success: function(results) {
-						for (a in results){
-							if (results[a].attributes.Status === true) {
-								CategoryListNameConteo.push({cont:results[a].attributes.CategoryApp})
-							}
-						}
-					},
-					error: function(error) {
-						// Error occureds
-						console.log(error);
-					}
-				});
-				CategoryListName.push({
-					name: results[x].attributes.CategoryName,direc:results[x].attributes.CategoryName,cont_promo:0,icon: results[x].attributes.IconCategory,
-					color : results[x].attributes.ColorCategory, cont_cupones:0
-				})
-				name  = results[x].attributes.CategoryName
-			}
-			pro.then(function(){
-
-				for (w in CategoryListName){
-					for (i in Cupons) {
-						if(CategoryListName[w].name == Cupons[i].Categoryapp){
-							CategoryListName[w].cont_cupones = CategoryListName[w].cont_cupones + 1
-						}
-					}
-					for(s in CategoryListNameConteo){
-
-						if(CategoryListName[w].name == CategoryListNameConteo[s].cont){
-							CategoryListName[w].cont_promo = CategoryListName[w].cont_promo + 1
-						}
-					}
-				}
-				$ionicLoading.hide();
-				$('.pageStartBoxPurple').show();
-				$('.flechitas').show();
-
-			});
-		},
-		error: function(myObject, error) {
-			// Error occured
-			console.log( error );
-		}
+	var query = new Parse.Query('AppCategory');
+	query.each(function(results) {
+				console.log(results.attributes);
+				CategoryListName.push(results.attributes)
+	}).then(function() {
+		$ionicLoading.hide();
+		$('.pageStartBoxPurple').show();
+		$('.flechitas').show();
 	});
-
-
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
   		setTimeout(function() {
