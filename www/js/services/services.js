@@ -58,6 +58,33 @@ app.factory('Categorys', function() {
 		}
 	};
 })
+//*************** Customer APP FACTORY **************
+app.factory('CustomerAll', function() {
+	return {
+		all: function(IDCostumer) {
+				var AllCustomer = [];
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					AllCustomer.push(CustomerList[a])
+				}
+			}
+			if (AllCustomer.length == 0) {
+				AllCustomer.push({oferta:"noHay"});
+			}
+			return AllCustomer;
+		},
+		get: function(chatId) {
+			for (var i = 0; i < AllCustomer.length; i++) {
+				if (AllCustomer[i].id === parseInt(chatId)) {
+					return AllCustomer[i];
+				}
+			}
+			return null;
+		}
+	};
+});
 // ************* SUPERMARKET APP FACTORY *************
 app.factory('Supermercados', function() {
 	// Might use a resource here that returns a JSON array Some fake testing data

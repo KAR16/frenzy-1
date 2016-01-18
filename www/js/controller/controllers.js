@@ -365,7 +365,43 @@ angular.module('starter.controllers', ['ionic'])
       colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','Z','','none']);
     });
 })
+//********************** Customer CONTROLLER *****************************
 
+.controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
+	var dimensions = {
+		name: 'supermarketMenu'
+	};
+	// Loading scope
+	$scope.loading = $ionicLoading.show({
+      noBackdrop: true,
+      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+  });
+
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.changeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+	Parse.Analytics.track("view", dimensions);
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+  $scope.$on('$ionicView.enter', function() {
+  		setTimeout(function() {
+		$scope.$apply(function() {
+			$scope.chats = CustomerAll.all($stateParams.IDcustomer);
+			$ionicLoading.hide();
+		});
+	}, 1000);
+      colorIconsFoother = []
+    colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Supermercados','','none',]);
+  });
+})
 // ********************* SUPERMARKET CONTROLLER ***************************
 .controller('SupermercadoCtrl', function($scope, $ionicLoading,$stateParams,Supermercados) {
 	Super=[]
@@ -1170,6 +1206,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			'menuContent': {
 				templateUrl: "templates/categories/others.html",
 				controller: 'OtrosCtrl'
+			}
+		}
+	})
+	// ******* OTHER CATEGORIES *******
+	.state('app.singlessssss', {
+		url: "/playlists/:IDcustomer",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/categories/Customer.html",
+				controller: 'CustomerCtrl'
 			}
 		}
 	})
