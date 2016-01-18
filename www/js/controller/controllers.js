@@ -376,7 +376,7 @@ angular.module('starter.controllers', ['ionic'])
       noBackdrop: true,
       template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
   });
-
+$scope.AppCategory = $stateParams.IDcustomer
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.changeColorHeart = function (parametro, category) {
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
@@ -399,7 +399,7 @@ angular.module('starter.controllers', ['ionic'])
 		});
 	}, 1000);
       colorIconsFoother = []
-    colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Supermercados','','none',]);
+    colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.AppCategory,'','none',]);
   });
 })
 // ********************* SUPERMARKET CONTROLLER ***************************

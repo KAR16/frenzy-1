@@ -1,11 +1,11 @@
-<ion-view  view-title="Supermercado">
+<ion-view  view-title="{{AppCategory}}">
     <!--**********  ESTABLISHMENTS  **********-->
     <ion-content class="backgroundCategories"  nav-transition="none">
         <div class="col">
             <!--*****  BOXES ENLINE BLOCK  *****-->
             <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in chats | filter: {oferta : 'existe'}">
                 <!--*****  BOXES DESIGN  *****-->
-                <div class="categoriesBoxes categoriesBoxesSupermarket col col-100">
+                <div class="categoriesBoxes {{AppCategory}} col col-100">
                     <!--*****  LINK ONLY FOR THE IMAGE  *****-->
                     <a href="#/app/ofertas/{{customer.NameCategory}}" id = "{{customer.NameCategory}}">
                     <img class="imageCategoryBoxes" ng-src="{{customer.name}}" alt="image">
@@ -14,20 +14,20 @@
                         <!--*****  GREEN BOX FOR PROMOTIONS AND OFFERTS  *****-->
                         <div class="col col-80" style="margin-top:-5px;">
                             <!--*****  OFFERTS COUNT  *****-->
-                            <spam class="categoriesOffertsPrice">
+                            <spam class="Price{{AppCategory}}">
                                 {{customer.promo}}
                             </spam>
                             <!--***** OFFERTS NAME  *****-->
-                            <spam class="categoriesOffertsTitle">
+                            <spam class="Title{{AppCategory}}">
                                 ofertas
                             </spam>
                             <br>
                             <!--*****  PROMOTIONS COUNT  *****-->
-                            <spam class="categoriesAveragePrice">
+                            <spam class="AveragePrice{{AppCategory}}">
                                 Q{{customer.promedio}}
                             </spam>
                             <!--*****  PROMOTIONS NAME  *****-->
-                            <spam class="categoriesAverageTitle">
+                            <spam class="AverageTitle{{AppCategory}}">
                                 promedio
                             </spam>
                         </div>
