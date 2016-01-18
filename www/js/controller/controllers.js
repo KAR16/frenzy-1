@@ -894,66 +894,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-	// ******* SUPERMARKET CATEGORIES *******
-	.state('app.single', {
-		url: "/playlists/Supermercado/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/supermarkets.html",
-				controller: 'SupermercadoCtrl'
-			}
-		}
-	})
-	// ******* RESTAURANT'S CATEGORIES *******
-	.state('app.singles', {
-		url: "/playlists/Restaurantes/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/restaurants.html",
-				controller: 'RestaurantesCtrl'
-			}
-		}
-	})
-	// ******* FASHION CATEGORIES *******
-	.state('app.singless', {
-		url: "/playlists/Moda/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/fashion.html",
-				controller: 'ModaCtrl'
-			}
-		}
-	})
-	// ******* ENTERTAINMENT CATEGORIES *******
-	.state('app.singlesss', {
-		url: "/playlists/Entretenimiento/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/entertainment.html",
-				controller: 'EntretenimientoCtrl'
-			}
-		}
-	})
-	// ******* ELECTRONICS CATEGORIES *******
-	.state('app.singlessss', {
-		url: "/playlists/Electrónicos/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/electronics.html",
-				controller: 'ElectronicosCtrl'
-			}
-		}
-	})
-	// ******* OTHER CATEGORIES *******
-	.state('app.singlesssss', {
-		url: "/playlists/Otros/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/others.html",
-				controller: 'OtrosCtrl'
-			}
-		}
-	})
+
 	// ******* OTHER CATEGORIES *******
 	.state('app.singlessssss', {
 		url: "/playlists/:IDcustomer",
