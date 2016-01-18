@@ -143,9 +143,28 @@ angular.module('starter.controllers', ['ionic'])
 		} else {
 			if ($scope.currentUser["attributes"].authData == undefined) {
 				IdUsuario = String($scope.currentUser.id)
+				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+					success:function (results) {
+						console.log(results);
+					 		CustomerList = results
+					},
+					error:function (error) {
+					 console.log(error);
+					}
+				});
 				        viewPromotion()
 			}else {
 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+					success:function (results) {
+						console.log(results);
+							CustomerList = results
+
+					},
+					error:function (error) {
+					 console.log(error);
+					}
+				});
 				        viewPromotion()
 			}
 			$state.go('app.playlists');
@@ -242,6 +261,9 @@ angular.module('starter.controllers', ['ionic'])
 				console.log(results.attributes);
 				CategoryListName.push(results.attributes)
 	}).then(function() {
+		ReloadFavorite()
+	}).then(function() {
+
 		$ionicLoading.hide();
 		$('.pageStartBoxPurple').show();
 		$('.flechitas').show();
@@ -345,7 +367,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 // ********************* SUPERMARKET CONTROLLER ***************************
-.controller('SupermercadoCtrl', function($scope, $ionicLoading) {
+.controller('SupermercadoCtrl', function($scope, $ionicLoading,$stateParams,Supermercados) {
 	Super=[]
 	var dimensions = {
 		name: 'supermarketMenu'
@@ -359,7 +381,6 @@ angular.module('starter.controllers', ['ionic'])
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.changeColorHeart = function (parametro, category) {
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
 		if (cssColor == "white") {
 			document.getElementById(parametro+" "+category).style.color = "red";
 			SaveFavorite(IdUsuario, category)
@@ -371,97 +392,13 @@ angular.module('starter.controllers', ['ionic'])
 	};
 
 	Parse.Analytics.track("view", dimensions);
-	var customer1 = new Parse.Query('Customer');
-	Parse.Cloud.run('GetPromotions', {}, {
-			success: function(result) {
-					/* Call GetQuantityPromotions function in Parse Cloud Code and
-					send result like parameter */
-					Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-							success: function(result) {
-									/* Call GetAverageSavings function in Parse Cloud Code and
-									send result like parameter */
-									Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-											success: function(result) {
-													/* Call AddPromotions function and send result like parameter */
-													AddPromotionsSupermercado(result);
-
-											},
-											error: function(error) {
-													/* Show error if call failed */
-													console.log(error);
-											}
-									});
-							},
-							error: function(error) {
-									/* Show error if call failed */
-									console.log(error);
-							}
-					});
-			},
-			error: function(error) {
-					/* Show error if call failed */
-					console.log(error);
-			}
-	});
-	function AddPromotionsSupermercado(Array) {
-		var cust = customer1.find().then(function(results) {
-				for (x in results) {
-					var CountPromotions = 0;
-					if (results[x].attributes.Name in Array.Quantities[0]) {
-						CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-						average = Array.averageSavingscustomer[results[x].attributes.Name];
-					} else {
-						CountPromotions = 0;
-						average = 0;
-					};
-					if("Supermercado" == results[x].attributes.CategoryApp){
-						name = results[x].attributes.Name;
-						listSupermercado.push(results[x].attributes.Logo._url);
-						listNameSupermercado.push(name.split(" ").join("_"));
-						Categorys.push({
-							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
-						})
-						Super.push({
-							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
-							colorHeart: "white"
-						});
-					}
-				};
-				if (Super.length == 0) {
-					Super.push({oferta:"noHay"});
-				}
-			});
-
-			cust.then(function(){
-				var FavoriteHeart = new Parse.Query('Favorite')
-				FavoriteHeart.equalTo("UserID", IdUsuario);
-				FavoriteHeart.find({
-					success: function(results) {
-						for (a in results[0].attributes.CustomerID){
-							for (b in Super){
-								if (results[0].attributes.CustomerID[a] === Super[b].NameCategory){
-									if (Super[b].colorHeart === "white") {
-										Super[b].colorHeart  = "red";
-									}
-								}
-							}
-						}
-					},
-					error: function(myObject, error) {
-						// Error occureds
-						console.log( error );
-					}
-				});
-				$ionicLoading.hide();
-			});
-	}
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
   		setTimeout(function() {
 		$scope.$apply(function() {
-			$scope.chats = Super;
+			$scope.chats = Supermercados.all($stateParams.IDcustomer);
+			$ionicLoading.hide();
 		});
 	}, 1000);
       colorIconsFoother = []
@@ -469,7 +406,7 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // *********************** RESTAURANTS CONTROLLER *************************
-.controller('RestaurantesCtrl', function($scope, $ionicLoading) {
+.controller('RestaurantesCtrl', function($scope,$stateParams ,$ionicLoading,Restaurante) {
 
 	var dimensions = {
 		name: 'restaurantMenu'
@@ -493,98 +430,16 @@ angular.module('starter.controllers', ['ionic'])
 		}
 	};
 
-	Parse.Analytics.track("view", dimensions);
-	var customer2 = new Parse.Query('Customer');
-	Restaurantes = []
-	Parse.Cloud.run('GetPromotions', {}, {
-	    success: function(result) {
-	        /* Call GetQuantityPromotions function in Parse Cloud Code and
-	        send result like parameter */
-	        Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-	            success: function(result) {
-	                /* Call GetAverageSavings function in Parse Cloud Code and
-	                send result like parameter */
-	                Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-	                    success: function(result) {
-	                        /* Call AddPromotions function and send result like parameter */
-	                        AddPromotionsRestaurantes(result);
-	                    },
-	                    error: function(error) {
-	                        /* Show error if call failed */
-	                        console.log(error);
-	                    }
-	                });
-	            },
-	            error: function(error) {
-	                /* Show error if call failed */
-	                console.log(error);
-	            }
-	        });
-	    },
-	    error: function(error) {
-	        /* Show error if call failed */
-	        console.log(error);
-	    }
-	});
-	function AddPromotionsRestaurantes(Array) {
-			var cust2 = customer2.find().then(function(results) {
-				for (x in results) {
-					var CountPromotions = 0;
-					if (results[x].attributes.Name in Array.Quantities[0]) {
-						CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-						average = Array.averageSavingscustomer[results[x].attributes.Name];
-					} else {
-						CountPromotions = 0;
-						average = 0;
-					};
-					if("Restaurantes" == results[x].attributes.CategoryApp){
-						name = results[x].attributes.Name;
-						listSupermercado.push(results[x].attributes.Logo._url);
-						listNameSupermercado.push(name.split(" ").join("_"));
-						Categorys.push({
-							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
-						})
-						Restaurantes.push({
-							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
-							colorHeart: "white"
-						});
-					}
-				};
-				if (Restaurantes.length == 0) {
-					Restaurantes.push({oferta:"noHay"});
-				}
-			});
 
-			cust2.then(function(){
-				var FavoriteHeart2 = new Parse.Query('Favorite')
-				FavoriteHeart2.equalTo("UserID", IdUsuario);
-				FavoriteHeart2.find({
-					success: function(results) {
-						for (a in results[0].attributes.CustomerID){
-							for (b in Restaurantes){
-								if (results[0].attributes.CustomerID[a] === Restaurantes[b].NameCategory){
-									if (Restaurantes[b].colorHeart === "white") {
-										Restaurantes[b].colorHeart  = "red";
-									}
-								}
-							}
-						}
-					},
-					error: function(myObject, error) {
-						// Error occureds
-						console.log( error );
-					}
-				});
-			$ionicLoading.hide();
-		  });
-	}
+	Parse.Analytics.track("view", dimensions);
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
 		setTimeout(function() {
 			$scope.$apply(function() {
-			$scope.chats = Restaurantes;
+			$scope.chats = Restaurante.all($stateParams.IDcustomer);
+			$ionicLoading.hide();
+				//$scope.chats2 = Restaurante.all($stateParams.IDcustomer);
 		});
 	}, 1000);
         colorIconsFoother = []
@@ -592,7 +447,7 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // ************************* FASHION CONTROLLER ****************************
-.controller('ModaCtrl', function($scope, $ionicLoading) {
+.controller('ModaCtrl', function($scope, $ionicLoading,$stateParams,Moda) {
 	var dimensions = {
 		name: 'fashionMenu'
 	};
@@ -617,98 +472,13 @@ angular.module('starter.controllers', ['ionic'])
 	};
 
 	Parse.Analytics.track("view", dimensions);
-	var customer3 = new Parse.Query('Customer');
-	Modas = []
-	Parse.Cloud.run('GetPromotions', {}, {
-			success: function(result) {
-					/* Call GetQuantityPromotions function in Parse Cloud Code and
-					send result like parameter */
-					Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-							success: function(result) {
-									/* Call GetAverageSavings function in Parse Cloud Code and
-									send result like parameter */
-									Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-											success: function(result) {
-													/* Call AddPromotions function and send result like parameter */
-													AddPromotionsModa(result);
-											},
-											error: function(error) {
-													/* Show error if call failed */
-													console.log(error);
-											}
-									});
-							},
-							error: function(error) {
-									/* Show error if call failed */
-									console.log(error);
-							}
-					});
-			},
-			error: function(error) {
-					/* Show error if call failed */
-					console.log(error);
-			}
-	});
-	function AddPromotionsModa(Array) {
-			var cust3 = customer3.find().then(function(results) {
-				for (x in results) {
-					var CountPromotions = 0;
-					if (results[x].attributes.Name in Array.Quantities[0]) {
-						CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-						average = Array.averageSavingscustomer[results[x].attributes.Name];
-					} else {
-						CountPromotions = 0;
-						average = 0;
-					};
-					if("Moda" == results[x].attributes.CategoryApp){
-						name = results[x].attributes.Name;
-						listSupermercado.push(results[x].attributes.Logo._url);
-						listNameSupermercado.push(name.split(" ").join("_"));
-						Categorys.push({
-							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
-						})
-						Modas.push({
-							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
-							colorHeart: "white"
-						});
-					}
-				};
-				if (Modas.length == 0) {
-					Modas.push({oferta:"noHay"});
-				}
-			});
-
-
-			cust3.then(function(){
-				var FavoriteHeart3 = new Parse.Query('Favorite')
-				FavoriteHeart3.equalTo("UserID", IdUsuario);
-				FavoriteHeart3.find({
-					success: function(results) {
-						for (a in results[0].attributes.CustomerID){
-							for (b in Modas){
-								if (results[0].attributes.CustomerID[a] === Modas[b].NameCategory){
-									if (Modas[b].colorHeart === "white") {
-										Modas[b].colorHeart  = "red";
-									}
-								}
-							}
-						}
-					},
-					error: function(myObject, error) {
-						// Error occureds
-						console.log( error );
-					}
-				});
-				$ionicLoading.hide();
-			});
-	}
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
     setTimeout(function () {
 		$scope.$apply(function () {
-			$scope.chats = Modas
+			$scope.chats = Moda.all($stateParams.IDcustomer);
+			$ionicLoading.hide();
 		});
 	}, 1000);
         colorIconsFoother = []
@@ -716,7 +486,7 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // ************************** ENTERTAINMENT CONTROLLER ********************
-.controller('EntretenimientoCtrl', function($scope, $ionicLoading) {
+.controller('EntretenimientoCtrl', function($scope, $ionicLoading,$stateParams,Entretenimiento) {
 	Entretenimientos=[]
 	var dimensions = {
 		name: 'entertainmentMenu'
@@ -742,96 +512,14 @@ angular.module('starter.controllers', ['ionic'])
 	};
 
 	Parse.Analytics.track("view", dimensions);
-		var customer4 = new Parse.Query('Customer');
-	Parse.Cloud.run('GetPromotions', {}, {
-			success: function(result) {
-					/* Call GetQuantityPromotions function in Parse Cloud Code and
-					send result like parameter */
-					Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-							success: function(result) {
-									/* Call GetAverageSavings function in Parse Cloud Code and
-									send result like parameter */
-									Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-											success: function(result) {
-													/* Call AddPromotions function and send result like parameter */
-													AddPromotionsEntretenimiento(result);
-											},
-											error: function(error) {
-													/* Show error if call failed */
-													console.log(error);
-											}
-									});
-							},
-							error: function(error) {
-									/* Show error if call failed */
-									console.log(error);
-							}
-					});
-			},
-			error: function(error) {
-					/* Show error if call failed */
-					console.log(error);
-			}
-	});
-	function AddPromotionsEntretenimiento(Array) {
-			var cust4 = customer4.find().then(function(results) {
-				for (x in results) {
-					var CountPromotions = 0;
-					if (results[x].attributes.Name in Array.Quantities[0]) {
-						CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-						average = Array.averageSavingscustomer[results[x].attributes.Name];
-					} else {
-						CountPromotions = 0;
-						average = 0;
-					};
-					if("Entretenimiento" == results[x].attributes.CategoryApp){
-						name = results[x].attributes.Name;
-						listSupermercado.push(results[x].attributes.Logo._url);
-						listNameSupermercado.push(name.split(" ").join("_"));
-						Categorys.push({
-							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
-						})
-						Entretenimientos.push({
-							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
-							colorHeart: "white"
-						});
-					}
-				};
-				if (Entretenimientos.length == 0) {
-					Entretenimientos.push({oferta:"noHay"});
-				}
-			});
-
-			cust4.then(function(){
-				var FavoriteHeart4 = new Parse.Query('Favorite')
-				FavoriteHeart4.equalTo("UserID", IdUsuario);
-				FavoriteHeart4.find({
-					success: function(results) {
-						for (a in results[0].attributes.CustomerID){
-							for (b in Entretenimientos){
-								if (results[0].attributes.CustomerID[a] === Entretenimientos[b].NameCategory){
-									if (Entretenimientos[b].colorHeart === "white") {
-										Entretenimientos[b].colorHeart  = "red";
-									}
-								}
-							}
-						}
-					},
-					error: function(myObject, error) {
-						// Error occureds
-						console.log( error );
-					}
-				});
-				$ionicLoading.hide();
-			});
-	}
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
 		setTimeout(function() {
 			$scope.$apply(function() {
-				$scope.chats = Entretenimientos;
+	//			$scope.chats = Entretenimientos;
+				$scope.chats = Entretenimiento.all($stateParams.IDcustomer);
+				$ionicLoading.hide();
 			});
 		}, 1000);
         colorIconsFoother = []
@@ -839,7 +527,7 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // *************************** ELECTRONICS CONTROLLER *********************
-.controller('ElectronicosCtrl', function($scope, $ionicLoading) {
+.controller('ElectronicosCtrl', function($scope, $ionicLoading,Electronicos,$stateParams) {
 	Electronico=[]
 	var dimensions = {
 		name: 'electronicsMenu'
@@ -865,96 +553,14 @@ angular.module('starter.controllers', ['ionic'])
 	};
 
 	Parse.Analytics.track("view", dimensions);
-		var customer5 = new Parse.Query('Customer');
-	Parse.Cloud.run('GetPromotions', {}, {
-			success: function(result) {
-					/* Call GetQuantityPromotions function in Parse Cloud Code and
-					send result like parameter */
-					Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-							success: function(result) {
-									/* Call GetAverageSavings function in Parse Cloud Code and
-									send result like parameter */
-									Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-											success: function(result) {
-													/* Call AddPromotions function and send result like parameter */
-													AddPromotionsElectronicos(result);
-											},
-											error: function(error) {
-													/* Show error if call failed */
-													console.log(error);
-											}
-									});
-							},
-							error: function(error) {
-									/* Show error if call failed */
-									console.log(error);
-							}
-					});
-			},
-			error: function(error) {
-					/* Show error if call failed */
-					console.log(error);
-			}
-	});
-	function AddPromotionsElectronicos(Array) {
-		var cust5 =	customer5.find().then(function(results) {
-				for (x in results) {
-					var CountPromotions = 0;
-					if (results[x].attributes.Name in Array.Quantities[0]) {
-						CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-						average = Array.averageSavingscustomer[results[x].attributes.Name];
-					} else {
-						CountPromotions = 0;
-						average = 0;
-					};
-					if("Electrónicos" == results[x].attributes.CategoryApp){
-						name = results[x].attributes.Name;
-						listSupermercado.push(results[x].attributes.Logo._url);
-						listNameSupermercado.push(name.split(" ").join("_"));
-						Categorys.push({
-							nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
-						})
-						Electronico.push({
-							id:x,name: results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
-							lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
-							colorHeart: "white"
-						});
-					}
-				};
-				if (Electronico.length == 0) {
-					Electronico.push({oferta:"noHay"});
-				}
-			});
-
-			cust5.then(function(){
-				var FavoriteHeart5 = new Parse.Query('Favorite')
-				FavoriteHeart5.equalTo("UserID", IdUsuario);
-				FavoriteHeart5.find({
-					success: function(results) {
-						for (a in results[0].attributes.CustomerID){
-							for (b in Electronico){
-								if (results[0].attributes.CustomerID[a] === Electronico[b].NameCategory){
-									if (Electronico[b].colorHeart === "white") {
-										Electronico[b].colorHeart  = "red";
-									}
-								}
-							}
-						}
-					},
-					error: function(myObject, error) {
-						// Error occureds
-						console.log( error );
-					}
-				});
-				$ionicLoading.hide();
-			});
-	}
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
 		setTimeout(function() {
 			$scope.$apply(function() {
-				$scope.chats = Electronico;
+			//	$scope.chats = Electronico;
+				$scope.chats = Electronicos.all($stateParams.IDcustomer);
+				$ionicLoading.hide();
 			});
 		}, 1000);
         colorIconsFoother = []
@@ -962,7 +568,7 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // *************************** OTHERS CONTROLLER **************************
-.controller('OtrosCtrl', function($scope, $ionicLoading) {
+.controller('OtrosCtrl', function($scope, $ionicLoading,Otros,$stateParams) {
 
 	var dimensions = {
 		name: 'othersMenu'
@@ -1002,98 +608,14 @@ angular.module('starter.controllers', ['ionic'])
 	};
 
 	Parse.Analytics.track("view", dimensions);
-	var customer6 = new Parse.Query('Customer');
-	Parse.Cloud.run('GetPromotions', {}, {
-		success: function(result) {
-				/* Call GetQuantityPromotions function in Parse Cloud Code and
-				send result like parameter */
-				Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-						success: function(result) {
-								/* Call GetAverageSavings function in Parse Cloud Code and
-								send result like parameter */
-								Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-										success: function(result) {
-												/* Call AddPromotions function and send result like parameter */
-												AddPromotionsOtros(result);
-										},
-										error: function(error) {
-												/* Show error if call failed */
-												console.log(error);
-										}
-								});
-						},
-						error: function(error) {
-								/* Show error if call failed */
-								console.log(error);
-						}
-				});
-		},
-		error: function(error) {
-				/* Show error if call failed */
-				console.log(error);
-		}
-	});
-
-	function AddPromotionsOtros(Array) {
-	var cust6 =	customer6.find().then(function(results) {
-		Otro = [];
-			for (x in results) {
-				var CountPromotions = 0;
-				if (results[x].attributes.Name in Array.Quantities[0]) {
-					CountPromotions =  Array.Quantities[0][results[x].attributes.Name];
-					average = Array.averageSavingscustomer[results[x].attributes.Name];
-				} else {
-					CountPromotions = 0;
-					average = 0;
-				};
-				if("Otros" == results[x].attributes.CategoryApp){
-					name = results[x].attributes.Name;
-					listSupermercado.push(results[x].attributes.Logo._url);
-					listNameSupermercado.push(name.split(" ").join("_"));
-					Categorys.push({
-						nameCategory:results[x].attributes.Name,ID:"favorite"+x,names:results[x].attributes.CategoryApp
-					})
-					Otro.push({
-						id:x,name:results[x].attributes.Logo._url, promo: CountPromotions,promedio:average,
-						lastText: "favorite"+x,img_class:listNameSupermercado[x], NameCategory: results[x].attributes.Name ,oferta : 'existe',
-						colorHeart: "white"
-					});
-				}
-			};
-			if (Otro.length == 0) {
-				Otro.push({oferta:"noHay"});
-			}
-		});
-
-		cust6.then(function(){
-			var FavoriteHeart6 = new Parse.Query('Favorite')
-			FavoriteHeart6.equalTo("UserID", IdUsuario);
-			FavoriteHeart6.find({
-				success: function(results) {
-					for (a in results[0].attributes.CustomerID){
-						for (b in Otro){
-							if (results[0].attributes.CustomerID[a] === Otro[b].NameCategory){
-								if (Otro[b].colorHeart === "white") {
-									Otro[b].colorHeart  = "red";
-								}
-							}
-						}
-					}
-				},
-				error: function(myObject, error) {
-					// Error occureds
-					console.log( error );
-				}
-			});
-			$ionicLoading.hide();
-		});
-	}
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
 	$scope.$on('$ionicView.enter', function() {
 		setTimeout(function() {
 			$scope.$apply(function() {
-				$scope.Others = Otro;
+			//	$scope.Others = Otro;
+			$scope.Others = Otros.all($stateParams.IDcustomer);
+			$ionicLoading.hide();
 			});
 		}, 1000);
 			colorIconsFoother = []
@@ -1593,7 +1115,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* SUPERMARKET CATEGORIES *******
 	.state('app.single', {
-		url: "/playlists/Supermercado",
+		url: "/playlists/Supermercado/:IDcustomer",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/categories/supermarkets.html",
@@ -1603,7 +1125,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* RESTAURANT'S CATEGORIES *******
 	.state('app.singles', {
-		url: "/playlists/Restaurantes",
+		url: "/playlists/Restaurantes/:IDcustomer",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/categories/restaurants.html",
@@ -1613,7 +1135,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* FASHION CATEGORIES *******
 	.state('app.singless', {
-		url: "/playlists/Moda",
+		url: "/playlists/Moda/:IDcustomer",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/categories/fashion.html",
@@ -1623,7 +1145,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* ENTERTAINMENT CATEGORIES *******
 	.state('app.singlesss', {
-		url: "/playlists/Entretenimiento",
+		url: "/playlists/Entretenimiento/:IDcustomer",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/categories/entertainment.html",
@@ -1633,7 +1155,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* ELECTRONICS CATEGORIES *******
 	.state('app.singlessss', {
-		url: "/playlists/Electrónicos",
+		url: "/playlists/Electrónicos/:IDcustomer",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/categories/electronics.html",
@@ -1643,7 +1165,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* OTHER CATEGORIES *******
 	.state('app.singlesssss', {
-		url: "/playlists/Otros",
+		url: "/playlists/Otros/:IDcustomer",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/categories/others.html",
@@ -1710,9 +1232,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			} else {
 				if ($scope.currentUser["attributes"].authData == undefined) {
 					IdUsuario = String($scope.currentUser.id)
+					Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+						success:function (results) {
+							console.log(results);
+	CustomerList = results
+						},
+						error:function (error) {
+						 console.log(error);
+						}
+					});
 							viewPromotion()
 				}else {
 					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+					Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+						success:function (results) {
+							console.log(results);
+								CustomerList = results
+
+						},
+						error:function (error) {
+						 console.log(error);
+						}
+					});
 							viewPromotion()
 				}
 				$state.go('app.playlists');
@@ -1760,6 +1301,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     if ($scope.currentUser == null ){
     }else{
         IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+					success:function (results) {
+						console.log(results);
+	CustomerList = results
+					},
+					error:function (error) {
+					 console.log(error);
+					}
+				});
         viewPromotion()
         $state.go('app.playlists');
     }
@@ -1769,24 +1319,42 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     //Browser Login
     if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
 
-      Parse.FacebookUtils.logIn(null, {
-        success: function(user) {
-          IdUsuario = user.changed.authData.facebook.id
-          viewPromotion()
-          if (!user.existed()) {
-          } else {
-          }
-          $state.go('app.playlists');
-        },
-        error: function(user, error) {
-        }
-      });
+				Parse.FacebookUtils.logIn('email,user_friends', {
+						success: function(user) {
+								if (!user.existed()) {
+
+										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
+												user.set("email", me.email);
+												user.set('name', me.name);
+												user.set('gender', me.gender);
+												user.set('birthday', me.birthday);
+												user.set('hometown', me.hometown)
+												user.save();
+										});
+								} else {
+										console.log("Logged");
+								}
+								$state.go('app.playlists');
+						},
+						error: function(user, error) {
+								console.log(error);
+						}
+				});
     }
     //Native Login
     else {
       $cordovaFacebook.login(permissions).then(function(success){
         //alert(success);
         IdUsuario = success.authResponse.userID
+				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+					success:function (results) {
+						console.log(results);
+	CustomerList = results
+					},
+					error:function (error) {
+					 console.log(error);
+					}
+				});
         viewPromotion()
         //Need to convert expiresIn format from FB to date
         var expiration_date = new Date();
@@ -1799,18 +1367,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           "expiration_date": expiration_date
         };
 
-        Parse.FacebookUtils.logIn(facebookAuthData, {
-          success: function(user) {
-            //alert(JSON.stringify(user));
-            if (!user.existed()) {
-            } else {
-            }
-             $state.go('app.playlists');
-          },
-          error: function(user, error) {
-            alert(JSON.stringify(error));
-          }
-        });
+				Parse.FacebookUtils.logIn('email,user_friends', {
+						success: function(user) {
+								if (!user.existed()) {
+
+										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
+												user.set("email", me.email);
+												user.set('name', me.name);
+												user.set('gender', me.gender);
+												user.set('birthday', me.birthday);
+												user.set('hometown', me.hometown)
+												user.save();
+										});
+								} else {
+										console.log("Logged");
+								}
+								$state.go('app.playlists');
+						},
+						error: function(user, error) {
+								console.log(error);
+						}
+				});
       }, function(error){
         console.log(error);
       });

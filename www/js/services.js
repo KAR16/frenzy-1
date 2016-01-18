@@ -61,12 +61,20 @@ app.factory('Categorys', function() {
 // ************* SUPERMARKET APP FACTORY *************
 app.factory('Supermercados', function() {
 	// Might use a resource here that returns a JSON array Some fake testing data
-	var supermercados = Super;
+
 
 	return {
-		all: function() {
-			if (Super.length == 0) {
-				Super.push({oferta:"noHay"});
+		all: function(IDCostumer) {
+			var supermercados = [];
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					supermercados.push(CustomerList[a])
+				}
+			}
+			if (supermercados.length == 0) {
+				supermercados.push({oferta:"noHay"});
 			}
 			return supermercados;
 		},
@@ -83,12 +91,18 @@ app.factory('Supermercados', function() {
 // ************* ENTERTAINMENT APP FACTORY *************
 app.factory('Entretenimiento', function() {
 	// Some fake testing data
-	var entretenimiento = Entretenimientos;
-
 	return {
-		all: function() {
-			if (Entretenimientos.length == 0) {
-				Entretenimientos.push({oferta:"noHay"});
+		all: function(IDCostumer) {
+				var entretenimiento = [];
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					entretenimiento.push(CustomerList[a])
+				}
+			}
+			if (entretenimiento.length == 0) {
+				entretenimiento.push({oferta:"noHay"});
 			}
 			return entretenimiento;
 		},
@@ -104,16 +118,18 @@ app.factory('Entretenimiento', function() {
 });
 // ************* FASION APP FACTORY *************
 app.factory('Moda', function() {
-	for (a in promociones) {
-		var C = promociones.length;
-	}
-
-	var moda = Modas;
-
 	return {
-		all: function() {
-			if (Modas.length == 0) {
-				Modas.push({oferta:"noHay"});
+		all: function(IDCostumer) {
+				var moda = [];
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					moda.push(CustomerList[a])
+				}
+			}
+			if (moda.length == 0) {
+				moda.push({oferta:"noHay"});
 			}
 			return moda;
 		},
@@ -129,12 +145,19 @@ app.factory('Moda', function() {
 });
 // ************* ELECTRONICS APP FACTORY *************
 app.factory('Electronicos', function() {
-	var electronicos = Electronico;
 
 	return {
-		all: function() {
-			if (Electronico.length == 0) {
-				Electronico.push({oferta:"noHay"});
+		all: function(IDCostumer) {
+			var electronicos = [];
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					electronicos.push(CustomerList[a])
+				}
+			}
+			if (electronicos.length == 0) {
+				electronicos.push({oferta:"noHay"});
 			}
 			return electronicos;
 		},
@@ -149,13 +172,22 @@ app.factory('Electronicos', function() {
 	};
 })
 // ************* RESTAURANTS APP FACTORY *************
-app.factory('Restaurantes', function() {
-	var restaurantes = Restaurantes;
+app.factory('Restaurante', function() {
+
 
 	return {
-		all: function() {
-			if (Restaurantes.length == 0) {
-				Restaurantes.push({oferta:"noHay"});
+		all: function(IDCostumer) {
+			var restaurantes = [];
+
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					restaurantes.push(CustomerList[a])
+				}
+			}
+			if (restaurantes.length == 0) {
+				restaurantes.push({oferta:"noHay"});
 			}
 			return restaurantes;
 		},
@@ -171,12 +203,18 @@ app.factory('Restaurantes', function() {
 });
 // ************* OTHERS APP FACTORY *************
 app.factory('Otros', function() {
-	var Others = Otro;
-
 	return {
-		all: function() {
-			if (Otro.length == 0) {
-				Otro.push({oferta:"noHay"});
+		all: function(IDCostumer) {
+			var Others = [];
+			for (a in CustomerList) {
+			//	console.log(CustomerList[a].Category);
+				if (IDCostumer == CustomerList[a].Category) {
+					console.log("encontro ");
+					Others.push(CustomerList[a])
+				}
+			}
+			if (Others.length == 0) {
+				Others.push({oferta:"noHay"});
 			}
 			return Others;
 		},
@@ -765,7 +803,10 @@ function SaveFavorite(UserId, CustomerId) {
 		'CustomerID':CustomerId
 	};
 
-	Parse.Cloud.run('SaveFavorite', {"Array":result});
+	var saveFavoriteCustomer = Parse.Cloud.run('SaveFavorite', {"Array":result});
+	saveFavoriteCustomer.then(function () {
+		ReloadFavorite()
+	});
 };
 // *************** DELETE FAVORITE FUNCTION ***************
 function DeleteFavorite(UserId, CustomerId) {
@@ -775,7 +816,10 @@ function DeleteFavorite(UserId, CustomerId) {
 		'CustomerID':CustomerId
 	};
 
-	Parse.Cloud.run('DeleteFavorite', {"Array":result});
+  var DeleteFavoriteCustomer = Parse.Cloud.run('DeleteFavorite', {"Array":result});
+	DeleteFavoriteCustomer.then(function () {
+		ReloadFavorite()
+	});
 };
 // *************** SAVE PROMOTION FUNCTION ***************
 function SavePromotion(UserId, PromotionId) {
