@@ -200,6 +200,41 @@
     color: white;
 }
 
+/* Color of loading to Customers for CategoryApp*/
+
+/* loading for Supermercado */
+.LoadingSupermercado{
+	stroke: #00BAB9;
+	fill: #00BAB9;
+}
+
+/* loading for Restaurantes */
+.LoadingRestaurantes{
+	stroke: #FF5252;
+	fill: #FF5252;
+}
+/* loading for Moda */
+.LoadingModa{
+	stroke: #FFD922;
+	fill: #FFD922;
+}
+/* loading for Entretenimiento */
+.LoadingEntretenimiento{
+	stroke: #9C28B0;
+	fill: #9C28B0;
+}
+/* loading for Electronicos */
+.LoadingElectrónicos{
+	stroke: #3F51B5;
+	fill: #3F51B5;
+}
+/* loading for Otros */
+.LoadingOtros{
+	stroke: #00DDC1;
+	fill: #00DDC1;
+}
+
+
 
 .categoriesHeartIcon {
     margin-top:20px;

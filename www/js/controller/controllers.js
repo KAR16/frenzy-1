@@ -372,11 +372,12 @@ angular.module('starter.controllers', ['ionic'])
 		name: 'supermarketMenu'
 	};
 	// Loading scope
+	$scope.AppCategory = $stateParams.IDcustomer
 	$scope.loading = $ionicLoading.show({
       noBackdrop: true,
-      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+      template: '<ion-spinner customer1lass="spinner" icon="lines" class = "Loading'+$scope.AppCategory+'"></ion-spinner>'
   });
-$scope.AppCategory = $stateParams.IDcustomer
+
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.changeColorHeart = function (parametro, category) {
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
