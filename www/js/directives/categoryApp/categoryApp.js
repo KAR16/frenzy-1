@@ -5,6 +5,6 @@ app.directive('categoryInfo', function() {
     scope: {
       info: '='
     },
-    templateUrl: 'js/directives/categoryApp.html'
+    templateUrl: 'js/directives/categoryApp/categoryApp.html'
   }
 })
