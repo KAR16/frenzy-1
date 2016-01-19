@@ -12,25 +12,25 @@
         <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {oferta : 'existe'}">
             <!--**********  IMAGE ESTABLISHMENT  **********-->
             <div class="col col-20">
-                <img class="savedPageImage" alt="pizza" src="{{promotion.Photo._url}}">
+                <img class="savedPageImage" alt="pizza" src="{{promotion.photo}}">
             </div>
             <div class="col col-80">
                 <!--**********  TITLE OFFERT  **********-->
                 <p class="savedPageTitleDescription overFlowText">
-                    {{promotion.Name}}
+                    {{promotion.name}}
                 </p>
                 <!--**********  PRICE OFFERT  **********-->
                 <p class="savedPageOffert">
-                    Oferta - {{promotion.PromotionalPrice | currency: 'Q'}}
+                    Oferta - {{promotion.promotionalPrice | currency: 'Q'}}
                 </p>
                 <!--**********  DESCRIPTION OFFERT  **********-->
                 <p class="savedPageDescription overFlowText">
-                    {{promotion.PromotionDescription}}
+                    {{promotion.description}}
                 </p>
             </div>
             <!--**********  PIN ICON  **********-->
             <div class="col col-10 home">
-                <p class="savedPageIcon" id="{{promotion.PromotionId}}" ng-click="SalvadosSaveAndDelete('{{promotion.PromotionId}}')" style="color:purple">
+                <p class="savedPageIcon" id="{{promotion.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{promotion.IDpromotion}}')" style="color:purple">
                     W
                 </p>
             </div>

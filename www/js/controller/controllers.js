@@ -956,9 +956,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  SPLASH  ******************************/
 .controller('splashController', ['$scope', '$state', function($scope, $state) {
-	Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+	Parse.Cloud.run('GetCustomer', {},{
 		success:function (results) {
-			console.log(results);
+		//	console.log(results);
 			CustomerList = results
 		},
 		error:function (error) {
