@@ -32,9 +32,11 @@ var CustomerList;
 function ReloadFavorite() {
 	console.log("recargo");
 	var FavoriteHeartCustomer = new Parse.Query('Favorite')
+	console.log(IdUsuario);
 	FavoriteHeartCustomer.equalTo("UserID", IdUsuario);
 	FavoriteHeartCustomer.find({
 		success: function(results) {
+			console.log(results);
 			for (a in results[0].attributes.CustomerID){
 				for (b in CustomerList){
 					if (results[0].attributes.CustomerID[a] === CustomerList[b].NameCategory){

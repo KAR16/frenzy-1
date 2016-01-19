@@ -956,36 +956,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  SPLASH  ******************************/
 .controller('splashController', ['$scope', '$state', function($scope, $state) {
-	function doSomething(){
-	}
+	Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+		success:function (results) {
+			console.log(results);
+			CustomerList = results
+		},
+		error:function (error) {
+		 console.log(error);
+		}
+	});
 	$scope.currentUser = Parse.User.current();
 	if ($scope.currentUser == null ){
 		$state.go('tutorial')
 			} else {
 				if ($scope.currentUser["attributes"].authData == undefined) {
 					IdUsuario = String($scope.currentUser.id)
-					Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-						success:function (results) {
-							console.log(results);
-	CustomerList = results
-						},
-						error:function (error) {
-						 console.log(error);
-						}
-					});
 							viewPromotion()
 				}else {
 					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-					Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-						success:function (results) {
-							console.log(results);
-								CustomerList = results
-
-						},
-						error:function (error) {
-						 console.log(error);
-						}
-					});
 							viewPromotion()
 				}
 				$state.go('app.playlists');
@@ -1053,6 +1041,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 				Parse.FacebookUtils.logIn('email,user_friends', {
 						success: function(user) {
+							IdUsuario = user.changed.authData.facebook.id
 								if (!user.existed()) {
 
 										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
