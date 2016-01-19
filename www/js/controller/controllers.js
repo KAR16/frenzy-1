@@ -365,17 +365,17 @@ angular.module('starter.controllers', ['ionic'])
       colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','Z','','none']);
     });
 })
+//********************** Customer CONTROLLER *****************************
 
-// ********************* SUPERMARKET CONTROLLER ***************************
-.controller('SupermercadoCtrl', function($scope, $ionicLoading,$stateParams,Supermercados) {
-	Super=[]
+.controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	var dimensions = {
 		name: 'supermarketMenu'
 	};
 	// Loading scope
+	$scope.AppCategory = $stateParams.IDcustomer
 	$scope.loading = $ionicLoading.show({
       noBackdrop: true,
-      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+      template: '<ion-spinner customer1lass="spinner" icon="lines" class = "Loading'+$scope.AppCategory+'"></ion-spinner>'
   });
 
 	/************ FUNCTION CHANGE COLOR HEART  **********/
@@ -390,237 +390,18 @@ angular.module('starter.controllers', ['ionic'])
 			DeleteFavorite(IdUsuario, category)
 		}
 	};
-
 	Parse.Analytics.track("view", dimensions);
-
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
   		setTimeout(function() {
 		$scope.$apply(function() {
-			$scope.chats = Supermercados.all($stateParams.IDcustomer);
+			$scope.chats = CustomerAll.all($stateParams.IDcustomer);
 			$ionicLoading.hide();
 		});
 	}, 1000);
       colorIconsFoother = []
-    colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Supermercados','','none',]);
+    colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.AppCategory,'','none',]);
   });
-})
-// *********************** RESTAURANTS CONTROLLER *************************
-.controller('RestaurantesCtrl', function($scope,$stateParams ,$ionicLoading,Restaurante) {
-
-	var dimensions = {
-		name: 'restaurantMenu'
-	};
-
-	$scope.loading = $ionicLoading.show({
-		noBackdrop: true,
-		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FF5252; fill: #FF5252;"></ion-spinner>'
-	});
-	/************ FUNCTION CHANGE COLOR HEART  **********/
-	$scope.changeColorHeart = function (parametro, category) {
-		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
-		if (cssColor == "white") {
-			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-		} else {
-			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
-			DeleteFavorite(IdUsuario, category)
-		}
-	};
-
-
-	Parse.Analytics.track("view", dimensions);
-
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-		setTimeout(function() {
-			$scope.$apply(function() {
-			$scope.chats = Restaurante.all($stateParams.IDcustomer);
-			$ionicLoading.hide();
-				//$scope.chats2 = Restaurante.all($stateParams.IDcustomer);
-		});
-	}, 1000);
-        colorIconsFoother = []
-		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Restaurantes','','none']);
-    });
-})
-// ************************* FASHION CONTROLLER ****************************
-.controller('ModaCtrl', function($scope, $ionicLoading,$stateParams,Moda) {
-	var dimensions = {
-		name: 'fashionMenu'
-	};
-
-	$scope.loading = $ionicLoading.show({
-		noBackdrop: true,
-		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFD922; fill: #FFD922;"></ion-spinner>'
-	});
-
-	/************ FUNCTION CHANGE COLOR HEART  **********/
-	$scope.changeColorHeart = function (parametro, category) {
-		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
-		if (cssColor == "white") {
-			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-		} else {
-			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
-			DeleteFavorite(IdUsuario, category)
-		}
-	};
-
-	Parse.Analytics.track("view", dimensions);
-
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-    setTimeout(function () {
-		$scope.$apply(function () {
-			$scope.chats = Moda.all($stateParams.IDcustomer);
-			$ionicLoading.hide();
-		});
-	}, 1000);
-        colorIconsFoother = []
-      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Moda','','none']);
-    });
-})
-// ************************** ENTERTAINMENT CONTROLLER ********************
-.controller('EntretenimientoCtrl', function($scope, $ionicLoading,$stateParams,Entretenimiento) {
-	Entretenimientos=[]
-	var dimensions = {
-		name: 'entertainmentMenu'
-	};
-
-	$scope.loading = $ionicLoading.show({
-		noBackdrop: true,
-		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #9C28B0; fill: #9C28B0;"></ion-spinner>'
-	});
-
-	/************ FUNCTION CHANGE COLOR HEART  **********/
-	$scope.changeColorHeart = function (parametro, category) {
-		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
-		if (cssColor == "white") {
-			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-		} else {
-			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
-			DeleteFavorite(IdUsuario, category)
-		}
-	};
-
-	Parse.Analytics.track("view", dimensions);
-
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-		setTimeout(function() {
-			$scope.$apply(function() {
-	//			$scope.chats = Entretenimientos;
-				$scope.chats = Entretenimiento.all($stateParams.IDcustomer);
-				$ionicLoading.hide();
-			});
-		}, 1000);
-        colorIconsFoother = []
-      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Entretenimiento','','none']);
-    });
-})
-// *************************** ELECTRONICS CONTROLLER *********************
-.controller('ElectronicosCtrl', function($scope, $ionicLoading,Electronicos,$stateParams) {
-	Electronico=[]
-	var dimensions = {
-		name: 'electronicsMenu'
-	};
-
-	$scope.loading = $ionicLoading.show({
-		noBackdrop: true,
-		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #3F51B5; fill: #3F51B5;"></ion-spinner>'
-	});
-
-	/************ FUNCTION CHANGE COLOR HEART  **********/
-	$scope.changeColorHeart = function (parametro, category) {
-		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
-		if (cssColor == "white") {
-			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-		} else {
-			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
-			DeleteFavorite(IdUsuario, category)
-		}
-	};
-
-	Parse.Analytics.track("view", dimensions);
-
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-		setTimeout(function() {
-			$scope.$apply(function() {
-			//	$scope.chats = Electronico;
-				$scope.chats = Electronicos.all($stateParams.IDcustomer);
-				$ionicLoading.hide();
-			});
-		}, 1000);
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Electronicos','','none']);
-    });
-})
-// *************************** OTHERS CONTROLLER **************************
-.controller('OtrosCtrl', function($scope, $ionicLoading,Otros,$stateParams) {
-
-	var dimensions = {
-		name: 'othersMenu'
-	};
-
-	$scope.loading = $ionicLoading.show({
-		noBackdrop: true,
-		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00DDC1; fill: #00DDC1;"></ion-spinner>'
-	});
-
-	/************ FUNCTION CHANGE COLOR HEART  **********/
-	$scope.changeColorHeart = function (parametro, category) {
-		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
-		if (cssColor == "white") {
-			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-		} else {
-			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
-			DeleteFavorite(IdUsuario, category)
-		}
-	};
-
-	/************ FUNCTION CHANGE COLOR HEART  **********/
-	$scope.changeColorHeart = function (parametro, category) {
-		var cssColor = document.getElementById(parametro+" "+category).style.color;
-
-		if (cssColor == "white") {
-			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-		} else {
-			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
-			DeleteFavorite(IdUsuario, category)
-		}
-	};
-
-	Parse.Analytics.track("view", dimensions);
-
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-	$scope.$on('$ionicView.enter', function() {
-		setTimeout(function() {
-			$scope.$apply(function() {
-			//	$scope.Others = Otro;
-			$scope.Others = Otros.all($stateParams.IDcustomer);
-			$ionicLoading.hide();
-			});
-		}, 1000);
-			colorIconsFoother = []
-			colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','Otros','','none']);
-	});
 })
 // *************************  OFFERS CONTROLLER	***************************
 .controller('PaizCtrl', function($scope, $stateParams, Paiz) {
@@ -1113,63 +894,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-	// ******* SUPERMARKET CATEGORIES *******
-	.state('app.single', {
-		url: "/playlists/Supermercado/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/supermarkets.html",
-				controller: 'SupermercadoCtrl'
-			}
-		}
-	})
-	// ******* RESTAURANT'S CATEGORIES *******
-	.state('app.singles', {
-		url: "/playlists/Restaurantes/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/restaurants.html",
-				controller: 'RestaurantesCtrl'
-			}
-		}
-	})
-	// ******* FASHION CATEGORIES *******
-	.state('app.singless', {
-		url: "/playlists/Moda/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/fashion.html",
-				controller: 'ModaCtrl'
-			}
-		}
-	})
-	// ******* ENTERTAINMENT CATEGORIES *******
-	.state('app.singlesss', {
-		url: "/playlists/Entretenimiento/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/entertainment.html",
-				controller: 'EntretenimientoCtrl'
-			}
-		}
-	})
-	// ******* ELECTRONICS CATEGORIES *******
-	.state('app.singlessss', {
-		url: "/playlists/Electrónicos/:IDcustomer",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/categories/electronics.html",
-				controller: 'ElectronicosCtrl'
-			}
-		}
-	})
+
 	// ******* OTHER CATEGORIES *******
-	.state('app.singlesssss', {
-		url: "/playlists/Otros/:IDcustomer",
+	.state('app.singlessssss', {
+		url: "/playlists/:IDcustomer",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/categories/others.html",
-				controller: 'OtrosCtrl'
+				templateUrl: "templates/categories/Customer.html",
+				controller: 'CustomerCtrl'
 			}
 		}
 	})
