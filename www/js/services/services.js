@@ -260,7 +260,7 @@ var dato = []; /* Push data popover */
 var ContPromo = []; /* Count of promotions */
 var Cupcont=[]; /* Count of Cupons */
 // ************* PAIZ APP FACTORY *************
-app.factory('Paiz', function() {
+app.factory('currentPromotion', function() {
 	var paiz = Category;
 
 	return {

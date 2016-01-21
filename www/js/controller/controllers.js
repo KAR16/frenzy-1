@@ -419,7 +419,7 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('PaizCtrl', function($scope, $stateParams, Paiz,$ionicPopover) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
@@ -431,7 +431,7 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.message = 'hello';
 	});
 	// Pixels quantity of Popover for height div
-	$scope.pix = Paiz.get($stateParams.superId);
+	$scope.pix = currentPromotion.get($stateParams.superId);
 	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
@@ -535,7 +535,7 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.Promotions($stateParams.superId);
 		// Redirection page variable to coupons
 		var couponPage="#/app/cupones/";
-		idRoute = Paiz.get($stateParams.superId);
+		idRoute = currentPromotion.get($stateParams.superId);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
 		// Validate if doesn't existing a promotion then redirection to coupons page.
@@ -548,8 +548,8 @@ angular.module('starter.controllers', ['ionic'])
 			$('.pageFavoritesSecondRow').show();
 		}
 
-		$scope.chats = Paiz.get($stateParams.superId);
-		$scope.popover = Paiz.all($stateParams.superId);
+		$scope.chats = currentPromotion.get($stateParams.superId);
+		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
 		$scope.heartPopover = function(id){
@@ -574,7 +574,7 @@ angular.module('starter.controllers', ['ionic'])
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
 	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
-	$scope.categoryNameCoupon = Paiz.get($stateParams.superId);
+	$scope.categoryNameCoupon = currentPromotion.get($stateParams.superId);
 	$scope.$on('$ionicView.enter', function() {
 		colorIconsFoother = []
 		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
@@ -905,7 +905,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		views: {
 			'menuContent': {
 				templateUrl: "templates/offers/offers.html",
-				controller: 'PaizCtrl'
+				controller: 'currentPromotionCtrl'
 			}
 		}
 	})
@@ -927,16 +927,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			'menuContent': {
 				templateUrl: "templates/categories/Customer.html",
 				controller: 'CustomerCtrl'
-			}
-		}
-	})
-	// ****************  OFFERS  *************
-	.state('ofertas', {
-		url: "/ofertas",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/offers/offers.html",
-				controller: 'PaizCtrl'
 			}
 		}
 	})
