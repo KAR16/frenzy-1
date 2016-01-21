@@ -366,7 +366,22 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 //********************** Customer CONTROLLER *****************************
+.controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.ChangeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
+})
 .controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	var dimensions = {
 		name: 'supermarketMenu'
@@ -404,10 +419,17 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('PaizCtrl', function($scope, $stateParams, Paiz) {
+.controller('PaizCtrl', function($scope, $stateParams, Paiz,$ionicPopover) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
+
+	$ionicPopover.fromTemplateUrl('templates/popover.html', {
+		scope: $scope,
+	}).then(function(popover) {
+		$scope.popover = popover;
+		$scope.message = 'hello';
+	});
 	// Pixels quantity of Popover for height div
 	$scope.pix = Paiz.get($stateParams.superId);
 	console.log($scope.pix);
@@ -531,12 +553,15 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
 		$scope.heartPopover = function(id){
+			console.log(id);
+			console.log("alksjdlkasjdlk");
 			var favorite = new Parse.Query('Favorite');
 			favorite.equalTo("UserID", IdUsuario);
 			favorite.equalTo("CustomerID", id);
 			favorite.find({
 				success: function(results) {
 					if ( results.length > 0 ) {
+						console.log("red");
 						$scope.heartMenu = "red";
 					}
 				},
