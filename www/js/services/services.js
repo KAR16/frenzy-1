@@ -261,8 +261,6 @@ var ContPromo = []; /* Count of promotions */
 var Cupcont=[]; /* Count of Cupons */
 // ************* PAIZ APP FACTORY *************
 app.factory('currentPromotion', function() {
-	var paiz = Category;
-
 	return {
 		all: function(superId) {},
 		get: function(superId) {
@@ -274,6 +272,12 @@ app.factory('currentPromotion', function() {
 			Cupcont=[];
 			var validar = "existe"
 
+			var resultSet = $.grep(CustomerList, function (e) {
+				 return e.NameCategory.indexOf(superId) == 0;
+			});
+
+			console.log(JSON.stringify(resultSet[0]["promo"]))
+
 			for (a in Cupons) {
 				if (superId == Cupons[a].Category) {
 					Cupcont.push(Cupons[a])
@@ -281,7 +285,10 @@ app.factory('currentPromotion', function() {
 				}
 			}
 
+
+
 			for (c in CurrentPromotion) {
+
 				if (superId === CurrentPromotion[c].Category) {
 					if (CurrentPromotion[c].ShopOnline == undefined) {
 							CurrentPromotion[c].Display = "none"
@@ -318,13 +325,13 @@ app.factory('currentPromotion', function() {
 			}
 
 			if (CurrentPromotion) {
-				if (Cupcont.length == 0) {
+				if (resultSet[0]["coupon"] == 0) {
 					validar = "no"
 				}
 				ALL.push(Category)
 				ALL.push(dato)
-				ALL.push(ContPromo)
-				ALL.push([{cont:Cupcont.length,t:dato[0].name,Validar:validar}])
+				ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar}])
+				console.log(ALL);
 				return ALL;
 			}
 			return null;

@@ -539,9 +539,9 @@ angular.module('starter.controllers', ['ionic'])
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
 		// Validate if doesn't existing a promotion then redirection to coupons page.
-		if (idRoute[2][0].conteo == 0 && idRoute[3][0].cont == 0) {
+		if (idRoute[2][0].contPromotion == 0 && idRoute[2][0].contCoupon == 0) {
 			$('.pageFavoritesSecondRow').css("display","none");
-		} else if(idRoute[2][0].conteo == 0){
+		} else if(idRoute[2][0].contPromotion == 0){
 			location.href=couponPage
 			$('.pageFavoritesSecondRow').show();;
 		}else {
@@ -975,6 +975,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		success:function (results) {
 		//	console.log(results);
 			CustomerList = results
+			console.log(CustomerList);
 		},
 		error:function (error) {
 		 console.log(error);
