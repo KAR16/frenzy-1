@@ -18,25 +18,25 @@
             <a class="pageOffertsOffertsTitle">
                 <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
                 <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()">
-                    Ofertas ({{s.conteo}})
+                    Ofertas ({{s.contPromotion}})
                 </p>
                 <!--**********  LINE DECORATION  **********-->
                 <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction">
             </a>
         </div>
         <!--**********  CUPONS  **********-->
-        <div class="col col-33"  ng-repeat="s in chats[3] | filter: {Validar : 'existe'}">
+        <div class="col col-33"  ng-repeat="s in chats[2] | filter: {Validar : 'existe'}">
             <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/cupones/{{s.t}}" >
                 <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
                 <p class="pageFavoritesOurFavoritesTitle"style="color:#D8D8D8">
-                    Cupones ({{s.cont}})
+                    Cupones ({{s.contCoupon}})
                 </p>
                 <!--**********  LINE DECORATION  **********-->
                 <hr class="pageFavoritesLineDecoration" style="background-color:#D8D8D8">
             </a>
         </div>
         <!--***** blank space  *****-->
-        <div style="margin-left:100px;" ng-repeat="s in chats[3] | filter: {Validar : 'no'}"></div>
+        <div style="margin-left:100px;" ng-repeat="s in chats[2] | filter: {Validar : 'no'}"></div>
         <!--**********  ICON POPOVER  *********-->
         <div class="col col-33" style="align-items:center">
             <div ng-repeat="s in chats[1]">

@@ -366,7 +366,44 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 //********************** Customer CONTROLLER *****************************
+.controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
+	$scope.UrlC = function (id) {
+		console.log("entro");
+		console.log(id);
+		var resultSetCs = $.grep(CustomerList, function (e) {
+			 return e.NameCategory.indexOf(id) == 0;
+		});
+		console.log(resultSetCs[0]);
+		var promotionPage = "#/app/ofertas/"
+		var couponPage="#/app/cupones/";
 
+		// Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
+	if (resultSetCs[0].promo > 0  &&  resultSetCs[0].coupon > 0) {
+		console.log("hay una promocion");
+		location.href=promotionPage+id
+	}else if (resultSetCs[0].promo > 0) {
+			location.href=promotionPage+id
+	}else if( resultSetCs[0].coupon > 0){
+		location.href=couponPage+id
+	}
+
+
+
+	}
+	/************ FUNCTION CHANGE COLOR HEART  **********/
+	$scope.ChangeColorHeart = function (parametro, category) {
+		var cssColor = document.getElementById(parametro+" "+category).style.color;
+		if (cssColor == "white") {
+			document.getElementById(parametro+" "+category).style.color = "red";
+			SaveFavorite(IdUsuario, category)
+		} else {
+			document.getElementById(parametro+" "+category).style.color = "white";
+			console.log(category);
+			DeleteFavorite(IdUsuario, category)
+		}
+	};
+
+})
 .controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	var dimensions = {
 		name: 'supermarketMenu'
@@ -404,12 +441,19 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('PaizCtrl', function($scope, $stateParams, Paiz) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
+
+	$ionicPopover.fromTemplateUrl('templates/popover.html', {
+		scope: $scope,
+	}).then(function(popover) {
+		$scope.popover = popover;
+		$scope.message = 'hello';
+	});
 	// Pixels quantity of Popover for height div
-	$scope.pix = Paiz.get($stateParams.superId);
+	$scope.pix = currentPromotion.get($stateParams.superId);
 	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
@@ -513,30 +557,33 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.Promotions($stateParams.superId);
 		// Redirection page variable to coupons
 		var couponPage="#/app/cupones/";
-		idRoute = Paiz.get($stateParams.superId);
+		idRoute = currentPromotion.get($stateParams.superId);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
 		// Validate if doesn't existing a promotion then redirection to coupons page.
-		if (idRoute[2][0].conteo == 0 && idRoute[3][0].cont == 0) {
-			$('.pageFavoritesSecondRow').css("display","none");
-		} else if(idRoute[2][0].conteo == 0){
-			location.href=couponPage
-			$('.pageFavoritesSecondRow').show();;
-		}else {
-			$('.pageFavoritesSecondRow').show();
-		}
+		// if (idRoute[2][0].contPromotion == 0 && idRoute[2][0].contCoupon == 0) {
+		// 	$('.pageFavoritesSecondRow').css("display","none");
+		// } else if(idRoute[2][0].contPromotion == 0){
+		// 	//location.href=couponPage
+		// 	$('.pageFavoritesSecondRow').show();;
+		// }else {
+		// 	$('.pageFavoritesSecondRow').show();
+		// }
 
-		$scope.chats = Paiz.get($stateParams.superId);
-		$scope.popover = Paiz.all($stateParams.superId);
+		$scope.chats = currentPromotion.get($stateParams.superId);
+		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
 		$scope.heartPopover = function(id){
+			console.log(id);
+			console.log("alksjdlkasjdlk");
 			var favorite = new Parse.Query('Favorite');
 			favorite.equalTo("UserID", IdUsuario);
 			favorite.equalTo("CustomerID", id);
 			favorite.find({
 				success: function(results) {
 					if ( results.length > 0 ) {
+						console.log("red");
 						$scope.heartMenu = "red";
 					}
 				},
@@ -549,7 +596,7 @@ angular.module('starter.controllers', ['ionic'])
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
 	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
-	$scope.categoryNameCoupon = Paiz.get($stateParams.superId);
+	$scope.categoryNameCoupon = currentPromotion.get($stateParams.superId);
 	$scope.$on('$ionicView.enter', function() {
 		colorIconsFoother = []
 		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
@@ -880,7 +927,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		views: {
 			'menuContent': {
 				templateUrl: "templates/offers/offers.html",
-				controller: 'PaizCtrl'
+				controller: 'currentPromotionCtrl'
 			}
 		}
 	})
@@ -902,16 +949,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			'menuContent': {
 				templateUrl: "templates/categories/Customer.html",
 				controller: 'CustomerCtrl'
-			}
-		}
-	})
-	// ****************  OFFERS  *************
-	.state('ofertas', {
-		url: "/ofertas",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/offers/offers.html",
-				controller: 'PaizCtrl'
 			}
 		}
 	})
@@ -956,36 +993,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  SPLASH  ******************************/
 .controller('splashController', ['$scope', '$state', function($scope, $state) {
-	function doSomething(){
-	}
+	Parse.Cloud.run('GetCustomer', {},{
+		success:function (results) {
+		//	console.log(results);
+			CustomerList = results
+			console.log(CustomerList);
+		},
+		error:function (error) {
+		 console.log(error);
+		}
+	});
 	$scope.currentUser = Parse.User.current();
 	if ($scope.currentUser == null ){
 		$state.go('tutorial')
 			} else {
 				if ($scope.currentUser["attributes"].authData == undefined) {
 					IdUsuario = String($scope.currentUser.id)
-					Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-						success:function (results) {
-							console.log(results);
-	CustomerList = results
-						},
-						error:function (error) {
-						 console.log(error);
-						}
-					});
 							viewPromotion()
 				}else {
 					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-					Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-						success:function (results) {
-							console.log(results);
-								CustomerList = results
-
-						},
-						error:function (error) {
-						 console.log(error);
-						}
-					});
 							viewPromotion()
 				}
 				$state.go('app.playlists');
@@ -1053,6 +1079,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 				Parse.FacebookUtils.logIn('email,user_friends', {
 						success: function(user) {
+							IdUsuario = user.changed.authData.facebook.id
 								if (!user.existed()) {
 
 										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {

@@ -1,10 +1,10 @@
 <link rel="stylesheet" type="text/css" href="templates/categories/categories_style.css">
 <!--*****  BOXES DESIGN  *****-->
 <div class="categoriesBoxes {{info.Category}} col col-100">
-    <!--*****  LINK ONLY FOR THE IMAGE  *****-->
-    <a href="#/app/ofertas/{{info.NameCategory}}" id = "{{info.NameCategory}}">
-    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="image">
-    </a>
+    <!--*****  LINK ONLY FOR THE IMAGE   href="#/app/ofertas/{{info.NameCategory}}"*****-->
+    <div  ng-controller = "changeColorHeartCtrl" id = "{{info.NameCategory}}">
+    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="image" ng-click = "UrlC('{{info.NameCategory}}')" >
+  </div>
     <div class="row">
         <!--*****  GREEN BOX FOR PROMOTIONS AND OFFERTS  *****-->
         <div class="col col-80" style="margin-top:-5px;">
@@ -27,9 +27,9 @@
             </spam>
         </div>
         <!--*****  SECOND ROW TO HEART ICON  *****-->
-        <div class="col col-20 categoriesHeartIcon">
+        <div class="col col-20 categoriesHeartIcon" ng-controller = "changeColorHeartCtrl">
             <!--*****  HEART ICON  *****-->
-            <div class="home" id="{{info.lastText}} {{info.NameCategory}}"  name = "{{info.NameCategory}}" ng-click="changeColorHeart('{{info.lastText}}','{{info.NameCategory}}')" style="color:{{info.colorHeart}}">B</div>
+            <div class="home" id="{{info.lastText}} {{info.NameCategory}}"  name = "{{info.NameCategory}}" ng-click="ChangeColorHeart('{{info.lastText}}','{{info.NameCategory}}')" style="color:{{info.colorHeart}}">B</div>
         </div>
     </div>
 </div>

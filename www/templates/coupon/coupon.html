@@ -13,28 +13,32 @@ hr     {
 	 <!--*****  SECOND TAB HEADER  *****-->
 		<div class="row pageFavoritesSecondRow" style="height:35px;margin-top:44px;position:absolute; z-index:1;">
 			<!--**********  OFFERTS  **********-->
-			<div class="col col-33">
+			<div class="col col-33" ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'existe'}">
 				<a class="pageOffertsOffertsTitle"  href="#/app/ofertas/{{cupons[0][0].Category}}"  nav-transition="none">
 					<!--*****  TITLE AND FUNCITION OFFERTS  *****-->
 					<p class="pageFavoritesOurFavoritesTitle" style="color:#D8D8D8">
-						Ofertas ({{ConteoPro[0].conteo}})
+						Ofertas ({{ofert.contPromotion}})
 					</p>
 					<!--**********  LINE DECORATION  **********-->
 					<hr class="pageFavoritesLineDecoration" id="lineOffertsFunction"  style="background-color:#D8D8D8">
 				</a>
 			</div>
 			<!--**********  CUPONS  **********-->
+
 			<div class="col col-33">
 				<a class="pageOffertsOffertsTitle" nav-transition="none">
 					<!--*****  TITLE AND FUNCITION OFFERTS  *****-->
-					<p class="pageFavoritesOurFavoritesTitle">
-						Cupones ({{cupons[2][0].conteo}})
+					<p class="pageFavoritesOurFavoritesTitle" ng-repeat="cupon in categoryNameCoupon[3]">
+						Cupones ({{cupon.contCoupon}})
 					</p>
 					<!--**********  LINE DECORATION  **********-->
 					<hr class="pageFavoritesLineDecoration">
 				</a>
 			</div>
+			<div style="margin-left:100px;"  ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'no'}"></div>
+
 			<!--**********  ICON POPOVER  *********-->
+
 			<div class="col col-33">
 				<div ng-repeat="s in cupons[1]">
 					<div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
