@@ -275,7 +275,7 @@ hr     {
 				<!--*****  FIRST POPOVER CONTENT  *****-->
 				<ion-content >
 					<div class="list" ng-repeat="s in cupons[1]" >
-						<a class="item " target="_blank" onclick="changeColorHeartFollow()" style="  text-align:right; color:silver;">
+						<a class="item " target="_blank" ng-click="changeColorHeartFollow('{{s.name}}')" style="  text-align:right; color:silver;">
 							Seguir
 							<spam class="home pageOffertsPopoverIconsDescrpition" id="{{s.id}}" onclick="changeColorHeartFollow(id)" style="color:{{heartMenu}}">
 								B
