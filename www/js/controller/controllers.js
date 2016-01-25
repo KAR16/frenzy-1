@@ -367,7 +367,29 @@ angular.module('starter.controllers', ['ionic'])
 })
 //********************** Customer CONTROLLER *****************************
 .controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
+	$scope.UrlC = function (id) {
+		console.log("entro");
+		console.log(id);
+		var resultSetCs = $.grep(CustomerList, function (e) {
+			 return e.NameCategory.indexOf(id) == 0;
+		});
+		console.log(resultSetCs[0]);
+		var promotionPage = "#/app/ofertas/"
+		var couponPage="#/app/cupones/";
 
+		// Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
+	if (resultSetCs[0].promo > 0  &&  resultSetCs[0].coupon > 0) {
+		console.log("hay una promocion");
+		location.href=promotionPage+id
+	}else if (resultSetCs[0].promo > 0) {
+			location.href=promotionPage+id
+	}else if( resultSetCs[0].coupon > 0){
+		location.href=couponPage+id
+	}
+
+
+
+	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
@@ -539,14 +561,14 @@ angular.module('starter.controllers', ['ionic'])
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
 		// Validate if doesn't existing a promotion then redirection to coupons page.
-		if (idRoute[2][0].contPromotion == 0 && idRoute[2][0].contCoupon == 0) {
-			$('.pageFavoritesSecondRow').css("display","none");
-		} else if(idRoute[2][0].contPromotion == 0){
-			location.href=couponPage
-			$('.pageFavoritesSecondRow').show();;
-		}else {
-			$('.pageFavoritesSecondRow').show();
-		}
+		// if (idRoute[2][0].contPromotion == 0 && idRoute[2][0].contCoupon == 0) {
+		// 	$('.pageFavoritesSecondRow').css("display","none");
+		// } else if(idRoute[2][0].contPromotion == 0){
+		// 	//location.href=couponPage
+		// 	$('.pageFavoritesSecondRow').show();;
+		// }else {
+		// 	$('.pageFavoritesSecondRow').show();
+		// }
 
 		$scope.chats = currentPromotion.get($stateParams.superId);
 		$scope.popover = currentPromotion.all($stateParams.superId);

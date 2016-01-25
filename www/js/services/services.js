@@ -276,7 +276,7 @@ app.factory('currentPromotion', function() {
 				 return e.NameCategory.indexOf(superId) == 0;
 			});
 
-			console.log(JSON.stringify(resultSet[0]["promo"]))
+			//console.log(JSON.stringify(resultSet[0]["promo"]))
 
 			for (a in Cupons) {
 				if (superId == Cupons[a].Category) {
@@ -284,8 +284,6 @@ app.factory('currentPromotion', function() {
 
 				}
 			}
-
-
 
 			for (c in CurrentPromotion) {
 
@@ -331,7 +329,7 @@ app.factory('currentPromotion', function() {
 				ALL.push(Category)
 				ALL.push(dato)
 				ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar}])
-				console.log(ALL);
+				//console.log(ALL);
 				return ALL;
 			}
 			return null;
@@ -414,8 +412,13 @@ app.factory('Cupons', function() {
 			var AllCupon = [];
 			var DatoCupon = [];
 			var CuponALL = [];
-			var ContCupon = [];
+			var ContCupon = []; //conteo de copunes
+			var validar = "existe";
+			var resultSetC = $.grep(CustomerList, function (e) {
+				 return e.NameCategory.indexOf(salvadosId) == 0;
+			});
 
+			console.log(JSON.stringify(resultSetC[0]))
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].Category) {
 					if (Cupons[a].ShopOnline == undefined) {
@@ -446,6 +449,9 @@ app.factory('Cupons', function() {
 					}
 				}
 			}
+			if (resultSetC[0]["promo"] == 0) {
+				validar = "no"
+			}
 
 			// INSTEAD ALL COUPON IN ALL COUPON VARIABLE
 			allCupon = AllCupon;
@@ -454,6 +460,8 @@ app.factory('Cupons', function() {
 				CuponALL.push(allCupon)
 				CuponALL.push(DatoCupon)
 				CuponALL.push(ContCupon)
+				CuponALL.push([{contCoupon:resultSetC[0]["coupon"],contPromotion:resultSetC[0]["promo"],Validar:validar}])
+				console.log(CuponALL);
 				return CuponALL;
 			}
 		},get: function(){}
