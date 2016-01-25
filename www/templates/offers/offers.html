@@ -245,9 +245,9 @@
                 <!--*****  FIRST POPOVER CONTENT  *****-->
                 <ion-content>
                     <div class="list" ng-repeat="s in chats[1]">
-                        <a class="item " target="_blank" onclick="changeColorHeartFollow()" style="  text-align:right; color:silver;">
+                        <a class="item " target="_blank" id="{{s.name}}"  ng-click="changeColorHeartFollow('{{s.name}}')" style="  text-align:right; color:silver;">
                             Seguir
-                            <spam class="home pageOffertsPopoverIconsDescrpition" id="{{s.id}}" onclick="changeColorHeartFollow(id)" style="color:{{heartMenu}}">
+                            <spam class="home pageOffertsPopoverIconsDescrpition"  style="color:{{heartMenu}}">
                                 B
                             </spam>
                         </a>

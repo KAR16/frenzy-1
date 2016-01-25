@@ -264,3 +264,11 @@
 .cajaTexto {
     background-color: white;
 }
+
+.pageFavoritesSecondRow {
+	background-color:#00BAB9;
+	color:white;
+	font-size: 12px;
+	font-weight: bolder;
+	margin-top:-25px;
+}
