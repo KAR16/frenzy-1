@@ -385,6 +385,8 @@ angular.module('starter.controllers', ['ionic'])
 			location.href=promotionPage+id
 	}else if( resultSetCs[0].coupon > 0){
 		location.href=couponPage+id
+	}else {
+			location.href=promotionPage+id
 	}
 
 
@@ -569,37 +571,39 @@ angular.module('starter.controllers', ['ionic'])
 		// }else {
 		// 	$('.pageFavoritesSecondRow').show();
 		// }
-
+		$scope.changeColorHeartFollow = function(id) {
+			if ($scope.heartMenu == "silver") {
+				$scope.heartMenu = "red";
+				SaveFavorite(IdUsuario, id)
+			} else {
+				$scope.heartMenu = "silver";
+				DeleteFavorite(IdUsuario, id)
+			}
+		}
 		$scope.chats = currentPromotion.get($stateParams.superId);
 		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
 		$scope.heartPopover = function(id){
-			console.log(id);
-			console.log("alksjdlkasjdlk");
-			var favorite = new Parse.Query('Favorite');
-			favorite.equalTo("UserID", IdUsuario);
-			favorite.equalTo("CustomerID", id);
-			favorite.find({
-				success: function(results) {
-					if ( results.length > 0 ) {
-						console.log("red");
-						$scope.heartMenu = "red";
-					}
-				},
-				error: function(myObject, error) {
-					// Error occureds
-					console.log( error );
-				}
+			var resultSetPopover = $.grep(CustomerList, function (e) {
+				 return e.NameCategory.indexOf(id) == 0;
 			});
+			console.log(resultSetPopover);
+			if (resultSetPopover[0].colorHeart == "white") {
+					$scope.heartMenu = "silver";
+			}else {
+				$scope.heartMenu = resultSetPopover[0].colorHeart;
+			}
+
 		}
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
 	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
-	$scope.categoryNameCoupon = currentPromotion.get($stateParams.superId);
+	$scope.custumerName = $stateParams.superId.replace("-"," ");
 	$scope.$on('$ionicView.enter', function() {
+		console.log();
 		colorIconsFoother = []
-		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
+		colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.custumerName,'','none']);
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
@@ -689,6 +693,7 @@ angular.module('starter.controllers', ['ionic'])
 			var favorite = new Parse.Query('Favorite');
 			favorite.equalTo("UserID", IdUsuario);
 			favorite.equalTo("CustomerID", id);
+
 			favorite.find({
 				success: function(results) {
 					if ( results.length > 0 ) {
