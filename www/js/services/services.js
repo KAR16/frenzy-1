@@ -406,9 +406,10 @@ app.factory('OurFavorites', function() {
 	};
 });
 // ************* COUPONS APP FACTORY *************
-app.factory('Cupons', function() {
+app.factory('Coupons', function() {
 	return {
 		all: function(salvadosId) {
+			console.log(Cupons);
 			var AllCupon = [];
 			var DatoCupon = [];
 			var CuponALL = [];
@@ -493,74 +494,17 @@ var PromoSave = new Parse.Query('PromotionSaved')
 
 // ************* CALL DATA PARSE *************
 //query limit hace la llamada de mas elementos
-function couponFunction() {
-	Cupons = [];
-	var Cupon = new Parse.Query('Cupon');
-	var cup = Cupon.find({
-		success: function(results) {
-			for (x in results) {
-				for (i in results[x].attributes.Customer){
-					if (true === results[x].attributes.Status){
-						if (results[x].attributes.PhotoCupon === null || results[x].attributes.PhotoCupon === undefined){
-							Cupons.push({nul:"sin",
-								name:results[x].attributes.Name,
-								description:results[x].attributes.PromotionDescription,
-								Canjea:results[x].attributes.CuponDiscount,
-								Category:results[x].attributes.Customer[i],
-								cupon:"existe",
-								ColorPinCupon: "silver",
-								BarCodePhoto:results[x].attributes.BarCodePhoto,
-								Presentation:results[x].attributes.Presentation,
-								description:results[x].attributes.PromotionDescription,
-								customer:results[x].attributes.Customer[i],
-								PhotoCupon:results[x].attributes.PhotoCupon,
-								Publication_Date:results[x].attributes.PublicationDate,
-								End_Date:results[x].attributes.EndDate,
-								IDCupon:results[x].id,
-								Categoryapp:results[x].attributes.CategoryApp,
-								TypeCoupon:results[x].attributes.TypeCoupon,
-								QuantityCoupons:results[x].attributes.QuantityCoupons,
-								QuantityExchanged:results[x].attributes.QuantityExchanged,
-								ShopOnline:results[x].attributes.ShopOnline,
-								Display:"",
-							});
-						}else{
-							Cupons.push({nul:"con",
-								name:results[x].attributes.Name,
-								description:results[x].attributes.PromotionDescription,
-								Canjea:results[x].attributes.CuponDiscount,
-								Category:results[x].attributes.Customer[i],
-								cupon:"existe",
-								ColorPinCupon: "silver",
-								BarCodePhoto:results[x].attributes.BarCodePhoto,
-								Presentation:results[x].attributes.Presentation,
-								description:results[x].attributes.PromotionDescription,
-								customer:results[x].attributes.Customer[i],
-								PhotoCupon:results[x].attributes.PhotoCupon,
-								Publication_Date:results[x].attributes.PublicationDate,
-								End_Date:results[x].attributes.EndDate,
-								IDCupon:results[x].id,
-								Categoryapp:results[x].attributes.CategoryApp,
-								TypeCoupon:results[x].attributes.TypeCoupon,
-								QuantityCoupons:results[x].attributes.QuantityCoupons,
-								QuantityExchanged:results[x].attributes.QuantityExchanged,
-								ShopOnline:results[x].attributes.ShopOnline,
-								Display:"",
-							});
-						}
-					}
-				}
-			}
-			console.log(Cupons)
-		},
-
-		error: function(myObject, error) {
-			// Error occured
-			console.log( error );
-		}
-	});
-	// ************* WHEN THE PROMISE CATEGORIES IS READY *************
-	cup.then(function(){
+Parse.Cloud.run('GetCouponsApp', {},{
+	success:function (results) {
+		console.log("copunes");
+	//	console.log(results);
+		Cupons = results
+		console.log(Cupons);
+	},
+	error:function (error) {
+	 console.log(error);
+	}
+}).then(function(){
 		var PromoSavess = new Parse.Query('PromotionSaved')
 
 		PromoSavess.equalTo("UserID", IdUsuario);
@@ -584,9 +528,103 @@ function couponFunction() {
 		});
 
 	});
-}
 
-couponFunction();
+
+
+// function couponFunction() {
+// 	Cupons = [];
+// 	var Cupon = new Parse.Query('Cupon');
+// 	var cup = Cupon.find({
+// 		success: function(results) {
+// 			for (x in results) {
+// 				for (i in results[x].attributes.Customer){
+// 					if (true === results[x].attributes.Status){
+// 						if (results[x].attributes.PhotoCupon === null || results[x].attributes.PhotoCupon === undefined){
+// 							Cupons.push({nul:"sin",
+// 								name:results[x].attributes.Name,
+// 								description:results[x].attributes.PromotionDescription,
+// 								Canjea:results[x].attributes.CuponDiscount,
+// 								Category:results[x].attributes.Customer[i],
+// 								cupon:"existe",
+// 								ColorPinCupon: "silver",
+// 								BarCodePhoto:results[x].attributes.BarCodePhoto,
+// 								Presentation:results[x].attributes.Presentation,
+// 								description:results[x].attributes.PromotionDescription,
+// 								customer:results[x].attributes.Customer[i],
+// 								PhotoCupon:results[x].attributes.PhotoCupon,
+// 								Publication_Date:results[x].attributes.PublicationDate,
+// 								End_Date:results[x].attributes.EndDate,
+// 								IDCupon:results[x].id,
+// 								Categoryapp:results[x].attributes.CategoryApp,
+// 								TypeCoupon:results[x].attributes.TypeCoupon,
+// 								QuantityCoupons:results[x].attributes.QuantityCoupons,
+// 								QuantityExchanged:results[x].attributes.QuantityExchanged,
+// 								ShopOnline:results[x].attributes.ShopOnline,
+// 								Display:"",
+// 							});
+// 						}else{
+// 							Cupons.push({nul:"con",
+// 								name:results[x].attributes.Name,
+// 								description:results[x].attributes.PromotionDescription,
+// 								Canjea:results[x].attributes.CuponDiscount,
+// 								Category:results[x].attributes.Customer[i],
+// 								cupon:"existe",
+// 								ColorPinCupon: "silver",
+// 								BarCodePhoto:results[x].attributes.BarCodePhoto,
+// 								Presentation:results[x].attributes.Presentation,
+// 								description:results[x].attributes.PromotionDescription,
+// 								customer:results[x].attributes.Customer[i],
+// 								PhotoCupon:results[x].attributes.PhotoCupon,
+// 								Publication_Date:results[x].attributes.PublicationDate,
+// 								End_Date:results[x].attributes.EndDate,
+// 								IDCupon:results[x].id,
+// 								Categoryapp:results[x].attributes.CategoryApp,
+// 								TypeCoupon:results[x].attributes.TypeCoupon,
+// 								QuantityCoupons:results[x].attributes.QuantityCoupons,
+// 								QuantityExchanged:results[x].attributes.QuantityExchanged,
+// 								ShopOnline:results[x].attributes.ShopOnline,
+// 								Display:"",
+// 							});
+// 						}
+// 					}
+// 				}
+// 			}
+// 			console.log(Cupons)
+// 		},
+//
+// 		error: function(myObject, error) {
+// 			// Error occured
+// 			console.log( error );
+// 		}
+// 	});
+// 	// ************* WHEN THE PROMISE CATEGORIES IS READY *************
+// 	cup.then(function(){
+// 		var PromoSavess = new Parse.Query('PromotionSaved')
+//
+// 		PromoSavess.equalTo("UserID", IdUsuario);
+// 		PromoSavess.find({
+// 			success: function(results) {
+// 				for (a in results[0].attributes.CuponID){
+// 					for (b in Cupons){
+// 						if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
+// 							if (Cupons[b].ColorPinCupon === "silver") {
+// 								Cupons[b].ColorPinCupon  = "purple";
+// 							}
+// 						}
+// 					}
+// 				}
+//
+// 			},
+// 			error: function(myObject, error) {
+// 				// Error occureds
+// 				console.log( error );
+// 			}
+// 		});
+//
+// 	});
+// }
+//
+// couponFunction();
 // ************* THE QUERY CALL MORE ELEMENTS *************
 promotion = promotion.limit(100);
 customer = customer.limit(100);
@@ -804,7 +842,6 @@ function viewFavorite() {
 }
 // *************** VIEW PROMOTION FUNCTION ***************
 function viewPromotion(){
-	console.log("entro a view");
 	AllPromotion = [];
 	var con = 0;
 	var promotionSavedData = Parse.Object.extend("PromotionSaved");

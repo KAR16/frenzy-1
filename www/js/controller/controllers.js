@@ -258,7 +258,6 @@ angular.module('starter.controllers', ['ionic'])
 	CategoryListName = [];
 	var query = new Parse.Query('AppCategory');
 	query.each(function(results) {
-				console.log(results.attributes);
 				CategoryListName.push(results.attributes)
 	}).then(function() {
 		ReloadFavorite()
@@ -456,7 +455,7 @@ angular.module('starter.controllers', ['ionic'])
 	});
 	// Pixels quantity of Popover for height div
 	$scope.pix = currentPromotion.get($stateParams.superId);
-	console.log($scope.pix);
+//	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
 	$scope.reload = function () {
@@ -607,13 +606,13 @@ angular.module('starter.controllers', ['ionic'])
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
+.controller('CuponCtrl', function($scope, $stateParams ,Coupons) {
 
 	// For to update QuantityExchanged
-	var CuponClassExchanged = new Parse.Object.extend("Cupon");
+	var CuponClassExchanged = Parse.Object.extend("Cupon");
 	var cuponClassExchanged = new CuponClassExchanged();
 	var query = new Parse.Query("Cupon");
-	$scope.pix = Cupons.all($stateParams.CuponID);
+	$scope.pix = Coupons.all($stateParams.CuponID);
 	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
@@ -624,19 +623,18 @@ angular.module('starter.controllers', ['ionic'])
 			success: function(results){
 				if(results == false) {
 					alert("No hay cupones para canjear sorry :c	!!")
-					couponFunction()
+
 				}
 				else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
 					cuponClassExchanged.id = id;
 					cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 					cuponClassExchanged.save();
-					couponFunction()
+
 					alert("Has cambiado tu cupon!!");
 				} else {
 					cuponClassExchanged.id = id;
 					cuponClassExchanged.set("Status", false);
 					cuponClassExchanged.save();
-					couponFunction()
 					alert("No hay cupones para canjear sorry :c	!!")
 				}
 			}
@@ -685,33 +683,38 @@ angular.module('starter.controllers', ['ionic'])
 	/*****  functions *****/
 	$scope.$on('$ionicView.enter', function() {
 
-		$scope.cupons = Cupons.all($stateParams.CuponID);
+		$scope.cupons = Coupons.all($stateParams.CuponID);
 		$scope.heartMenu = "silver";
 		$scope.ConteoPro = ContPromo
 
-		$scope.heartPopover = function(id){
-			var favorite = new Parse.Query('Favorite');
-			favorite.equalTo("UserID", IdUsuario);
-			favorite.equalTo("CustomerID", id);
 
-			favorite.find({
-				success: function(results) {
-					if ( results.length > 0 ) {
-						$scope.heartMenu = "red";
-					}
-				},
-				error: function(myObject, error) {
-					// Error occureds
-					console.log( error );
-				}
+		$scope.heartPopover = function(id){
+			var resultSetPopover = $.grep(CustomerList, function (e) {
+				 return e.NameCategory.indexOf(id) == 0;
 			});
+			console.log(resultSetPopover);
+			if (resultSetPopover[0].colorHeart == "white") {
+					$scope.heartMenu = "silver";
+			}else {
+				$scope.heartMenu = resultSetPopover[0].colorHeart;
+			}
+
+		}
+		$scope.changeColorHeartFollow = function(id) {
+			if ($scope.heartMenu == "silver") {
+				$scope.heartMenu = "red";
+				SaveFavorite(IdUsuario, id)
+			} else {
+				$scope.heartMenu = "silver";
+				DeleteFavorite(IdUsuario, id)
+			}
 		}
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
  //***** SCOPE $ON TO REFRESH MENU CONTROLLER
 
  $scope.$on('$ionicView.enter', function() {
-	  	$scope.categoryNameCoupon = Cupons.all($stateParams.CuponID);
+	  	$scope.categoryNameCoupon = Coupons.all($stateParams.CuponID);
 		 colorIconsFoother = []
 		 colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
  });
@@ -743,7 +746,7 @@ angular.module('starter.controllers', ['ionic'])
 	};
 
 		// For to update QuantityExchanged
-		var CuponClassExchanged = new Parse.Object.extend("Cupon");
+		var CuponClassExchanged = Parse.Object.extend("Cupon");
 		var cuponClassExchanged = new CuponClassExchanged();
 		var query = new Parse.Query("Cupon");
 		query.equalTo("objectId",$stateParams.DescriptionID)
@@ -769,9 +772,6 @@ angular.module('starter.controllers', ['ionic'])
 					}
 				})
 
-				couponCash2.then(function(){
-					couponFunction()
-				});
 		}
 
 		/*****  noneDisplay equalTo displayNoneInline for
@@ -1002,7 +1002,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		success:function (results) {
 		//	console.log(results);
 			CustomerList = results
-			console.log(CustomerList);
 		},
 		error:function (error) {
 		 console.log(error);
