@@ -73,6 +73,10 @@ app.factory('CustomerAll', function() {
 			if (AllCustomer.length == 0) {
 				AllCustomer.push({oferta:"noHay"});
 			}
+			for (g in AllCustomer) {
+				AllCustomer[g]["suma"] = AllCustomer[g]["promo"] +  AllCustomer[g]["coupon"]
+			}
+			console.log(AllCustomer);
 			return AllCustomer;
 		},
 		get: function(chatId) {
@@ -882,7 +886,7 @@ function viewPromotion(){
 			for (var i = 0; i < results[0].attributes.PromotionID.length; i++){
 				for(x in CurrentPromotion) {
 					if (results[0].attributes.PromotionID[i] === CurrentPromotion[x].IDpromotion) {
-
+						console.log(CurrentPromotion[x].IDpromotion);
 						AllPromotion.push(CurrentPromotion[x]);
 						// AllPromotion[con]["PromotionId"] = promociones[x].id;
 						// AllPromotion[con]["oferta"] = "existe";
