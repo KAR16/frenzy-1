@@ -605,70 +605,69 @@ angular.module('starter.controllers', ['ionic'])
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Coupons) {
 
-	// For to update QuantityExchanged
-	var CuponClassExchanged = Parse.Object.extend("Cupon");
-	var cuponClassExchanged = new CuponClassExchanged();
-	var query = new Parse.Query("Cupon");
-	$scope.pix = Coupons.all($stateParams.CuponID);
-	$scope.pixels = $scope.pix[1][0].pixels;
+		// For to update QuantityExchanged
+		var CuponClassExchanged = Parse.Object.extend("Cupon");
+		var cuponClassExchanged = new CuponClassExchanged();
+		var query = new Parse.Query("Cupon");
+		$scope.pix = Coupons.all($stateParams.CuponID);
+		$scope.pixels = $scope.pix[1][0].pixels;
 
-	$scope.countCoupon = function(id){
+		$scope.countCoupon = function(id){
 
-		query.equalTo("objectId",id)
-		var couponCash =	query.find({
-			success: function(results){
-				if(results == false) {
-					sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
-					couponFunction();
-				}
-				else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
-					cuponClassExchanged.id = id;
-					cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-					cuponClassExchanged.save();
-					couponFunction();
+					query.equalTo("objectId",id)
+					var couponCash =	query.find({
+							success: function(results){
+									if(results == false) {
+											sweetAlert('Lo sentimos', 'No hay cupones para canjear', 'warning');
+											couponFunction()
+									}
+									else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
 
-					swal({
-							title: "Estas Seguro?",
-							text: "Quieres canjear este cupón?",
-							type: "warning",
-							showCancelButton: true,
-							cancelButtonText: 'No',
-							confirmButtonColor: "#00BAB9",
-							confirmButtonText: "Canjear!",
-							closeOnConfirm: false
-					},
-							function() {
-									swal({
-											title: "Perfecto!",
-											text: "Has cambiado tu cupón",
-											imageUrl: "../../Pulgar_Arriba.jpg",
-											timer: 2000,
-											showConfirmButton: false
-									});
-									$scope.cupons[0][0].QuantityExchanged +=1;
-									var couponPages="#/app/descripcionCupones/";
-									// IdPromotion with redirection page
-									couponPages = couponPages+id;
-									location.href=couponPages;
-							});
+											swal({
+													title: "Estas Seguro?",
+													text: "Quieres canjear este cupon?",
+													type: "warning",
+													showCancelButton: true,
+													cancelButtonText: 'No',
+													confirmButtonColor: "#00BAB9",
+													confirmButtonText: "Canjear!",
+													closeOnConfirm: false
+											},
+											function(isConfirm){
+													if (isConfirm) {
+															swal({
+																title: 'Perfecto!',
+																text: 'Has cambiado tu Cupón',
+																timer: 2000,
+																showConfirmButton: false,
+																imageUrl: "../../img/Pulgar_Arriba.jpg"
+															});
 
-				} else {
-					cuponClassExchanged.id = id;
-					cuponClassExchanged.set("Status", false);
-					cuponClassExchanged.save();
-					sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
-					couponFunction();
-				}
-			}
-		})
-		couponCash.then(function(){
-			$scope.cupons[0][0].QuantityExchanged +=1;
-			var couponPages="#/app/descripcionCupones/";
-			// IdPromotion with redirection page
-			couponPages = couponPages+id;
-			location.href=couponPages;
-		});
-	}
+															couponCash.then(function(){
+																	$scope.cupons[0][0].QuantityExchanged +=1;
+																	var couponPages="#/app/descripcionCupones/";
+																	// IdPromotion with redirection page
+																	couponPages = couponPages+id;
+																	location.href=couponPages;
+															});
+
+															cuponClassExchanged.id = id;
+															cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+															cuponClassExchanged.save();
+													} else {
+															swal("Cancelled", "Your imaginary file is safe :)", "error");
+													}
+											});
+									} else {
+											cuponClassExchanged.id = id;
+											cuponClassExchanged.set("Status", false);
+											cuponClassExchanged.save();
+											couponFunction()
+											alert("No hay cupones para canjear sorry :c	!!")
+									}
+							}
+					})
+		}
 
 	/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
