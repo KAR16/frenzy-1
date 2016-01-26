@@ -62,7 +62,7 @@ Parse.Cloud.run('GetPromotionsApp', {},{
 	error:function (error) {
 	 console.log(error);
 	}
-});
+})
 
 /***********************************************************/
 /**********  PAGE_START EXIT APP FUNCTION  *****************/

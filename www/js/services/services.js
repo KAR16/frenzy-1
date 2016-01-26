@@ -346,6 +346,7 @@ app.factory('AllFavorite', function() {
 				AllFavorite.push({oferta:"noHay"});
 			}
 			favorites = AllFavorite;
+			console.log(favorites);
 			return favorites;
 		},
 		get: function() {
@@ -390,6 +391,7 @@ app.factory('OurFavorites', function() {
 						success: function(results) {
 							for (i in AllourFavorites) {
 								AllourFavorites[i]["logo"] = results[0].attributes.Logo._url;
+								AllourFavorites[i]["oferta"] = "siHay"
 							}
 							cust.then(function(){});
 						},
@@ -401,6 +403,10 @@ app.factory('OurFavorites', function() {
 				}
 			}
 			var OurFavorites = AllourFavorites
+			if (OurFavorites.length == 0) {
+				OurFavorites.push({oferta : 'noHay'})
+			}
+			console.log(OurFavorites);
 			return OurFavorites
 		},get: function(){}
 	};
@@ -839,7 +845,29 @@ function viewFavorite() {
 				}
 			}
 		}
+	}).then(function () {
+		var PromoSavess = new Parse.Query('PromotionSaved')
+		PromoSavess.equalTo("UserID", IdUsuario);
+		PromoSavess.find({
+		success: function(results) {
+			for (a in results[0].attributes.PromotionID){
+				for (b in AllFavorite){
+					if (results[0].attributes.PromotionID[a] === AllFavorite[b].IDpromotion){
+						if (AllFavorite[b].ColorPin === "silver") {
+							AllFavorite[b].ColorPin  = "purple";
+						}
+					}else {
+						AllFavorite[b].ColorPin  = "silver";
+					}
+				}
+			}
+		},
+		error: function(myObject, error) {
+			// Error occureds
+			console.log( error );
+		}
 	});
+	})
 }
 // *************** VIEW PROMOTION FUNCTION ***************
 function viewPromotion(){

@@ -55,10 +55,26 @@
     <ion-content class="pageFavoritesBodyColor" ng-controller="AppCtrl" ng-app="ionicApp" animation="slide-left-right-ios7" scroll="false">
         <!--**********  SECOND TAB HEADER  **********-->
         <div style="height:35px;"></div>
+        <div ng-repeat="favorites in ourFavorites  | filter: {oferta : 'noHay'}">
+            <div class="open_sans boxbox">
+                <p class="savedPageNoItemBlankSpace">
+                    f
+                </p>
+                <p class="home savedPageNoItemsIcon">f</p>
+                <p class="savedPageNoItemsTitle">
+                    Uh-uH
+                </p>
+                <p class="savedPageNoItemsDescription">Ten pacienza pronto te mostraremos</p>
+                <p class="savedPageNoItemsDescription">nuestras promociones favoritas</p>
+                <p class="savedPageNoItemsDescription">para usarlos despues.</p>
+            </div>
+        </div>
         <!--***********  SLIDER  ************-->
         <ion-slide-box>
             <!--**********  SLIDER CONTENT  **********-->
-            <ion-slide ng-repeat="s in ourFavorites">
+            <ion-slide>
+
+              <div  ng-repeat="s in ourFavorites | filter: {oferta : 'siHay'}">
                 <!--**********  SLIDER BOXES  **********-->
                 <div class="nuevoDivContenedor" >
                     <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
@@ -75,7 +91,7 @@
                     </div>
                     <!--*****  MAIN IMAGE FAVORITE PAGE  *****-->
                     <!--*****  ZISE PHOTO FAVORITES 700X700  *****-->
-                    <img class="imagenCajaNueva" src="{{s.PhotoFavorite._url}}" alt="nissan">
+                    <img class="imagenCajaNueva" src="{{s.photo}}" alt="nissan">
                     <!--***** ESTABLISHMENT LOGO  *****-->
                     <div class="pageFavoritesEstablishmentLogo" style="">
                         <img class="logoEstablishment" src="{{s.logo}}" alt="label">
@@ -129,6 +145,9 @@
                         </div>
                     </div>
                 </div>
+              </div>
+
+
             </ion-slide>
         </ion-slide-box>
         <!--**********  SECOND POP OVER SHARE  **********-->

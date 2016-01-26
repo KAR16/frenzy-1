@@ -149,28 +149,28 @@ angular.module('starter.controllers', ['ionic'])
 		} else {
 			if ($scope.currentUser["attributes"].authData == undefined) {
 				IdUsuario = String($scope.currentUser.id)
-				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-					success:function (results) {
-						console.log(results);
-					 		CustomerList = results
-					},
-					error:function (error) {
-					 console.log(error);
-					}
-				});
+				// Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+				// 	success:function (results) {
+				// 		console.log(results);
+				// 	 		CustomerList = results
+				// 	},
+				// 	error:function (error) {
+				// 	 console.log(error);
+				// 	}
+				// });
 				        viewPromotion()
 			}else {
 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-					success:function (results) {
-						console.log(results);
-							CustomerList = results
-
-					},
-					error:function (error) {
-					 console.log(error);
-					}
-				});
+				// Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+				// 	success:function (results) {
+				// 		console.log(results);
+				// 			CustomerList = results
+				//
+				// 	},
+				// 	error:function (error) {
+				// 	 console.log(error);
+				// 	}
+				// });
 				        viewPromotion()
 			}
 			$state.go('app.playlists');
@@ -663,7 +663,7 @@ angular.module('starter.controllers', ['ionic'])
 											cuponClassExchanged.set("Status", false);
 											cuponClassExchanged.save();
 											couponFunction()
-											alert("No hay cupones para canjear sorry :c	!!")
+											swal("Lo sentimos","No hay cupones para canjear sorry :c	!!", "warning")
 									}
 							}
 					})
@@ -1089,15 +1089,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     if ($scope.currentUser == null ){
     }else{
         IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-					success:function (results) {
-						console.log(results);
-	CustomerList = results
-					},
-					error:function (error) {
-					 console.log(error);
-					}
-				});
+	// 			Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+	// 				success:function (results) {
+	// 					console.log(results);
+	// CustomerList = results
+	// 				},
+	// 				error:function (error) {
+	// 				 console.log(error);
+	// 				}
+	// 			});
         viewPromotion()
         $state.go('app.playlists');
     }
@@ -1135,15 +1135,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       $cordovaFacebook.login(permissions).then(function(success){
         //alert(success);
         IdUsuario = success.authResponse.userID
-				Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-					success:function (results) {
-						console.log(results);
-	CustomerList = results
-					},
-					error:function (error) {
-					 console.log(error);
-					}
-				});
+	// 			Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
+	// 				success:function (results) {
+	// 					console.log(results);
+	// CustomerList = results
+	// 				},
+	// 				error:function (error) {
+	// 				 console.log(error);
+	// 				}
+	// 			});
         viewPromotion()
         //Need to convert expiresIn format from FB to date
         var expiration_date = new Date();
