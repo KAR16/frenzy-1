@@ -149,29 +149,10 @@ angular.module('starter.controllers', ['ionic'])
 		} else {
 			if ($scope.currentUser["attributes"].authData == undefined) {
 				IdUsuario = String($scope.currentUser.id)
-				// Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-				// 	success:function (results) {
-				// 		console.log(results);
-				// 	 		CustomerList = results
-				// 	},
-				// 	error:function (error) {
-				// 	 console.log(error);
-				// 	}
-				// });
-				        viewPromotion()
+        viewPromotion()
 			}else {
 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-				// Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-				// 	success:function (results) {
-				// 		console.log(results);
-				// 			CustomerList = results
-				//
-				// 	},
-				// 	error:function (error) {
-				// 	 console.log(error);
-				// 	}
-				// });
-				        viewPromotion()
+        viewPromotion()
 			}
 			$state.go('app.playlists');
 		}
@@ -510,8 +491,6 @@ angular.module('starter.controllers', ['ionic'])
 			$scope.reload()
 		}
 	};
-
-
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
 		a = cell.toString();
@@ -558,15 +537,6 @@ angular.module('starter.controllers', ['ionic'])
 		idRoute = currentPromotion.get($stateParams.superId);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
-		// Validate if doesn't existing a promotion then redirection to coupons page.
-		// if (idRoute[2][0].contPromotion == 0 && idRoute[2][0].contCoupon == 0) {
-		// 	$('.pageFavoritesSecondRow').css("display","none");
-		// } else if(idRoute[2][0].contPromotion == 0){
-		// 	//location.href=couponPage
-		// 	$('.pageFavoritesSecondRow').show();;
-		// }else {
-		// 	$('.pageFavoritesSecondRow').show();
-		// }
 		$scope.changeColorHeartFollow = function(id) {
 			if ($scope.heartMenu == "silver") {
 				$scope.heartMenu = "red";
@@ -655,15 +625,17 @@ angular.module('starter.controllers', ['ionic'])
 															cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 															cuponClassExchanged.save();
 													} else {
-															swal("Cancelled", "Your imaginary file is safe :)", "error");
+															swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
 													}
 											});
 									} else {
 											cuponClassExchanged.id = id;
 											cuponClassExchanged.set("Status", false);
 											cuponClassExchanged.save();
+											sweetAlert('Lo sentimos!', 'Ya no tenemos cupones para canjear', 'warning');
+											var couponPages="#/app/playlists";
+											location.href=couponPages;
 											couponFunction()
-											swal("Lo sentimos","No hay cupones para canjear sorry :c	!!", "warning")
 									}
 							}
 					})
@@ -776,30 +748,45 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.countCoupon = function(){
 				var couponCash2 = query.find({
 					success: function(results){
-						if(results == false) {
-							sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
-					} else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
+
+						if(results == false){
+								sweetAlert('Lo sentimos!', 'Ya no tenemos cupones para canjear', 'warning');
+								var couponPages="#/app/playlists";
+								location.href=couponPages;
+						} else if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
 								cuponClassExchanged.id = $stateParams.DescriptionID;
-								cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-								cuponClassExchanged.save();
-								swal({
-										title: "Perfecto!",
-										text: "Has cambiado tu cupón",
-										imageUrl: "../../Pulgar_Arriba.jpg",
-										timer: 2000,
-										showConfirmButton: false
-								});
-					} else if(parseInt(results[0].attributes.QuantityExchanged) === parseInt(results[0].attributes.QuantityCoupons)){
+									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+									cuponClassExchanged.save();
+									swal({
+											title: "Perfecto!",
+											text: "Has cambiado tu cupón",
+											imageUrl: "../../img/Pulgar_Arriba.jpg",
+											timer: 2000,
+											showConfirmButton: false
+									});
+						} else {
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("Status", false);
 								cuponClassExchanged.save();
-								sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
-					}
+								// Running job Cloud Code functionalities for to update count coupon for costumer and categories
+								Parse.Cloud.run('runJobCountCouponCostumer', {}, {
+									success: function(result) {
+												Parse.Cloud.run('runJobCountCouponCategories', {});
+									},
+									error: function(error) {
+											/* Show error if call failed */
+											console.log(error);
+									}
+								});
+
+								sweetAlert('Lo sentimos!', 'Ya no tenemos cupones para canjear', 'warning');
+								var couponPages="#/app/playlists";
+								location.href=couponPages;
+						}
 					}
 				})
 
 		}
-
 		/*****  noneDisplay equalTo displayNoneInline for
 		 				call the list and show or hide barcode image
 						in DescriptionCupons  *****/
