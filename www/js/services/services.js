@@ -492,45 +492,46 @@ var favorite = new Parse.Query('Favorite');
 var PromoSave = new Parse.Query('PromotionSaved')
 
 
-// ************* CALL DATA PARSE *************
-//query limit hace la llamada de mas elementos
-Parse.Cloud.run('GetCouponsApp', {},{
-	success:function (results) {
-		console.log("copunes");
-	//	console.log(results);
-		Cupons = results
-		console.log(Cupons);
-	},
-	error:function (error) {
-	 console.log(error);
-	}
-}).then(function(){
-		var PromoSavess = new Parse.Query('PromotionSaved')
-
-		PromoSavess.equalTo("UserID", IdUsuario);
-		PromoSavess.find({
-			success: function(results) {
-				for (a in results[0].attributes.CuponID){
-					for (b in Cupons){
-						if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
-							if (Cupons[b].ColorPinCupon === "silver") {
-								Cupons[b].ColorPinCupon  = "purple";
-							}
-						}
-					}
+function couponFunction() {
+			// ************* CALL DATA PARSE *************
+			//query limit hace la llamada de mas elementos
+			Parse.Cloud.run('GetCouponsApp', {},{
+				success:function (results) {
+					console.log("copunes");
+				//	console.log(results);
+					Cupons = results
+					console.log(Cupons);
+				},
+				error:function (error) {
+				 console.log(error);
 				}
+			}).then(function(){
+					var PromoSavess = new Parse.Query('PromotionSaved')
 
-			},
-			error: function(myObject, error) {
-				// Error occureds
-				console.log( error );
-			}
-		});
+					PromoSavess.equalTo("UserID", IdUsuario);
+					PromoSavess.find({
+						success: function(results) {
+							for (a in results[0].attributes.CuponID){
+								for (b in Cupons){
+									if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
+										if (Cupons[b].ColorPinCupon === "silver") {
+											Cupons[b].ColorPinCupon  = "purple";
+										}
+									}
+								}
+							}
 
-	});
+						},
+						error: function(myObject, error) {
+							// Error occureds
+							console.log( error );
+						}
+					});
 
+				});
+}
 
-
+couponFunction();
 // function couponFunction() {
 // 	Cupons = [];
 // 	var Cupon = new Parse.Query('Cupon');
