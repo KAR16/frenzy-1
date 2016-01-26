@@ -45,10 +45,10 @@ angular.module('starter.controllers', ['ionic'])
     	$scope.optionGender = 'female';
     }
 	$scope.Alert = function () {
-		if ($scope.user.email == undefined ) {
-			alert("No puede estar vacio, porfavor ingrese un correo")
-		}else if($scope.user.password == undefined) {
-				alert("No puede estar vacio, porfavor ingrese una contraseña")
+			if ($scope.user.email == undefined ) {
+					sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
+			}else if($scope.user.password == undefined) {
+					sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
 			}else {
 				$scope.ValidarEmail = "none"
 				$scope.Validarpassword = "none"
@@ -87,21 +87,27 @@ angular.module('starter.controllers', ['ionic'])
                     clear: true
                 });
 								Parse.User.logOut();
-								alert("Se envio una confirmacion a tu correo electronico")
+								/* Alert for validate email */
+								swal({
+										title: "Bien Hecho!",
+										text: "Se envió una confirmación a tu correo electrónico",
+										imageUrl: "../../img/Sobre.png",
+										timer: 3000,
+										/* Button ok disable */
+										showConfirmButton: false
+								});
             },
             error: function(user, error) {
                 $ionicLoading.hide();
                 if (error.code === 125) {
-                    $scope.error.message = 'Please specify a valid email ' +
-                        'address';
-										alert("Por favor, indique una dirección de correo electrónico válida")
+                    $scope.error.message = 'Please specify a valid email ' + 'address';
+										sweetAlert('Atención','Por favor indique una dirección de correo electrónico válida');
                 } else if (error.code === 202) {
-                    $scope.error.message = 'The email address is already ' +
-                        'registered';
-										alert('La dirección de correo electrónico ya está registrado')
+                    $scope.error.message = 'The email address is already ' + 'registered';
+										sweetAlert('Vaya! parece que hay un error...','La dirección de correo electrónico ya está registrado','warning')
                 } else {
                     $scope.error.message = error.message;
-										alert(error.message)
+										console.log(error.message)
                 }
                 $scope.$apply();
             }
@@ -188,12 +194,11 @@ angular.module('starter.controllers', ['ionic'])
 					error: function(err) {
 							$ionicLoading.hide();
 							if (err.code === 125) {
-									$scope.error.message = 'Email address does not exist';
-									alert('Email address does not exist')
+									$scope.error.message = 'La dirección de correo electrónico no existe';
+									sweetAlert('Ha ocurrido un Error', 'La direccón de correo electrónico no existe', 'error');
 							} else {
-									$scope.error.message = 'An unknown error has occurred, ' +
-											'please try again';
-											alert('An unknown error has occurred,please try again');
+									$scope.error.message = 'Ha ocurrido un Error, ' + 'Por favor intentelo nuevamente';
+											sweetAlert('Ha ocurrido un Error', 'Por favor intentelo nuevamente', 'error');
 							}
 							$scope.$apply();
 					}
@@ -216,7 +221,7 @@ angular.module('starter.controllers', ['ionic'])
 							$ionicLoading.hide();
 							$rootScope.user = user;
 							$rootScope.isLoggedIn = true;
-							alert("no se ha verificado su correo")
+							sweetAlert('Atención', 'Aún no se ha confirmado su correo', 'warning');
 						}else {
 							$ionicLoading.hide();
 							$rootScope.user = user;
@@ -233,8 +238,7 @@ angular.module('starter.controllers', ['ionic'])
                 if (err.code === 101) {
                     $scope.error.message = 'Invalid login credentials';
                 } else {
-                    $scope.error.message = 'An unexpected error has ' +
-                        'occurred, please try again.';
+                    $scope.error.message = 'An unexpected error has ' + 'occurred, please try again.';
                 }
                 $scope.$apply();
             }
@@ -367,29 +371,23 @@ angular.module('starter.controllers', ['ionic'])
 //********************** Customer CONTROLLER *****************************
 .controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	$scope.UrlC = function (id) {
-		console.log("entro");
-		console.log(id);
 		var resultSetCs = $.grep(CustomerList, function (e) {
 			 return e.NameCategory.indexOf(id) == 0;
 		});
-		console.log(resultSetCs[0]);
+
 		var promotionPage = "#/app/ofertas/"
 		var couponPage="#/app/cupones/";
 
 		// Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
-	if (resultSetCs[0].promo > 0  &&  resultSetCs[0].coupon > 0) {
-		console.log("hay una promocion");
-		location.href=promotionPage+id
-	}else if (resultSetCs[0].promo > 0) {
-			location.href=promotionPage+id
-	}else if( resultSetCs[0].coupon > 0){
-		location.href=couponPage+id
-	}else {
-			location.href=promotionPage+id
-	}
-
-
-
+		if (resultSetCs[0].promo > 0  &&  resultSetCs[0].coupon > 0) {
+				location.href=promotionPage+id
+		}else if (resultSetCs[0].promo > 0) {
+				location.href=promotionPage+id
+		}else if( resultSetCs[0].coupon > 0){
+			location.href=couponPage+id
+		}else {
+				location.href=promotionPage+id
+		}
 	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
@@ -399,7 +397,6 @@ angular.module('starter.controllers', ['ionic'])
 			SaveFavorite(IdUsuario, category)
 		} else {
 			document.getElementById(parametro+" "+category).style.color = "white";
-			console.log(category);
 			DeleteFavorite(IdUsuario, category)
 		}
 	};
@@ -613,7 +610,6 @@ angular.module('starter.controllers', ['ionic'])
 	var cuponClassExchanged = new CuponClassExchanged();
 	var query = new Parse.Query("Cupon");
 	$scope.pix = Coupons.all($stateParams.CuponID);
-	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
 	$scope.countCoupon = function(id){
@@ -622,20 +618,46 @@ angular.module('starter.controllers', ['ionic'])
 		var couponCash =	query.find({
 			success: function(results){
 				if(results == false) {
-					alert("No hay cupones para canjear sorry :c	!!")
-
+					sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
+					couponFunction();
 				}
 				else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
 					cuponClassExchanged.id = id;
 					cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 					cuponClassExchanged.save();
+					couponFunction();
 
-					alert("Has cambiado tu cupon!!");
+					swal({
+							title: "Estas Seguro?",
+							text: "Quieres canjear este cupón?",
+							type: "warning",
+							showCancelButton: true,
+							cancelButtonText: 'No',
+							confirmButtonColor: "#00BAB9",
+							confirmButtonText: "Canjear!",
+							closeOnConfirm: false
+					},
+							function() {
+									swal({
+											title: "Perfecto!",
+											text: "Has cambiado tu cupón",
+											imageUrl: "../../Pulgar_Arriba.jpg",
+											timer: 2000,
+											showConfirmButton: false
+									});
+									$scope.cupons[0][0].QuantityExchanged +=1;
+									var couponPages="#/app/descripcionCupones/";
+									// IdPromotion with redirection page
+									couponPages = couponPages+id;
+									location.href=couponPages;
+							});
+
 				} else {
 					cuponClassExchanged.id = id;
 					cuponClassExchanged.set("Status", false);
 					cuponClassExchanged.save();
-					alert("No hay cupones para canjear sorry :c	!!")
+					sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
+					couponFunction();
 				}
 			}
 		})
@@ -756,18 +778,23 @@ angular.module('starter.controllers', ['ionic'])
 				var couponCash2 = query.find({
 					success: function(results){
 						if(results == false) {
-						alert("No hay cupones para canjear sorry :c	!!")
-
+							sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
 					} else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 								cuponClassExchanged.save();
-								alert("Has cambiado tu cupon!!")
+								swal({
+										title: "Perfecto!",
+										text: "Has cambiado tu cupón",
+										imageUrl: "../../Pulgar_Arriba.jpg",
+										timer: 2000,
+										showConfirmButton: false
+								});
 					} else if(parseInt(results[0].attributes.QuantityExchanged) === parseInt(results[0].attributes.QuantityCoupons)){
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("Status", false);
 								cuponClassExchanged.save();
-								alert("No hay cupones para canjear sorry :c	!!")
+								sweetAlert('Lo sentimos!', 'Ya no has cupones para canjear', 'warning');
 					}
 					}
 				})
