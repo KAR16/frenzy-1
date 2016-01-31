@@ -5,7 +5,73 @@
     text-decoration: none;
     text-align: center;
 }
+.padin{
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+.popup-buttons .button {
+  border-radius: 12px;
+  border:none;
+  border-bottom: thick solid #E6E7E8;
 
+}
+.popup-container.active .popup {
+    border-radius: 5px;
+}
+.popup-buttons{
+  width: 250px;
+  margin-left:40px;
+  background-color: white;
+}
+.colorShopName{
+  font-size: 12px;
+  color:#483D8B;
+}
+.popup-container.active .popup {
+    width: 330px;
+    height: 330px;
+    color: gray;
+    background-color: white;
+}
+.popup-head{
+  border-radius: 5px;
+  background-color: white;
+}
+.popup-title{
+    background-color: white;
+
+}
+.popup-body {
+  background-color: white;
+}
+.AgregarF{
+  font-size: 15px;
+}
+.textAlert{
+  font-weight:bold;
+}
+.coloralert{
+  color: red;
+}
+.colorRobot{
+  color: blue;
+  font-size: 70px;
+}
+.facebookButon{
+  background-color:;
+  height: 35px;
+  border-radius: 12px;
+  border:none;
+  border-bottom: thick solid #E6E7E8;
+}
+.facebookTitle{
+  font-size: 19px;
+  font-weight: bolder;
+  color: #3F51B5;
+  text-align: center;
+  padding-top: 2px;
+}
 .backButtomStyle {
     margin-left: -5px;
     padding-top: 5px;

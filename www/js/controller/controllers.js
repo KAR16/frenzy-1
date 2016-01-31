@@ -420,7 +420,7 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
@@ -435,6 +435,7 @@ angular.module('starter.controllers', ['ionic'])
 	$scope.pix = currentPromotion.get($stateParams.superId);
 //	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
+
 
 	$scope.reload = function () {
 	    var PromoSavess = new Parse.Query('PromotionSaved')
@@ -545,6 +546,49 @@ angular.module('starter.controllers', ['ionic'])
 				$scope.heartMenu = "silver";
 				DeleteFavorite(IdUsuario, id)
 			}
+		}
+
+		$scope.askPromotion = function () {
+			var Title = '<div class="row"> <div class = "col"></div>  <p class = "padin open_sans col col-75">  ¿Te gustaria recibir notificaciones de nuevas ofertas o cupones de <spam class="colorShopName">' + $stateParams.superId + "</spam>?</p>  <div class = 'col'></div>  </div>"
+			var alertPopup = $ionicPopup.alert({
+				title: '<p class = "home colorRobot">b</p> <p class="textAlert open_sans">Tu peticion por mas <br>Ofertas ha sido envida</p>',
+				template: Title,
+				buttons: [{text: '<div class="row"><div class = "col col-75 AgregarF open_sans">Agregar a Favoritos</div> <div class = "home coloralert col">B</div></div>' ,
+				onTap: function() {
+					// var confirmPopup = $ionicPopup.confirm({
+					// 	title: 'Quieres Agregarlo a tu favoritos?',
+					// 	scope: $scope,
+					// 	buttons: [
+					// 	       { text: 'Cancel' },
+					// 	       {
+					// 	         text: '<b ng-model="data">Guardar</b>',
+					// 	         type: 'button-positive',
+					// 	        //  onTap: function(e) {
+					// 					// 	 	console.log(e.type);
+					// 					// 		if (e.type == "click") {
+					// 					// 			var resultSetPopovers = $.grep(CustomerList, function (e) {
+					// 					// 				 return e.NameCategory.indexOf($stateParams.superId) == 0;
+					// 					// 			});
+					// 					// 			console.log(resultSetPopovers);
+					// 					// 			if (resultSetPopovers[0].colorHeart == "white") {
+					// 					// 					$scope.heartMenu = "red";
+					// 					// 					SaveFavorite(IdUsuario, $stateParams.superId)
+					// 					// 			}else {
+					// 					// 					DeleteFavorite(IdUsuario, $stateParams.superId)
+					// 					// 				$scope.heartMenu = "silver"
+					// 					// 			}
+					// 					// 		}
+					// 	        //  }
+					// 	       },
+					// 	     ]
+					// });
+
+					 }
+				 }]
+			});
+			alertPopup.then(function(res) {
+				console.log('Thank you for not eating my delicious ice cream cone');
+			});
 		}
 		$scope.chats = currentPromotion.get($stateParams.superId);
 		$scope.popover = currentPromotion.all($stateParams.superId);
