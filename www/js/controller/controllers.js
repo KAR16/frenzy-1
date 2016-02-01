@@ -623,67 +623,11 @@ angular.module('starter.controllers', ['ionic'])
 		var CuponClassExchanged = Parse.Object.extend("Cupon");
 		var cuponClassExchanged = new CuponClassExchanged();
 		var query = new Parse.Query("Cupon");
+
+        query.equalTo('Status', true);
+
 		$scope.pix = Coupons.all($stateParams.CuponID);
 		$scope.pixels = $scope.pix[1][0].pixels;
-
-		$scope.countCoupon = function(id){
-
-					query.equalTo("objectId",id)
-					var couponCash =	query.find({
-							success: function(results){
-									if(results == false) {
-											sweetAlert('Lo sentimos', 'No hay cupones para canjear', 'warning');
-											couponFunction()
-									}
-									else if(parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)){
-
-											swal({
-													title: "Estas Seguro?",
-													text: "Quieres canjear este cupon?",
-													type: "warning",
-													showCancelButton: true,
-													cancelButtonText: 'No',
-													confirmButtonColor: "#00BAB9",
-													confirmButtonText: "Canjear!",
-													closeOnConfirm: false
-											},
-											function(isConfirm){
-													if (isConfirm) {
-															swal({
-																title: 'Perfecto!',
-																text: 'Has cambiado tu Cupón',
-																timer: 2000,
-																showConfirmButton: false,
-																imageUrl: "../../img/Pulgar_Arriba.jpg"
-															});
-
-															couponCash.then(function(){
-																	$scope.cupons[0][0].QuantityExchanged +=1;
-																	var couponPages="#/app/descripcionCupones/";
-																	// IdPromotion with redirection page
-																	couponPages = couponPages+id;
-																	location.href=couponPages;
-															});
-
-															cuponClassExchanged.id = id;
-															cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-															cuponClassExchanged.save();
-													} else {
-															swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
-													}
-											});
-									} else {
-											cuponClassExchanged.id = id;
-											cuponClassExchanged.set("Status", false);
-											cuponClassExchanged.save();
-											sweetAlert('Lo sentimos!', 'Ya no tenemos cupones para canjear', 'warning');
-											var couponPages="#/app/playlists";
-											location.href=couponPages;
-											couponFunction()
-									}
-							}
-					})
-		}
 
 	/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
@@ -699,13 +643,96 @@ angular.module('starter.controllers', ['ionic'])
 		z = Url;
 		window.open(z);
 	}
+
+    $scope.showCouponDescription = function(id){
+
+        query.equalTo("objectId",id)
+        var couponCash =	query.find({
+            success: function(results){
+                console.log('entro a la funcion');
+                if(results[0].attributes.TypeCoupon === 'Fecha'){
+
+                    swal({
+                        title: "Estas Seguro?",
+                        text: "Quieres canjear este cupon?",
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText: 'No',
+                        confirmButtonColor: "#00BAB9",
+                        confirmButtonText: "Canjear!",
+                        closeOnConfirm: false
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal({
+                                title: 'Perfecto!',
+                                text: 'Has cambiado tu Cupón',
+                                timer: 2000,
+                                showConfirmButton: false,
+                                imageUrl: "../../img/Pulgar_Arriba.jpg"
+                            });
+
+                            cuponClassExchanged.id = id;
+                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+                            cuponClassExchanged.save();
+                            var couponPages="#/app/descripcionCupones/";
+                            location.href=couponPages+id;
+                        } else {
+                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
+                        }
+                    });
+
+                }else if(results[0].attributes.TypeCoupon === 'Cupon'){
+                    swal({
+                        title: "Estas Seguro?",
+                        text: "Quieres canjear este cupon?",
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText: 'No',
+                        confirmButtonColor: "#00BAB9",
+                        confirmButtonText: "Canjear!",
+                        closeOnConfirm: false
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            swal({
+                                title: 'Perfecto!',
+                                text: 'Has cambiado tu Cupón',
+                                timer: 2000,
+                                showConfirmButton: false,
+                                imageUrl: "../../img/Pulgar_Arriba.jpg"
+                            });
+
+                            couponCash.then(function(){
+                                $scope.cupons[0][0].QuantityExchanged +=1;
+                                var couponPages="#/app/descripcionCupones/";
+                                // IdPromotion with redirection page
+                                couponPages = couponPages+id;
+                                location.href=couponPages;
+                            });
+
+                            cuponClassExchanged.id = id;
+                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+                            cuponClassExchanged.save();
+                        } else {
+                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
+                        }
+                    });
+                }
+            }
+        })
+
+    displayNoneInline=[{none:"none",inline:"inline"}];
+    }
+
 	$scope.llenar1=function(id){
 		$scope.countCoupon(id);
-		displayNoneInline=[{none:"none",inline:"inline"}];
-  };
-  $scope.llenar2=function(){
-    displayNoneInline=[{none:"inline",inline:"none"}];
-  };
+        displayNoneInline=[{none:"none",inline:"inline"}];
+      };
+
+      $scope.llenar2=function(){
+        displayNoneInline=[{none:"inline",inline:"none"}];
+      };
 	// ************ FUNCTION CHANGE COLOR PIN CUPON *************
 	$scope.changeColorPinCupon = function (id) {
 		var cssColorCuponPin = document.getElementById(id).style.color;
@@ -757,7 +784,7 @@ angular.module('starter.controllers', ['ionic'])
  });
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
-.controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
+.controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons, $ionicLoading) {
 
 	$scope.reloadpage = function(){
 		$scope.cupons[0].QuantityExchanged +=1
@@ -786,21 +813,23 @@ angular.module('starter.controllers', ['ionic'])
 		var CuponClassExchanged = Parse.Object.extend("Cupon");
 		var cuponClassExchanged = new CuponClassExchanged();
 		var query = new Parse.Query("Cupon");
-		query.equalTo("objectId",$stateParams.DescriptionID)
-		query.equalTo("Status",true)
+		query.equalTo("objectId",$stateParams.DescriptionID);
+		query.equalTo("Status",true);
 
 		$scope.countCoupon = function(){
 				var couponCash2 = query.find({
 					success: function(results){
 
-						if(results == false){
-								sweetAlert('Lo sentimos!', 'Ya no tenemos cupones para canjear', 'warning');
-								var couponPages="#/app/playlists";
-								location.href=couponPages;
-						} else if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
-								cuponClassExchanged.id = $stateParams.DescriptionID;
+                        console.log(results[0].attributes.TypeCoupon)
+
+
+                        if(results[0].attributes.TypeCoupon === "Cupon"){
+                            // ------------------------------------------------------------------------------------------------------------------------------------------------
+                               if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
+								    cuponClassExchanged.id = $stateParams.DescriptionID;
 									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 									cuponClassExchanged.save();
+
 									swal({
 											title: "Perfecto!",
 											text: "Has cambiado tu cupón",
@@ -808,25 +837,83 @@ angular.module('starter.controllers', ['ionic'])
 											timer: 2000,
 											showConfirmButton: false
 									});
-						} else {
+                              } else {
+
+								$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
+
 								cuponClassExchanged.id = $stateParams.DescriptionID;
 								cuponClassExchanged.set("Status", false);
 								cuponClassExchanged.save();
-								// Running job Cloud Code functionalities for to update count coupon for costumer and categories
-								Parse.Cloud.run('runJobCountCouponCostumer', {}, {
-									success: function(result) {
-												Parse.Cloud.run('runJobCountCouponCategories', {});
-									},
-									error: function(error) {
-											/* Show error if call failed */
-											console.log(error);
-									}
-								});
 
-								sweetAlert('Lo sentimos!', 'Ya no tenemos cupones para canjear', 'warning');
-								var couponPages="#/app/playlists";
-								location.href=couponPages;
+								swal({
+									title: 'Lo sentimos!',
+									text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+									type: 'warning'
+								},
+								function(isConfirm) {
+										if(isConfirm){
+
+											$scope.loading = $ionicLoading.show({
+													content: 'Sending',
+													animation: 'fade-in',
+													showBackdrop: true,
+													maxWidth: 200,
+													showDelay: 0
+											});
+
+											Parse.Cloud.run('CountCouponCustomer', {}, {
+													success: function(resultCustomer) {
+														console.log(resultCustomer);
+															Parse.Cloud.run('CountCouponCategories', {}, {
+																	success:function(result) {
+
+																		CategoryListName = [];
+																		var query = new Parse.Query('AppCategory');
+																		query.each(function(results) {
+																					CategoryListName.push(results.attributes)
+																		}).then(function() {
+																			ReloadFavorite()
+																		}).then(function() {
+
+																			Parse.Cloud.run('GetCustomer', {},{
+																				success:function (results) {
+																				//	console.log(results);
+																					CustomerList = results
+																				},
+																				error:function (error) {
+																				 console.log(error);
+																				}
+																			}).then(function() {
+																				$ionicLoading.hide();
+																				var couponPages="#/app/playlists";
+																				location.href=couponPages;
+																			})
+																		});
+
+																	},
+																	error: function(error) {
+																			/* Show error if call failed */
+																			console.log(error);
+																	}
+															});
+													},
+													error: function(error) {
+													/* Show error if call failed */
+													console.log(error);
+													}
+											});
+
+										}
+								})
 						}
+                        // ------------------------------------------------------------------------------------------------------------------------------------------------
+                    } else if(results[0].attributes.TypeCoupon === "Fecha"){
+                            console.log('tiene que sumar')
+                                    cuponClassExchanged.id = $stateParams.DescriptionID;
+									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+									cuponClassExchanged.save();
+                    }
+
 					}
 				})
 
