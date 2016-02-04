@@ -384,9 +384,16 @@ angular.module('starter.controllers', ['ionic'])
 
 })
 .controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
+	var Direc = [{name:"Supermercado",name2:"supermarketMenu"},{name:"Restaurantes",name2:"restaurantMenu"},{name:"Otros",name2:"otherMenu"},{name:"Electrónicos",name2:"entertainmentMenu"},{name:"Moda",name2:"fashionMenu"},{name:"Entretenimiento",name2:"entertainmentMenu"}]
+	var DirecParse = $.grep(Direc, function (e) {
+		 return e.name.indexOf($stateParams.IDcustomer) == 0;
+	});
+	console.log(DirecParse[0].name2);
 	var dimensions = {
-		name: 'supermarketMenu'
+		name: DirecParse[0].name2
 	};
+
+		Parse.Analytics.track("view", dimensions);
 	// Loading scope
 	$scope.AppCategory = $stateParams.IDcustomer
 	$scope.loading = $ionicLoading.show({
@@ -406,7 +413,7 @@ angular.module('starter.controllers', ['ionic'])
 			DeleteFavorite(IdUsuario, category)
 		}
 	};
-	Parse.Analytics.track("view", dimensions);
+
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
   $scope.$on('$ionicView.enter', function() {
   		setTimeout(function() {
