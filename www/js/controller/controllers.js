@@ -1207,22 +1207,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','Z','','none']);
 	});
 }])
-
+/**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
     $scope.currentUser = Parse.User.current();
     if ($scope.currentUser == null ){
     }else{
         IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-	// 			Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-	// 				success:function (results) {
-	// 					console.log(results);
-	// CustomerList = results
-	// 				},
-	// 				error:function (error) {
-	// 				 console.log(error);
-	// 				}
-	// 			});
         viewPromotion()
         $state.go('app.playlists');
     }
@@ -1232,43 +1223,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     //Browser Login
     if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
 
-				Parse.FacebookUtils.logIn('email,user_friends', {
-						success: function(user) {
-							IdUsuario = user.changed.authData.facebook.id
-								if (!user.existed()) {
+      Parse.FacebookUtils.logIn(null, {
+        success: function(user) {
+          IdUsuario = user.changed.authData.facebook.id
+          viewPromotion()
+          if (!user.existed()) {
+						FB.api('me?fields=id,name,birthday,hometown,gender', function(me) {
 
-										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
-												user.set("email", me.email);
-												user.set('name', me.name);
-												user.set('gender', me.gender);
-												user.set('birthday', me.birthday);
-												user.set('hometown', me.hometown)
-												user.save();
-										});
-								} else {
-										console.log("Logged");
-								}
-								$state.go('app.playlists');
-						},
-						error: function(user, error) {
-								console.log(error);
-						}
-				});
+													 user.set("email", me.email);
+																					 user.set('name', me.name);
+																					 user.set('gender', me.gender);
+																					 user.set('birthday', me.birthday);
+																					 user.set('hometown', me.hometown)
+													 user.save();
+											 });
+          } else {
+          }
+          $state.go('app.playlists');
+        },
+        error: function(user, error) {
+        }
+      });
     }
     //Native Login
     else {
       $cordovaFacebook.login(permissions).then(function(success){
         //alert(success);
         IdUsuario = success.authResponse.userID
-	// 			Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-	// 				success:function (results) {
-	// 					console.log(results);
-	// CustomerList = results
-	// 				},
-	// 				error:function (error) {
-	// 				 console.log(error);
-	// 				}
-	// 			});
         viewPromotion()
         //Need to convert expiresIn format from FB to date
         var expiration_date = new Date();
@@ -1281,27 +1262,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           "expiration_date": expiration_date
         };
 
-				Parse.FacebookUtils.logIn('email,user_friends', {
-						success: function(user) {
-								if (!user.existed()) {
+        Parse.FacebookUtils.logIn(facebookAuthData, {
+          success: function(user) {
+            //alert(JSON.stringify(user));
+            if (!user.existed()) {
+							FB.api('me?fields=id,name,birthday,hometown,gender', function(me) {
 
-										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
-												user.set("email", me.email);
-												user.set('name', me.name);
-												user.set('gender', me.gender);
-												user.set('birthday', me.birthday);
-												user.set('hometown', me.hometown)
-												user.save();
-										});
-								} else {
-										console.log("Logged");
-								}
-								$state.go('app.playlists');
-						},
-						error: function(user, error) {
-								console.log(error);
-						}
-				});
+													 user.set("email", me.email);
+																					 user.set('name', me.name);
+																					 user.set('gender', me.gender);
+																					 user.set('birthday', me.birthday);
+																					 user.set('hometown', me.hometown)
+													 user.save();
+											 });
+            } else {
+            }
+             $state.go('app.playlists');
+          },
+          error: function(user, error) {
+            alert(JSON.stringify(error));
+          }
+        });
       }, function(error){
         console.log(error);
       });

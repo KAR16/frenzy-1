@@ -10,6 +10,9 @@
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "com.frenzy"
         },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.frenzy"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.frenzy"
         },
@@ -41,6 +44,11 @@
             "PACKAGE_NAME": "com.frenzy"
         },
         "org.apache.cordova.vibration": {
+            "PACKAGE_NAME": "com.frenzy"
+        },
+        "phonegap-facebook-plugin": {
+            "APP_ID": "426922250825103",
+            "APP_NAME": "frenzy",
             "PACKAGE_NAME": "com.frenzy"
         }
     },
