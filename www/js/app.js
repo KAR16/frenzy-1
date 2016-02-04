@@ -16,12 +16,23 @@ function MostrarOcultar(capa,enlace){
 document.addEventListener("backbutton", onBackKeyDown, false);
 	function onBackKeyDown() {
 		if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
-			if (confirm("Desea salir de frenzy!") == true) {
-				navigator.app.exitApp();
-	    }
-			else{
-				$state.go('app.playlists');
-			}
+			swal({
+					title: "Salir",
+					text: "¿Deseas salir?",
+					type: "warning",
+					showCancelButton: true,
+					cancelButtonText: 'No',
+					confirmButtonColor: "#00BAB9",
+					confirmButtonText: "Salir",
+					closeOnConfirm: false
+			},
+			function(isConfirm) {
+					if(isConfirm){
+							navigator.app.exitApp();
+					}else {
+							$state.go('app.playlists');
+					}
+			})
 		}
 	}
 //**************************************************************************************************
