@@ -73,6 +73,10 @@ app.factory('CustomerAll', function() {
 			if (AllCustomer.length == 0) {
 				AllCustomer.push({oferta:"noHay"});
 			}
+			for (g in AllCustomer) {
+				AllCustomer[g]["suma"] = AllCustomer[g]["promo"] +  AllCustomer[g]["coupon"]
+			}
+			console.log(AllCustomer);
 			return AllCustomer;
 		},
 		get: function(chatId) {
@@ -346,6 +350,7 @@ app.factory('AllFavorite', function() {
 				AllFavorite.push({oferta:"noHay"});
 			}
 			favorites = AllFavorite;
+			console.log(favorites);
 			return favorites;
 		},
 		get: function() {
@@ -390,6 +395,7 @@ app.factory('OurFavorites', function() {
 						success: function(results) {
 							for (i in AllourFavorites) {
 								AllourFavorites[i]["logo"] = results[0].attributes.Logo._url;
+								AllourFavorites[i]["oferta"] = "siHay"
 							}
 							cust.then(function(){});
 						},
@@ -401,6 +407,10 @@ app.factory('OurFavorites', function() {
 				}
 			}
 			var OurFavorites = AllourFavorites
+			if (OurFavorites.length == 0) {
+				OurFavorites.push({oferta : 'noHay'})
+			}
+			console.log(OurFavorites);
 			return OurFavorites
 		},get: function(){}
 	};
@@ -492,45 +502,46 @@ var favorite = new Parse.Query('Favorite');
 var PromoSave = new Parse.Query('PromotionSaved')
 
 
-// ************* CALL DATA PARSE *************
-//query limit hace la llamada de mas elementos
-Parse.Cloud.run('GetCouponsApp', {},{
-	success:function (results) {
-		console.log("copunes");
-	//	console.log(results);
-		Cupons = results
-		console.log(Cupons);
-	},
-	error:function (error) {
-	 console.log(error);
-	}
-}).then(function(){
-		var PromoSavess = new Parse.Query('PromotionSaved')
-
-		PromoSavess.equalTo("UserID", IdUsuario);
-		PromoSavess.find({
-			success: function(results) {
-				for (a in results[0].attributes.CuponID){
-					for (b in Cupons){
-						if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
-							if (Cupons[b].ColorPinCupon === "silver") {
-								Cupons[b].ColorPinCupon  = "purple";
-							}
-						}
-					}
+function couponFunction() {
+			// ************* CALL DATA PARSE *************
+			//query limit hace la llamada de mas elementos
+			Parse.Cloud.run('GetCouponsApp', {},{
+				success:function (results) {
+					console.log("copunes");
+				//	console.log(results);
+					Cupons = results
+					console.log(Cupons);
+				},
+				error:function (error) {
+				 console.log(error);
 				}
+			}).then(function(){
+					var PromoSavess = new Parse.Query('PromotionSaved')
 
-			},
-			error: function(myObject, error) {
-				// Error occureds
-				console.log( error );
-			}
-		});
+					PromoSavess.equalTo("UserID", IdUsuario);
+					PromoSavess.find({
+						success: function(results) {
+							for (a in results[0].attributes.CuponID){
+								for (b in Cupons){
+									if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
+										if (Cupons[b].ColorPinCupon === "silver") {
+											Cupons[b].ColorPinCupon  = "purple";
+										}
+									}
+								}
+							}
 
-	});
+						},
+						error: function(myObject, error) {
+							// Error occureds
+							console.log( error );
+						}
+					});
 
+				});
+}
 
-
+couponFunction();
 // function couponFunction() {
 // 	Cupons = [];
 // 	var Cupon = new Parse.Query('Cupon');
@@ -838,7 +849,29 @@ function viewFavorite() {
 				}
 			}
 		}
+	}).then(function () {
+		var PromoSavess = new Parse.Query('PromotionSaved')
+		PromoSavess.equalTo("UserID", IdUsuario);
+		PromoSavess.find({
+		success: function(results) {
+			for (a in results[0].attributes.PromotionID){
+				for (b in AllFavorite){
+					if (results[0].attributes.PromotionID[a] === AllFavorite[b].IDpromotion){
+						if (AllFavorite[b].ColorPin === "silver") {
+							AllFavorite[b].ColorPin  = "purple";
+						}
+					}else {
+						AllFavorite[b].ColorPin  = "silver";
+					}
+				}
+			}
+		},
+		error: function(myObject, error) {
+			// Error occureds
+			console.log( error );
+		}
 	});
+	})
 }
 // *************** VIEW PROMOTION FUNCTION ***************
 function viewPromotion(){
@@ -853,7 +886,7 @@ function viewPromotion(){
 			for (var i = 0; i < results[0].attributes.PromotionID.length; i++){
 				for(x in CurrentPromotion) {
 					if (results[0].attributes.PromotionID[i] === CurrentPromotion[x].IDpromotion) {
-
+						console.log(CurrentPromotion[x].IDpromotion);
 						AllPromotion.push(CurrentPromotion[x]);
 						// AllPromotion[con]["PromotionId"] = promociones[x].id;
 						// AllPromotion[con]["oferta"] = "existe";

@@ -56,13 +56,13 @@ var ListPromotion;
 Parse.Cloud.run('GetPromotionsApp', {},{
 	success:function (results) {
 		console.log("promociones");
-	//	console.log(results);
+		console.log(results);
 		CurrentPromotion = results
 	},
 	error:function (error) {
 	 console.log(error);
 	}
-});
+})
 
 /***********************************************************/
 /**********  PAGE_START EXIT APP FUNCTION  *****************/
