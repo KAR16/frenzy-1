@@ -536,7 +536,7 @@ angular.module('starter.controllers', ['ionic'])
 		});
 	}
 
-	Parse.Analytics.track("view", dimensions);
+
 	$scope.$on('$ionicView.enter', function() {
 
 		$scope.Promotions($stateParams.superId);
@@ -556,12 +556,21 @@ angular.module('starter.controllers', ['ionic'])
 		}
 
 		$scope.askPromotion = function () {
+			console.log("se pedio mas promociones");
+			var NamePromo = $stateParams.superId
+			var NameUser = String(IdUsuario)
+			var Dimensions = {
+				name: 'peticionPromo_'+NamePromo,
+				user: NameUser
+			};
 			var Title = '<div class="row"> <div class = "col"></div>  <p class = "padin open_sans col col-75">  ¿Te gustaria recibir notificaciones de nuevas ofertas o cupones de <spam class="colorShopName">' + $stateParams.superId + "</spam>?</p>  <div class = 'col'></div>  </div>"
 			var alertPopup = $ionicPopup.alert({
 				title: '<p class = "home colorRobot">b</p> <p class="textAlert open_sans">Tu peticion por mas <br>Ofertas ha sido envida</p>',
 				template: Title,
 				buttons: [{text: '<div class="row"><div class = "col col-75 AgregarF open_sans">Agregar a Favoritos</div> <div class = "home coloralert col">B</div></div>' ,
 				onTap: function() {
+
+					Parse.Analytics.track("petition", Dimensions);
 					// var confirmPopup = $ionicPopup.confirm({
 					// 	title: 'Quieres Agregarlo a tu favoritos?',
 					// 	scope: $scope,
