@@ -3,7 +3,7 @@
 <div class="categoriesBoxes {{info.Category}} col col-100">
     <!--*****  LINK ONLY FOR THE IMAGE   href="#/app/ofertas/{{info.NameCategory}}"*****-->
     <div  ng-controller = "changeColorHeartCtrl" id = "{{info.NameCategory}}">
-    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="image" ng-click = "UrlC('{{info.NameCategory}}')" >
+    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="image" ng-click = 'UrlC("{{info.NameCategory}}")'>
   </div>
     <div class="row">
         <!--*****  GREEN BOX FOR PROMOTIONS AND OFFERTS  *****-->

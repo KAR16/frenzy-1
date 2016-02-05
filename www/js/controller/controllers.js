@@ -352,6 +352,7 @@ angular.module('starter.controllers', ['ionic'])
 //********************** Customer CONTROLLER *****************************
 .controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	$scope.UrlC = function (id) {
+		console.log(id);
 		var resultSetCs = $.grep(CustomerList, function (e) {
 			 return e.NameCategory.indexOf(id) == 0;
 		});
