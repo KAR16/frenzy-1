@@ -28,8 +28,10 @@ document.addEventListener("backbutton", onBackKeyDown, false);
 			},
 			function(isConfirm) {
 					if(isConfirm){
+							console.log('Salio');
 							navigator.app.exitApp();
 					}else {
+							console.log(Quedarse);
 							$state.go('app.playlists');
 					}
 			})

@@ -77,15 +77,15 @@
               <div  ng-repeat="s in ourFavorites | filter: {oferta : 'siHay'}">
                 <!--**********  SLIDER BOXES  **********-->
                 <div class="nuevoDivContenedor" >
-                    <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+                    <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label"  style="display:{{s.display}};">
                     <!--*****  PRICE LABEL OFFERTS  *****-->
-                    <div class="row pageFavoritesBoxPriceLabel">
+                    <div class="row pageFavoritesBoxPriceLabel" style="">
                         <div class="col col-25">
                             <p class="pageFavoritesSavingTitle">
-                                Ahorra
+                              {{s.textDiscount}}
                             </p>
                             <p class="pageFavoritesSavingPrice" style="margin-top:-10px;">
-                                Q{{s.ahorro}}
+                                {{s.ahorro}}
                             </p>
                         </div>
                     </div>
@@ -125,15 +125,15 @@
                     <!--*****  DIV TO PRICE AND ICONS  *****-->
                     <div class="row pageFavoritesDivIcons open_sans" style="height:38px; background-color:;" >
                         <!--*****  ACTUAL PRICE  *****-->
-                        <div class="col col-33">
-                            <spam class="pageFavoritesActualPrice">
-                                Q{{s.promotionalPrice}}
+                        <div class="col col-33" >
+                            <spam class="pageFavoritesActualPrice"  style="font-size:{{s.fontSize}}">
+                                {{s.promotionalPrice}}
                             </spam>
                         </div>
                         <!--*****   BEFORE PRICE  *****-->
                         <div class="col col-33">
                             <spam class="pageFavoritesActualPrice" style="color:silver;font-size:17px;">
-                                Q{{s.basePrice}}
+                                {{s.basePrice}}
                             </spam>
                         </div>
                         <!--*****  ICONS  *****-->
