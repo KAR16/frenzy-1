@@ -264,14 +264,21 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
-.controller('OurfavoritesCtrl', function($scope, OurFavorites) {
+.controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
 	var dimensions = {
 		name: 'frenzyFavorites',
 	};
+	$scope.loading = $ionicLoading.show({
+			noBackdrop: true,
+			template: '<ion-spinner customer1lass="spinner" icon="lines" class = "LoadingSupermercado"></ion-spinner>'
+	});
+
 	Parse.Analytics.track("view", dimensions);
-	$scope.ourFavorites = OurFavorites.all();
+
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
+			$scope.ourFavorites = OurFavorites.all();
+				$ionicLoading.hide();
         colorIconsFoother = []
       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
     });
@@ -1287,7 +1294,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
-
+	var NameUser = String(IdUsuario)
+	var Dimensions = {
+	  name: 'tools',
+	  user: NameUser
+	};
+	Parse.Analytics.track("Tools", Dimensions);
 	$scope.logout = function() {
 		Parse.User.logOut();
 		$state.go('login');
