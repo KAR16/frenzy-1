@@ -373,12 +373,22 @@ angular.module('starter.controllers', ['ionic'])
 	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
+		console.log(category);
+		var NamePromo = category
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+			name: 'Heart_'+NamePromo,
+			user: NameUser
+		};
+
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
 		if (cssColor == "white") {
 			document.getElementById(parametro+" "+category).style.color = "red";
 			SaveFavorite(IdUsuario, category)
+				Parse.Analytics.track("AddHeart", Dimensions);
 		} else {
 			document.getElementById(parametro+" "+category).style.color = "white";
+				Parse.Analytics.track("DelHeart", Dimensions);
 			DeleteFavorite(IdUsuario, category)
 		}
 	};
@@ -470,7 +480,14 @@ angular.module('starter.controllers', ['ionic'])
 	}
 
 	// ************ FUNCTION CHANGE COLOR PIN OFFERTS ************
-	$scope.changeColorPinOfferts = function (id, IDPromotion) {
+	$scope.changeColorPinOfferts = function (id, IDPromotion,Namepromotion) {
+		var NamePromo = Namepromotion
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'PromotionPin_'+NamePromo,
+		  user: NameUser
+		};
+		Parse.Analytics.track("pin", Dimensions);
 		var cssColorpinOfferts = document.getElementById(id+" "+IDPromotion).style.color;
 
 		if (cssColorpinOfferts == "silver") {
@@ -501,15 +518,35 @@ angular.module('starter.controllers', ['ionic'])
 		}
 	};
 	// *************** CALL PHONE FUNCTION ***************
-	$scope.call= function(cell){
+	$scope.call= function(cell,name){
+		var Dimensions = {
+			name: 'Promotion_call'+name,
+			user: NameUser
+		};
+		alert("call 1");
+		Parse.Analytics.track("CallsPromotion", Dimensions);
 		a = cell.toString();
 		b = 'tel:'
 		window.open(b+a);
 	}
 	// *************** URL BROWSER SHOP FUNCTION ***************
-	$scope.shopUrl = function(Url){
-		z = Url;
-		window.open(z);
+	$scope.shopUrl = function(Url,id,name){
+		var NamePromo = name.split(" ").join("_")
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'Promotion_'+NamePromo+"_"+id,
+		  user: NameUser
+		};
+		if (id == "web") {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("WebShopPromotion", Dimensions);
+		}else {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("cartShopPromotion", Dimensions);
+		}
+
 	}
 	// *************** PROMOTIONS FUNCTION ***************
 	$scope.Promotions =function (id){
@@ -546,11 +583,20 @@ angular.module('starter.controllers', ['ionic'])
 		idRoute = currentPromotion.get($stateParams.superId);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
+		var NamePromo = $stateParams.superId
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'HeartPopover_'+NamePromo,
+		  user: NameUser
+		};
 		$scope.changeColorHeartFollow = function(id) {
+
 			if ($scope.heartMenu == "silver") {
+				Parse.Analytics.track("AddHeartPopover", Dimensions);
 				$scope.heartMenu = "red";
 				SaveFavorite(IdUsuario, id)
 			} else {
+				Parse.Analytics.track("DelHeartPopover", Dimensions);
 				$scope.heartMenu = "silver";
 				DeleteFavorite(IdUsuario, id)
 			}
@@ -651,14 +697,30 @@ angular.module('starter.controllers', ['ionic'])
 						or hide it  ****/
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
+		alert("call 2")
 		a = cell.toString();
 		b = 'tel:'
 		window.open(b+a);
 	}
 	// *************** URL BROWSER SHOP FUNCTION ***************
-	$scope.shopUrl = function(Url){
-		z = Url;
-		window.open(z);
+	$scope.shopUrl = function(Url,id,name){
+		var NamePromo = name.split(" ").join("_")
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'Coupons_'+NamePromo+"_"+id,
+		  user: NameUser
+		};
+
+		if (id == "web") {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("WebShopCoupon", Dimensions);
+		}else {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("cartShopCoupon", Dimensions);
+		}
+
 	}
 
     $scope.showCouponDescription = function(id){
@@ -751,7 +813,14 @@ angular.module('starter.controllers', ['ionic'])
         displayNoneInline=[{none:"inline",inline:"none"}];
       };
 	// ************ FUNCTION CHANGE COLOR PIN CUPON *************
-	$scope.changeColorPinCupon = function (id) {
+	$scope.changeColorPinCupon = function (id,NameCoupon) {
+		var NamePromo = NameCoupon
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+			name: 'CouponPin_'+NamePromo,
+			user: NameUser
+		};
+		Parse.Analytics.track("pin", Dimensions);
 		var cssColorCuponPin = document.getElementById(id).style.color;
 		if (cssColorCuponPin == "silver") {
 			document.getElementById(id).style.color = "purple";
@@ -976,6 +1045,19 @@ angular.module('starter.controllers', ['ionic'])
 
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
+$scope.Analytics = function (id,nameShare) {
+	var NameUser = String(IdUsuario)
+	var Dimensions = {
+	  name: 'share_'+id,
+	  user: NameUser
+	};
+	if (nameShare == "promotion") {
+		Parse.Analytics.track("SharePromotion", Dimensions);
+	}else {
+		Parse.Analytics.track("ShareCoupon", Dimensions);
+	}
+
+}
 	$ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
 		scope: $scope,
 	}).then(function(popover) {

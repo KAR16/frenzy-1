@@ -80,7 +80,7 @@ hr     {
 			  	 	<div style=" height:40%; background-color:;">
 					   	<div style="height:30%;">
 						  	<p class="pageFavoritesDescriptionTitle open_sans">
-						  		{{cupon.Presentation }}
+						  		{{cupon.Presentation}}
 							</p>
 					   	</div>
 						<!--**********  DESCRIPTION  **********-->
@@ -116,7 +116,7 @@ hr     {
 					<!--*****  ICONS  *****-->
 					<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
 						<!-- Url Shop online Icon -->
-						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}')" style="display:{{cupon.Display}};font-size:23px;">
+						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}};font-size:23px;">
 								j
 						</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
@@ -155,7 +155,7 @@ hr     {
 						<!--*****  DESCRIPTION BOX WITHOUT IMAGE  *****-->
 						<div class="col col-75">
 							<p class="open_sans pageOffertsTitleDescriptionWithoutImage overFlowText">
-								{{cupon.Presentation }}
+								{{cupon.Presentation}}
 							</p>
 							<!--*****  OFFERTS DESCRIPTION  *****-->
 							<div class="ellipsifyThreeLines" style="background-color:; height:px; margin-left:10px;">
@@ -190,14 +190,14 @@ hr     {
 				<!--*****  ICONS  *****-->
 				<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
 					<!-- Url Shop online Icon -->
-					<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}')" style="display:{{cupon.Display}};font-size:23px;">
+					<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}};font-size:23px;">
 							j
 					</spam>
 						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
 								O
 						</spam>
 						<!-- Pin Icon -->
-						<spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}};font-size:23px;">
+						<spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}','{{cupon.Presentation}}')" style="color:{{cupon.ColorPinCupon}};font-size:23px;">
 						 W
 					 </spam>
 				</div>
@@ -287,7 +287,7 @@ hr     {
 							  {{s.callIcon}}
 							</spam>
 						</a>
-						<a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}')" target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
+						<a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}','web','{{s.name}}')" target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
 							  {{s.webUrl}}
 							<spam class="home pageOffertsPopoverIconsDescrpition">
 							{{s.webUrlIcon}}
@@ -307,11 +307,11 @@ hr     {
 					</div>
 					<hr class="secondPopoverHr">
 					<div>
-						<div>
+						<div ng-click= "Analytics('facebook','coupon')">
 							<img  class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
 							<a class="secondPopoverFacebookTitle" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank');" style="text-decoration:none;">Amigos de facebook</a>
 						</div>
-					  <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');">
+					  <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');" ng-click= "Analytics('message','coupon')">
 							<p class="home secondPopoverMailIcon">
 								V
 							</p>
