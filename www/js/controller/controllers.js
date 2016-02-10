@@ -302,8 +302,10 @@ angular.module('starter.controllers', ['ionic'])
 })
 // *************************** SAVED CONTROLLER ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
+	var NameUser = String(IdUsuario)
 	var dimensions = {
-		name: 'allPromotions',
+		name: 'Salvados',
+		user: NameUser
 	};
 	Parse.Analytics.track("view", dimensions);
 
@@ -1300,6 +1302,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	  user: NameUser
 	};
 	Parse.Analytics.track("Tools", Dimensions);
+	$scope.AnalyticsTools= function (id) {
+		var NameUser = String(IdUsuario)
+		var dimensions = {
+			name: 'tools_'+id,
+			user: NameUser
+		};
+		Parse.Analytics.track("Tools", dimensions);
+		alert("entro para mandar un analytics")
+	}
 	$scope.logout = function() {
 		Parse.User.logOut();
 		$state.go('login');
