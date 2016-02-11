@@ -13,37 +13,36 @@ function MostrarOcultar(capa,enlace){
 		aux.display = aux.display? "":"block";
 	}
 }
-/**********  PAGE_START EXIT APP FUNCTION  *****************/
-document.addEventListener("backbutton", onBackKeyDown, false);
-//
-function onBackKeyDown() {
-// 	if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
-// 		//
-// 		// swal({
-// 		// 	title: 'Salir',
-// 		// 	text: 'Deseas salir?',
-// 		// 	type: 'warning',
-// 		// 	showConfirmButton: true,
-// 		// 	confirmButtonText: 'Salir',
-// 		// 	showCancelButton: true,
-// 		// 	cancelButtonText: 'No'
-// 		// },
-// 		// function(isConfirm) {
-// 		// 		if(isConfirm){
-// 		// 				navigator.app.exitApp();
-// 		// 		} else {
-// 		// 				swal.close();
-// 		// 		}
-// 		// })
-//
+// /**********  PAGE_START EXIT APP FUNCTION  *****************/
+// document.addEventListener("backbutton", onBackKeyDown, false);
+// //
+// function onBackKeyDown() {
+// // 	if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
+// // 		//
+// // 		// swal({
+// // 		// 	title: 'Salir',
+// // 		// 	text: 'Deseas salir?',
+// // 		// 	type: 'warning',
+// // 		// 	showConfirmButton: true,
+// // 		// 	confirmButtonText: 'Salir',
+// // 		// 	showCancelButton: true,
+// // 		// 	cancelButtonText: 'No'
+// // 		// },
+// // 		// function(isConfirm) {
+// // 		// 		if(isConfirm){
+// // 		// 				navigator.app.exitApp();
+// // 		// 		} else {
+// // 		// 				swal.close();
+// // 		// 		}
+// // 		// })
+// //
 // 		if (confirm("Desea salir de frenzy!") == true) {
 // 			navigator.app.exitApp();
 // 		}
 // 		else{
 // 			console.log("salir");
 // 		}
-// 	}
-}
+// }
 //*********** DEVICE READY SPLASHSCREEN  *******************
 document.addEventListener("deviceready", function($scope) {
 	 if (userVerificate==null) {

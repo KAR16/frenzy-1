@@ -1091,21 +1091,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 // ************************ CORDOVA PLUGINS START LOAD ************************
 .run(function($ionicPlatform) {
 
-	$ionicPlatform.ready(function() {
-		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-		}
-		if (window.StatusBar) {
-			StatusBar.styleLightContent();
-		}
+		$ionicPlatform.ready(function() {
+			if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			}
+			if (window.StatusBar) {
+				StatusBar.styleLightContent();
+			}
+		});
 
-		if ($state.current.name == "app.playlists") {
-		navigator.app.exitApp();
-		} else {
-		window.history.back();
+		$ionicPlatform.registerBackButtonAction(function(event) {
+		if ($state.current.name == 'app.playlists') { // your check here
+		$ionicPopup.confirm({
+		title: 'System warning',
+		template: 'are you sure you want to exit?'
+		}).then(function(res) {
+		if (res) {
+		ionic.Platform.exitApp();
 		}
-
-	});
+		})
+		}
+		}, 100);
 
 })
 // ************************ ROUTER PROVIDER CONFIGURATION ************************
@@ -1298,7 +1304,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
   $scope.slideChanged = function(index) {
     switch(index) {
-        case 3:
+        case 0:
           $state.go('app.herramientas');
           break;
       }
@@ -1336,8 +1342,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
-	var timeDelayLogin;
-
    $scope.currentUser = Parse.User.current();
 
    if ($scope.currentUser == null ){
@@ -1372,7 +1376,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
    //===============LOGIN WITH FB==========//
    $scope.loginfb = function(){
-
 		 					  setTimeout(function(){
 
 																	if(!window.cordova){
@@ -1383,7 +1386,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 																	fbLogged.then(function(authData) {
 																			$state.go('app.playlists');
-																					return Parse.FacebookUtils.logIn(authData);
+																			return Parse.FacebookUtils.logIn(authData);
 																	})
 
 																	.then(function(userObject) {
