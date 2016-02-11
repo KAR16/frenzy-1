@@ -131,8 +131,6 @@
     background-color: #9C28B0;
     height: 200px;
     width: 100%;
-    margin-top: -27px;
-    margin-bottom: -5px;
 }
 
 .pageStartBoxPurpleIcon {
@@ -159,3 +157,10 @@
 .pageStartIconCategories {
     margin-top:-30px;
 }
+
+.newTriangle{
+ height: 9px;
+ margin-bottom: -11px;
+}
+.newTriangle2{
+ height: 8px;}
