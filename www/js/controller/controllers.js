@@ -230,6 +230,7 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
+
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
@@ -1089,6 +1090,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 })
 // ************************ CORDOVA PLUGINS START LOAD ************************
 .run(function($ionicPlatform) {
+
 	$ionicPlatform.ready(function() {
 		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
 			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -1096,7 +1098,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		if (window.StatusBar) {
 			StatusBar.styleLightContent();
 		}
+
+		if ($state.current.name == "app.playlists") {
+		navigator.app.exitApp();
+		} else {
+		window.history.back();
+		}
+
 	});
+
 })
 // ************************ ROUTER PROVIDER CONFIGURATION ************************
 .config(function($stateProvider, $urlRouterProvider) {
@@ -1240,7 +1250,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/splash');
+	//$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -1250,6 +1260,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  SPLASH  ******************************/
 .controller('splashController', ['$scope', '$state', function($scope, $state) {
+
+}])
+/*************************  TUTORIAL  ******************************/
+.controller('tutorialController', ['$scope', '$state', function($scope, $state) {
 	Parse.Cloud.run('GetCustomer', {},{
 		success:function (results) {
 		//	console.log(results);
@@ -1261,7 +1275,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	});
 	$scope.currentUser = Parse.User.current();
 	if ($scope.currentUser == null ){
-		$state.go('tutorial')
+		//$state.go('tutorial')
 			} else {
 				if ($scope.currentUser["attributes"].authData == undefined) {
 					IdUsuario = String($scope.currentUser.id)
@@ -1270,12 +1284,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
 							viewPromotion()
 				}
-				$state.go('app.playlists');
+				//$state.go('app.playlists');
 			}
-}])
-/*************************  TUTORIAL  ******************************/
-.controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-  $scope.slideChanged = function(index) {
+	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
           $state.go('login2');
@@ -1309,7 +1320,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			user: NameUser
 		};
 		Parse.Analytics.track("Tools", dimensions);
-		alert("entro para mandar un analytics")
 	}
 	$scope.logout = function() {
 		Parse.User.logOut();
@@ -1323,85 +1333,75 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	});
 }])
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
+
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
-    $scope.currentUser = Parse.User.current();
-    if ($scope.currentUser == null ){
-    }else{
-        IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-        viewPromotion()
-        $state.go('app.playlists');
-    }
-    //===============LOGIN WITH FB==========//
-    $scope.loginfb = function(){
-  	var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
-    //Browser Login
-    if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
+	var timeDelayLogin;
 
-      Parse.FacebookUtils.logIn(null, {
-        success: function(user) {
-          IdUsuario = user.changed.authData.facebook.id
-          viewPromotion()
-          if (!user.existed()) {
-						FB.api('me?fields=id,name,birthday,hometown,gender', function(me) {
+   $scope.currentUser = Parse.User.current();
 
-													 user.set("email", me.email);
-																					 user.set('name', me.name);
-																					 user.set('gender', me.gender);
-																					 user.set('birthday', me.birthday);
-																					 user.set('hometown', me.hometown)
-													 user.save();
-											 });
-          } else {
-          }
-          $state.go('app.playlists');
-        },
-        error: function(user, error) {
-        }
-      });
-    }
-    //Native Login
-    else {
-      $cordovaFacebook.login(permissions).then(function(success){
-        //alert(success);
-        IdUsuario = success.authResponse.userID
-        viewPromotion()
-        //Need to convert expiresIn format from FB to date
-        var expiration_date = new Date();
-        expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
-        expiration_date = expiration_date.toISOString();
+   if ($scope.currentUser == null ){
+   }else{
+       IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+       viewPromotion()
+       $state.go('app.playlists');
+   }
 
-        var facebookAuthData = {
-          "id": success.authResponse.userID,
-          "access_token": success.authResponse.accessToken,
-          "expiration_date": expiration_date
-        };
+        var fbLogged = new Parse.Promise();
 
-        Parse.FacebookUtils.logIn(facebookAuthData, {
-          success: function(user) {
-            //alert(JSON.stringify(user));
-            if (!user.existed()) {
-							FB.api('me?fields=id,name,birthday,hometown,gender', function(me) {
+   var fbLoginSuccess = function(response) {
+       if (!response.authResponse){
+           fbLoginError("Cannot find the authResponse");
+           return;
+       }
+       var expDate = new Date(
+           new Date().getTime() + response.authResponse.expiresIn * 1000
+       ).toISOString();
 
-													 user.set("email", me.email);
-																					 user.set('name', me.name);
-																					 user.set('gender', me.gender);
-																					 user.set('birthday', me.birthday);
-																					 user.set('hometown', me.hometown)
-													 user.save();
-											 });
-            } else {
-            }
-             $state.go('app.playlists');
-          },
-          error: function(user, error) {
-            alert(JSON.stringify(error));
-          }
-        });
-      }, function(error){
-        console.log(error);
-      });
-    }
-  };
-    // //===============/LOGIN WITH FB==========//
+       var authData = {
+           id: String(response.authResponse.userID),
+           access_token: response.authResponse.accessToken,
+           expiration_date: expDate
+       }
+       fbLogged.resolve(authData);
+   };
+
+   var fbLoginError = function(error){
+       fbLogged.reject(error);
+   };
+
+   //===============LOGIN WITH FB==========//
+   $scope.loginfb = function(){
+
+		 					  setTimeout(function(){
+
+																	if(!window.cordova){
+																					facebookConnectPlugin.browserInit('426922250825103');
+																	}
+
+																	facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
+
+																	fbLogged.then(function(authData) {
+																			$state.go('app.playlists');
+																					return Parse.FacebookUtils.logIn(authData);
+																	})
+
+																	.then(function(userObject) {
+																					var authData = userObject.get('authData');
+																					facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender', null,
+																					function(response) {
+																									userObject.set('name', response.name);
+																									userObject.set('birthday', response.birthday);
+																									userObject.set('gender', response.gender);
+																									userObject.set('hometown', response.hometown);
+																									userObject.save();
+																					},
+																					function(error) {
+																									console.log(error);
+																					})
+																	})
+								}, 1000);
+
+     };
+   // //===============/LOGIN WITH FB==========//
 });

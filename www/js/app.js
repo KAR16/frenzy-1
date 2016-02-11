@@ -1,5 +1,6 @@
 // IdUsuario of Facebook or Frenzy for Pines and hearts
 var IdUsuario;
+var userVerificate= Parse.User.current();
 // ***********  FUNCTION BACK ***************
 function goBack() {
 	window.history.back();
@@ -14,32 +15,56 @@ function MostrarOcultar(capa,enlace){
 }
 /**********  PAGE_START EXIT APP FUNCTION  *****************/
 document.addEventListener("backbutton", onBackKeyDown, false);
-	function onBackKeyDown() {
-		if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
-			swal({
-					title: "Salir",
-					text: "¿Deseas salir?",
-					type: "warning",
-					showCancelButton: true,
-					cancelButtonText: 'No',
-					confirmButtonColor: "#00BAB9",
-					confirmButtonText: "Salir",
-					closeOnConfirm: false
-			},
-			function(isConfirm) {
-					if(isConfirm){
-							console.log('Salio');
-							navigator.app.exitApp();
-					}else {
-							console.log(Quedarse);
-							$state.go('app.playlists');
-					}
-			})
+//
+function onBackKeyDown() {
+// 	if(document.URL == 'file:///android_asset/www/index.html#/app/playlists'){
+// 		//
+// 		// swal({
+// 		// 	title: 'Salir',
+// 		// 	text: 'Deseas salir?',
+// 		// 	type: 'warning',
+// 		// 	showConfirmButton: true,
+// 		// 	confirmButtonText: 'Salir',
+// 		// 	showCancelButton: true,
+// 		// 	cancelButtonText: 'No'
+// 		// },
+// 		// function(isConfirm) {
+// 		// 		if(isConfirm){
+// 		// 				navigator.app.exitApp();
+// 		// 		} else {
+// 		// 				swal.close();
+// 		// 		}
+// 		// })
+//
+// 		if (confirm("Desea salir de frenzy!") == true) {
+// 			navigator.app.exitApp();
+// 		}
+// 		else{
+// 			console.log("salir");
+// 		}
+// 	}
+}
+//*********** DEVICE READY SPLASHSCREEN  *******************
+document.addEventListener("deviceready", function($scope) {
+	 if (userVerificate==null) {
+	 		window.location.replace('file:///android_asset/www/index.html#/tutorial');
+			setTimeout(function() {
+  			navigator.splashscreen.hide();
+			}, 6000);
+
+	}else {
+		if (userVerificate["attributes"].authData == undefined) {
+			IdUsuario = String($scope.currentUser.id)
+					viewPromotion()
+		}else {
+			IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
+					viewPromotion()
 		}
-	}
-//**************************************************************************************************
-
-
+		window.location.replace('file:///android_asset/www/index.html#/app/playlists');
+		setTimeout(function() {
+			navigator.splashscreen.hide();
+		}, 6000);	}
+}, false);
 //**************************************************************************************************
 var CustomerList;
 function ReloadFavorite() {
