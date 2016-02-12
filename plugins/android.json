@@ -50,6 +50,15 @@
             "APP_ID": "426922250825103",
             "APP_NAME": "frenzy",
             "PACKAGE_NAME": "com.frenzy"
+        },
+        "com.cordova.plugins.sms": {
+            "PACKAGE_NAME": "com.frenzy"
+        },
+        "at.oneminutedistraction.phonenumber": {
+            "PACKAGE_NAME": "com.frenzy"
+        },
+        "mx.ferreyra.callnumber": {
+            "PACKAGE_NAME": "com.frenzy"
         }
     },
     "dependent_plugins": {}

@@ -380,42 +380,37 @@ app.factory('AllPromotion', function() {
 var AllourFavorites = [];
 
 app.factory('OurFavorites', function() {
-	AllourFavorites = [];
-	var OurFavorites = CurrentPromotion
+    AllourFavorites = [];
+    var OurFavorites = CurrentPromotion
 
+    return {
+        all: function() {
+            AllourFavorites = [];
+						Logo = [];
+                var Customer = new Parse.Query('Customer');
+            for (a in CurrentPromotion) {
+                if (CurrentPromotion[a].Our_Favorites === true ) {
+                    AllourFavorites.push(CurrentPromotion[a]);
+                    Customer.equalTo("Name",CurrentPromotion[a].Category);
+										Customer.each(function(results) {
+												for(x in AllourFavorites){
+														if(AllourFavorites[x].Category === results.attributes.Name){
+																AllourFavorites[x]["Logo"] = results.attributes.Logo._url;
+																AllourFavorites[x]["oferta"] = "siHay"
+														}
+												}
 
-	return {
-		all: function() {
-			AllourFavorites = [];
-				var Customer = new Parse.Query('Customer');
-			for (a in CurrentPromotion) {
-				if (CurrentPromotion[a].Our_Favorites === true ) {
-					AllourFavorites.push(CurrentPromotion[a]);
-					Customer.equalTo("Name",CurrentPromotion[a].Category);
-					var cust = Customer.find({
-						success: function(results) {
-							for (i in AllourFavorites) {
-								AllourFavorites[i]["logo"] = results[0].attributes.Logo._url;
-								AllourFavorites[i]["oferta"] = "siHay"
-							}
-							cust.then(function(){});
-						},
-						error: function(myObject, error) {
-							// Error occureds
-							console.log( error );
-						}
-					});
-				}
-			}
-			var OurFavorites = AllourFavorites
-			if (OurFavorites.length == 0) {
-				OurFavorites.push({oferta : 'noHay'})
-				OurFavorites.push({display : 'none'})
-			}
-			console.log(OurFavorites);
-			return OurFavorites
-		},get: function(){}
-	};
+										})
+                }
+            }
+            var OurFavorites = AllourFavorites
+            if (OurFavorites.length == 0) {
+                OurFavorites.push({oferta : 'noHay'})
+                OurFavorites.push({display : 'none'})
+            }
+            return OurFavorites
+        },get: function(){}
+    };
 });
 // ************* COUPONS APP FACTORY *************
 app.factory('Coupons', function() {

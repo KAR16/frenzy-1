@@ -17,12 +17,6 @@
 		height: 3px;
 		background-color: white;
     }
-	/* Spacing between the image and slider */
-	.imagenCajaNueva{
-		width: 100%;
-		height:60%;
-	}
-
 
 </style>
 <!--**********  FAVORITES PAGE  **********-->
@@ -72,13 +66,10 @@
         <!--***********  SLIDER  ************-->
         <ion-slide-box style="display:{{display[1].display}}">
             <!--**********  SLIDER CONTENT  **********-->
-            <ion-slide ng-repeat="s in ourFavorites" >
-
-              <div  >
-                <!--**********  SLIDER BOXES  **********-->
-                <div class="nuevoDivContenedor" >
-                    <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label"  style="display:{{s.display}};">
-                    <!--*****  PRICE LABEL OFFERTS  *****-->
+            <ion-slide ng-repeat="s in ourFavorites" class="">
+              <!--*****  PRICE LABEL OFFERTS  *****-->
+                <div class="favoritesDiv">
+                  <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label"  style="display:{{s.display}};">
                     <div class="row pageFavoritesBoxPriceLabel" style="">
                         <div class="col col-25">
                             <p class="pageFavoritesSavingTitle">
@@ -89,12 +80,9 @@
                             </p>
                         </div>
                     </div>
-                    <!--*****  MAIN IMAGE FAVORITE PAGE  *****-->
-                    <!--*****  ZISE PHOTO FAVORITES 700X700  *****-->
-                    <img class="imagenCajaNueva" src="{{s.photo}}" alt="nissan">
-                    <!--***** ESTABLISHMENT LOGO  *****-->
+                    <img  src="{{s.photo}}" alt="nissan" style="width:100%; height:60%;">
                     <div class="pageFavoritesEstablishmentLogo" style="">
-                        <img class="logoEstablishment" src="{{s.logo}}" alt="label">
+                        <img class="logoEstablishment" src="{{s.Logo}}" alt="label">
                         <spam class="pageFavoritesCountOfferts">
                             +32
                         </spam>
@@ -102,16 +90,13 @@
                             ofertas
                         </spam>
                     </div>
-                    <!--**********  TITLE DESCRIPTION  **********-->
-                    <div style=" height:32%; background-color:;">
-                        <div style="height:30%;">
+                    <div style=" height:22%;">
                             <p class="pageFavoritesDescriptionTitle open_sans">
                                 {{s.name}}
                             </p>
-                        </div>
                         <!--**********  DESCRIPTION  **********-->
-                        <div class="ellipsify cajaTexto" style="height:37%;background-color:; ">
-                            <div class="ellipsify">
+                        <div class="ellipsifyThreeLines" style="margin-top:-2%;">
+                            <div class="ellipsify" style="background-color:;">
                                 <div class="pre-dots"></div>
                                 <div class="dots">&hellip;</div>
                                 <p class="pageFavoritesDescription open_sans">
@@ -121,9 +106,11 @@
                                 <div class="hidedots2"></div>
                             </div>
                         </div>
+
                     </div>
+                    <!--*******************************************************************************************************************-->
                     <!--*****  DIV TO PRICE AND ICONS  *****-->
-                    <div class="row pageFavoritesDivIcons open_sans" style="height:38px; background-color:;" >
+                    <div class="row pageFavoritesDivIcons open_sans" style="height:38px; background-color:;margin-top:4%;" >
                         <!--*****  ACTUAL PRICE  *****-->
                         <div class="col col-33" >
                             <spam class="pageFavoritesActualPrice"  style="font-size:{{s.fontSize}}">
@@ -141,13 +128,10 @@
                             <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
                                 O
                             </spam>
-                            <spam class="pageFavoritesIcons home" id="{{s.IDpromotion}}" onclick="SalvadosSaveAndDelete(id)" style="color:{{s.ColorPin}}"> W </spam>
+                            <spam class="pageFavoritesIcons home" id="{{s.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{s.IDpromotion}}')" style="color:{{s.ColorPin}}"> W </spam>
                         </div>
                     </div>
                 </div>
-              </div>
-
-
             </ion-slide>
         </ion-slide-box>
         <!--**********  SECOND POP OVER SHARE  **********-->

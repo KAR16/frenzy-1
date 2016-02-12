@@ -230,7 +230,6 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
-
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
@@ -266,6 +265,29 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
 .controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
+	/*************************************************/
+	$scope.SalvadosSaveAndDelete = function (id) {
+        var NamePromo = id
+        var NameUser = String(IdUsuario)
+        var Dimensions = {
+          name: 'FavoritePin_'+NamePromo,
+          user: NameUser
+        };
+        Parse.Analytics.track("pin", Dimensions);
+        var pin = document.getElementById(id).style.color;
+        if (pin == "silver") {
+            document.getElementById(id).style.color = "purple";
+            SavePromotion(IdUsuario, id)
+            $scope.reload()
+        } else {
+            document.getElementById(id).style.color = "silver";
+            DeletePromotion(IdUsuario, id)
+            $scope.reload()
+        }
+        $scope.reload()
+    }
+	/**************************************************/
+
 	var dimensions = {
 		name: 'frenzyFavorites',
 	};
@@ -283,6 +305,28 @@ $scope.display = OurFavorites.all();
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
+	/*************************************************/
+	$scope.SalvadosSaveAndDelete = function (id) {
+        var NamePromo = id
+        var NameUser = String(IdUsuario)
+        var Dimensions = {
+          name: 'FavoritePin_'+NamePromo,
+          user: NameUser
+        };
+        Parse.Analytics.track("pin", Dimensions);
+        var pin = document.getElementById(id).style.color;
+        if (pin == "silver") {
+            document.getElementById(id).style.color = "purple";
+            SavePromotion(IdUsuario, id)
+            $scope.reload()
+        } else {
+            document.getElementById(id).style.color = "silver";
+            DeletePromotion(IdUsuario, id)
+            $scope.reload()
+        }
+        $scope.reload()
+    }
+	/**************************************************/
 	var dimensions = {
 		name: 'userFavorites',
 	};
@@ -533,15 +577,19 @@ $scope.display = OurFavorites.all();
 	};
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell,name){
+		var NameUser = String(IdUsuario);
 		var Dimensions = {
 			name: 'Promotion_call'+name,
 			user: NameUser
 		};
-		alert("call 1");
+
 		Parse.Analytics.track("CallsPromotion", Dimensions);
-		a = cell.toString();
-		b = 'tel:'
-		window.open(b+a);
+		var a = cell.toString();
+		var b = 'tel:'
+		var callPhone = b + a;
+
+		window.open(callPhone)
+
 	}
 	// *************** URL BROWSER SHOP FUNCTION ***************
 	$scope.shopUrl = function(Url,id,name){
@@ -1103,18 +1151,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 				StatusBar.styleLightContent();
 			}
 		});
-
+		// Disable back for app
 		$ionicPlatform.registerBackButtonAction(function(event) {
-		if ($state.current.name == 'app.playlists') { // your check here
-		$ionicPopup.confirm({
-		title: 'System warning',
-		template: 'are you sure you want to exit?'
-		}).then(function(res) {
-		if (res) {
-		ionic.Platform.exitApp();
-		}
-		})
-		}
+				if ($state.current.name == 'app.playlists') {
+						$ionicPopup.confirm({
+								title: 'System warning',
+								template: 'are you sure you want to exit?'
+						}).then(function(res) {
+								if (res) {
+										ionic.Platform.exitApp();
+								}
+						})
+				}
 		}, 100);
 
 })
@@ -1260,7 +1308,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/tutorial');
+	//$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -1274,28 +1322,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-	Parse.Cloud.run('GetCustomer', {},{
-		success:function (results) {
-		//	console.log(results);
-			CustomerList = results
-		},
-		error:function (error) {
-		 console.log(error);
-		}
-	});
-	$scope.currentUser = Parse.User.current();
-	if ($scope.currentUser == null ){
-		//$state.go('tutorial')
-			} else {
-				if ($scope.currentUser["attributes"].authData == undefined) {
-					IdUsuario = String($scope.currentUser.id)
-							viewPromotion()
-				}else {
-					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-							viewPromotion()
-				}
-				//$state.go('app.playlists');
-			}
+	// $scope.currentUser = Parse.User.current();
+	// if ($scope.currentUser == null ){
+	// 	//$state.go('tutorial')
+	// 		} else {
+	// 			if ($scope.currentUser["attributes"].authData == undefined) {
+	// 				IdUsuario = String($scope.currentUser.id)
+	// 						viewPromotion()
+	// 			}else {
+	// 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+	// 						viewPromotion()
+	// 			}
+	// 			//$state.go('app.playlists');
+	// 		}
 	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
