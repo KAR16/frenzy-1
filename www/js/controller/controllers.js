@@ -269,17 +269,14 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: 'frenzyFavorites',
 	};
-	$scope.loading = $ionicLoading.show({
-			noBackdrop: true,
-			template: '<ion-spinner customer1lass="spinner" icon="lines" class = "LoadingSupermercado"></ion-spinner>'
-	});
+$scope.display = OurFavorites.all();
 
 	Parse.Analytics.track("view", dimensions);
-
+			$scope.ourFavorites = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-			$scope.ourFavorites = OurFavorites.all();
-				$ionicLoading.hide();
+
+			//	$ionicLoading.hide();
         colorIconsFoother = []
       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
     });
@@ -337,6 +334,13 @@ angular.module('starter.controllers', ['ionic'])
 
 	// ************ DELETE AND SAVE PIN ************
 	$scope.SalvadosSaveAndDelete = function (id) {
+		var NamePromo = id
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'FavoritePin_'+NamePromo,
+		  user: NameUser
+		};
+		Parse.Analytics.track("pin", Dimensions);
 		var pin = document.getElementById(id).style.color;
 		if (pin == "silver") {
 			document.getElementById(id).style.color = "purple";
@@ -1256,7 +1260,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	//$urlRouterProvider.otherwise('/tutorial');
+	$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //

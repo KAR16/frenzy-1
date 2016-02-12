@@ -70,11 +70,11 @@
             </div>
         </div>
         <!--***********  SLIDER  ************-->
-        <ion-slide-box>
+        <ion-slide-box style="display:{{display[1].display}}">
             <!--**********  SLIDER CONTENT  **********-->
-            <ion-slide>
+            <ion-slide ng-repeat="s in ourFavorites" >
 
-              <div  ng-repeat="s in ourFavorites | filter: {oferta : 'siHay'}">
+              <div  >
                 <!--**********  SLIDER BOXES  **********-->
                 <div class="nuevoDivContenedor" >
                     <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label"  style="display:{{s.display}};">

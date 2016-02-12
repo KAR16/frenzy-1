@@ -382,11 +382,12 @@ var AllourFavorites = [];
 app.factory('OurFavorites', function() {
 	AllourFavorites = [];
 	var OurFavorites = CurrentPromotion
-	var Customer = new Parse.Query('Customer');
+
 
 	return {
 		all: function() {
 			AllourFavorites = [];
+				var Customer = new Parse.Query('Customer');
 			for (a in CurrentPromotion) {
 				if (CurrentPromotion[a].Our_Favorites === true ) {
 					AllourFavorites.push(CurrentPromotion[a]);
@@ -409,6 +410,7 @@ app.factory('OurFavorites', function() {
 			var OurFavorites = AllourFavorites
 			if (OurFavorites.length == 0) {
 				OurFavorites.push({oferta : 'noHay'})
+				OurFavorites.push({display : 'none'})
 			}
 			console.log(OurFavorites);
 			return OurFavorites
