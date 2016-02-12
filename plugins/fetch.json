@@ -193,9 +193,8 @@
     },
     "cordova-plugin-inappbrowser": {
         "source": {
-            "type": "git",
-            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser"
         },
         "is_top_level": true,
         "variables": {}
@@ -204,6 +203,24 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.cordova.plugins.sms": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cordova-sms/cordova-sms-plugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "at.oneminutedistraction.phonenumber": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/oneminutedistraction/phonenumber.git",
             "subdir": "."
         },
         "is_top_level": true,

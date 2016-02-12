@@ -128,7 +128,7 @@
                             <spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
                                 O
                             </spam>
-                            <spam class="pageFavoritesIcons home" id="{{s.IDpromotion}}" onclick="SalvadosSaveAndDelete(id)" style="color:{{s.ColorPin}}"> W </spam>
+                            <spam class="pageFavoritesIcons home" id="{{s.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{s.IDpromotion}}')" style="color:{{s.ColorPin}}"> W </spam>
                         </div>
                     </div>
                 </div>
