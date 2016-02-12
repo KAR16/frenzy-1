@@ -230,7 +230,6 @@ angular.module('starter.controllers', ['ionic'])
 
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
-
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
@@ -1103,18 +1102,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 				StatusBar.styleLightContent();
 			}
 		});
-
+		// Disable back for app
 		$ionicPlatform.registerBackButtonAction(function(event) {
-		if ($state.current.name == 'app.playlists') { // your check here
-		$ionicPopup.confirm({
-		title: 'System warning',
-		template: 'are you sure you want to exit?'
-		}).then(function(res) {
-		if (res) {
-		ionic.Platform.exitApp();
-		}
-		})
-		}
+				if ($state.current.name == 'app.playlists') {
+						$ionicPopup.confirm({
+								title: 'System warning',
+								template: 'are you sure you want to exit?'
+						}).then(function(res) {
+								if (res) {
+										ionic.Platform.exitApp();
+								}
+						})
+				}
 		}, 100);
 
 })
@@ -1274,28 +1273,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-	Parse.Cloud.run('GetCustomer', {},{
-		success:function (results) {
-		//	console.log(results);
-			CustomerList = results
-		},
-		error:function (error) {
-		 console.log(error);
-		}
-	});
-	$scope.currentUser = Parse.User.current();
-	if ($scope.currentUser == null ){
-		//$state.go('tutorial')
-			} else {
-				if ($scope.currentUser["attributes"].authData == undefined) {
-					IdUsuario = String($scope.currentUser.id)
-							viewPromotion()
-				}else {
-					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-							viewPromotion()
-				}
-				//$state.go('app.playlists');
-			}
+	// $scope.currentUser = Parse.User.current();
+	// if ($scope.currentUser == null ){
+	// 	//$state.go('tutorial')
+	// 		} else {
+	// 			if ($scope.currentUser["attributes"].authData == undefined) {
+	// 				IdUsuario = String($scope.currentUser.id)
+	// 						viewPromotion()
+	// 			}else {
+	// 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+	// 						viewPromotion()
+	// 			}
+	// 			//$state.go('app.playlists');
+	// 		}
 	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:

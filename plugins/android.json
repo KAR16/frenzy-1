@@ -16,6 +16,9 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.frenzy"
         },
+        "mx.ferreyra.callnumber": {
+            "PACKAGE_NAME": "com.frenzy"
+        },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.frenzy"
         },
