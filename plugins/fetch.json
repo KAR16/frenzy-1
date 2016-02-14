@@ -165,9 +165,8 @@
     },
     "phonegap-facebook-plugin": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/Wizcorp/phonegap-facebook-plugin.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "phonegap-facebook-plugin"
         },
         "is_top_level": true,
         "variables": {

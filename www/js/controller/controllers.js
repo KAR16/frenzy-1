@@ -1353,7 +1353,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       }
     }
 }])
-
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
 	var NameUser = String(IdUsuario)
