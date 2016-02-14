@@ -929,7 +929,7 @@ function DeleteFavorite(UserId, CustomerId) {
 
   var DeleteFavoriteCustomer = Parse.Cloud.run('DeleteFavorite', {"Array":result});
 	DeleteFavoriteCustomer.then(function () {
-		ReloadFavorite()
+		ReloadFavoriteDelete(CustomerId)
 	});
 };
 // *************** SAVE PROMOTION FUNCTION ***************

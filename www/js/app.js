@@ -6,9 +6,11 @@ function goBack() {
 	window.history.back();
 }
 /********************************************/
+var CustomerList;
 Parse.Cloud.run('GetCustomer', {},{
 	success:function (results) {
 	//	console.log(results);
+	console.log("tiendas");
 		CustomerList = results
 	},
 	error:function (error) {
@@ -71,8 +73,25 @@ document.addEventListener("deviceready", function($scope) {
 		}, 6000);	}
 }, false);
 //**************************************************************************************************
-var CustomerList;
+function ReloadFavoriteDelete(CustomerID) {
+console.log(CustomerID);
+	for (b in CustomerList){
+		if (CustomerID === CustomerList[b].NameCategory){
+			console.log(CustomerList[b]);
+			if (CustomerList[b].colorHeart === "red") {
+				CustomerList[b].colorHeart  = "white";
+			console.log(CustomerList[b]);
+			}
+		}
+		// else {
+		// 	console.log('************whitw*************');
+		// 	console.log(CustomerList[b]);
+		// 		CustomerList[b].colorHeart  = "white";
+		// }
+	}
+}
 function ReloadFavorite() {
+	console.log("recargo");
 	var FavoriteHeartCustomer = new Parse.Query('Favorite')
 	FavoriteHeartCustomer.equalTo("UserID", IdUsuario);
 	FavoriteHeartCustomer.find({
@@ -80,12 +99,17 @@ function ReloadFavorite() {
 			for (a in results[0].attributes.CustomerID){
 				for (b in CustomerList){
 					if (results[0].attributes.CustomerID[a] === CustomerList[b].NameCategory){
+						console.log(CustomerList[b]);
 						if (CustomerList[b].colorHeart === "white") {
 							CustomerList[b].colorHeart  = "red";
+						console.log(CustomerList[b]);
 						}
-					}else {
-							CustomerList[b].colorHeart  = "white";
 					}
+					// else {
+					// 	console.log('************whitw*************');
+					// 	console.log(CustomerList[b]);
+					// 		CustomerList[b].colorHeart  = "white";
+					// }
 				}
 			}
 		},
