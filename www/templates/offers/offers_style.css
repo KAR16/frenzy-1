@@ -58,20 +58,18 @@
   color: blue;
   font-size: 70px;
 }
-.facebookButon{
-  background-color:#00DDC1;
+.requestOffers{
+  background-color: #00DDC1;
   height: 35px;
   border-radius: 12px;
   border:none;
-  border-bottom: thick solid #00c6ad;
+  border-bottom: thick solid #00C6AD ;
 }
-.facebookTitle{
-  font-size: 19px;
-  font-weight: bolder;
-  color: #3F51B5;
-  text-align: center;
-  padding-top: 2px;
+
+.requestTextColor {
+    color: white;
 }
+
 .backButtomStyle {
     margin-left: -5px;
     padding-top: 5px;
