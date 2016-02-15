@@ -92,41 +92,6 @@
 .icon_otro {
     background-color: #00DDC1;
 }
-
-.arrow-up {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 10px 12px 10px;
-    border-color: transparent transparent #9C28B0 transparent;
-}
-
-.arrow-up-left {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 14px 0 0 12px;
-    border-color: transparent transparent transparent #9c28b0;
-    margin-left: -5px;
-}
-
-.arrow-dow-left {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 14px 12px 0 0;
-    border-color: #9c28b0 transparent transparent transparent;
-    margin-left: -5px;
-}
-
-.arrow-dow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 12px 10px 0 10px;
-    border-color: #9C28B0 transparent transparent transparent;
-}
-
 .pageStartBoxPurple {
     background-color: #9C28B0;
     height: 200px;
@@ -158,9 +123,95 @@
     margin-top:-30px;
 }
 
-.newTriangle{
- height: 9px;
- margin-bottom: -11px;
+/************************************************/
+
+.zigzag {
+position: relative;
+width: 100%;
+height: 200px;
 }
-.newTriangle2{
- height: 8px;}
+.zigzag:before {
+content: "";
+display: block;
+position: absolute;
+top: -10px;
+width: 100%;
+height: 10px;
+}
+.container2 {
+background: #9C28B0;
+}
+.container2:before {
+background:
+  linear-gradient(
+    45deg, transparent 33.333%,
+    #9C28B0 33.333%, #9C28B0 66.667%,
+    transparent 66.667%
+  ),
+  linear-gradient(
+    -45deg, transparent 33.333%,
+    #9C28B0 33.333%, #9C28B0 66.667%,
+    transparent 66.667%
+  );
+background-size: 20px 40px;
+}
+
+
+
+.container4 {
+background: white;
+height: 20px;
+}
+.container4:before {
+background:
+  linear-gradient(
+    45deg, transparent 33.333%,
+    white 33.333%, white 66.667%,
+    transparent 66.667%
+  ),
+  linear-gradient(
+    -45deg, transparent 33.333%,
+    white 33.333%, white 66.667%,
+    transparent 66.667%
+  );
+background-size: 20px 40px;
+}
+
+.container5 {
+  background-color: ;
+  opacity: 0;
+  height: 80px;
+}
+.container5:before {
+background:
+  linear-gradient(
+    45deg, transparent 33.333%,
+    #E6E7E8 33.333%, #E6E7E8 66.667%,
+    transparent 66.667%
+  ),
+  linear-gradient(
+    -45deg, transparent 33.333%,
+    #E6E7E8 33.333%, #E6E7E8 66.667%,
+    transparent 66.667%
+  );
+background-size: 20px 40px;
+}
+.container6 {
+background: #F1F2F2;
+opacity: 0.9;
+
+}
+.container6:before {
+background:
+  linear-gradient(
+    45deg, transparent 33.333%,
+    #F1F2F2 33.333%, #F1F2F2 66.667%,
+    transparent 66.667%
+  ),
+  linear-gradient(
+    -45deg, transparent 33.333%,
+    #F1F2F2 33.333%, #F1F2F2 66.667%,
+    transparent 66.667%
+  );
+background-size: 20px 40px;
+}
