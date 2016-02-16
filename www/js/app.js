@@ -33,9 +33,10 @@ function onBackKeyDown() {
 		swal({
 			title: 'Salir',
 			text: 'Deseas salir?',
-			type: 'warning',
+			imageUrl: '../img/payaso.png',
 			showConfirmButton: true,
 			confirmButtonText: 'Salir',
+			confirmButtonColor: '#00BAB9',
 			showCancelButton: true,
 			cancelButtonText: 'No'
 		},
@@ -46,8 +47,26 @@ function onBackKeyDown() {
 						console.log("quedar");
 				}
 		})
-	}
-	else  {
+	} else if(document.URL == 'file:///android_asset/www/index.html#/login2'){
+
+			swal({
+				title: 'Salir',
+				text: 'Deseas salir?',
+				imageUrl: '../img/payaso.png',
+				showConfirmButton: true,
+				confirmButtonText: 'Salir',
+				confirmButtonColor: '#00BAB9',
+				showCancelButton: true,
+				cancelButtonText: 'No'
+			},
+			function(isConfirm) {
+					if(isConfirm){
+							navigator.app.exitApp();
+					} else {
+							console.log("quedar");
+					}
+			})
+		} else  {
 		window.history.back();
 	}
 }
@@ -74,7 +93,6 @@ document.addEventListener("deviceready", function($scope) {
 }, false);
 //**************************************************************************************************
 function ReloadFavoriteDelete(CustomerID) {
-console.log(CustomerID);
 	for (b in CustomerList){
 		if (CustomerID === CustomerList[b].NameCategory){
 			console.log(CustomerList[b]);
@@ -83,11 +101,6 @@ console.log(CustomerID);
 			console.log(CustomerList[b]);
 			}
 		}
-		// else {
-		// 	console.log('************whitw*************');
-		// 	console.log(CustomerList[b]);
-		// 		CustomerList[b].colorHeart  = "white";
-		// }
 	}
 }
 function ReloadFavorite() {
@@ -105,11 +118,6 @@ function ReloadFavorite() {
 						console.log(CustomerList[b]);
 						}
 					}
-					// else {
-					// 	console.log('************whitw*************');
-					// 	console.log(CustomerList[b]);
-					// 		CustomerList[b].colorHeart  = "white";
-					// }
 				}
 			}
 		},

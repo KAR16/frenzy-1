@@ -217,9 +217,9 @@ angular.module('starter.controllers', ['ionic'])
                 $ionicLoading.hide();
                 // The login failed. Check error to see why.
                 if (err.code === 101) {
-                    $scope.error.message = 'Invalid login credentials';
+                    sweetAlert('Lo sentimos', 'Verifica los datos ingresados', 'error');
                 } else {
-                    $scope.error.message = 'An unexpected error has ' + 'occurred, please try again.';
+                    sweetAlert('Lo sentimos', 'Ha ocurrido un error. Intentalo nuevamente', 'error');
                 }
                 $scope.$apply();
             }
@@ -672,44 +672,15 @@ $scope.display = OurFavorites.all();
 				name: 'peticionPromo_'+NamePromo,
 				user: NameUser
 			};
-			var Title = '<div class="row"> <div class = "col"></div>  <p class = "padin open_sans col col-75">  ¿Te gustaria recibir notificaciones de nuevas ofertas o cupones de <spam class="colorShopName">' + $stateParams.superId + "</spam>?</p>  <div class = 'col'></div>  </div>"
+			var Title = '<div class="row"> <div class = "col"></div>  <p class = "padin open_sans col col-75">  ¿Te gustaria agregar a <spam class="colorShopName">' + $stateParams.superId + "</spam> como una de tus tiendas favoritas?</p>  <div class = 'col'></div>  </div>"
 			var alertPopup = $ionicPopup.alert({
 				title: '<p class = "home colorRobot">b</p> <p class="textAlert open_sans">Tu peticion por mas <br>Ofertas ha sido envida</p>',
 				template: Title,
-				buttons: [{text: '<div class="row"><div class = "col col-75 AgregarF open_sans">Agregar a Favoritos</div> <div class = "home coloralert col">B</div></div>' ,
+				buttons: [{text: "Si" ,
 				onTap: function() {
-
-					Parse.Analytics.track("petition", Dimensions);
-					// var confirmPopup = $ionicPopup.confirm({
-					// 	title: 'Quieres Agregarlo a tu favoritos?',
-					// 	scope: $scope,
-					// 	buttons: [
-					// 	       { text: 'Cancel' },
-					// 	       {
-					// 	         text: '<b ng-model="data">Guardar</b>',
-					// 	         type: 'button-positive',
-					// 	        //  onTap: function(e) {
-					// 					// 	 	console.log(e.type);
-					// 					// 		if (e.type == "click") {
-					// 					// 			var resultSetPopovers = $.grep(CustomerList, function (e) {
-					// 					// 				 return e.NameCategory.indexOf($stateParams.superId) == 0;
-					// 					// 			});
-					// 					// 			console.log(resultSetPopovers);
-					// 					// 			if (resultSetPopovers[0].colorHeart == "white") {
-					// 					// 					$scope.heartMenu = "red";
-					// 					// 					SaveFavorite(IdUsuario, $stateParams.superId)
-					// 					// 			}else {
-					// 					// 					DeleteFavorite(IdUsuario, $stateParams.superId)
-					// 					// 				$scope.heartMenu = "silver"
-					// 					// 			}
-					// 					// 		}
-					// 	        //  }
-					// 	       },
-					// 	     ]
-					// });
-
-					 }
-				 }]
+						Parse.Analytics.track("petition", Dimensions);
+				}
+			},{text: 'Cancelar'}]
 			});
 			alertPopup.then(function(res) {
 				console.log('Thank you for not eating my delicious ice cream cone');
@@ -799,7 +770,7 @@ $scope.display = OurFavorites.all();
                         type: "warning",
                         showCancelButton: true,
                         cancelButtonText: 'No',
-                        confirmButtonColor: "#00BAB9",
+                        confirmButtonColor: '#00BAB9',
                         confirmButtonText: "Canjear!",
                         closeOnConfirm: false
                     },
@@ -830,7 +801,7 @@ $scope.display = OurFavorites.all();
                         type: "warning",
                         showCancelButton: true,
                         cancelButtonText: 'No',
-                        confirmButtonColor: "#00BAB9",
+                        confirmButtonColor: '#00BAB9',
                         confirmButtonText: "Canjear!",
                         closeOnConfirm: false
                     },
