@@ -25,7 +25,7 @@
   background-color: white;
 }
 .colorShopName{
-  font-size: 12px;
+  font-size: 16px;
   color:#483D8B;
 }
 .popup-container.active .popup {
@@ -54,10 +54,10 @@
 .coloralert{
   color: red;
 }
-.colorRobot{
+/*.colorRobot{
   color: blue;
   font-size: 70px;
-}
+}*/
 .requestOffers{
   background-color: #00DDC1;
   height: 35px;
