@@ -721,62 +721,35 @@ $scope.display = OurFavorites.all();
 		/* **************************************************** */
 		$scope.askPromotion = function () {
 
-				var NamePromo = $stateParams.superId
-				var NameUser = String(IdUsuario)
-				var Dimensions = {
-						name: 'peticionPromo_'+NamePromo,
-						user: NameUser
-				};
+			var NamePromo = $stateParams.superId
+			var NameUser = String(IdUsuario)
+			var Dimensions = {
+				name: 'peticionPromo_'+NamePromo,
+				user: NameUser
+			};
 
-				swal({
-						title: "<p class='home' style='font-size:70px;color:blue'>b</p> <p style='font-weight:bold;color:#343434;font-size:20px'>Tu petición por más <br>Ofertas ha sido envida</p>",
-						text: "<div class='row'> <div class = 'col'></div>  <p class = 'padin open_sans col col-75'>  ¿Te gustaria agregar a <spam class='colorShopName'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas?</p>  <div class = 'col'></div>  </div>",
-						html: true,
-						confirmButtonColor: "#00BAB9",
-						confirmButtonText: "Agregar",
-						// Si se quiere cancelar pulsando otra parte de la aplicacion
-						//allowOutsideClick: false
-						showCancelButton: true,
-						cancelButtonText: 'Cancelar',
-				},
-				function(isConfirm) {
-						if(isConfirm){
-								Parse.Analytics.track("petition", Dimensions);
-								$scope.loading = $ionicLoading.show({
-										template: "<ion-spinner icon='dots'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam class='colorShopName' style='font-size:24px'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas </p>",
-										content: 'Agregando',
-										animation: 'fade-in',
-										showBackdrop: true,
-										maxWidth: 200,
-										showDelay: 0
-								})
+			swal({
+				title: "<p class='home' style='font-size:70px;color:blue'>b</p> <p style='font-weight:bold;color:#343434;font-size:20px'>Tu petición por más <br>Ofertas ha sido envida</p>",
+				text: "<div class='row'> <div class = 'col'></div>  <p class = 'padin open_sans col col-75'>  ¿Te gustaria agregar a <spam class='colorShopName'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas?</p>  <div class = 'col'></div>  </div>",
+				html: true,
+				confirmButtonColor: "#00BAB9",
+				confirmButtonText: "Agregar",
+				// Si se quiere cancelar pulsando otra parte de la aplicacion
+				allowOutsideClick: true
+			},
+			function(isConfirm) {
+				if(isConfirm){
+					Parse.Analytics.track("petition", Dimensions);
 
-								$timeout(function () {
-										$ionicLoading.hide();
-								}, 6000);
-						}
-				});
-			// console.log("se pedio mas promociones");
-			// var NamePromo = $stateParams.superId
-			// var NameUser = String(IdUsuario)
-			// var Dimensions = {
-			// 	name: 'peticionPromo_'+NamePromo,
-			// 	user: NameUser
-			// };
-			// var Title = '<div class="row"> <div class = "col"></div>  <p class = "padin open_sans col col-75">  ¿Te gustaria agregar a <spam class="colorShopName">' + $stateParams.superId + "</spam> como una de tus tiendas favoritas?</p>  <div class = 'col'></div>  </div>"
-			// var alertPopup = $ionicPopup.alert({
-			// 	title: '<p class = "home colorRobot">b</p> <p class="textAlert open_sans">Tu peticion por mas <br>Ofertas ha sido envida</p>',
-			// 	template: Title,
-			// 	buttons: [{text: "Si" ,
-			// 	onTap: function() {
-			// 			Parse.Analytics.track("petition", Dimensions);
-			// 	}
-			// },{text: 'Cancelar'}]
-			// });
-			// alertPopup.then(function(res) {
-			// 	console.log('Thank you for not eating my delicious ice cream cone');
-			// });
+					$scope.loading = $ionicLoading.show({
+						template: "<ion-spinner customer1lass='spinner' icon='lines' class ='Loading'" + $scope.AppCategory + "></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas </p>"
+					});
 
+					$timeout(function () {
+						$ionicLoading.hide();
+					}, 2500);
+				}
+			});
 		}
 		/* **************************************************** */
 		$scope.chats = currentPromotion.get($stateParams.superId);
@@ -1372,7 +1345,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/tutorial');
+	//$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //

@@ -33,7 +33,7 @@ function onBackKeyDown() {
 		swal({
 			title: 'Salir',
 			text: 'Deseas salir?',
-			imageUrl: '../img/payaso.png',
+			imageUrl: 'img/payaso.png',
 			showConfirmButton: true,
 			confirmButtonText: 'Salir',
 			confirmButtonColor: '#00BAB9',
@@ -52,7 +52,7 @@ function onBackKeyDown() {
 			swal({
 				title: 'Salir',
 				text: 'Deseas salir?',
-				imageUrl: '../img/payaso.png',
+				imageUrl: 'img/payaso.png',
 				showConfirmButton: true,
 				confirmButtonText: 'Salir',
 				confirmButtonColor: '#00BAB9',
