@@ -266,6 +266,33 @@ angular.module('starter.controllers', ['ionic'])
 // ******************** OUR FAVORITES CONTROLLER **************************
 .controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
 	/*************************************************/
+
+		$scope.reload = function () {
+		    var PromoSavess = new Parse.Query('PromotionSaved')
+		    PromoSavess.equalTo("UserID", IdUsuario);
+		    PromoSavess.find({
+
+				success: function(results) {
+						viewFavorite()
+					for (a in results[0].attributes.PromotionID){
+						for (b in CurrentPromotion){
+							if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+								if (CurrentPromotion[b].ColorPin === "silver") {
+									CurrentPromotion[b].ColorPin  = "purple";
+								}
+							}else {
+								CurrentPromotion[b].ColorPin  = "silver";
+							}
+						}
+					}
+				},
+				error: function(myObject, error) {
+					// Error occureds
+					console.log( error );
+				}
+			});
+		}
+
 	$scope.SalvadosSaveAndDelete = function (id) {
         var NamePromo = id
         var NameUser = String(IdUsuario)
@@ -306,6 +333,32 @@ $scope.display = OurFavorites.all();
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
 	/*************************************************/
+
+		$scope.reload = function () {
+		    var PromoSavess = new Parse.Query('PromotionSaved')
+		    PromoSavess.equalTo("UserID", IdUsuario);
+		    PromoSavess.find({
+				success: function(results) {
+					viewFavorite()
+					for (a in results[0].attributes.PromotionID){
+						for (b in CurrentPromotion){
+							if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+								if (CurrentPromotion[b].ColorPin === "silver") {
+									CurrentPromotion[b].ColorPin  = "purple";
+								}
+							}else {
+								CurrentPromotion[b].ColorPin  = "silver";
+							}
+						}
+					}
+				},
+				error: function(myObject, error) {
+					// Error occureds
+					console.log( error );
+				}
+			});
+		}
+
 	$scope.SalvadosSaveAndDelete = function (id) {
         var NamePromo = id
         var NameUser = String(IdUsuario)
@@ -356,6 +409,7 @@ $scope.display = OurFavorites.all();
 	    PromoSavess.equalTo("UserID", IdUsuario);
 	    PromoSavess.find({
 			success: function(results) {
+				viewFavorite()
 				for (a in results[0].attributes.PromotionID){
 					for (b in CurrentPromotion){
 						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
@@ -518,6 +572,7 @@ $scope.display = OurFavorites.all();
 	    PromoSavess.equalTo("UserID", IdUsuario);
 	    PromoSavess.find({
 			success: function(results) {
+				viewFavorite()
 				for (a in results[0].attributes.PromotionID){
 					for (b in CurrentPromotion){
 						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
