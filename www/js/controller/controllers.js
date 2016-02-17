@@ -217,9 +217,9 @@ angular.module('starter.controllers', ['ionic'])
                 $ionicLoading.hide();
                 // The login failed. Check error to see why.
                 if (err.code === 101) {
-                    $scope.error.message = 'Invalid login credentials';
+                    sweetAlert('Lo sentimos', 'Verifica los datos ingresados', 'error');
                 } else {
-                    $scope.error.message = 'An unexpected error has ' + 'occurred, please try again.';
+                    sweetAlert('Lo sentimos', 'Ha ocurrido un error. Intentalo nuevamente', 'error');
                 }
                 $scope.$apply();
             }
@@ -264,20 +264,122 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
-.controller('OurfavoritesCtrl', function($scope, OurFavorites) {
+.controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
+	/*************************************************/
+
+		$scope.reload = function () {
+		    var PromoSavess = new Parse.Query('PromotionSaved')
+		    PromoSavess.equalTo("UserID", IdUsuario);
+		    PromoSavess.find({
+
+				success: function(results) {
+						viewFavorite()
+					for (a in results[0].attributes.PromotionID){
+						for (b in CurrentPromotion){
+							if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+								if (CurrentPromotion[b].ColorPin === "silver") {
+									CurrentPromotion[b].ColorPin  = "purple";
+								}
+							}else {
+								CurrentPromotion[b].ColorPin  = "silver";
+							}
+						}
+					}
+				},
+				error: function(myObject, error) {
+					// Error occureds
+					console.log( error );
+				}
+			});
+		}
+
+	$scope.SalvadosSaveAndDelete = function (id) {
+        var NamePromo = id
+        var NameUser = String(IdUsuario)
+        var Dimensions = {
+          name: 'FavoritePin_'+NamePromo,
+          user: NameUser
+        };
+        Parse.Analytics.track("pin", Dimensions);
+        var pin = document.getElementById(id).style.color;
+        if (pin == "silver") {
+            document.getElementById(id).style.color = "purple";
+            SavePromotion(IdUsuario, id)
+            // $scope.reload()
+        } else {
+            document.getElementById(id).style.color = "silver";
+            DeletePromotion(IdUsuario, id)
+          //  $scope.reload()
+        }
+      //  $scope.reload()
+    }
+	/**************************************************/
+
 	var dimensions = {
 		name: 'frenzyFavorites',
 	};
+$scope.display = OurFavorites.all();
+
 	Parse.Analytics.track("view", dimensions);
-	$scope.ourFavorites = OurFavorites.all();
+			$scope.ourFavorites = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
+
+			//	$ionicLoading.hide();
         colorIconsFoother = []
       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
+	/*************************************************/
+
+		$scope.reload = function () {
+		    var PromoSavess = new Parse.Query('PromotionSaved')
+		    PromoSavess.equalTo("UserID", IdUsuario);
+		    PromoSavess.find({
+				success: function(results) {
+					viewFavorite()
+					for (a in results[0].attributes.PromotionID){
+						for (b in CurrentPromotion){
+							if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+								if (CurrentPromotion[b].ColorPin === "silver") {
+									CurrentPromotion[b].ColorPin  = "purple";
+								}
+							}else {
+								CurrentPromotion[b].ColorPin  = "silver";
+							}
+						}
+					}
+				},
+				error: function(myObject, error) {
+					// Error occureds
+					console.log( error );
+				}
+			});
+		}
+
+	$scope.SalvadosSaveAndDelete = function (id) {
+        var NamePromo = id
+        var NameUser = String(IdUsuario)
+        var Dimensions = {
+          name: 'FavoritePin_'+NamePromo,
+          user: NameUser
+        };
+        Parse.Analytics.track("pin", Dimensions);
+        var pin = document.getElementById(id).style.color;
+        if (pin == "silver") {
+            document.getElementById(id).style.color = "purple";
+            SavePromotion(IdUsuario, id)
+          //  $scope.reload()
+        } else {
+            document.getElementById(id).style.color = "silver";
+            DeletePromotion(IdUsuario, id)
+          //  $scope.reload()
+        }
+      //  $scope.reload()
+    }
+	/**************************************************/
 	var dimensions = {
 		name: 'userFavorites',
 	};
@@ -295,49 +397,38 @@ angular.module('starter.controllers', ['ionic'])
 })
 // *************************** SAVED CONTROLLER ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
+	var NameUser = String(IdUsuario)
 	var dimensions = {
-		name: 'allPromotions',
+		name: 'Salvados',
+		user: NameUser
 	};
 	Parse.Analytics.track("view", dimensions);
 
 	$scope.reload = function () {
-	    var PromoSavess = new Parse.Query('PromotionSaved')
-	    PromoSavess.equalTo("UserID", IdUsuario);
-	    PromoSavess.find({
-			success: function(results) {
-				for (a in results[0].attributes.PromotionID){
-					for (b in CurrentPromotion){
-						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
-							if (CurrentPromotion[b].ColorPin === "silver") {
-								CurrentPromotion[b].ColorPin  = "purple";
-							}
-						}else {
-							CurrentPromotion[b].ColorPin  = "silver";
-						}
-					}
-				}
-			},
-			error: function(myObject, error) {
-				// Error occureds
-				console.log( error );
-			}
-		});
+
 	}
 
 
 	// ************ DELETE AND SAVE PIN ************
 	$scope.SalvadosSaveAndDelete = function (id) {
+		var NamePromo = id
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'FavoritePin_'+NamePromo,
+		  user: NameUser
+		};
+		Parse.Analytics.track("pin", Dimensions);
 		var pin = document.getElementById(id).style.color;
 		if (pin == "silver") {
 			document.getElementById(id).style.color = "purple";
 			SavePromotion(IdUsuario, id)
-			$scope.reload()
+			// $scope.reload()
 		} else {
 			document.getElementById(id).style.color = "silver";
 			DeletePromotion(IdUsuario, id)
-			$scope.reload()
+		//	$scope.reload()
 		}
-		$scope.reload()
+	//	$scope.reload()
 	}
 
 	$scope.$on('$ionicView.enter', function() {
@@ -352,6 +443,7 @@ angular.module('starter.controllers', ['ionic'])
 //********************** Customer CONTROLLER *****************************
 .controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	$scope.UrlC = function (id) {
+		console.log(id);
 		var resultSetCs = $.grep(CustomerList, function (e) {
 			 return e.NameCategory.indexOf(id) == 0;
 		});
@@ -372,12 +464,22 @@ angular.module('starter.controllers', ['ionic'])
 	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
+		console.log(category);
+		var NamePromo = category
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+			name: 'Heart_'+NamePromo,
+			user: NameUser
+		};
+
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
 		if (cssColor == "white") {
 			document.getElementById(parametro+" "+category).style.color = "red";
 			SaveFavorite(IdUsuario, category)
+				Parse.Analytics.track("AddHeart", Dimensions);
 		} else {
 			document.getElementById(parametro+" "+category).style.color = "white";
+				Parse.Analytics.track("DelHeart", Dimensions);
 			DeleteFavorite(IdUsuario, category)
 		}
 	};
@@ -427,7 +529,7 @@ angular.module('starter.controllers', ['ionic'])
   });
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
@@ -449,6 +551,7 @@ angular.module('starter.controllers', ['ionic'])
 	    PromoSavess.equalTo("UserID", IdUsuario);
 	    PromoSavess.find({
 			success: function(results) {
+				viewFavorite()
 				for (a in results[0].attributes.PromotionID){
 					for (b in CurrentPromotion){
 						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
@@ -469,21 +572,28 @@ angular.module('starter.controllers', ['ionic'])
 	}
 
 	// ************ FUNCTION CHANGE COLOR PIN OFFERTS ************
-	$scope.changeColorPinOfferts = function (id, IDPromotion) {
+	$scope.changeColorPinOfferts = function (id, IDPromotion,Namepromotion) {
+		var NamePromo = Namepromotion
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'PromotionPin_'+NamePromo,
+		  user: NameUser
+		};
+		Parse.Analytics.track("pin", Dimensions);
 		var cssColorpinOfferts = document.getElementById(id+" "+IDPromotion).style.color;
 
 		if (cssColorpinOfferts == "silver") {
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
 			SavePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
-	    viewPromotion()
+		//	$scope.reload()
+	    //viewPromotion()
 		} else {
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
 			DeletePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
-	    viewPromotion()
+		//	$scope.reload()
+	    //viewPromotion()
 		}
-		$scope.reload()
+	//$scope.reload()
 	};
 	// *********** FUNCTION CHANGE COLOR PIN OFFERTS WITHOUT IMAGE **********
 	$scope.changeColorPinOffertsWithoutImage = function (id, IDPromotion) {
@@ -492,23 +602,47 @@ angular.module('starter.controllers', ['ionic'])
 		if (cssColorpinOffertsWithoutImage == "silver") {
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
 			SavePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
+		//	$scope.reload()
 		} else {
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
 			DeletePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
+		//	$scope.reload()
 		}
 	};
 	// *************** CALL PHONE FUNCTION ***************
-	$scope.call= function(cell){
-		a = cell.toString();
-		b = 'tel:'
-		window.open(b+a);
+	$scope.call= function(cell,name){
+		var NameUser = String(IdUsuario);
+		var Dimensions = {
+			name: 'Promotion_call'+name,
+			user: NameUser
+		};
+
+		Parse.Analytics.track("CallsPromotion", Dimensions);
+		var a = cell.toString();
+		var b = 'tel:'
+		var callPhone = b + a;
+
+		window.open(callPhone)
+
 	}
 	// *************** URL BROWSER SHOP FUNCTION ***************
-	$scope.shopUrl = function(Url){
-		z = Url;
-		window.open(z);
+	$scope.shopUrl = function(Url,id,name){
+		var NamePromo = name.split(" ").join("_")
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'Promotion_'+NamePromo+"_"+id,
+		  user: NameUser
+		};
+		if (id == "web") {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("WebShopPromotion", Dimensions);
+		}else {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("cartShopPromotion", Dimensions);
+		}
+
 	}
 	// *************** PROMOTIONS FUNCTION ***************
 	$scope.Promotions =function (id){
@@ -536,7 +670,7 @@ angular.module('starter.controllers', ['ionic'])
 		});
 	}
 
-	Parse.Analytics.track("view", dimensions);
+
 	$scope.$on('$ionicView.enter', function() {
 
 		$scope.Promotions($stateParams.superId);
@@ -545,58 +679,58 @@ angular.module('starter.controllers', ['ionic'])
 		idRoute = currentPromotion.get($stateParams.superId);
 		// IdPromotion with redirection page
 		couponPage = couponPage+$stateParams.superId
+		var NamePromo = $stateParams.superId
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'HeartPopover_'+NamePromo,
+		  user: NameUser
+		};
 		$scope.changeColorHeartFollow = function(id) {
+
 			if ($scope.heartMenu == "silver") {
+				Parse.Analytics.track("AddHeartPopover", Dimensions);
 				$scope.heartMenu = "red";
 				SaveFavorite(IdUsuario, id)
 			} else {
+				Parse.Analytics.track("DelHeartPopover", Dimensions);
 				$scope.heartMenu = "silver";
 				DeleteFavorite(IdUsuario, id)
 			}
 		}
-
+		/* **************************************************** */
 		$scope.askPromotion = function () {
-			var Title = '<div class="row"> <div class = "col"></div>  <p class = "padin open_sans col col-75">  ¿Te gustaria recibir notificaciones de nuevas ofertas o cupones de <spam class="colorShopName">' + $stateParams.superId + "</spam>?</p>  <div class = 'col'></div>  </div>"
-			var alertPopup = $ionicPopup.alert({
-				title: '<p class = "home colorRobot">b</p> <p class="textAlert open_sans">Tu peticion por mas <br>Ofertas ha sido envida</p>',
-				template: Title,
-				buttons: [{text: '<div class="row"><div class = "col col-75 AgregarF open_sans">Agregar a Favoritos</div> <div class = "home coloralert col">B</div></div>' ,
-				onTap: function() {
-					// var confirmPopup = $ionicPopup.confirm({
-					// 	title: 'Quieres Agregarlo a tu favoritos?',
-					// 	scope: $scope,
-					// 	buttons: [
-					// 	       { text: 'Cancel' },
-					// 	       {
-					// 	         text: '<b ng-model="data">Guardar</b>',
-					// 	         type: 'button-positive',
-					// 	        //  onTap: function(e) {
-					// 					// 	 	console.log(e.type);
-					// 					// 		if (e.type == "click") {
-					// 					// 			var resultSetPopovers = $.grep(CustomerList, function (e) {
-					// 					// 				 return e.NameCategory.indexOf($stateParams.superId) == 0;
-					// 					// 			});
-					// 					// 			console.log(resultSetPopovers);
-					// 					// 			if (resultSetPopovers[0].colorHeart == "white") {
-					// 					// 					$scope.heartMenu = "red";
-					// 					// 					SaveFavorite(IdUsuario, $stateParams.superId)
-					// 					// 			}else {
-					// 					// 					DeleteFavorite(IdUsuario, $stateParams.superId)
-					// 					// 				$scope.heartMenu = "silver"
-					// 					// 			}
-					// 					// 		}
-					// 	        //  }
-					// 	       },
-					// 	     ]
-					// });
 
-					 }
-				 }]
-			});
-			alertPopup.then(function(res) {
-				console.log('Thank you for not eating my delicious ice cream cone');
+			var NamePromo = $stateParams.superId
+			var NameUser = String(IdUsuario)
+			var Dimensions = {
+				name: 'peticionPromo_'+NamePromo,
+				user: NameUser
+			};
+
+			swal({
+				title: "<p class='home' style='font-size:70px;color:blue'>b</p> <p style='font-weight:bold;color:#343434;font-size:20px'>Tu petición por más <br>Ofertas ha sido envida</p>",
+				text: "<div class='row'> <div class = 'col'></div>  <p class = 'padin open_sans col col-75'>  ¿Te gustaria agregar a <spam class='colorShopName'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas?</p>  <div class = 'col'></div>  </div>",
+				html: true,
+				confirmButtonColor: "#00BAB9",
+				confirmButtonText: "Agregar",
+				// Si se quiere cancelar pulsando otra parte de la aplicacion
+				allowOutsideClick: true
+			},
+			function(isConfirm) {
+				if(isConfirm){
+					Parse.Analytics.track("petition", Dimensions);
+
+					$scope.loading = $ionicLoading.show({
+						template: "<ion-spinner customer1lass='spinner' icon='lines' class ='Loading'" + $scope.AppCategory + "></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas </p>"
+					});
+
+					$timeout(function () {
+						$ionicLoading.hide();
+					}, 2500);
+				}
 			});
 		}
+		/* **************************************************** */
 		$scope.chats = currentPromotion.get($stateParams.superId);
 		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
@@ -641,14 +775,30 @@ angular.module('starter.controllers', ['ionic'])
 						or hide it  ****/
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
+		alert("call 2")
 		a = cell.toString();
 		b = 'tel:'
 		window.open(b+a);
 	}
 	// *************** URL BROWSER SHOP FUNCTION ***************
-	$scope.shopUrl = function(Url){
-		z = Url;
-		window.open(z);
+	$scope.shopUrl = function(Url,id,name){
+		var NamePromo = name.split(" ").join("_")
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+		  name: 'Coupons_'+NamePromo+"_"+id,
+		  user: NameUser
+		};
+
+		if (id == "web") {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("WebShopCoupon", Dimensions);
+		}else {
+			z = Url;
+			window.open(z);
+			Parse.Analytics.track("cartShopCoupon", Dimensions);
+		}
+
 	}
 
     $scope.showCouponDescription = function(id){
@@ -665,7 +815,7 @@ angular.module('starter.controllers', ['ionic'])
                         type: "warning",
                         showCancelButton: true,
                         cancelButtonText: 'No',
-                        confirmButtonColor: "#00BAB9",
+                        confirmButtonColor: '#00BAB9',
                         confirmButtonText: "Canjear!",
                         closeOnConfirm: false
                     },
@@ -696,7 +846,7 @@ angular.module('starter.controllers', ['ionic'])
                         type: "warning",
                         showCancelButton: true,
                         cancelButtonText: 'No',
-                        confirmButtonColor: "#00BAB9",
+                        confirmButtonColor: '#00BAB9',
                         confirmButtonText: "Canjear!",
                         closeOnConfirm: false
                     },
@@ -741,7 +891,14 @@ angular.module('starter.controllers', ['ionic'])
         displayNoneInline=[{none:"inline",inline:"none"}];
       };
 	// ************ FUNCTION CHANGE COLOR PIN CUPON *************
-	$scope.changeColorPinCupon = function (id) {
+	$scope.changeColorPinCupon = function (id,NameCoupon) {
+		var NamePromo = NameCoupon
+		var NameUser = String(IdUsuario)
+		var Dimensions = {
+			name: 'CouponPin_'+NamePromo,
+			user: NameUser
+		};
+		Parse.Analytics.track("pin", Dimensions);
 		var cssColorCuponPin = document.getElementById(id).style.color;
 		if (cssColorCuponPin == "silver") {
 			document.getElementById(id).style.color = "purple";
@@ -966,6 +1123,19 @@ angular.module('starter.controllers', ['ionic'])
 
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
+$scope.Analytics = function (id,nameShare) {
+	var NameUser = String(IdUsuario)
+	var Dimensions = {
+	  name: 'share_'+id,
+	  user: NameUser
+	};
+	if (nameShare == "promotion") {
+		Parse.Analytics.track("SharePromotion", Dimensions);
+	}else {
+		Parse.Analytics.track("ShareCoupon", Dimensions);
+	}
+
+}
 	$ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
 		scope: $scope,
 	}).then(function(popover) {
@@ -988,14 +1158,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 })
 // ************************ CORDOVA PLUGINS START LOAD ************************
 .run(function($ionicPlatform) {
-	$ionicPlatform.ready(function() {
-		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-		}
-		if (window.StatusBar) {
-			StatusBar.styleLightContent();
-		}
-	});
+
+		$ionicPlatform.ready(function() {
+			if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			}
+			if (window.StatusBar) {
+				StatusBar.styleLightContent();
+			}
+		});
+		// Disable back for app
+		$ionicPlatform.registerBackButtonAction(function(event) {
+				if ($state.current.name == 'app.playlists') {
+						$ionicPopup.confirm({
+								title: 'System warning',
+								template: 'are you sure you want to exit?'
+						}).then(function(res) {
+								if (res) {
+										ionic.Platform.exitApp();
+								}
+						})
+				}
+		}, 100);
+
 })
 // ************************ ROUTER PROVIDER CONFIGURATION ************************
 .config(function($stateProvider, $urlRouterProvider) {
@@ -1139,7 +1324,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/splash');
+	$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -1149,32 +1334,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  SPLASH  ******************************/
 .controller('splashController', ['$scope', '$state', function($scope, $state) {
-	Parse.Cloud.run('GetCustomer', {},{
-		success:function (results) {
-		//	console.log(results);
-			CustomerList = results
-		},
-		error:function (error) {
-		 console.log(error);
-		}
-	});
-	$scope.currentUser = Parse.User.current();
-	if ($scope.currentUser == null ){
-		$state.go('tutorial')
-			} else {
-				if ($scope.currentUser["attributes"].authData == undefined) {
-					IdUsuario = String($scope.currentUser.id)
-							viewPromotion()
-				}else {
-					IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-							viewPromotion()
-				}
-				$state.go('app.playlists');
-			}
+
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-  $scope.slideChanged = function(index) {
+	// $scope.currentUser = Parse.User.current();
+	// if ($scope.currentUser == null ){
+	// 	//$state.go('tutorial')
+	// 		} else {
+	// 			if ($scope.currentUser["attributes"].authData == undefined) {
+	// 				IdUsuario = String($scope.currentUser.id)
+	// 						viewPromotion()
+	// 			}else {
+	// 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+	// 						viewPromotion()
+	// 			}
+	// 			//$state.go('app.playlists');
+	// 		}
+	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
           $state.go('login2');
@@ -1186,16 +1363,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
   $scope.slideChanged = function(index) {
     switch(index) {
-        case 3:
+        case 0:
           $state.go('app.herramientas');
           break;
       }
     }
 }])
-
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
-
+	var NameUser = String(IdUsuario)
+	var Dimensions = {
+	  name: 'tools',
+	  user: NameUser
+	};
+	Parse.Analytics.track("Tools", Dimensions);
+	$scope.AnalyticsTools= function (id) {
+		var NameUser = String(IdUsuario)
+		var dimensions = {
+			name: 'tools_'+id,
+			user: NameUser
+		};
+		Parse.Analytics.track("Tools", dimensions);
+	}
 	$scope.logout = function() {
 		Parse.User.logOut();
 		$state.go('login');
@@ -1207,105 +1396,73 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','Z','','none']);
 	});
 }])
+/**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
-    $scope.currentUser = Parse.User.current();
-    if ($scope.currentUser == null ){
-    }else{
-        IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-	// 			Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-	// 				success:function (results) {
-	// 					console.log(results);
-	// CustomerList = results
-	// 				},
-	// 				error:function (error) {
-	// 				 console.log(error);
-	// 				}
-	// 			});
-        viewPromotion()
-        $state.go('app.playlists');
-    }
-    //===============LOGIN WITH FB==========//
-    $scope.loginfb = function(){
-  	var permissions = ["public_profile", "email", "user_birthday","user_hometown"];
-    //Browser Login
-    if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
+   $scope.currentUser = Parse.User.current();
 
-				Parse.FacebookUtils.logIn('email,user_friends', {
-						success: function(user) {
-							IdUsuario = user.changed.authData.facebook.id
-								if (!user.existed()) {
+   if ($scope.currentUser == null ){
+   }else{
+       IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
+       viewPromotion()
+       $state.go('app.playlists');
+   }
 
-										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
-												user.set("email", me.email);
-												user.set('name', me.name);
-												user.set('gender', me.gender);
-												user.set('birthday', me.birthday);
-												user.set('hometown', me.hometown)
-												user.save();
-										});
-								} else {
-										console.log("Logged");
-								}
-								$state.go('app.playlists');
-						},
-						error: function(user, error) {
-								console.log(error);
-						}
-				});
-    }
-    //Native Login
-    else {
-      $cordovaFacebook.login(permissions).then(function(success){
-        //alert(success);
-        IdUsuario = success.authResponse.userID
-	// 			Parse.Cloud.run('GetCustomer', {"Array":IdUsuario},{
-	// 				success:function (results) {
-	// 					console.log(results);
-	// CustomerList = results
-	// 				},
-	// 				error:function (error) {
-	// 				 console.log(error);
-	// 				}
-	// 			});
-        viewPromotion()
-        //Need to convert expiresIn format from FB to date
-        var expiration_date = new Date();
-        expiration_date.setSeconds(expiration_date.getSeconds() + success.authResponse.expiresIn);
-        expiration_date = expiration_date.toISOString();
+        var fbLogged = new Parse.Promise();
 
-        var facebookAuthData = {
-          "id": success.authResponse.userID,
-          "access_token": success.authResponse.accessToken,
-          "expiration_date": expiration_date
-        };
+   var fbLoginSuccess = function(response) {
+       if (!response.authResponse){
+           fbLoginError("Cannot find the authResponse");
+           return;
+       }
+       var expDate = new Date(
+           new Date().getTime() + response.authResponse.expiresIn * 1000
+       ).toISOString();
 
-				Parse.FacebookUtils.logIn('email,user_friends', {
-						success: function(user) {
-								if (!user.existed()) {
+       var authData = {
+           id: String(response.authResponse.userID),
+           access_token: response.authResponse.accessToken,
+           expiration_date: expDate
+       }
+       fbLogged.resolve(authData);
+   };
 
-										FB.api('me?fields=id,name,birthday,hometown,gender,picture&type=large', function(me) {
-												user.set("email", me.email);
-												user.set('name', me.name);
-												user.set('gender', me.gender);
-												user.set('birthday', me.birthday);
-												user.set('hometown', me.hometown)
-												user.save();
-										});
-								} else {
-										console.log("Logged");
-								}
-								$state.go('app.playlists');
-						},
-						error: function(user, error) {
-								console.log(error);
-						}
-				});
-      }, function(error){
-        console.log(error);
-      });
-    }
-  };
-    // //===============/LOGIN WITH FB==========//
+   var fbLoginError = function(error){
+       fbLogged.reject(error);
+   };
+
+   //===============LOGIN WITH FB==========//
+   $scope.loginfb = function(){
+		 					  setTimeout(function(){
+
+																	if(!window.cordova){
+																					facebookConnectPlugin.browserInit('426922250825103');
+																	}
+
+																	facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
+
+																	fbLogged.then(function(authData) {
+																			$state.go('app.playlists');
+																			return Parse.FacebookUtils.logIn(authData);
+																	})
+
+																	.then(function(userObject) {
+																					var authData = userObject.get('authData');
+																					facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender', null,
+																					function(response) {
+																									userObject.set('name', response.name);
+																									userObject.set('birthday', response.birthday);
+																									userObject.set('gender', response.gender);
+																									userObject.set('hometown', response.hometown);
+																									userObject.save();
+																					},
+																					function(error) {
+																									console.log(error);
+																					})
+																	})
+								}, 1000);
+
+     };
+   // //===============/LOGIN WITH FB==========//
 });

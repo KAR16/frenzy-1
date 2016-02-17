@@ -25,7 +25,7 @@
   background-color: white;
 }
 .colorShopName{
-  font-size: 12px;
+  font-size: 16px;
   color:#483D8B;
 }
 .popup-container.active .popup {
@@ -54,24 +54,22 @@
 .coloralert{
   color: red;
 }
-.colorRobot{
+/*.colorRobot{
   color: blue;
   font-size: 70px;
-}
-.facebookButon{
-  background-color:;
+}*/
+.requestOffers{
+  background-color: #00DDC1;
   height: 35px;
   border-radius: 12px;
   border:none;
-  border-bottom: thick solid #E6E7E8;
+  border-bottom: thick solid #00C6AD ;
 }
-.facebookTitle{
-  font-size: 19px;
-  font-weight: bolder;
-  color: #3F51B5;
-  text-align: center;
-  padding-top: 2px;
+
+.requestTextColor {
+    color: white;
 }
+
 .backButtomStyle {
     margin-left: -5px;
     padding-top: 5px;

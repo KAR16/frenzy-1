@@ -22,7 +22,10 @@
     "com.ionic.keyboard",
     "cordova-plugin-facebook4",
     "org.apache.cordova.splashscreen",
-    "org.apache.cordova.device-orientation"
+    "org.apache.cordova.device-orientation",
+    "phonegap-facebook-plugin",
+    "cordova-plugin-contacts",
+    "cordova-plugin-inappbrowser"
   ],
   "cordovaPlatforms": []
 }

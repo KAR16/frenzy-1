@@ -41,26 +41,6 @@
   height: 15%;
   margin-top: -15%;
 }
-.arrow-up-tutorial {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 10px 12px 10px;
-    border-color: transparent transparent #E6E7E8 transparent;
-    margin-top: -16px;
-}
-.arrow-up-left-tutorial {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 14px 0 0 12px;
-    border-color: transparent transparent transparent #E6E7E8;
-    margin-left: -5px;
-    margin-top: -17px;
-}
-.boxGreyTitleTutorial{
-
-}
 /******************************************/
 /***********  SLIDER NO.2  ****************/
 .backgroundTutorialNo2 {
@@ -80,7 +60,7 @@
 /******************************************/
 /***********  SLIDER NO.3  ****************/
 .backgroundTutorialNo4 {
-  background-color:#3F51B5;
+  background-color:#00BAB9;
   width: 100%;
   height: 100%;
   padding-top: 5%;
@@ -89,6 +69,7 @@
 /***************  GREY BOX ******************/
 .tut1{
   text-align: center;
+  padding-top: 5%;
   font-size: 15px;
   font-weight: bolder;
   color: #A7A9AC;

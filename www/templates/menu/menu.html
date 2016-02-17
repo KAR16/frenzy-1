@@ -48,34 +48,35 @@
                 <spam class="title home" style="font-size:65px; margin-top:0px;">{{footerChangeColor[0][5]}}</spam>
             </ion-header-bar>
            <!--************************* FOOTHER  ******************************-->
-            <ion-footer-bar align-title="left" class="bar-stable" style="background-color:#E6E7E8;border-style:none;background-color:#E6E7E8;border-style:none;vertical-align:super;align-items: center;">
-                    <div class="row home" style="vertical-align:super">
-                            <div class="col col-10"></div>
+            <ion-footer-bar  class="bar-stable" style="background-color:#E6E7E8; border-style:none;align-items: center;">
+                    <item-content class="row home  my-menu" style="vertical-align:super:">
+
                             <!--************  ICONO FOOTER HOME  ******************-->
-                            <div class="col col-25">
-                                    <a href="#/app/playlists" style="color:{{footerChangeColor[0][0]}}; text-decoration:none;" nav-transition="none">
-                                            <div>A</div>
-                                    </a>
+                            <div class="col col-25" style="">
+                                    <ion-item href="#/app/playlists" style="color:{{footerChangeColor[0][0]}}; margin-top:6px;" nav-transition="none">
+                                        <div style="font-size:30px;margin-left:10px;margin-top:-5px;">A</div>
+                                    </ion-item>
                             </div>
                             <!--************  ICONO FOOTER HEART  ******************-->
                             <div class="col col-25">
-                                    <a href="#/app/favoritos" style="color:{{footerChangeColor[0][1]}}; text-decoration:none;" nav-transition="none" onclick="viewFavorite()">
-                                            <div>B</div>
-                                    </a>
+                                    <ion-item href="#/app/favoritos" style="color:{{footerChangeColor[0][1]}}; margin-top:6px;" nav-transition="none" onclick="viewFavorite()">
+                                            <div  style="font-size:30px;margin-left:10px;margin-top:-5px;">B</div>
+                                    </ion-item>
                             </div>
                             <!--************  ICONO FOOTER STAR onclick="viewPromotion()" ******************-->
                             <div class="col col-25" >
-                                    <a href="#/app/salvados" style="color:{{footerChangeColor[0][2]}}; text-decoration:none;" nav-transition="none" >
-                                            <div id = "{{chats}}">W</div>
-                                    </a>
+                                    <ion-item href="#/app/salvados" style="color:{{footerChangeColor[0][2]}}; margin-top:6px;" nav-transition="none" >
+                                            <div id = "{{chats}}" style="font-size:30px;margin-left:10px;margin-top:-5px;">W</div>
+                                    </ion-item>
                             </div>
                             <!--************  ICONO FOOTER TOOL  ******************-->
                             <div class="col col-25">
-                                    <a href="#/app/herramientas" style="color:{{footerChangeColor[0][3]}}; text-decoration:none;" nav-transition="none">
-                                            <div>D</div>
-                                    </a>
+                                    <ion-item href="#/app/herramientas" style="color:{{footerChangeColor[0][3]}}; margin-top:6px;" nav-transition="none">
+                                            <div style="font-size:30px;margin-left:10px;margin-top:-5px;">D</div>
+                                    </ion-item>
                             </div>
-                    </div>
+                          </item-content>
+
             </ion-footer-bar>
         </ion-nav-view>
     </ion-side-menu-content>

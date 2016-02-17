@@ -1,85 +1,25 @@
 <ion-view >
     <!--**********  BODY OF PAGE START  **********-->
-    <ion-content  nav-transition="none">
+    <ion-content  nav-transition="none"locking="false">
         <!--**********  LIST TO CREATE CATEGORIES FRENZY  **********-->
         <ion-list>
             <!--**********  LIST STYLE PAGE START  **********-->
-            <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categorys" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}">
+            <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categorys | orderBy:'IconCategory'" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}">
               <category-info info ="category" ></category-info>
             </ion-item>
         </ion-list>
         <br>
         <!--**********  TRIANGLES TOP  **********-->
-        <div class="flechitas">
-            <div class="row ">
-            <p class="arrow-up-left"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-            <p class="arrow-up"></p>
-        </div>
-        <!--**********  PURPLE BOX  **********-->
-        <div class="pageStartBoxPurple">
-            <!--**********  CLOCK ICON  **********-->
-            <h4 class="home pageStartBoxPurpleIcon">
-                c
-            </h4>
-            <h4 class="open_sans pageStartBoxPurpleTitle">
-                Espera por nuevas promociones..!!
-            </h4>
-        </div>
+        <div class="container2 zigzag">
+          <!--**********  CLOCK ICON  **********-->
+              <h4 class="home pageStartBoxPurpleIcon">
+                  c
+              </h4>
+              <h4 class="open_sans pageStartBoxPurpleTitle">
+                  Espera por nuevas promociones..!!
+              </h4></div>
+        <div class="container4 zigzag"></div>
         <!--**********  TRIANGLES DOWN  **********-->
-        <div class="row">
-            <p class="arrow-dow-left"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-            <p class="arrow-dow"></p>
-        </div>
-        </div>
+
     </ion-content>
 </ion-view>
