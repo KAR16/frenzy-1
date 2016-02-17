@@ -305,13 +305,13 @@ angular.module('starter.controllers', ['ionic'])
         if (pin == "silver") {
             document.getElementById(id).style.color = "purple";
             SavePromotion(IdUsuario, id)
-            $scope.reload()
+            // $scope.reload()
         } else {
             document.getElementById(id).style.color = "silver";
             DeletePromotion(IdUsuario, id)
-            $scope.reload()
+          //  $scope.reload()
         }
-        $scope.reload()
+      //  $scope.reload()
     }
 	/**************************************************/
 
@@ -371,13 +371,13 @@ $scope.display = OurFavorites.all();
         if (pin == "silver") {
             document.getElementById(id).style.color = "purple";
             SavePromotion(IdUsuario, id)
-            $scope.reload()
+          //  $scope.reload()
         } else {
             document.getElementById(id).style.color = "silver";
             DeletePromotion(IdUsuario, id)
-            $scope.reload()
+          //  $scope.reload()
         }
-        $scope.reload()
+      //  $scope.reload()
     }
 	/**************************************************/
 	var dimensions = {
@@ -405,28 +405,7 @@ $scope.display = OurFavorites.all();
 	Parse.Analytics.track("view", dimensions);
 
 	$scope.reload = function () {
-	    var PromoSavess = new Parse.Query('PromotionSaved')
-	    PromoSavess.equalTo("UserID", IdUsuario);
-	    PromoSavess.find({
-			success: function(results) {
-				viewFavorite()
-				for (a in results[0].attributes.PromotionID){
-					for (b in CurrentPromotion){
-						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
-							if (CurrentPromotion[b].ColorPin === "silver") {
-								CurrentPromotion[b].ColorPin  = "purple";
-							}
-						}else {
-							CurrentPromotion[b].ColorPin  = "silver";
-						}
-					}
-				}
-			},
-			error: function(myObject, error) {
-				// Error occureds
-				console.log( error );
-			}
-		});
+
 	}
 
 
@@ -443,13 +422,13 @@ $scope.display = OurFavorites.all();
 		if (pin == "silver") {
 			document.getElementById(id).style.color = "purple";
 			SavePromotion(IdUsuario, id)
-			$scope.reload()
+			// $scope.reload()
 		} else {
 			document.getElementById(id).style.color = "silver";
 			DeletePromotion(IdUsuario, id)
-			$scope.reload()
+		//	$scope.reload()
 		}
-		$scope.reload()
+	//	$scope.reload()
 	}
 
 	$scope.$on('$ionicView.enter', function() {
@@ -606,15 +585,15 @@ $scope.display = OurFavorites.all();
 		if (cssColorpinOfferts == "silver") {
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
 			SavePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
-	    viewPromotion()
+		//	$scope.reload()
+	    //viewPromotion()
 		} else {
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
 			DeletePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
-	    viewPromotion()
+		//	$scope.reload()
+	    //viewPromotion()
 		}
-		$scope.reload()
+	//$scope.reload()
 	};
 	// *********** FUNCTION CHANGE COLOR PIN OFFERTS WITHOUT IMAGE **********
 	$scope.changeColorPinOffertsWithoutImage = function (id, IDPromotion) {
@@ -623,11 +602,11 @@ $scope.display = OurFavorites.all();
 		if (cssColorpinOffertsWithoutImage == "silver") {
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
 			SavePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
+		//	$scope.reload()
 		} else {
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
 			DeletePromotion(IdUsuario, IDPromotion)
-			$scope.reload()
+		//	$scope.reload()
 		}
 	};
 	// *************** CALL PHONE FUNCTION ***************
@@ -1345,7 +1324,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	//$urlRouterProvider.otherwise('/tutorial');
+	$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //

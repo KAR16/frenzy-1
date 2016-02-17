@@ -17,11 +17,11 @@
         <div class="col col-33" ng-repeat="s in chats[2]">
             <a class="pageOffertsOffertsTitle">
                 <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
-                <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()">
+                <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()" style="display:{{s.ocultar}}">
                     Ofertas ({{s.contPromotion}})
                 </p>
                 <!--**********  LINE DECORATION  **********-->
-                <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction">
+                <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction" style="display:{{s.ocultar}}">
             </a>
         </div>
         <!--**********  CUPONS  **********-->
@@ -281,7 +281,7 @@
         <!--**********  SECOND POP OVER SHARE  **********-->
         <script id="templates/popoverNew.html" type="text/ng-template">
             <ion-popover-view style="height:150px; width:250px;">
-                <!--***** MAIN CONTENT SECOND POPOVER *****-->
+                //***** MAIN CONTENT SECOND POPOVER *****
                 <div class="secondPopoverTextAling" style="text-aling:center;">
                     <spam class="secondPopoverTitle">Compartir Oferta</spam>
                 </div>
