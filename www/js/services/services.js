@@ -268,6 +268,7 @@ app.factory('currentPromotion', function() {
 	return {
 		all: function(superId) {},
 		get: function(superId) {
+			console.log("entro");
 			ALL = []
 			Category = [];
 			dato = [];
@@ -290,7 +291,7 @@ app.factory('currentPromotion', function() {
 			}
 
 			for (c in CurrentPromotion) {
-
+				console.log(CurrentPromotion[c]);
 				if (superId === CurrentPromotion[c].Category) {
 					if (CurrentPromotion[c].ShopOnline == undefined) {
 							CurrentPromotion[c].Display = "none"
@@ -330,10 +331,15 @@ app.factory('currentPromotion', function() {
 				if (resultSet[0]["coupon"] == 0) {
 					validar = "no"
 				}
+				if(resultSet[0]['promo'] == 0){
+					ALL.push(Category)
+					ALL.push(dato)
+					ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar,ocultar:'none'}])
+				}
 				ALL.push(Category)
 				ALL.push(dato)
 				ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar}])
-				//console.log(ALL);
+				console.log(ALL);
 				return ALL;
 			}
 			return null;
@@ -857,8 +863,6 @@ function viewFavorite() {
 						if (AllFavorite[b].ColorPin === "silver") {
 							AllFavorite[b].ColorPin  = "purple";
 						}
-					}else {
-						AllFavorite[b].ColorPin  = "silver";
 					}
 				}
 			}
@@ -870,20 +874,61 @@ function viewFavorite() {
 	});
 	})
 }
+
 // *************** VIEW PROMOTION FUNCTION ***************
-function viewPromotion(){
+function viewPromotion(PromotionId,verificar){
+	var PromoSavess = new Parse.Query('PromotionSaved')
+	PromoSavess.equalTo("UserID", IdUsuario);
+
+	PromoSavess.find({
+	success: function(results) {
+
+		for (a in results[0].attributes.PromotionID){
+			for (b in CurrentPromotion){
+				if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
+					if (CurrentPromotion[b].ColorPin === "silver") {
+						CurrentPromotion[b].ColorPin  = "purple";
+					}
+				}
+			}
+		}
+	},
+	error: function(myObject, error) {
+		// Error occureds
+		console.log( error );
+	}
+}).then(function () {
+	if (verificar == "eliminar") {
+		console.log("se elimno");
+		for (b in CurrentPromotion){
+			if (PromotionId === CurrentPromotion[b].IDpromotion){
+				console.log("************************");
+				console.log(PromotionId);
+				console.log(CurrentPromotion[b].IDpromotion);
+				console.log("************************");
+				if (CurrentPromotion[b].ColorPin === "purple") {
+
+					CurrentPromotion[b].ColorPin  = "silver";
+					console.log("----------------------------");
+					console.log(CurrentPromotion[b].ColorPin);
+				}
+			}
+		}
+
+	}
+}).then(function () {
 	AllPromotion = [];
-	var con = 0;
 	var promotionSavedData = Parse.Object.extend("PromotionSaved");
 	var query = new Parse.Query(promotionSavedData);
 	query.equalTo("UserID", IdUsuario);
 	query.find({
 		success: function(results) {
-
+			console.log(results);
 			for (var i = 0; i < results[0].attributes.PromotionID.length; i++){
 				for(x in CurrentPromotion) {
 					if (results[0].attributes.PromotionID[i] === CurrentPromotion[x].IDpromotion) {
 						console.log(CurrentPromotion[x].IDpromotion);
+
 						AllPromotion.push(CurrentPromotion[x]);
 						// AllPromotion[con]["PromotionId"] = promociones[x].id;
 						// AllPromotion[con]["oferta"] = "existe";
@@ -898,13 +943,17 @@ function viewPromotion(){
 					};
 				}
 			}
-
 		},
 		error: function(error) {
 			// Error occureds
 			console.log(error);
 		}
-	});
+	}).then(function () {
+
+		 viewFavorite()
+	})
+	})
+
 }
 // *************** SAVE FAVORITE FUNCTION ***************
 function SaveFavorite(UserId, CustomerId) {
@@ -957,7 +1006,7 @@ function DeletePromotion(UserId, PromotionId) {
 	var Deletepromotion = Parse.Cloud.run('DeletePromotion', {"Array":result});
 
 	Deletepromotion.then(function(){
-		viewPromotion()
+		viewPromotion(PromotionId,"eliminar")
 	});
 };
 // *************** SAVE FAVORITE CUPON FUNCTION ***************

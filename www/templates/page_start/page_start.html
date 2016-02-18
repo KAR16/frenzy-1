@@ -4,7 +4,7 @@
         <!--**********  LIST TO CREATE CATEGORIES FRENZY  **********-->
         <ion-list>
             <!--**********  LIST STYLE PAGE START  **********-->
-            <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categorys" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}">
+            <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categorys | orderBy:'IconCategory'" style="height:65px; border:none; border:dislplay;margin-top:10px;" id  = "{{category.direc}}">
               <category-info info ="category" ></category-info>
             </ion-item>
         </ion-list>

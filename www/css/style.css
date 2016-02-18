@@ -3,7 +3,7 @@
     .bordeMediaQueri {
         border-style: solid;
         border-color: red;
-        border-width: 3px; 
+        border-width: 3px;
     }
 }
 /**********************/
@@ -582,4 +582,9 @@
 
 .flechitas {
     display: none;
+}
+
+
+.button .ng-binding .button-default {
+    height: 10px;
 }

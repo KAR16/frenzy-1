@@ -17,11 +17,11 @@
         <div class="col col-33" ng-repeat="s in chats[2]">
             <a class="pageOffertsOffertsTitle">
                 <!--*****  TITLE AND FUNCITION OFFERTS  *****-->
-                <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()">
+                <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" onclick="offerts()" style="display:{{s.ocultar}}">
                     Ofertas ({{s.contPromotion}})
                 </p>
                 <!--**********  LINE DECORATION  **********-->
-                <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction">
+                <hr class="pageFavoritesLineDecoration" id="lineOffertsFunction" style="display:{{s.ocultar}}">
             </a>
         </div>
         <!--**********  CUPONS  **********-->
@@ -124,7 +124,7 @@
                       </tr>
                     </table>
                     </div>
-                    <!--*****  ICONS  ******-->
+                    <!--*****  ICONS  *******-->
                     <!-- Share Facebook Icon -->
                     <div class="col-35" style="text-align:right;align-items:center">
                       <!-- Url Shop online Icon -->
@@ -135,7 +135,7 @@
                             O
                         </spam>
                         <!-- Pin Icon -->
-                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}','{{super.name}}')" style="color:silver;font-size:23px;">
+                        <spam class="home pageOffertsLikeIcon" id="{{super.ID}} {{super.IDpromotion}}" ng-click="changeColorPinOfferts('{{super.ID}}','{{super.IDpromotion}}','{{super.name}}')" style="color:{{super.ColorPin}};font-size:23px;">
                             W
                         </spam>
                     </div>
@@ -243,8 +243,8 @@
                 <p class="savedPageNoItemsDescription">para que puedas disfrutarlas</p>
                 <br>
 <center>
-  <div class="col col-50 facebookButon" ng-click="askPromotion()">
-    <p class="savedPageNoItemsDescription">Pedir mas ofertas</p>
+  <div class="col col-50 requestOffers" ng-click="askPromotion()">
+    <p class="requestTextColor">Pedir mas ofertas</p>
   </div>
 </center>
 
@@ -281,7 +281,7 @@
         <!--**********  SECOND POP OVER SHARE  **********-->
         <script id="templates/popoverNew.html" type="text/ng-template">
             <ion-popover-view style="height:150px; width:250px;">
-                <!--***** MAIN CONTENT SECOND POPOVER *****-->
+                //***** MAIN CONTENT SECOND POPOVER *****
                 <div class="secondPopoverTextAling" style="text-aling:center;">
                     <spam class="secondPopoverTitle">Compartir Oferta</spam>
                 </div>
