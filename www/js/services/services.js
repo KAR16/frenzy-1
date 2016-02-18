@@ -268,6 +268,7 @@ app.factory('currentPromotion', function() {
 	return {
 		all: function(superId) {},
 		get: function(superId) {
+			console.log("entro");
 			ALL = []
 			Category = [];
 			dato = [];
@@ -290,7 +291,7 @@ app.factory('currentPromotion', function() {
 			}
 
 			for (c in CurrentPromotion) {
-
+				console.log(CurrentPromotion[c]);
 				if (superId === CurrentPromotion[c].Category) {
 					if (CurrentPromotion[c].ShopOnline == undefined) {
 							CurrentPromotion[c].Display = "none"
@@ -913,8 +914,7 @@ function viewPromotion(PromotionId,verificar){
 				}
 			}
 		}
-		console.log("______________________________________________________________");
-		console.log(CurrentPromotion);
+
 	}
 }).then(function () {
 	AllPromotion = [];
@@ -928,7 +928,7 @@ function viewPromotion(PromotionId,verificar){
 				for(x in CurrentPromotion) {
 					if (results[0].attributes.PromotionID[i] === CurrentPromotion[x].IDpromotion) {
 						console.log(CurrentPromotion[x].IDpromotion);
-						console.log(CurrentPromotion[x]);
+
 						AllPromotion.push(CurrentPromotion[x]);
 						// AllPromotion[con]["PromotionId"] = promociones[x].id;
 						// AllPromotion[con]["oferta"] = "existe";
@@ -949,7 +949,7 @@ function viewPromotion(PromotionId,verificar){
 			console.log(error);
 		}
 	}).then(function () {
-		console.log(CurrentPromotion);
+
 		 viewFavorite()
 	})
 	})
