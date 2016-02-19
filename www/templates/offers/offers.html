@@ -40,7 +40,7 @@
         <!--**********  ICON POPOVER  *********-->
         <div class="col col-33" style="align-items:center">
             <div ng-repeat="s in chats[1]">
-                <div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
+                <div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click='heartPopover("{{s.name}}")'>
                     <div>
                         <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl">
                             <p class="pageOffertsPopoverSimbol" style="vertical-aling:middle;">
@@ -256,19 +256,19 @@
                 <!--*****  FIRST POPOVER CONTENT  *****-->
                 <ion-content>
                     <div class="list" ng-repeat="s in chats[1]">
-                        <a class="item " target="_blank" id="{{s.name}}"  ng-click="changeColorHeartFollow('{{s.name}}')" style="  text-align:right; color:silver;">
+                        <a class="item " target="_blank" id="{{s.name}}"  ng-click='changeColorHeartFollow("{{s.name}}")' style="  text-align:right; color:silver;">
                             Seguir
                             <spam class="home pageOffertsPopoverIconsDescrpition"  style="color:{{heartMenu}}">
                                 B
                             </spam>
                         </a>
-                        <a class="item" id = "{{s.cel}}" ng-click="call({{s.cel}},'{{s.name}}')" target="_blank" style="text-align:right; color:silver;">
+                        <a class="item" id = "{{s.cel}}" ng-click='call("{{s.cel}}","{{s.name}}")' target="_blank" style="text-align:right; color:silver;">
                             {{s.call}}
                             <spam class="home pageOffertsPopoverIconsDescrpition">
                                 {{s.callIcon}}
                             </spam>
                         </a>
-                        <a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}','web','{{s.name}}')" target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
+                        <a class="item" id ="{{s.url}}" ng-click='shopUrl("{{s.url}}","web","{{s.name}}")' target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
                             {{s.webUrl}}
                             <spam class="home pageOffertsPopoverIconsDescrpition">
                                 {{s.webUrlIcon}}
