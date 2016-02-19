@@ -720,12 +720,12 @@ $scope.display = OurFavorites.all();
 					Parse.Analytics.track("petition", Dimensions);
 					SaveFavorite(IdUsuario, IDPromotion)
 					$scope.loading = $ionicLoading.show({
-						template: "<ion-spinner customer1lass='spinner' icon='lines' style='stroke: #FF5252;fill: #FF5252;'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px;font-weight:bold;'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas, espera un momento... </p>"
+						template: "<ion-spinner customer1lass='spinner' icon='lines' style='stroke: #00BAB9;fill: #00BAB9;'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px;font-weight:bold;'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas, espera un momento... </p>"
 					});
 
 					$timeout(function () {
 						$ionicLoading.hide();
-					}, 2500);
+					}, 25000);
 				}
 			});
 		}
