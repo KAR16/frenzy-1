@@ -291,7 +291,7 @@ app.factory('currentPromotion', function() {
 			}
 
 			for (c in CurrentPromotion) {
-				console.log(CurrentPromotion[c]);
+			//	console.log(CurrentPromotion[c]);
 				if (superId === CurrentPromotion[c].Category) {
 					if (CurrentPromotion[c].ShopOnline == undefined) {
 							CurrentPromotion[c].Display = "none"

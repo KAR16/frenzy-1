@@ -1,4 +1,7 @@
 <style>
+.loading-container {
+	 background-color: rgba(0, 0, 0, 0.38);
+	}
     .bar.bar-positive    {
     box-shadow: 0 0 0px white;
     }
@@ -243,7 +246,7 @@
                 <p class="savedPageNoItemsDescription">para que puedas disfrutarlas</p>
                 <br>
 <center>
-  <div class="col col-50 requestOffers" ng-click="askPromotion()">
+  <div class="col col-50 requestOffers" ng-click='askPromotion("{{chats[1][0].name}}")'>
     <p class="requestTextColor">Pedir mas ofertas</p>
   </div>
 </center>

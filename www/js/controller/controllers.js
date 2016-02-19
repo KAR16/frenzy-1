@@ -698,8 +698,7 @@ $scope.display = OurFavorites.all();
 			}
 		}
 		/* **************************************************** */
-		$scope.askPromotion = function () {
-
+		$scope.askPromotion = function (IDPromotion) {
 			var NamePromo = $stateParams.superId
 			var NameUser = String(IdUsuario)
 			var Dimensions = {
@@ -719,9 +718,9 @@ $scope.display = OurFavorites.all();
 			function(isConfirm) {
 				if(isConfirm){
 					Parse.Analytics.track("petition", Dimensions);
-
+					SaveFavorite(IdUsuario, IDPromotion)
 					$scope.loading = $ionicLoading.show({
-						template: "<ion-spinner customer1lass='spinner' icon='lines' class ='Loading'" + $scope.AppCategory + "></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas </p>"
+						template: "<ion-spinner customer1lass='spinner' icon='lines' style='stroke: #FF5252;fill: #FF5252;'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px;font-weight:bold;'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas, espera un momento... </p>"
 					});
 
 					$timeout(function () {
