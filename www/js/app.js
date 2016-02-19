@@ -112,10 +112,10 @@ function ReloadFavorite() {
 			for (a in results[0].attributes.CustomerID){
 				for (b in CustomerList){
 					if (results[0].attributes.CustomerID[a] === CustomerList[b].NameCategory){
-						console.log(CustomerList[b]);
+				//		console.log(CustomerList[b]);
 						if (CustomerList[b].colorHeart === "white") {
 							CustomerList[b].colorHeart  = "red";
-						console.log(CustomerList[b]);
+					//	console.log(CustomerList[b]);
 						}
 					}
 				}
