@@ -1328,6 +1328,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 // ############## //
 //  Controllers   //
 // ############## //
+
+/*************************  BODY CONTROLLER  ******************************/
+
+.controller('bodyCtrl', ['$state', function($state) {
+    var userVerificate= Parse.User.current();
+    //*********** DEVICE READY SPLASHSCREEN  *******************
+    document.addEventListener("deviceready", function($scope) {
+         if (userVerificate==null) {
+             $state.go('tutorial');
+                setTimeout(function() {
+                  navigator.splashscreen.hide();
+                }, 5000);
+
+        }else {
+            if (userVerificate["attributes"].authData == undefined) {
+                IdUsuario = String($scope.currentUser.id)
+                        viewPromotion()
+            }else {
+                IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
+                        viewPromotion()
+            }
+            $state.go('app.playlists');
+            setTimeout(function() {
+                navigator.splashscreen.hide();
+            }, 6000);    }
+    }, false);}])
+
+
+.controller('rootCtrl', ['$state', function($state) {
+ $state.go('app.playlists');
+}])
+
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
 }])
