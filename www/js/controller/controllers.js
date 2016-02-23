@@ -698,8 +698,7 @@ $scope.display = OurFavorites.all();
 			}
 		}
 		/* **************************************************** */
-		$scope.askPromotion = function () {
-
+		$scope.askPromotion = function (IDPromotion) {
 			var NamePromo = $stateParams.superId
 			var NameUser = String(IdUsuario)
 			var Dimensions = {
@@ -719,14 +718,14 @@ $scope.display = OurFavorites.all();
 			function(isConfirm) {
 				if(isConfirm){
 					Parse.Analytics.track("petition", Dimensions);
-
+					SaveFavorite(IdUsuario, IDPromotion)
 					$scope.loading = $ionicLoading.show({
-						template: "<ion-spinner customer1lass='spinner' icon='lines' class ='Loading'" + $scope.AppCategory + "></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas </p>"
+						template: "<ion-spinner customer1lass='spinner' icon='lines' style='stroke: #00BAB9;fill: #00BAB9;'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px;font-weight:bold;'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas, espera un momento... </p>"
 					});
 
 					$timeout(function () {
 						$ionicLoading.hide();
-					}, 2500);
+					}, 25000);
 				}
 			});
 		}
@@ -1324,11 +1323,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-	//$urlRouterProvider.otherwise('/tutorial');
+		$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
 // ############## //
+
+/*************************  BODY CONTROLLER  ******************************/
+
+.controller('bodyCtrl', ['$state', function($state) {
+    var userVerificate= Parse.User.current();
+    //*********** DEVICE READY SPLASHSCREEN  *******************
+    document.addEventListener("deviceready", function($scope) {
+         if (userVerificate==null) {
+             $state.go('tutorial');
+                setTimeout(function() {
+                  navigator.splashscreen.hide();
+                }, 5000);
+
+        }else {
+            if (userVerificate["attributes"].authData == undefined) {
+                IdUsuario = String($scope.currentUser.id)
+                        viewPromotion()
+            }else {
+                IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
+                        viewPromotion()
+            }
+            $state.go('app.playlists');
+            setTimeout(function() {
+                navigator.splashscreen.hide();
+            }, 6000);    }
+    }, false);}])
+
+
+.controller('rootCtrl', ['$state', function($state) {
+ $state.go('app.playlists');
+}])
+
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
 }])

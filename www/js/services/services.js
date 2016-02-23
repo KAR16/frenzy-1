@@ -291,7 +291,7 @@ app.factory('currentPromotion', function() {
 			}
 
 			for (c in CurrentPromotion) {
-				console.log(CurrentPromotion[c]);
+			//	console.log(CurrentPromotion[c]);
 				if (superId === CurrentPromotion[c].Category) {
 					if (CurrentPromotion[c].ShopOnline == undefined) {
 							CurrentPromotion[c].Display = "none"
@@ -842,17 +842,21 @@ function Heart(id){
 // *************** VIEW FAVORITE FUNCTION ****************
 function viewFavorite() {
 	AllFavorite = [];
+	var favorite = new Parse.Query('Favorite');
+	favorite.equalTo("UserID", IdUsuario);
 	favorite.each(function(results) {
 		for(b in results.attributes.CustomerID){
-			if(results.attributes.UserID===IdUsuario){
 				for (c in CurrentPromotion){
 					if (CurrentPromotion[c].Category === results.attributes.CustomerID[b]){
+
 						AllFavorite.push(CurrentPromotion[c]);
+
 					}
 				}
-			}
 		}
+
 	}).then(function () {
+		console.log(AllFavorite);
 		var PromoSavess = new Parse.Query('PromotionSaved')
 		PromoSavess.equalTo("UserID", IdUsuario);
 		PromoSavess.find({

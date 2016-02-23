@@ -70,27 +70,6 @@ function onBackKeyDown() {
 		window.history.back();
 	}
 }
-//*********** DEVICE READY SPLASHSCREEN  *******************
-document.addEventListener("deviceready", function($scope) {
-	 if (userVerificate==null) {
-	 		window.location.replace('file:///android_asset/www/index.html#/tutorial');
-			setTimeout(function() {
-  			navigator.splashscreen.hide();
-			}, 6000);
-
-	}else {
-		if (userVerificate["attributes"].authData == undefined) {
-			IdUsuario = String($scope.currentUser.id)
-					viewPromotion()
-		}else {
-			IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
-					viewPromotion()
-		}
-		window.location.replace('file:///android_asset/www/index.html#/app/playlists');
-		setTimeout(function() {
-			navigator.splashscreen.hide();
-		}, 6000);	}
-}, false);
 //**************************************************************************************************
 function ReloadFavoriteDelete(CustomerID) {
 	for (b in CustomerList){
@@ -112,10 +91,10 @@ function ReloadFavorite() {
 			for (a in results[0].attributes.CustomerID){
 				for (b in CustomerList){
 					if (results[0].attributes.CustomerID[a] === CustomerList[b].NameCategory){
-						console.log(CustomerList[b]);
+				//		console.log(CustomerList[b]);
 						if (CustomerList[b].colorHeart === "white") {
 							CustomerList[b].colorHeart  = "red";
-						console.log(CustomerList[b]);
+					//	console.log(CustomerList[b]);
 						}
 					}
 				}

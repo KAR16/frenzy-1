@@ -31,7 +31,7 @@
     <!-- if your code is uploader on ios you need to add this code of css in the line number 34 -->
     <!-- style="margin-top:-10px" -->
     <!--*****  SECOND TAB HEADER  *****-->
-    <ion-content ng-controller="AllFavoriteCtrl">
+    <ion-content ng-controller="AllFavoriteCtrl" ng-init="chats[$index].Category != chats[$index - 1].Category">
         <div style="height:31px;"></div>
         <div ng-repeat="favorite in chats | filter: {oferta : 'existe'}">
             <!--************  YOUR FAVORITES BODY  *******************-->
@@ -52,7 +52,7 @@
                 </div>
             </a>
             <!--*****  SECOND ROW DESCRIPTION OF YOUR FAVORITE STABLISHMENT  *****-->
-            <div class="row row-border pageYourFavoritesWhiteBox">
+            <div class="row row-border pageYourFavoritesWhiteBox" ng-if="chats[$index].Category != chats[$index - 2].Category">
                 <div class="col col-80 pageYourFavoritesWhiteBoxTop">
                     <!--**********  OFFERT  **********-->
                     <p class="overFlowText pageYourFavoritesOffert">
