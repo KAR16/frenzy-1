@@ -304,6 +304,21 @@ app.factory('currentPromotion', function() {
 				}
 			}
 
+			for (c in Category) {
+				if (Category[c].TypePromotion == "SpecialPromotion") {
+					Category[c]["colum"] = "55"
+					Category[c]["columIcon"] = "40"
+					Category[c]["columDisplay"] = "none"
+				}else if (Category[c].TypePromotion == "DirectDiscount") {
+					Category[c]["colum"] = "33"
+				}else {
+					Category[c]["colum"] = "55"
+					Category[c]["columIcon"] = "40"
+					Category[c]["columDisplay"] = "none"
+				}
+					console.log(Category[c]);
+			}
+
 			if (Category.length == 0) {
 				ContPromo.push({conteo:Category.length})
 				Category.push({oferta:"noHay"});
@@ -409,6 +424,18 @@ app.factory('OurFavorites', function() {
 										})
                 }
             }
+						for (c in AllourFavorites) {
+							if (AllourFavorites[c].TypePromotion == "SpecialPromotion") {
+								AllourFavorites[c]["colum"] = "67"
+								AllourFavorites[c]["columDisplay"] = "none"
+							}else if (AllourFavorites[c].TypePromotion == "DirectDiscount") {
+								AllourFavorites[c]["colum"] = "33"
+							}else {
+								AllourFavorites[c]["colum"] = "67"
+								AllourFavorites[c]["columDisplay"] = "none"
+							}
+								console.log(AllourFavorites[c]);
+						}
             var OurFavorites = AllourFavorites
             if (OurFavorites.length == 0) {
                 OurFavorites.push({oferta : 'noHay'})
