@@ -725,7 +725,7 @@ $scope.display = OurFavorites.all();
 
 					$timeout(function () {
 						$ionicLoading.hide();
-					}, 25000);
+					}, 2000);
 				}
 			});
 		}
