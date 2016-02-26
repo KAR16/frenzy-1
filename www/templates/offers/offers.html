@@ -70,7 +70,7 @@
                         <p class="pageFavoritesSavingTitle">
                             {{super.textDiscount}}
                         </p>
-                        <p class="pageFavoritesSavingPrice" style="margin-top:-10px; font-size:18px; margin-top:{{super.marginTop}};text-align:{{super.textAlign}};margin-left:11px;">
+                        <p class="pageFavoritesSavingPrice {{super.TypePromotion}}">
                             {{super.ahorro}}
                         </p>
                     </div>
@@ -104,13 +104,13 @@
                 <!--*****  DIV TO PRICE AND ICONS  *****-->
                 <div class="row pageFavoritesDivIcons open_sans" style="height:38px;align-items:center">
                     <!--*****  ACTUAL PRICE  *****-->
-                    <div class="col-33" style="text-align:center;align-items:center;margin-left:5px">
-                        <spam class="pageFavoritesActualPrice" style="font-size:{{super.fontSize}">
+                    <div class="col-{{super.colum}}" style="text-align:center;align-items:center;margin-left:5px">
+                        <spam class="pageFavoritesActualPrice">
                             {{super.promotionalPrice}}
                         </spam>
                     </div>
                     <!--*****   BEFORE PRICE  *****-->
-                  <div class="col-25" style="text-align:center;align-items:center">
+                  <div class="col-25" style="text-align:center;align-items:center;display:{{super.columDisplay}}" >
                     <table style="line-height:10px;margin:auto;margin-top:-5px;text-align:center">
                       <tr>
                         <td>  <spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
@@ -129,7 +129,7 @@
                     </div>
                     <!--*****  ICONS  *******-->
                     <!-- Share Facebook Icon -->
-                    <div class="col-35" style="text-align:right;align-items:center">
+                    <div class="col-{{super.columIcon}}" style="text-align:right;align-items:center">
                       <!-- Url Shop online Icon -->
                       <spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{super.ShopOnline}}','cart','{{super.name}}')" style="display:{{super.Display}};font-size: 23px;">
                           {{super.IconShopOnline}}

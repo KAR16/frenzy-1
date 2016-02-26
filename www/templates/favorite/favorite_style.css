@@ -1,3 +1,23 @@
+.SpecialPromotion{
+	margin-top:-10px;
+	font-size:22px;
+	margin-left:11px;
+}
+.DirectDiscount{
+	color: white;
+	font-weight: bold;
+	margin-top:-10px;
+	font-size:20px;
+	margin-left:11px;
+}
+.Percentage{
+	color: white;
+  font-weight: bold;
+	margin-top:-10px;
+	font-size:22px;
+	margin-top:3px;
+	margin-left:11px;
+}
 .imagePageFavoritesStyle {
 	width:100%;
 }
