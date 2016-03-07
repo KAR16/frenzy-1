@@ -362,6 +362,19 @@ app.factory('currentPromotion', function() {
 	};
 });
 // ************* ALL FAVORITE APP FACTORY *************
+app.filter("commaBreak",
+
+    function () {
+
+        return function ( value ) {
+
+            if( !value.length ) return;
+
+            return value.split('-').join(" ")
+
+        }
+
+});
 app.factory('AllFavorite', function() {
 	var favorites = AllFavorite;
 
