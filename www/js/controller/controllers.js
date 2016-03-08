@@ -635,11 +635,11 @@ $scope.display = OurFavorites.all();
 		};
 		if (id == "web") {
 			z = Url;
-			window.open(z);
+			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("WebShopPromotion", Dimensions);
 		}else {
 			z = Url;
-			window.open(z);
+			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("cartShopPromotion", Dimensions);
 		}
 
@@ -790,11 +790,11 @@ $scope.display = OurFavorites.all();
 
 		if (id == "web") {
 			z = Url;
-			window.open(z);
+			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("WebShopCoupon", Dimensions);
 		}else {
 			z = Url;
-			window.open(z);
+			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("cartShopCoupon", Dimensions);
 		}
 

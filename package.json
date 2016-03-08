@@ -25,7 +25,9 @@
     "org.apache.cordova.device-orientation",
     "phonegap-facebook-plugin",
     "cordova-plugin-contacts",
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-whitelist@~1.0.0",
+    "cordova-sms-plugin"
   ],
   "cordovaPlatforms": []
 }
