@@ -1,0 +1,198 @@
+<style>
+.bar.bar-positive    {
+box-shadow: 0 0 0px white;
+}
+</style>
+
+<ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Fecha'}">
+	<ion-content style="background-color:#F1F2F2;">
+		<!--**********************************************************************-->
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+		<!--*****  PRICE LABEL OFFERTS  *****-->
+		<div class="row pageFavoritesBoxPriceLabel">
+			<div class="col col-25">
+				<p class="cuponsDescriptionsLabelExchance">
+					Canjea
+				</p>
+				<p class="pageFavoritesSavingPrice">
+					Q.{{cupon.Canjea}}
+				</p>
+			</div>
+		</div>
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan">
+		<div class="cuponsDescriptionDiv2">
+			<div class="row">
+				<div class="col col-75 cuponsDescriptionTitle open_sans">
+					{{cupon.Presentation }}
+				</div>
+				<div class="col col-25">
+					<div class="cuponsDescriptionPinCircle home">W</div>
+				</div>
+			</div>
+		</div>
+		<div class="row cuponsDescriptionDiv3">
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+		</div>
+		<br>
+		<div>
+			<p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
+		</div>
+		<div>
+			<p class="cuponsDescriptionMainDescription">
+				{{cupon.description}}
+			</p>
+		</div>
+		<br>
+		<!--**************  animation  ***********************-->
+		<div>
+			<div class="loader" style="margin-top:px;">
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+			</div>
+		</div>
+		<div class="availableCupones open_sans">Del {{cupon.Publication_Date.toLocaleDateString()}} Al {{cupon.End_Date.toLocaleDateString()}}</div>
+		<!--***************  EXCHANGE BUTTON  ********************-->
+		<a style="text-decoration:none;"  class="botonCanjear">
+			<div style="display:{{noneDisplay[0].none}};">
+				<div ng-click="buttonCash(); countCoupon()"  >
+					<div>
+						<div id="popup">
+							<p class="exchangeButonStyle">Canjear</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		<!--*****  BARCODE IMAGE  *****-->
+		<div>
+			<div class="row">
+				<div class="col col-10"></div>
+				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}};">
+					<img class="exchangeBoxBarCodeImage" src="{{cupon.BarCodePhoto._url}}" alt="" >
+				</div>
+				<div class="col col-10"></div>
+			</div>
+		</div>
+		<div class="exchangeButtonBlankSpaceButton"></div>
+		<div class="">
+
+			<p>
+				{{turtle1[0][0]}}
+			</p>
+
+		</div>
+	</ion-content>
+</ion-view>
+
+
+
+<!-- Ionic view for Coupon TypeCoupon -->
+<ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Cupon'}">
+	<ion-content style="background-color:#F1F2F2;">
+		<!--**********************************************************************-->
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+		<!--*****  PRICE LABEL OFFERTS  *****-->
+		<div class="row pageFavoritesBoxPriceLabel">
+			<div class="col col-25">
+				<p class="cuponsDescriptionsLabelExchance">
+					Canjea
+				</p>
+				<p class="pageFavoritesSavingPrice">
+					Q.{{cupon.Canjea}}
+				</p>
+			</div>
+		</div>
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan">
+		<div class="cuponsDescriptionDiv2">
+			<div class="row">
+				<div class="col col-75 cuponsDescriptionTitle open_sans">
+					{{cupon.Presentation }}
+				</div>
+				<div class="col col-25">
+					<div class="cuponsDescriptionPinCircle home">W</div>
+				</div>
+			</div>
+		</div>
+		<div class="row cuponsDescriptionDiv3">
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+		</div>
+		<br>
+		<div>
+			<p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
+		</div>
+		<div>
+			<p class="cuponsDescriptionMainDescription">
+				{{cupon.description}}
+			</p>
+		</div>
+		<br>
+		<!--**************  animation  ***********************-->
+		<div>
+			<div class="loader" style="margin-top:px;">
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+				<div class="side"></div>
+			</div>
+		</div>
+		<div class="availableCupones open_sans">Cupones Canjeados: {{cupon.QuantityExchanged}} de {{cupon.QuantityCoupons}} </div>
+		<!--***************  EXCHANGE BUTTON  ********************-->
+		<a style="text-decoration:none;"  class="botonCanjear">
+			<div style="display:{{noneDisplay[0].none}};">
+				<div ng-click="reloadpage(); buttonCash()">
+					<div>
+						<div id="popup">
+							<p class="exchangeButonStyle" ng-click="countCoupon()">Canjear</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		<!--*****  BARCODE IMAGE  *****-->
+		<div>
+			<div class="row">
+				<div class="col col-10"></div>
+				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}};">
+					<img class="exchangeBoxBarCodeImage" src="{{cupon.BarCodePhoto._url}}" alt="" >
+				</div>
+				<div class="col col-10"></div>
+			</div>
+		</div>
+		<div class="exchangeButtonBlankSpaceButton"></div>
+		<div class="">
+
+			<p>
+				{{turtle1[0][0]}}
+			</p>
+
+		</div>
+	</ion-content>
+</ion-view>

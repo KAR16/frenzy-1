@@ -1,0 +1,83 @@
+<style>
+    .row{
+        font-size:30px;
+    }
+
+    .bar.bar-positive {
+        border-color: #00BAB9 ;
+        background-color: #00BAB9 ;
+        border-style:none;
+        box-shadow: 0 0 5px #888888 ;
+        background-image: linear-gradient(0deg, #00BAB9   , #00BAB9    50%, transparent 50%);
+        color: #fff;
+    }
+    /**  if your code is uploader on ios you need to add this code of css **/
+     /**
+     margin-top: -12px;
+     **/
+     /**  if your code is uploader on android you do not need to add margin-top  **/
+    .bar.bar-positive .title {
+        color: white;
+        margin-top:3px;
+    }
+    .bar.bar-positive.bar-footer {
+        background-image: linear-gradient(180deg, #00BAB9   , #00BAB9    50%, transparent 50%);
+    }
+</style>
+<ion-side-menus  enable-menu-with-back-views="false">
+    <ion-side-menu-content >
+        <!--***** barra de contenido principal class="barraMenu" *****-->
+        <!--***** visualizacion contenido menu principal *****-->
+        <ion-nav-view   name="menuContent">
+            <!--************  HEADER AND BACK BUTTON  <a href="#/app/playlists">***************-->
+            <!--*****  ALL TITLES  *****-->
+            <ion-header-bar align-title="center" class="bar-positive" style="display:{{footerChangeColor[0][7]}};">
+                <i class="icon ion-chevron-left backButtomStyle" onclick="goBack()"  nav-transition="none"></i>
+                <!--*****  is your code is uplodader on android you need to add this code of css  *****-->
+                <!--    margin-top:-7px; -->
+                <!--*****  is your code is uplodader on ios you need to add this code of css  *****-->
+                <!--    margin-top:10px; -->
+                <spam class="title" style="font-weight:bolder; margin-top:-7px;">{{footerChangeColor[0][4]}}</spam>
+            </ion-header-bar>
+            <!--*****  FRENZY TITLES  *****-->
+            <ion-header-bar align-title="center" class="bar-positive" style="display:{{footerChangeColor[0][6]}};">
+                <!--*****  is your code is uplodader on ios you need to add this code of css  *****-->
+                <!--    margin-top:20px; -->
+                <!--*****  is your code is uplodader on andoid you do not need to add margin-top on css style  *****-->
+                <i class="icon ion-chevron-left backButtomStyle" onclick="goBack()"  nav-transition="none" style="display:{{footerChangeColor[0][8]}};"></i>
+                <spam class="title home" style="font-size:65px; margin-top:0px;">{{footerChangeColor[0][5]}}</spam>
+            </ion-header-bar>
+           <!--************************* FOOTHER  ******************************-->
+            <ion-footer-bar  class="bar-stable" style="background-color:#E6E7E8; border-style:none;align-items: center;">
+                    <item-content class="row home  my-menu" style="vertical-align:super:">
+
+                            <!--************  ICONO FOOTER HOME  ******************-->
+                            <div class="col col-25" style="">
+                                    <ion-item href="#/app/playlists" style="color:{{footerChangeColor[0][0]}}; margin-top:6px;" nav-transition="none">
+                                        <div style="font-size:30px;margin-left:10px;margin-top:-5px;">A</div>
+                                    </ion-item>
+                            </div>
+                            <!--************  ICONO FOOTER HEART  ******************-->
+                            <div class="col col-25">
+                                    <ion-item href="#/app/favoritos" style="color:{{footerChangeColor[0][1]}}; margin-top:6px;" nav-transition="none" onclick="viewFavorite()">
+                                            <div  style="font-size:30px;margin-left:10px;margin-top:-5px;">B</div>
+                                    </ion-item>
+                            </div>
+                            <!--************  ICONO FOOTER STAR onclick="viewPromotion()" ******************-->
+                            <div class="col col-25" >
+                                    <ion-item href="#/app/salvados" style="color:{{footerChangeColor[0][2]}}; margin-top:6px;" nav-transition="none" >
+                                            <div id = "{{chats}}" style="font-size:30px;margin-left:10px;margin-top:-5px;">W</div>
+                                    </ion-item>
+                            </div>
+                            <!--************  ICONO FOOTER TOOL  ******************-->
+                            <div class="col col-25">
+                                    <ion-item href="#/app/herramientas" style="color:{{footerChangeColor[0][3]}}; margin-top:6px;" nav-transition="none">
+                                            <div style="font-size:30px;margin-left:10px;margin-top:-5px;">D</div>
+                                    </ion-item>
+                            </div>
+                          </item-content>
+
+            </ion-footer-bar>
+        </ion-nav-view>
+    </ion-side-menu-content>
+</ion-side-menus>

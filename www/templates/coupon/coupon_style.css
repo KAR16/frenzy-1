@@ -1,0 +1,23 @@
+.nuevoDivContenedor {
+	margin-top:7%;
+	margin-left: 5%;
+	background-color:white;
+	width: 90%;
+	height: 80%;
+	box-shadow: 3px 3px 2px #BDBDBD;
+}
+
+.imagenEtiquetaMorada {
+	height: 70px;
+	width: 100px;
+	position:absolute;
+}
+
+.imagenCajaNueva {
+	width: 100%;
+	height:280px;
+}
+
+.cajaTexto {
+	background-color: white;
+}

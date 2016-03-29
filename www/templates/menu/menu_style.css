@@ -1,0 +1,16 @@
+.frenzyMainTitle{
+  height: 28px;
+  width: 110px;
+  align-content: center;
+}
+
+.my-menu {
+  background-color: transparent;
+
+}
+
+.my-menu .item, .my-menu .item-content, .my-menu .item-complex{
+background-color: rgba(0,0,0,0);
+border-style: none;
+border-color: red;
+}

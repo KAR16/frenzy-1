@@ -1,0 +1,97 @@
+<ion-view class="BackgroundColor">
+  <ion-content ng-app="ionicApp">
+    <!--*****  row for main div  *****-->
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80 mainDiv">
+        <!--*****  row from icon penguin  *****-->
+        <div class="row">
+          <div class="col col-25"></div>
+          <div class="col col-50">
+            <!--*****  penguin icon-->
+            <p class="home penguin spacingpenguin">i</p>
+            <!--***** title  *****-->
+            <p class="title">Crea una cuenta</p>
+          </div>
+          <div class="col col-25"></div>
+        </div>
+        <!--*****  row main body  *****-->
+        <div class="row">
+          <div class="col col-100 open_sans">
+            <!--*****  mail  *****-->
+            <p class="subtitle">Correo electronico</p>
+            <!--*****  MAIL INPUT BOX  *****-->
+            <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
+              <input type="email" ng-model="user.email" placeholder="correo@ejemplo.com" >
+            </label>
+            <!--*****  password  *****-->
+            <!--*****  PASSWORD TITLE  *****-->
+            <p class="subtitle2" >Contraseña</p>
+            <!--*****  PASSSWORD INPUT BOX  *****-->
+            <label class="item item-input inputBox" style="border:{{Validarpassword}}" >
+              <input type="password" ng-model="user.password">
+            </label>
+​            <!--*****  GENDER DIV  *****-->
+            <p class="genderTitle">Genero (*)</p>
+            <!--*****  MALE  *****-->
+            <div class="row genderRow">
+              <div class="col col-50 genderBoxMale item item-input" value="set background" ng-click="genderMaleStyle()" ng-style="genderMaleBStyle">
+                <p class="">Masculino</p>
+              </div>
+              <!--*****  FEMALE  *****-->
+              <div class="col col-50 genderBoxFemale item item-input" value="set background" ng-click="genderFemaleleStyle()" ng-style="genderFemaleleBStyle">
+                <p class="subtitle">Femenina</p>
+              </div>
+            </div>
+            <!--*****  BIRTHDAY TITLE  *****-->
+            <p class="dateTitle">Fecha de nacimiento (*)</p>
+            <!--*****  BIRTHDAY INPUT  *****-->
+            <label class="item item-input dateBox">
+              <input type="date" ng-model='user.birthday'>
+            </label>
+            <center>
+              <div class="enterButton" ng-click='Alert()'>
+                <h3 class="enterButtonTitle open_sans">Entrar</h3>
+              </div>
+            </center>
+          </div>
+        </div>
+      </div>
+      <div class="col col-10"></div>
+    </div>
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80">
+        <p class="loginTitle8">
+          Inicia secion con Facebook o con una cuenta existente
+        </p>
+      </div>
+      <div class="col col-10"></div>
+    </div>
+    <div class="row" ng-controller="loginCtrl">
+      <div class="col col-10"></div>
+      <div class="col col-80" ng-controller="loginCtrl">
+        <div class="row">
+          <div class="col col-50 facebookButon" ng-click="loginfb()">
+            <p class="facebookTitle">Facebook</p>
+          </div>
+          <div class="col col-50 singupButon">
+            <a href="#/login" nav-transition="none" style="text-decoration:none;">
+              <p class="singupTitle open_sans">Iniciar sesion</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col col-10"></div>
+    </div>
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80">
+        <p class="termsLogin">
+          * Los campos genero y fecha de nacimiento no son obligatorios, te recomendamos llenarlos para una mayor satisfacción en nuestra aplicación
+        </p>
+      </div>
+      <div class="col col-10"></div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,213 @@
+.SpecialPromotion{
+	margin-top:-10px;
+	font-size:22px;
+	margin-left:11px;
+}
+.DirectDiscount{
+	color: white;
+	font-weight: bold;
+	margin-top:-10px;
+	font-size:20px;
+	margin-left:11px;
+}
+.Percentage{
+	color: white;
+  font-weight: bold;
+	margin-top:-10px;
+	font-size:22px;
+	margin-top:3px;
+	margin-left:11px;
+}
+.imagePageFavoritesStyle {
+	width:100%;
+}
+
+[class*='relacion'] {}
+
+.relacionFavoritesImage {
+  height: calc(16vh *  3.1);
+}
+
+[class*='relacion'] {}
+.relacionFavorites {
+	height: calc(7vh *  3.1);
+}
+
+.pageFavoritesTitleFrenzy {
+	font-size:65px;
+}
+
+.pageFavoritesBodyColor {
+	background-color:#F1F2F2;
+}
+
+.pageFavoritesOurFavorites {
+	color:white;
+	text-decoration:none;
+	text-align: center;
+}
+
+.pageFavoritesOurFavoritesTitle {
+	margin-top:-2px;
+	font-size:15px;
+}
+
+.pageFavoritesLineDecoration {
+	margin-top:-5px;
+	border-radius:3px;
+	border-style:none;
+}
+
+.pageFavoritesYourFavorites {
+	color:white;
+	text-decoration:none;
+	text-align: center;
+}
+
+.pageFavoritesYourFavoritesTitle {
+	margin-top:23px;
+	color:#D8D8D8;
+	font-size:13px;
+}
+
+.pageFavoritesLineDecorationYourFavorites {
+	margin-top:-5px;
+	color:#D8D8D8;
+	background-color:#D8D8D8;
+	border-style:none;
+}
+
+.boxResponsiveFavorites {
+	height: calc(55vh *  1.33); /*height: calc(52vh *  1.33);*/
+	width: 95%;
+	margin-left:10px;
+	margin-top:15px;
+	box-shadow: 3px 3px 2px #BDBDBD;
+	background-color:white;
+}
+
+.pageFavoritesBoxPriceLabel {
+	position:absolute;
+}
+
+.pageFavoritesEstablishmentLogo {
+	margin-top:-25px;
+}
+
+.pageFavoritesHrLineBox {
+	border:none;
+	background-color:black;
+	height:1px;
+}
+
+.pageFavoritesActualPrice {
+	font-size:18px;
+	margin-left: 5px;
+}
+
+.pageFavoritesSavingTitle {
+	font-size:17px;
+	color:#E6E2E2;
+	margin-left:5px;
+}
+
+.pageFavoritesSavingPrice {
+	font-size:16px;
+	color:white;
+	font-weight:bold;
+}
+
+[class*='relacion'] {}
+
+.relacionImagePageFavorites {
+	height: calc(38vh *  1.33);
+}
+
+.logoEstablishment {
+	height: 50px;
+	width: 50px;
+	margin-top:-65px;
+	margin-left: 10px;
+}
+
+.pageFavoritesCountOfferts {
+	font-size:14px;
+	color:black;
+	font-weight:bolder;
+	color:white;
+	margin-top:-5px;
+}
+
+.pageFavoritesCountOffertsTitle {
+	font-size:13px;
+	color:#BDBDBD;
+}
+
+.pageFavoritesDescriptionTitle {
+	font-size:20px;
+	color:black;
+	margin-left:10px;
+	padding-top:3%;
+}
+
+.pageFavoritesDescription {
+	font-size:13px;
+	margin-left:10px;
+	color:#BDBDBD;
+	width: 90%;
+}
+
+.pageFavoritesBeforePrice {
+	font-size:13px;
+	margin-left:-10px;
+	color:#A7A9AC;
+}
+
+.pageFavoritesIcons {
+	color:silver;
+	margin-left:15px;
+	margin-top:10px;
+}
+
+.pageFavoritesDivIcons {
+	background-color:white;
+	border-style: solid;
+	border-top:1px solid #F1F2F2;
+}
+
+.imagenEtiquetaMorada {
+	height: 75px;
+	width: 100px;
+	position:absolute;
+}
+
+.cajaTexto {
+	background-color: white;
+}
+
+.popover {
+	align-content: center;
+	margin-right: 100px;
+}
+
+.imagenEtiquetaMorada {
+	height: 75px;
+	width: 100px;
+	position:absolute;
+}
+
+.cajaTexto{
+	background-color: white;
+}
+/***********************************************************/
+.favoritesDiv{
+	background-color: white;
+	height: 80%;
+	width: 95%;
+	margin-left: 2%;
+	margin-top: 5%;
+	box-shadow: 3px 3px 2px #BDBDBD;
+}
+.imageFavorite{
+
+}

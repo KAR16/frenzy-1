@@ -1,0 +1,25 @@
+<ion-view  view-title="{{AppCategory}}">
+    <!--**********  ESTABLISHMENTS  **********-->
+    <ion-content class="backgroundCategories"  nav-transition="none">
+        <div class="col">
+            <!--*****  BOXES ENLINE BLOCK  *****-->
+            <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in chats | filter: {oferta : 'existe'}">
+              <customer-info info ="customer"></customer-info>
+            </div>
+            <div ng-repeat="customer in chats  | filter: {oferta : 'noHay'}">
+                <div class="open_sans boxbox">
+                    <p class="savedPageNoItemBlankSpace">
+                        f
+                    </p>
+                    <p class="home savedPageNoItemsIcon">g</p>
+                    <p class="savedPageNoItemsTitle">
+                        Uh-ha-Ha-ha
+                    </p>
+                    <p class="savedPageNoItemsDescription"  style="margin-top:15px;">Espera nuestros monitos </p>
+                    <p class="savedPageNoItemsDescription"> estan trabajando para traerte las</p>
+                    <p class="savedPageNoItemsDescription"> nuevas promociones para que ahorres a lo loco...!!</p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

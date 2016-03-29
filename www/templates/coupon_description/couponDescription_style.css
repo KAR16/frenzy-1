@@ -1,0 +1,141 @@
+.cuponsDescriptionDiv {
+	height: 6px;
+	background-color: #9C28B0;
+	border-bottom: solid;
+	border-bottom-color: #BDBDBD;
+	border-width: 1px;
+}
+
+.cuponsDescriptionsLabelExchance {
+	font-size: 17px;
+	color:#E6E2E2;
+}
+
+.pageFavoritesSavingPrice {
+	margin-top: -5px;
+	font-weight: bolder;
+	font-size: 20px;
+}
+
+.cuponsDescriptionImage {
+	height: 225px;
+	width: 100%;
+}
+
+.cuponsDescriptionDiv2 {
+	height: 40px;
+	background-color: #9C28B0;
+	margin-top: -5px;
+}
+
+.cuponsDescriptionPinCircle {
+	height: 50px;
+	width: 50px;
+	border-radius: 22px;
+	background-color: #00BAB9;
+	text-align: center;
+	font-size: 40px;
+	color: white;
+	position:relative;
+	margin-top: -45px;
+	padding-top: 20px;
+	box-shadow: 0px 3px 10px 1px black;
+}
+
+.cuponsDescriptionTitle {
+	font-size: 20px;
+	color:white;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cuponsDescriptionDiv3 {
+	background-color: #9C28B0;
+	height: 17px;
+	width: 1000px;
+}
+
+.semi-circulo {
+	width: 23px;
+	height: 13px;
+	background: #F1F2F2;
+	-moz-border-radius: 100px 100px 0 0;
+	-webkit-border-radius: 100px 100px 0 0;
+	border-radius: 100px 100px 0 0;
+	-webkit-box-shadow:  inset 9px 8px 10px 80px rgba(190,190,190,1);
+	-moz-box-shadow:     inset 9px 8px 10px 80px rgba(190,190,190,1);
+	box-shadow:          inset 9px 8px 10px -8px rgba(190,190,190,1);
+	margin-left: 18px;
+	display: inline-block;
+}
+
+.cuponsDescriptionTitleDescription {
+	color:#A7A9AC;
+	margin-left: 15px;
+	font-size:15px;
+	font-weight: bolder;
+}
+
+.cuponsDescriptionMainDescription {
+	font-size: 13px;
+	margin-left:15px;
+	margin-right: 15px;
+}
+
+.cuponsDescriptionButtonExchange {
+	height: 35px;
+	width: 175px;
+	color:#3F51B5;
+	font-size: 25px;
+	font-weight: bolder;
+	background-color: white;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.settingsTermsTitle {
+	color:black;
+}
+
+ .exchangeButonStyle {
+	text-align: center;
+	color:#3F51B5;
+	font-size: 25px;
+	font-weight: bolder;
+	background-color: white;
+	height: 35px;
+	width: 50%;
+	padding-top: 7px;
+	margin-top: 15px;
+	border-radius: 10px;
+	margin-left: 25%;
+}
+
+.exchangeBoxBarCode {
+	background-color: white;
+	border-radius: 10px;
+	margin-top: 15px;
+}
+
+.exchangeBoxBarCodeImage {
+	text-align: center;
+	margin-left: 19%;
+}
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
+}
+
+.exchangeButtonBlankSpaceButton {
+	height: 100px;
+}
+
+.availableCupones {
+	font-size: 15px;
+	font-weight: bolder;
+	color:black;
+	margin-left:100px;
+	margin-top: -10px;
+}
