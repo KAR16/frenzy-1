@@ -12,6 +12,7 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 5)	ahora vamos al siguiente archivo frenzy/config.xml y cambiamos el numero de version a una versioin mayor por ejemplo 
 		version="2.0.0"
+	tambien cambiamos el id a "com.frenzy", estos cambios son en la Linea Numero 2 del archivo xml.
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 6)	agregaremos el plugin de facebook en terminal corremos
 		cordova plugin add cordova-plugin-facebook4 --variable APP_ID="426922250825103" --variable APP_NAME="frenzy"
