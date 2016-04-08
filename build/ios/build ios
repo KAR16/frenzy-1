@@ -24,7 +24,7 @@
 		cordova plugin add https://github.com/Rohfosho/CordovaCallNumberPlugin.git
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 9)	agregaremos el plugin de sms en terminal corremos
-		cordova plugin add https://github.com/cordova-sms/cordova-sms-plugin.gitcordova plugin add https://github.com/cordova-sms/cordova-sms-plugin.git
+		cordova plugin add https://github.com/cordova-sms/cordova-sms-plugin.git
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 10)	corremos en terminal (cordova plugin) y tendremos que tener los siguientes plugins
 		com.cordova.plugins.sms 0.1.8 "Cordova SMS Plugin"
