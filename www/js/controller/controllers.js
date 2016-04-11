@@ -1348,9 +1348,10 @@ $urlRouterProvider.otherwise('/tutorial');
 											viewPromotion()
 					}
 					$state.go('app.playlists');
-					setTimeout(function() {
-							navigator.splashscreen.hide();
-					}, 6000);    }
+					// setTimeout(function() {
+					// 		navigator.splashscreen.hide();
+					// }, 6000);
+				}
 	}, false);}])
 
 
@@ -1361,25 +1362,8 @@ $urlRouterProvider.otherwise('/tutorial');
 .controller('rootCtrl', ['$state', function($state) {
   $state.go('app.playlists');
 }])
-/*************************  SPLASH  ******************************/
-.controller('splashController', ['$scope', '$state', function($scope, $state) {
-
-}])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-	// $scope.currentUser = Parse.User.current();
-	// if ($scope.currentUser == null ){
-	// 	//$state.go('tutorial')
-	// 		} else {
-	// 			if ($scope.currentUser["attributes"].authData == undefined) {
-	// 				IdUsuario = String($scope.currentUser.id)
-	// 						viewPromotion()
-	// 			}else {
-	// 				IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-	// 						viewPromotion()
-	// 			}
-	// 			//$state.go('app.playlists');
-	// 		}
 	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
