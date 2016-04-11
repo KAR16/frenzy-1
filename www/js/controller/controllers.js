@@ -207,6 +207,8 @@ angular.module('starter.controllers', ['ionic'])
 							$ionicLoading.hide();
 							$rootScope.user = user;
 							$rootScope.isLoggedIn = true;
+							IdUsuario = String($rootScope.user.id);
+							viewPromotion();
 							$state.go('app.playlists', {
 							clear: true
 							});
@@ -296,6 +298,7 @@ angular.module('starter.controllers', ['ionic'])
 	$scope.SalvadosSaveAndDelete = function (id) {
         var NamePromo = id
         var NameUser = String(IdUsuario)
+				console.log(NameUser);
         var Dimensions = {
           name: 'FavoritePin_'+NamePromo,
           user: NameUser
@@ -371,6 +374,8 @@ $scope.display = OurFavorites.all();
         if (pin == "silver") {
             document.getElementById(id).style.color = "purple";
             SavePromotion(IdUsuario, id)
+						console.log(IdUsuario + " usuario");
+						console.log(id + " id");
           //  $scope.reload()
         } else {
             document.getElementById(id).style.color = "silver";
@@ -1413,69 +1418,75 @@ $urlRouterProvider.otherwise('/tutorial');
 
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 
-   $scope.currentUser = Parse.User.current();
+	$scope.currentUser = Parse.User.current();
+	console.log($scope.currentUser)
+ if ($scope.currentUser != null ){
+	 if ($scope.currentUser["attributes"].authData != undefined) {
+			IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
+			viewPromotion();
+			$state.go('app.playlists');
+	 } else {
+			IdUsuario = String($scope.currentUser.id);
+			viewPromotion();
+			$state.go('app.playlists');
+	 }
 
-   if ($scope.currentUser == null ){
-   }else{
-       IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
-       viewPromotion()
-       $state.go('app.playlists');
-   }
+ }
 
-        var fbLogged = new Parse.Promise();
+			var fbLogged = new Parse.Promise();
 
-   var fbLoginSuccess = function(response) {
-       if (!response.authResponse){
-           fbLoginError("Cannot find the authResponse");
-           return;
-       }
-       var expDate = new Date(
-           new Date().getTime() + response.authResponse.expiresIn * 1000
-       ).toISOString();
+ var fbLoginSuccess = function(response) {
+		 if (!response.authResponse){
+				 fbLoginError("Cannot find the authResponse");
+				 return;
+		 }
+		 var expDate = new Date(
+				 new Date().getTime() + response.authResponse.expiresIn * 1000
+		 ).toISOString();
 
-       var authData = {
-           id: String(response.authResponse.userID),
-           access_token: response.authResponse.accessToken,
-           expiration_date: expDate
-       }
-       fbLogged.resolve(authData);
-   };
+		 var authData = {
+				 id: String(response.authResponse.userID),
+				 access_token: response.authResponse.accessToken,
+				 expiration_date: expDate
+		 }
+		 fbLogged.resolve(authData);
+ };
 
-   var fbLoginError = function(error){
-       fbLogged.reject(error);
-   };
+ var fbLoginError = function(error){
+		 fbLogged.reject(error);
+ };
 
-   //===============LOGIN WITH FB==========//
-   $scope.loginfb = function(){
-		 					  setTimeout(function(){
+ //===============LOGIN WITH FB==========//
+ $scope.loginfb = function(){
+															setTimeout(function(){
 
-																	if(!window.cordova){
-																					facebookConnectPlugin.browserInit('426922250825103');
-																	}
+																																	 if(!window.cordova){
+																																									 facebookConnectPlugin.browserInit('426922250825103');
+																																	 }
 
-																	facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
+																																	 facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
 
-																	fbLogged.then(function(authData) {
-																			$state.go('app.playlists');
-																			return Parse.FacebookUtils.logIn(authData);
-																	})
+																																	 fbLogged.then(function(authData) {
+																																					 $state.go('app.playlists');
+																																					 return Parse.FacebookUtils.logIn(authData);
+																																	 })
 
-																	.then(function(userObject) {
-																					var authData = userObject.get('authData');
-																					facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender', null,
-																					function(response) {
-																									userObject.set('name', response.name);
-																									userObject.set('birthday', response.birthday);
-																									userObject.set('gender', response.gender);
-																									userObject.set('hometown', response.hometown);
-																									userObject.save();
-																					},
-																					function(error) {
-																									console.log(error);
-																					})
-																	})
-								}, 1000);
+																																	 .then(function(userObject) {
+																																									 var authData = userObject.get('authData');
+																																									 facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender', null,
+																																									 function(response) {
+																																																	 userObject.set('name', response.name);
+																																																	 userObject.set('birthday', response.birthday);
+																																																	 userObject.set('gender', response.gender);
+																																																	 userObject.set('hometown', response.hometown);
+																																																	 userObject.save();
+																																									 },
+																																									 function(error) {
+																																																	 console.log(error);
+																																									 })
+																																	 })
+															 }, 1000);
 
-     };
-   // //===============/LOGIN WITH FB==========//
+	 };
+ // //===============/LOGIN WITH FB==========//
 });
