@@ -430,7 +430,7 @@ app.factory('OurFavorites', function() {
 												for(x in AllourFavorites){
 														if(AllourFavorites[x].Category === results.attributes.Name){
 																AllourFavorites[x]["Logo"] = results.attributes.Logo._url;
-																AllourFavorites[x]["oferta"] = "siHay"
+																AllourFavorites[x]["oferta"] = "existe"
 														}
 												}
 
