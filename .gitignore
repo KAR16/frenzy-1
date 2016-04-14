@@ -1,4 +1,33 @@
-hooks/
-node_modules/
-platforms/
-bower_components/
+hooks/*
+node_modules/*
+platforms/*
+bower_components/*
+node_modules/*
+plugins/*
+hooks/*
+resources/android/*
+resources/ios/*
+
+
+
+# -- Sistemas Operativos ------------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.*
+!.gitignore
+!.htaccess
+*~
+
+# Mac OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes

@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col col-100 open_sans">
             <!--*****  mail  *****-->
-            <p class="subtitle">Correo electronico</p>
+            <p class="subtitle">Correo electrónico</p>
             <!--*****  MAIL INPUT BOX  *****-->
             <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
               <input type="email" ng-model="user.email" placeholder="correo@ejemplo.com" >
@@ -32,7 +32,7 @@
               <input type="password" ng-model="user.password">
             </label>
 ​            <!--*****  GENDER DIV  *****-->
-            <p class="genderTitle">Genero (*)</p>
+            <p class="genderTitle">Género (*)</p>
             <!--*****  MALE  *****-->
             <div class="row genderRow">
               <div class="col col-50 genderBoxMale item item-input" value="set background" ng-click="genderMaleStyle()" ng-style="genderMaleBStyle">
@@ -40,7 +40,7 @@
               </div>
               <!--*****  FEMALE  *****-->
               <div class="col col-50 genderBoxFemale item item-input" value="set background" ng-click="genderFemaleleStyle()" ng-style="genderFemaleleBStyle">
-                <p class="subtitle">Femenina</p>
+                <p class="subtitle">Femenino</p>
               </div>
             </div>
             <!--*****  BIRTHDAY TITLE  *****-->
@@ -63,21 +63,21 @@
       <div class="col col-10"></div>
       <div class="col col-80">
         <p class="loginTitle8">
-          Inicia secion con Facebook o con una cuenta existente
+          Inicia sesión con Facebook o con una cuenta existente.
         </p>
       </div>
       <div class="col col-10"></div>
     </div>
-    <div class="row" ng-controller="loginCtrl">
+    <div class="row" ng-controller="loginCtrl2">
       <div class="col col-10"></div>
-      <div class="col col-80" ng-controller="loginCtrl">
+      <div class="col col-80" ng-controller="loginCtrl2">
         <div class="row">
           <div class="col col-50 facebookButon" ng-click="loginfb()">
             <p class="facebookTitle">Facebook</p>
           </div>
           <div class="col col-50 singupButon">
             <a href="#/login" nav-transition="none" style="text-decoration:none;">
-              <p class="singupTitle open_sans">Iniciar sesion</p>
+              <p class="singupTitle open_sans">Iniciar sesión</p>
             </a>
           </div>
         </div>
@@ -88,7 +88,7 @@
       <div class="col col-10"></div>
       <div class="col col-80">
         <p class="termsLogin">
-          * Los campos genero y fecha de nacimiento no son obligatorios, te recomendamos llenarlos para una mayor satisfacción en nuestra aplicación
+          * Los campos género y fecha de nacimiento no son obligatorios, te recomendamos llenarlos para una mayor satisfacción en nuestra aplicación.
         </p>
       </div>
       <div class="col col-10"></div>

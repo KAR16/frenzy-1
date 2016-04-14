@@ -22,6 +22,7 @@
 <!--**********  FAVORITES PAGE  **********-->
 <ion-view class="generalBackground">
     <!--*****  SECOND TAB HEADER  *****-->
+    <!-- If this app is for IOS platform then modify the 26 line (height:40px;margin-top:60px) -->
     <div class="row pageFavoritesSecondRow" style="height:35px;margin-top:44px;position:absolute; z-index:1;">
         <!--**********  OFFERTS  **********-->
         <div class="col col-50">
@@ -51,9 +52,6 @@
         <div style="height:35px;"></div>
         <div ng-repeat="favorites in ourFavorites  | filter: {oferta : 'noHay'}">
             <div class="open_sans boxbox">
-                <p class="savedPageNoItemBlankSpace">
-                    f
-                </p>
                 <p class="home savedPageNoItemsIcon">f</p>
                 <p class="savedPageNoItemsTitle">
                     Uh-uH
@@ -83,12 +81,6 @@
                     <img  src="{{s.photo}}" alt="nissan" style="width:100%; height:60%;">
                     <div class="pageFavoritesEstablishmentLogo" style="">
                         <img class="logoEstablishment" src="{{s.Logo}}" alt="label">
-                        <spam class="pageFavoritesCountOfferts">
-                            +32
-                        </spam>
-                        <spam class="pageFavoritesCountOffertsTitle">
-                            ofertas
-                        </spam>
                     </div>
                     <div style=" height:22%;">
                             <p class="pageFavoritesDescriptionTitle open_sans">

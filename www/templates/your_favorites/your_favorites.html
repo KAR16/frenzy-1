@@ -5,6 +5,7 @@
 </style>
 <ion-view>
     <!--*****  SECOND TAB HEADER  *****-->
+    <!-- If this app is for IOS platform then modify the 9 line (height:40px;margin-top:60px) -->
     <div class="row pageFavoritesSecondRow" style="height:35px;margin-top:44px;position:absolute; z-index:1;">
         <!--**********  OFFERTS  **********-->
         <div class="col col-50">
@@ -28,8 +29,6 @@
             </a>
         </div>
     </div>
-    <!-- if your code is uploader on ios you need to add this code of css in the line number 34 -->
-    <!-- style="margin-top:-10px" -->
     <!--*****  SECOND TAB HEADER  *****-->
     <ion-content ng-controller="AllFavoriteCtrl" ng-init="chats[$index -1].Category != chats[$index - 1].Category">
         <div style="height:31px;"></div>
@@ -77,9 +76,6 @@
         </div>
         <div ng-repeat="favorite in chats  | filter: {oferta : 'noHay'}">
             <div class="open_sans boxbox">
-                <p class="savedPageNoItemBlankSpace">
-                    f
-                </p>
                 <p class="home savedPageNoItemsIcon">f</p>
                 <p class="savedPageNoItemsTitle">
                     Uh-uH
