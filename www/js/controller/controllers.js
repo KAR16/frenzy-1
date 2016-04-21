@@ -34,13 +34,13 @@ angular.module('starter.controllers', ['ionic'])
     $scope.optionGender = '';
 
     $scope.genderMaleStyle= function(){
-    	$scope.genderMaleBStyle = {'background-color':'#48D1CC'};
+    	$scope.genderMaleBStyle = {'background-color':'#263147','color':'white'};
     	$scope.genderFemaleleBStyle = {};
     	$scope.optionGender = 'male';
     }
 
 	$scope.genderFemaleleStyle= function(){
-    	$scope.genderFemaleleBStyle = {'background-color':'#48D1CC'};
+    	$scope.genderFemaleleBStyle = {'background-color':'#263147','color':'white'};
     	$scope.genderMaleBStyle = {};
     	$scope.optionGender = 'female';
     }
@@ -1211,6 +1211,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/tutorial2/tutorial2.html",
 		controller:"tutorial2Controller"
   })
+	// ******** LOGIN AND REGISTER TEMPLETE
+	.state('loginAndRegister', {
+		url: "/LoginAndRegister",
+		templateUrl: "templates/login_and_register/loginAndRegister.html"
+	})
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
@@ -1325,7 +1330,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-//$urlRouterProvider.otherwise('/tutorial');
+$urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -1369,7 +1374,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
-          $state.go('login2');
+          $state.go('loginAndRegister'); // modificar a login2
           break;
       }
     }

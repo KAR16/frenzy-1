@@ -1,0 +1,50 @@
+.circle {
+  width: 100px;
+  height: 100px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 45%;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 5px #303C83
+}
+
+.penguinLoginAndRegister {
+  /*font-size: 500%;*/
+  color: #3F51B5;
+}
+
+.SesionTitle {
+  color: #FFFFFF;
+}
+
+.loginButtons {
+  padding-top: 50px;
+}
+
+.FacebookButtonLogin {
+  background-color: #FFFFFF;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  width: 170px;
+  box-shadow: 0px 3px 0px #D2D8D7;
+}
+
+.FacebookTextLogin {
+  font-size: 22px;
+  font-weight: bolder;
+  color: #3F51B5;
+  text-align: center;
+}
+
+.EmailLogin {
+  background-color: #00BAB9;
+  border-radius: 12px;
+  height: 45px;
+  width: 170px;
+  box-shadow: 0px 3px 0px #1E8E7F;
+}
+
+/*div {
+  border: 1px solid gray;
+}*/

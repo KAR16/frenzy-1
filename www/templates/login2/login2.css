@@ -34,8 +34,7 @@
 .inputBox{
   background-color: #E6E7E8;
   border-radius: 12px;
-  height: 33px;
-  margin-top: -8px;
+  /*height: 33px;*/
 }
 .genderTitle{
   color: #263147;
@@ -49,12 +48,16 @@
   background-color: #E6E7E8;
   border-radius: 12px;
   text-align: center;
+  height: 48px;
+  line-height: 285%;
 }
 .genderBoxFemale{
   background-color: #E6E7E8;
   border-radius: 12px;
   margin-left: 7px;
   text-align: center;
+  height: 48px;
+  line-height: 285%;
 }
 .dateTitle{
   color: #263147;
