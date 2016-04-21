@@ -15,7 +15,6 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="FadeSplashScreen" value="true" />
-    <preference name="FadeSplashScreenDuration" value="0.1" />
     <preference name="SuppressesIncrementalRendering" value="true" />
     <preference name="orientation" value="portrait" />
     <preference name="Fullscreen" value="true" />
@@ -23,6 +22,10 @@
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
+    <plugin name="phonegap-facebook-plugin" spec="~0.12.0">
+        <variable name="APP_ID" value="426922250825103" />
+        <variable name="APP_NAME" value="frenzy" />
+    </plugin>
     <platform name="ios">
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
@@ -58,8 +61,5 @@
         <splash density="port-xxxhdpi" src="resources\android\splash\drawable-port-xxxhdpi-screen.png" />
     </platform>
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
-    <plugin name="phonegap-facebook-plugin" spec="~0.12.0">
-        <variable name="APP_ID" value="426922250825103" />
-        <variable name="APP_NAME" value="frenzy" />
-    </plugin>
+    <engine name="android" spec="~5.1.1" />
 </widget>

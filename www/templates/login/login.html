@@ -1,4 +1,9 @@
 <ion-view class="BackgroundColor">
+  <style>
+    .col {
+      padding: 0px;
+    }
+  </style>
   <ion-content ng-app="ionicApp">
     <!--*****  row for main div  *****-->
     <div class="row">
@@ -15,8 +20,9 @@
           </div>
           <div class="col col-25"></div>
         </div>
+        <hr color='#F1F2F2'>
         <!--*****  row main body  *****-->
-        <div class="row">
+        <div class="row" style="padding:15px">
           <div class="col col-100 open_sans">
             <!--*****  mail  *****-->
             <p class="subtitle">Correo electrónico</p>
@@ -41,9 +47,9 @@
       </div>
       <div class="col col-10"></div>
     </div>
-    <div class="row" ng-controller="loginCtrl">
+    <div class="row" ng-controller="loginCtrlFacebook">
       <div class="col col-10"></div>
-      <div class="col col-80" ng-controller="loginCtrl">
+      <div class="col col-80" ng-controller="loginCtrlFacebook">
         <p class="subtitle3 open_sans">Inicia sesión con Facebook o crea una cuenta.</p>
 
         <div class="row">
