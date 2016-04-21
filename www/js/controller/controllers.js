@@ -34,13 +34,13 @@ angular.module('starter.controllers', ['ionic'])
     $scope.optionGender = '';
 
     $scope.genderMaleStyle= function(){
-    	$scope.genderMaleBStyle = {'background-color':'#263147','color':'white'};
+    	$scope.genderMaleBStyle = {'background-color':'#48D1CC'};
     	$scope.genderFemaleleBStyle = {};
     	$scope.optionGender = 'male';
     }
 
 	$scope.genderFemaleleStyle= function(){
-    	$scope.genderFemaleleBStyle = {'background-color':'#263147','color':'white'};
+    	$scope.genderFemaleleBStyle = {'background-color':'#48D1CC'};
     	$scope.genderMaleBStyle = {};
     	$scope.optionGender = 'female';
     }
@@ -116,7 +116,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 // ************************ LOGIN WITHOUT FACEBOOK **********************************
-.controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
+.controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading) {
 		Parse.Cloud.run('verifyFinalizedPromotions',{}, {
 			success: function(result) {
 				//result is 'Hello world!'
@@ -1211,16 +1211,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/tutorial2/tutorial2.html",
 		controller:"tutorial2Controller"
   })
-	// ******** LOGIN AND REGISTER TEMPLETE
-	.state('loginAndRegister', {
-		url: "/LoginAndRegister",
-		templateUrl: "templates/login_and_register/loginAndRegister.html"
-	})
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
 		templateUrl: "templates/login/login.html",
-    	controller: "LoginController"
+    	controller: "LoginCtrlEmail"
+	})
+	// ******** LOGIN AND CONTROLLER ******
+	.state('loginAndRegister', {
+		url: "/loginAndRegister",
+		templateUrl: "templates/login_and_register/loginAndRegister.html"
 	})
   // ******** FACEBOOK *****
 	.state('login2', {
@@ -1374,7 +1374,7 @@ $urlRouterProvider.otherwise('/tutorial');
 	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
-          $state.go('loginAndRegister'); // modificar a login2
+          $state.go('loginAndRegister');
           break;
       }
     }
@@ -1418,22 +1418,22 @@ $urlRouterProvider.otherwise('/tutorial');
 }])
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
-.controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
+.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook) {
 
-	$scope.currentUser = Parse.User.current();
-	console.log($scope.currentUser)
- if ($scope.currentUser != null ){
-	 if ($scope.currentUser["attributes"].authData != undefined) {
-			IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
-			viewPromotion();
-			$state.go('app.playlists');
-	 } else {
-			IdUsuario = String($scope.currentUser.id);
-			viewPromotion();
-			$state.go('app.playlists');
-	 }
-
- }
+ // $scope.currentUser = Parse.User.current();
+ // console.log($scope.currentUser)
+ // if ($scope.currentUser != null ){
+ //  if ($scope.currentUser["attributes"].authData != undefined) {
+ // 		IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
+ // 		viewPromotion();
+ // 		$state.go('app.playlists');
+ //  } else {
+ // 		IdUsuario = String($scope.currentUser.id);
+ // 		viewPromotion();
+ // 		$state.go('app.playlists');
+ //  }
+ //
+ // }
 
 			var fbLogged = new Parse.Promise();
 
@@ -1491,80 +1491,4 @@ $urlRouterProvider.otherwise('/tutorial');
 
 	 };
  // //===============/LOGIN WITH FB==========//
-})
-
-.controller('loginCtrl2', function($scope, $state, $cordovaFacebook) {
-
-    $scope.currentUser = Parse.User.current();
-    console.log($scope.currentUser)
-if ($scope.currentUser != null ){
-     if ($scope.currentUser["attributes"].authData != undefined) {
-            IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
-            console.log("correo1");
-            viewPromotion();
-            $state.go('app.playlists');
-     } else {
-            IdUsuario = String($scope.currentUser.id);
-            viewPromotion();
-            console.log("correo2");
-            $state.go('app.playlists');
-     }
-
-}
-
-            var fbLogged = new Parse.Promise();
-
-var fbLoginSuccess = function(response) {
-         if (!response.authResponse){
-                 fbLoginError("Cannot find the authResponse");
-                 return;
-         }
-         var expDate = new Date(
-                 new Date().getTime() + response.authResponse.expiresIn * 1000
-         ).toISOString();
-
-         var authData = {
-                 id: String(response.authResponse.userID),
-                 access_token: response.authResponse.accessToken,
-                 expiration_date: expDate
-         }
-         fbLogged.resolve(authData);
-};
-
-var fbLoginError = function(error){
-         fbLogged.reject(error);
-};
-
-//===============LOGIN WITH FB==========//
-$scope.loginfb = function(){
-    setTimeout(function(){
-
-         if(!window.cordova){
-               facebookConnectPlugin.browserInit('426922250825103');
-         }
-
-         facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
-
-         fbLogged.then(function(authData) {
-                         $state.go('app.playlists');
-                         return Parse.FacebookUtils.logIn(authData);
-         })
-
-         .then(function(userObject) {
-             var authData = userObject.get('authData');
-             facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender', null,
-             function(response) {
-               userObject.set('name', response.name);
-               userObject.set('birthday', response.birthday);
-               userObject.set('gender', response.gender);
-               userObject.set('hometown', response.hometown);
-               userObject.save();
-             },
-             function(error) {
-              console.log(error);
-             })
-         })
-     }, 1000);
-
-};
 });
