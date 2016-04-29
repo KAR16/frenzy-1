@@ -18,7 +18,13 @@
 .title{
   color:black;
   font-size: 17px;
-  padding-top: 10px;
+  text-align: center;
+}
+.title-spacing {
+  font-weight: bold;
+  /*padding-top: 10px;*/
+  color:black;
+  font-size: 17px;
   text-align: center;
 }
 .subtitle{
@@ -49,7 +55,6 @@
   border-radius: 12px;
   text-align: center;
   height: 48px;
-  line-height: 285%;
 }
 .genderBoxFemale{
   background-color: #E6E7E8;
@@ -57,7 +62,6 @@
   margin-left: 7px;
   text-align: center;
   height: 48px;
-  line-height: 285%;
 }
 .dateTitle{
   color: #263147;
@@ -71,12 +75,9 @@
 }
 .enterButton{
   background-color: #FF5252;
-  height: 30px;
   width: 150px;
-  margin-top: 20px;
   border-radius: 10px;
-  border-bottom: solid;
-  border-color: red;
+  box-shadow: 0px 3px 0px #D24646;
 }
 .enterButtonTitle{
   color: white;
@@ -116,7 +117,6 @@
 .singupTitle{
   text-align: center;
   font-size: 16px;
-  padding-top: 2px;
   color: white;
 }
 .termsLogin{
@@ -130,3 +130,15 @@
   font-weight: bolder;
   text-decoration: underline;
 }
+.FacebookButtonLogin2 {
+  background-color: #FFFFFF;
+  height: 40px;
+  border-radius: 12px;
+  border: none;
+  width: 170px;
+  box-shadow: 0px 3px 0px #D2D8D7;
+}
+
+/*div {
+  border:1px solid red;
+}*/

@@ -1,4 +1,4 @@
-<ion-slide-box class="tutorialPageBackgroundColor" show-pager="false" on-slide-changed="slideChanged(index)" style="background-color:#9C28B0;">
+<ion-slide-box class="tutorialPageBackgroundColor" on-slide-changed="slideChanged(index)" style="background-color:#9C28B0">
     <!--**************************  FIRST SLIDE  *****************************-->
     <ion-slide>
       <!--**********  SLIDER BOXES  **********-->
@@ -16,9 +16,8 @@
         <!--*****  TRIANGLES  *****-->
     </div>
         <!--*****  DIV GREY  *****-->
-        <div class="container6 zigzag" style="margin-top:-70px;">
-          <p class="tut1">Desliza hacia la izquierda</p>
-          <div class="container5 zigzag"></div>
+        <div class="container6 zigzag slide-image-center" style="margin-top:-70px;">
+          <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
       </div>
     </ion-slide>
   <!--***********************************************************************-->
@@ -28,20 +27,45 @@
     <!--*****  DIV RESPONSIVE NO.2  *****-->
     <div class="backgroundTutorialNo2 open_sans" >
       <!--*****  HOUSE IMAGE NO.2  *****-->
-      <img class="imageHouseTutorialNo1" src="img/heart.png" alt="nissan">
+      <img class="imageHouseTutorialNo1" src="img/cerdo.png" alt="Heart">
       <!--*****  TITLE NO.2.1  *****-->
-      <p class="titleTutorial1-1">Recibe nuevas promos y</p>
+      <p class="titleTutorial1-1"></p>
       <!--*****  TITLE NO.2.2  *****-->
-      <p  class="titleTutorial1-2">cupones de tus marcas favoritas</p>
+      <p  class="titleTutorial1-2">Ahorra en tus marcas favoritas</p>
       <!--*****  MAIN IMAGE NO.2  *****-->
-      <img class="imageTutorialNo1" src="img/2.png" alt="nissan">
-      <!--*****  BOTTOM BOX  *****-->
-      <!--*****  TRIANGLES  *****-->
+      <br>
+      <!--  -->
+      <div class="row">
+        <div class="col col-10"></div>
+        <!-- Offers and Promotions for Average -->
+        <div class="col">
+          <!-- If find offers or promotions -->
+          <div ng-repeat="customer in chats | filter: {oferta : 'existe'}">
+
+          </div>
+          <div ng-repeat="customer in chats  | filter: {oferta : 'noHay'}">
+              <!-- If does not find offers or promotions -->
+              <div class="open_sans boxbox">
+                  <p class="savedPageNoItemBlankSpace">
+                      f
+                  </p>
+                  <p class="home savedPageNoItemsIcon">g</p>
+                  <p class="savedPageNoItemsTitle">
+                      Uh-ha-Ha-ha
+                  </p>
+                  <p class="savedPageNoItemsDescription"  style="margin-top:15px;">Espera nuestros monitos </p>
+                  <p class="savedPageNoItemsDescription"> estan trabajando para traerte las</p>
+                  <p class="savedPageNoItemsDescription"> nuevas promociones para que ahorres a lo loco...!!</p>
+              </div>
+          </div>
+        </div>
+        <div class="col col-10"></div>
+      </div>
+      <!--  -->
   </div>
       <!--*****  DIV GREY  *****-->
-      <div class="container6 zigzag" style="margin-top:-70px;">
-        <p class="tut1">Desliza hacia la izquierda</p>
-        <div class="container5 zigzag"></div>
+      <div class="container6 zigzag slide-image-center" style="margin-top:-70px;">
+        <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
   </ion-slide>
   <!--**********************************************************************-->
@@ -51,25 +75,29 @@
     <!--*****  DIV RESPONSIVE NO.3  *****-->
     <div class="backgroundTutorialNo3 open_sans" >
       <!--*****  HOUSE IMAGE NO.3  *****-->
-      <img class="imageHouseTutorialNo1" src="img/pin.png" alt="nissan">
+      <img class="imageHouseTutorialNo1" src="img/telefono.png" alt="nissan">
       <!--*****  TITLE NO.3.1  *****-->
-      <p class="titleTutorial1-1">Guarda ofertas y cupones para</p>
+      <br>
+      <p class="titleTutorial1-1">El directorio telefónico y web de</p>
       <!--*****  TITLE NO.3.2  *****-->
-      <p  class="titleTutorial1-2">despues</p>
+      <p  class="titleTutorial1-2">tus marcas favoritas</p>
       <!--*****  MAIN IMAGE NO.3  *****-->
-      <img class="imageTutorialNo1" src="img/3.png" alt="nissan">
+      <img class="imageTutorialNo1" src="img/phone3.png" alt="nissan">
       <!--*****  BOTTOM BOX  *****-->
       <!--*****  TRIANGLES  *****-->
   </div>
       <!--*****  DIV GREY  *****-->
-      <div class="container6 zigzag" style="margin-top:-70px;">
-        <p class="tut1">Desliza hacia la izquierda</p>
-        <div class="container5 zigzag"></div>
+      <div class="container6 zigzag slide-image-center" style="margin-top:-70px;">
+        <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
       </div>
   </ion-slide>
   <!--**********************************************************-->
   <!--**********************************************************-->
   <ion-slide>
-    <div class="finalDivTutorialPage">
-    </div>  </ion-slide>
+    <div class="finalDivTutorialPage" style="display:table">
+      <div class="" style="display:table-cell;vertical-align:middle;text-align:center">
+        <img style="width:150px" src="img/frenzy.png" alt="" />
+      </div>
+    </div>
+  </ion-slide>
 </ion-slide-box>
