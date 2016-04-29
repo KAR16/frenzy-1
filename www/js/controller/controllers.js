@@ -1371,6 +1371,7 @@ $urlRouterProvider.otherwise('/tutorial');
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
+
 	$scope.slideChanged = function(index) {
     switch(index) {
         case 3:
@@ -1407,7 +1408,7 @@ $urlRouterProvider.otherwise('/tutorial');
 	}
 	$scope.logout = function() {
 		Parse.User.logOut();
-		$state.go('login');
+		$state.go('loginAndRegister');
 	};
 
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
