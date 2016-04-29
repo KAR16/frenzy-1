@@ -38,25 +38,10 @@
       <div class="row">
         <div class="col col-10"></div>
         <!-- Offers and Promotions for Average -->
-        <div class="col">
+        <div class="col" ng-controller = 'TutorialCostumer'>
           <!-- If find offers or promotions -->
-          <div ng-repeat="customer in chats | filter: {oferta : 'existe'}">
-
-          </div>
-          <div ng-repeat="customer in chats  | filter: {oferta : 'noHay'}">
-              <!-- If does not find offers or promotions -->
-              <div class="open_sans boxbox">
-                  <p class="savedPageNoItemBlankSpace">
-                      f
-                  </p>
-                  <p class="home savedPageNoItemsIcon">g</p>
-                  <p class="savedPageNoItemsTitle">
-                      Uh-ha-Ha-ha
-                  </p>
-                  <p class="savedPageNoItemsDescription"  style="margin-top:15px;">Espera nuestros monitos </p>
-                  <p class="savedPageNoItemsDescription"> estan trabajando para traerte las</p>
-                  <p class="savedPageNoItemsDescription"> nuevas promociones para que ahorres a lo loco...!!</p>
-              </div>
+          <div ng-repeat="customer in TutorialPromotion | orderBy:'-suma'  | limitTo:6 ">
+              <tutorial-info info="customer"></tutorial-info>
           </div>
         </div>
         <div class="col col-10"></div>

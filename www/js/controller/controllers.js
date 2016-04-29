@@ -1,4 +1,3 @@
-/*****  GLOBAL LISTS  *****/
 var displayNoneInline = []
 var colorIconsFoother = []
 var pix = "170px"
@@ -33,17 +32,17 @@ angular.module('starter.controllers', ['ionic'])
     // Gender variable for to save in Parse
     $scope.optionGender = '';
 
-    $scope.genderMaleStyle= function(){
-    	$scope.genderMaleBStyle = {'background-color':'#48D1CC'};
-    	$scope.genderFemaleleBStyle = {};
-    	$scope.optionGender = 'male';
-    }
+		$scope.genderMaleStyle= function(){
+		       $scope.genderMaleBStyle = {'background-color':'#263147 ','color':'white'};
+		       $scope.genderFemaleleBStyle = {'color':'#263147 '};
+		       $scope.optionGender = 'male';
+		   }
 
-	$scope.genderFemaleleStyle= function(){
-    	$scope.genderFemaleleBStyle = {'background-color':'#48D1CC'};
-    	$scope.genderMaleBStyle = {};
-    	$scope.optionGender = 'female';
-    }
+		    $scope.genderFemaleleStyle= function(){
+		       $scope.genderFemaleleBStyle = {'background-color':'#263147 ','color':'white'};
+		       $scope.genderMaleBStyle = {'color':'#263147 '};
+		       $scope.optionGender = 'female';
+		   }
 	$scope.Alert = function () {
 			if ($scope.user.email == undefined ) {
 					sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
@@ -526,6 +525,7 @@ $scope.display = OurFavorites.all();
   		setTimeout(function() {
 		$scope.$apply(function() {
 			$scope.chats = CustomerAll.all($stateParams.IDcustomer);
+			console.log(JSON.stringify($scope.chats))
 			$ionicLoading.hide();
 		});
 	}, 1000);
@@ -736,6 +736,7 @@ $scope.display = OurFavorites.all();
 		}
 		/* **************************************************** */
 		$scope.chats = currentPromotion.get($stateParams.superId);
+
 		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
@@ -1492,4 +1493,22 @@ $urlRouterProvider.otherwise('/tutorial');
 
 	 };
  // //===============/LOGIN WITH FB==========//
+})
+
+
+.controller('TutorialCostumer', function($scope, $ionicPopover) {
+	Parse.Cloud.run('GetCustomer', {},{
+		success:function (results) {
+			console.log(results);
+			var Result = results
+			for (g in Result) {
+				Result[g]["suma"] = Result[g]["promo"] +  Result[g]["coupon"]
+			}
+			$scope.TutorialPromotion = Result
+		},
+		error:function (error) {
+		 console.log(error);
+		}
+	})
+	//[{"Category":"Restaurantes","NameCategory":"Mr-Sushi","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-3a4902eb-7c6a-4419-84fe-93d852ffec9e-logo%20mr%20sushi.png","oferta":"existe","promedio":15,"promo":1,"suma":1},{"Category":"Restaurantes","NameCategory":"Dominos","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-5814f869-746e-4030-a5d7-17616c55870a-220x220.jpg","oferta":"existe","promedio":59,"promo":3,"suma":3},{"Category":"Restaurantes","NameCategory":"MARGHERITA","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-52085c6c-ffb3-4739-a50b-43f81e54173a-Logo_Margherita_converted.png","oferta":"existe","promedio":52,"promo":2,"suma":2},{"Category":"Restaurantes","NameCategory":"Astoria","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-35023ccc-d86e-43ec-929f-12999efb0480-LOGO.png","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Restaurantes","NameCategory":"ALTUNA","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-d3818ae3-0aae-403b-b84d-d59c60c98bfe-imagen%202%2072%20dpi-01.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Restaurantes","NameCategory":"Don-Carnitas","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-aafa6d05-f2d6-4227-b037-92be2848e58d-Nuestro%20Logo.jpg","oferta":"existe","promedio":24.67,"promo":3,"suma":3},{"Category":"Moda","NameCategory":"MNG","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-bdaee8f4-36f2-4cd5-ba9b-2a7909065e81-logoMNGBjpg_converted.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Moda","NameCategory":"Piel-De-Toro","colorHeart":"red","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-66f5b440-3f8b-4002-a89e-b587fb9a14d2-rsz_logo_piel.png","oferta":"existe","promedio":892.5,"promo":4,"suma":4},{"Category":"Moda","NameCategory":"Claire's","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-bddb919b-4a61-4fb7-bd36-bbcf1bf4debe-claire.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Moda","NameCategory":"TIFFANY-HAIR-FASHION","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-d54c21…4299-9510-6f9cd80e8004-10991123_1074933285855798_5623932414552156501_n.png","oferta":"existe","promedio":0,"promo":0,"suma":0}]
 });
