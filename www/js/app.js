@@ -1,5 +1,6 @@
-// IdUsuario of Facebook or Frenzy for Pines and hearts
+
 var IdUsuario;
+var IdGender;
 var userVerificate= Parse.User.current();
 // ***********  FUNCTION BACK ***************
 function goBack() {
@@ -17,6 +18,16 @@ Parse.Cloud.run('GetCustomer', {},{
 	 console.log(error);
 	}
 });
+// Parse.Cloud.run('Push', {},{
+// 	success:function (results) {
+// 			console.log(results);
+//
+// 		//CustomerList = results
+// 	},
+// 	error:function (error) {
+// 	 console.log(error);
+// 	}
+// });
 // ************* THIS FUNCTION IS FOR HIDE THE OPTIONS IN TOOLS ***********************/
 document.write('<style type="text/css">div.cp_oculta{display: none;}</style>');
 function MostrarOcultar(capa,enlace){

@@ -1,257 +1,34 @@
-/*** if your code is uplodader on ios you need to add this code on .backgroundCategories**/
-/**
-	margin-top:-10px;
-**/
-
+/*Background Color light-Gray for Customer Template*/
 .backgroundCategories {
 	background-color: #F1F2F2;
 }
-
-.categoriesBoxes {
-    background-size: auto auto;
-    color: #212121 ;
-    width: 100%;
-    height: 185px;
-    box-shadow: 3px 3px 2px #BDBDBD ;
-}
-
-/* Color of box to Customers for CategoryApp*/
-
-.Supermercado {
-    background: linear-gradient(white 70%, #00BAB9 25%);
-    background: -webkit-linear-gradient(white 65%, #00BAB9 35%);
-    background: -o-linear-gradient(white 65%, #00BAB9 35%);
-}
-
-.Restaurantes {
-    background: linear-gradient(white 70%, #FF5252 25%);
-    background: -webkit-linear-gradient(white 65%, #FF5252 35%);
-    background: -o-linear-gradient(white 65%, #FF5252 35%);
-}
-
-.Moda {
-    background: linear-gradient(white 70%, #FFD922 25%);
-    background: -webkit-linear-gradient(white 65%, #FFD922 35%);
-    background: -o-linear-gradient(white 65%, #FFD922 35%);
-}
-
-.Entretenimiento {
-    background: linear-gradient(white 70%, #9C28B0 25%);
-    background: -webkit-linear-gradient(white 65%, #9C28B0 35%);
-    background: -o-linear-gradient(white 65%, #9C28B0 35%);
-}
-
-.Electrónicos {
-    background: linear-gradient(white 70%, #3F51B5 25%);
-    background: -webkit-linear-gradient(white 65%, #3F51B5 35%);
-    background: -o-linear-gradient(white 65%, #3F51B5 35%);
-}
-
-.Otros {
-    background: linear-gradient(white 70%, #00DDC1 25%);
-    background: -webkit-linear-gradient(white 65%, #00DDC1 35%);
-    background: -o-linear-gradient(white 65%, #00DDC1 35%);
-}
-
-/* Color of text to Customers for CategoryApp*/
-
-/* Category Supermercado */
-.PriceSupermercado {
-    color:white;
-    font-size:12px;
-	margin-left: -7px;
-}
-
-.TitleSupermercado {
-    font-size:13px;
-    color:#78D9D8;
-}
-
-.AveragePriceSupermercado {
-    color:white;
-    font-size:12px;
-    font-weight: bolder;
-		margin-left: -7px;
-}
-
-.AverageTitleSupermercado {
-    font-size:11px;
-    color: #78D9D8;
-}
-
-/* Category Restaurantes */
-.PriceRestaurantes {
-    color:white;
-    font-size:12px;
-	margin-left: -7px;
-}
-
-.TitleRestaurantes {
-    font-size:13px;
-    color:#CFCDCD;
-}
-
-.AveragePriceRestaurantes {
-    color:white;
-    font-size:12px;
-    font-weight: bolder;
-		margin-left: -7px;
-}
-
-.AverageTitleRestaurantes {
-    font-size:11px;
-    color: #CFCDCD;
-}
-
-/* Category Moda */
-.PriceModa {
-    color:black;
-    font-size:12px;
-	margin-left: -7px;
-}
-
-.TitleModa {
-    font-size:13px;
-    color:#846464;
-}
-
-.AveragePriceModa {
-    color:black;
-    font-size:12px;
-    font-weight: bolder;
-		margin-left: -7px;
-}
-
-.AverageTitleModa {
-    font-size:11px;
-    color:#846464;
-}
-
-/* Category Entretenimiento */
-.PriceEntretenimiento {
-    color:white;
-    font-size:12px;
-	margin-left: -7px;
-}
-
-.TitleEntretenimiento {
-    font-size:13px;
-    color:#C5C3C3;
-}
-
-.AveragePriceEntretenimiento {
-    color:white;
-    font-size:12px;
-    font-weight: bolder;
-		margin-left: -7px;
-}
-
-.AverageTitleEntretenimiento {
-    font-size:11px;
-    color: #C5C3C3;
-}
-
-/* Category Electrónicos */
-.PriceElectrónicos {
-    color:white;
-    font-size:12px;
-	margin-left: -7px;
-}
-
-.TitleElectrónicos {
-    font-size:13px;
-    color:#C5C3C3;
-}
-
-.AveragePriceElectrónicos {
-    color:white;
-    font-size:12px;
-    font-weight: bolder;
-		margin-left: -7px;
-}
-
-.AverageTitleElectrónicos {
-    font-size:11px;
-    color: #C5C3C3;
-}
-
-
-/* Category Otros */
-.PriceOtros {
-    color:white;
-    font-size:12px;
-	margin-left: -7px;
-}
-
-.TitleOtros {
-    font-size:13px;
-    color:white;
-}
-
-.AveragePriceOtros {
-    color:white;
-    font-size:12px;
-    font-weight: bolder;
-		margin-left: -7px;
-}
-
-.AverageTitleOtros {
-    font-size:11px;
-    color: white;
-}
-
-/* Color of loading to Customers for CategoryApp*/
-
-/* loading for Supermercado */
-
+/* loading for Supermarket */
 .LoadingSupermercado{
 	stroke: #00BAB9;
 	fill: #00BAB9;
 }
-
-/* loading for Restaurantes */
+/* loading for Restaurants */
 .LoadingRestaurantes{
-	stroke: #FF5252;
-	fill: #FF5252;
+	stroke: #FBA340;
+	fill: #FBA340;
 }
-/* loading for Moda */
+/* loading for Fashion */
 .LoadingModa{
-	stroke: #FFD922;
-	fill: #FFD922;
-}
-/* loading for Entretenimiento */
-.LoadingEntretenimiento{
 	stroke: #9C28B0;
 	fill: #9C28B0;
 }
-/* loading for Electronicos */
+/* loading for Entertainment */
+.LoadingEntretenimiento{
+	stroke: #FFD922;
+	fill: #FFD922;
+}
+/* loading for Electronics */
 .LoadingElectrónicos{
 	stroke: #3F51B5;
 	fill: #3F51B5;
 }
-/* loading for Otros */
+/* loading for Others */
 .LoadingOtros{
 	stroke: #00DDC1;
 	fill: #00DDC1;
-}
-
-
-
-.categoriesHeartIcon {
-    margin-top:20px;
-}
-
-
-.imageCategoryBoxes {
-    width: auto;
-    height: 110px;
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.categoriesBoxesEnlineBlock {
-    display: inline-block;
-    width: 100%;
-    height: auto;
 }

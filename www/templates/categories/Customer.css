@@ -1,0 +1,189 @@
+#PaddingBoxBefore.col {
+  padding: 5px;
+}
+/*Customer Description Static Width*/
+#colRestaurantes.col {
+  padding: 0px !important;
+}
+#infoCol2.col {
+  padding: 0px !important;
+}
+#infoCol3.col {
+  padding: 0px !important;
+}
+/*Customer Box Style*/
+.imageCategoryBoxes {
+  width: auto;
+  height: 110px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.CenteredCustomerImage {
+  padding:5px 0px 5px 0px;
+}
+
+/*Padding for Each Customer Box*/
+#PaddingBox.categoriesBoxesEnlineBlock {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  /*Up, Right, Bottom, Left*/
+  padding: 5px;
+}
+/*Heart Vertical Centered*/
+.categoriesHeartIcon {
+  display:flex;
+}
+/*Vertical Centered Icon And Size*/
+.HeartCentered {
+  text-align:center;
+  margin:auto;
+  font-size: 30px;
+}
+/*Categories Boxes Style*/
+.categoriesBoxes {
+  background-size: auto auto;
+  color: #212121 ;
+  background-color: white;
+  width: 100%;
+  box-shadow: 3px 3px 2px #BDBDBD ;
+  padding: 0px
+}
+/*Description Bar Colors for Categories*/
+.Supermercado {
+  background-color: #00BAB9;
+}
+.Restaurantes {
+  background-color: #FBA340;
+}
+.Moda {
+  background-color: #9C28B0;
+}
+.Entretenimiento {
+  background-color: #FFD922;
+}
+.Electrónicos {
+  background-color: #3F51B5;
+}
+.Otros {
+  background-color: #00DDC1;
+}
+/* Supermarket Category*/
+.PriceSupermercado {
+  color:white;
+  font-size:12px;
+}
+.TitleSupermercado {
+  font-size:13px;
+  color:#78D9D8;
+}
+.AveragePriceSupermercado {
+  color:white;
+  font-size:12px;
+  font-weight: bolder;
+}
+.AverageTitleSupermercado {
+  font-size:11px;
+  color: #78D9D8;
+}
+/* Restaurant Category */
+.PriceRestaurantes {
+  color:white;
+  font-size:12px;
+  margin-left: 5px !important;
+}
+.TitleRestaurantes {
+  font-size:13px;
+  color:#263147;
+}
+.AveragePriceRestaurantes {
+  color:white;
+  font-size:12px;
+  font-weight: bolder;
+  margin-left: 5px !important;
+}
+.AverageTitleRestaurantes {
+  font-size:11px;
+  color: #263147;
+}
+/* Fashion Category */
+.PriceModa {
+  color:white;
+  font-size:12px;
+  margin-left: 5px !important;
+}
+.TitleModa {
+  font-size:13px;
+  color:white;
+}
+.AveragePriceModa {
+  color:white;
+  font-size:12px;
+  font-weight: bolder;
+  margin-left: 5px !important;
+}
+.AverageTitleModa {
+  font-size:11px;
+  color:white;
+}
+/* Category Entertainment */
+.PriceEntretenimiento {
+  color:#263147;
+  font-size:12px;
+  margin-left: 5px !important;
+}
+.TitleEntretenimiento {
+  font-size:13px;
+  color:#263147;
+}
+.AveragePriceEntretenimiento {
+  color:#263147;
+  font-size:12px;
+  font-weight: bolder;
+  margin-left: 5px !important;
+}
+.AverageTitleEntretenimiento {
+  font-size:11px;
+  color: #263147;
+}
+/* Electronic Category */
+.PriceElectrónicos {
+  color:white;
+  font-size:12px;
+  margin-left: 5px !important;
+}
+.TitleElectrónicos {
+  font-size:13px;
+  color:#C5C3C3;
+}
+.AveragePriceElectrónicos {
+  color:white;
+  font-size:12px;
+  font-weight: bolder;
+  margin-left: 5px !important;
+}
+.AverageTitleElectrónicos {
+  font-size:11px;
+  color: #C5C3C3;
+}
+/* Other Category */
+.PriceOtros {
+  color:white;
+  font-size:12px;
+  margin-left: 5px !important;
+}
+.TitleOtros {
+  font-size:13px;
+  color:white;
+}
+.AveragePriceOtros {
+  color:white;
+  font-size:12px;
+  font-weight: bolder;
+  margin-left: 5px !important;
+}
+.AverageTitleOtros {
+  font-size:11px;
+  color: white;
+}

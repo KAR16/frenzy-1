@@ -6,31 +6,39 @@ box-shadow: 0 0 0px white;
 
 <ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Fecha'}">
 	<ion-content style="background-color:#F1F2F2;">
-		<!--**********************************************************************-->
-		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
-		<!--*****  PRICE LABEL OFFERTS  *****-->
-		<div class="row pageFavoritesBoxPriceLabel">
-			<div class="col col-25">
-				<p class="cuponsDescriptionsLabelExchance">
-					Canjea
-				</p>
-				<p class="pageFavoritesSavingPrice">
-					Q.{{cupon.Canjea}}
-				</p>
+
+		<div class="OffersContainer">
+			<!-- Label Price -->
+			<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+			<!-- Price Text Offers -->
+			<div class="row BoxPriceLabel">
+				<div class="col col-25 BoxLabel">
+					<p id="NothingSpace" class="AhorraTextLabel">
+						Canjea
+					</p>
+					<p class="SavingPriceLabel {{super.TypePromotion}}">
+						{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
+					</p>
+				</div>
 			</div>
-		</div>
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan">
-		<div class="cuponsDescriptionDiv2">
+			<!-- Width of the Offers Image -->
+			<img class="imageOffertsAndCoupons" ng-src="{{cupon.PhotoCupon._url}}" alt="CouponImage">
+			<!-- Promotion Description -->
 			<div class="row">
-				<div class="col col-75 cuponsDescriptionTitle open_sans">
+				<p class="OfferDescriptionTitle open_sans">
 					{{cupon.Presentation }}
-				</div>
-				<div class="col col-25">
-					<div class="cuponsDescriptionPinCircle home">W</div>
-				</div>
+				</p>
+			</div>
+			<!-- Promotion Description Text -->
+			<div class="row">
+				<p class="pageFavoritesDescription open_sans home">
+					W
+				</p>
 			</div>
 		</div>
-		<div class="row cuponsDescriptionDiv3">
+
+
+		 <div class="row cuponsDescriptionDiv3">
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
@@ -44,7 +52,7 @@ box-shadow: 0 0 0px white;
 		</div>
 		<br>
 		<div>
-			<p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
+			<p class="cuponsDescriptionTitleDescription">Descripcion y Condiciones</p>
 		</div>
 		<div>
 			<p class="cuponsDescriptionMainDescription">
@@ -52,7 +60,10 @@ box-shadow: 0 0 0px white;
 			</p>
 		</div>
 		<br>
-		<!--**************  animation  ***********************-->
+
+
+
+
 		<div>
 			<div class="loader" style="margin-top:px;">
 				<div class="side"></div>
@@ -66,7 +77,9 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<div class="availableCupones open_sans">Del {{cupon.Publication_Date.toLocaleDateString()}} Al {{cupon.End_Date.toLocaleDateString()}}</div>
-		<!--***************  EXCHANGE BUTTON  ********************-->
+
+
+
 		<a style="text-decoration:none;"  class="botonCanjear">
 			<div style="display:{{noneDisplay[0].none}};">
 				<div ng-click="buttonCash(); countCoupon()"  >
@@ -78,7 +91,8 @@ box-shadow: 0 0 0px white;
 				</div>
 			</div>
 		</a>
-		<!--*****  BARCODE IMAGE  *****-->
+
+
 		<div>
 			<div class="row">
 				<div class="col col-10"></div>
@@ -91,68 +105,63 @@ box-shadow: 0 0 0px white;
 		<div class="exchangeButtonBlankSpaceButton"></div>
 		<div class="">
 
-			<p>
-				{{turtle1[0][0]}}
-			</p>
-
 		</div>
 	</ion-content>
 </ion-view>
 
 
-
-<!-- Ionic view for Coupon TypeCoupon -->
+<!-- *********************************************************************************************************** -->
 <ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Cupon'}">
-	<ion-content style="background-color:#F1F2F2;">
-		<!--**********************************************************************-->
-		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
-		<!--*****  PRICE LABEL OFFERTS  *****-->
-		<div class="row pageFavoritesBoxPriceLabel">
-			<div class="col col-25">
-				<p class="cuponsDescriptionsLabelExchance">
+	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
+		<!-- Label Price -->
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
+		<!-- Price Text Offers -->
+		<div class="row BoxPriceLabel">
+			<div id="GeneralPaddingCols0" class="col col-25 BoxLabel">
+				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance">
 					Canjea
 				</p>
 				<p class="pageFavoritesSavingPrice">
-					Q.{{cupon.Canjea}}
+					{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
 				</p>
 			</div>
 		</div>
+		<!-- Coupon Image -->
 		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan">
-		<div class="cuponsDescriptionDiv2">
+		<!-- Purple Container -->
+		<div class="PurpleCouponsDescription">
 			<div class="row">
-				<div class="col col-75 cuponsDescriptionTitle open_sans">
+				<div class="col col-80 cuponsDescriptionTitle open_sans">
 					{{cupon.Presentation }}
 				</div>
-				<div class="col col-25">
+				<div class="col col-20">
 					<div class="cuponsDescriptionPinCircle home">W</div>
 				</div>
 			</div>
 		</div>
+		<!-- Semi-Circle Container -->
 		<div class="row cuponsDescriptionDiv3">
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
-			<p class="semi-circulo"></p><p class="semi-circulo"></p>
-			<p class="semi-circulo"></p><p class="semi-circulo"></p>
-			<p class="semi-circulo"></p><p class="semi-circulo"></p>
-			<p class="semi-circulo"></p><p class="semi-circulo"></p>
-			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 		</div>
 		<br>
+		<!-- Description and Statements -->
 		<div>
-			<p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
+			<p class="cuponsDescriptionTitleDescription">Descripcion y Condiciones</p>
 		</div>
+		<!-- Coupon Description -->
 		<div>
-			<p class="cuponsDescriptionMainDescription">
+			<p class="couponsDescriptionMainDescription">
 				{{cupon.description}}
 			</p>
 		</div>
 		<br>
-		<!--**************  animation  ***********************-->
+		<!-- Coupon Loading -->
 		<div>
-			<div class="loader" style="margin-top:px;">
+			<div class="loader">
 				<div class="side"></div>
 				<div class="side"></div>
 				<div class="side"></div>
@@ -163,8 +172,9 @@ box-shadow: 0 0 0px white;
 				<div class="side"></div>
 			</div>
 		</div>
+		<!-- Coupon Exchanged -->
 		<div class="availableCupones open_sans">Cupones Canjeados: {{cupon.QuantityExchanged}} de {{cupon.QuantityCoupons}} </div>
-		<!--***************  EXCHANGE BUTTON  ********************-->
+		<!-- Button Coupon Exchanged -->
 		<a style="text-decoration:none;"  class="botonCanjear">
 			<div style="display:{{noneDisplay[0].none}};">
 				<div ng-click="reloadpage(); buttonCash()">
@@ -176,23 +186,22 @@ box-shadow: 0 0 0px white;
 				</div>
 			</div>
 		</a>
-		<!--*****  BARCODE IMAGE  *****-->
+		<!-- Bar Code Image Coupon -->
 		<div>
 			<div class="row">
 				<div class="col col-10"></div>
-				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}};">
-					<img class="exchangeBoxBarCodeImage" src="{{cupon.BarCodePhoto._url}}" alt="" >
+				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}}">
+					<img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto._url}}" alt="BarCodeFrenzy" >
 				</div>
 				<div class="col col-10"></div>
 			</div>
-		</div>
-		<div class="exchangeButtonBlankSpaceButton"></div>
-		<div class="">
-
-			<p>
-				{{turtle1[0][0]}}
-			</p>
-
+			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
+			<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
+				<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
+				<div class="TermButton">
+					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditions"></a>
+				</div>
+			</div>
 		</div>
 	</ion-content>
 </ion-view>

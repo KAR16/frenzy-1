@@ -480,6 +480,12 @@ app.factory('Coupons', function() {
 					}else {
 						Cupons[a].Display = ""
 					}
+					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						Cupons[a]["CanjeaQ"] = "Q."
+					}else {
+							Cupons[a]["CanjeaP"] = "%"
+					}
 					AllCupon.push(Cupons[a])
 				}
 			}
@@ -528,6 +534,12 @@ app.factory('DescriptionCupons', function() {
 			var AllCuponDescription = [];
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].IDCupon) {
+					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						Cupons[a]["CanjeaQ"] = "Q."
+					}else {
+							Cupons[a]["CanjeaP"] = "%"
+					}
 					AllCuponDescription.push(Cupons[a])
 				}
 			}

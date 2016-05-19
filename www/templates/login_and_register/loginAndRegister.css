@@ -1,0 +1,93 @@
+.LoginAndRegisterCenteredDiv .scroll-content {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin-top: -30px; /* the height of the centered content */
+  text-align: center;
+}
+.LoginAndRegisterCenteredDiv .scroll {
+  display: table-cell;
+  vertical-align: middle;
+}
+/*Background for LoginAndRegister Template*/
+.BackgroundColorLoginAndRegister {
+  background-color: #3F51B5;
+  height: 100%;
+}
+/*Width for Penguin Icon*/
+.PenguinWidth {
+  width:120px;
+  height:120px;
+}
+/*Color and Space for Sesion Title Text*/
+.SesionTitle {
+  color: #FFFFFF;
+  padding:0px;
+  margin:0px;
+}
+/*Style for Facebook Button*/
+.FacebookButtonLogin {
+  background-color: #FFFFFF;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  width: 170px;
+  box-shadow: 0px 3px 0px #D2D8D7;
+}
+.FacebookButtonLogin:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*Height and Facebook Button Aligment*/
+.FacebookButtonStyle {
+  align-items:center;
+  display:flex;
+  height:60px;
+}
+/*Facebook Text Style*/
+.FacebookTextLogin {
+  font-size: 22px;
+  font-weight: bolder;
+  color: #3F51B5;
+  text-align: center;
+  display:inline-block;
+  width:170px;
+}
+/*Style for Or Text Login*/
+.orTextLogin {
+  text-align:center;
+  color:#FFFFFF;
+  font-size:22px;
+}
+/*Style for Email Login Frenzy*/
+.EmailLogin {
+  background-color: #00BAB9;
+  border-radius: 12px;
+  height: 45px;
+  width: 170px;
+  box-shadow: 0px 3px 0px #1E8E7F;
+}
+.EmailLogin:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #1A8072, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #1A8072, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #1A8072, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*Center Login Text*/
+.loginButtonStyle {
+  align-items:center;
+  display:flex;
+  height:55px;
+}
+.emailCenteredLoginAndRegister {
+  text-align:center;
+  width:170px;
+}

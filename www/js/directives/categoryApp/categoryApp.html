@@ -1,31 +1,33 @@
+<!-- Loading Styles is found in categories_style.css -->
 <div class="row">
-    <!--**********  COL WITH CATEGORIE'S ICON  **********-->
-    <div class="col col-10">
-        <!--**********  ICON CATEGORIES  **********-->
-        <div  class="pageStartIconsStyleGeneraly pageStartIconCategories home {{info.ColorCategory}}">
-            <div class="home iconoMenu">{{info.IconCategory}}</div>
+  <div class="col col-20">
+    <!-- Icon Categories -->
+    <img class="pageStartIconsStyleGeneraly" src="img/{{info.CategoryName}}.png" alt="" />
+    <!-- <div  class="pageStartIconsStyleGeneraly home {{info.ColorCategory}}">
+      <div class="totalHeight">
+        <div class="home iconStyleCategories">
+          <div class="categoryIconVerticalCenter">{{info.IconCategory}}</div>
         </div>
+      </div>
+    </div> -->
+  </div>
+  <!-- Categories Name -->
+  <div class="col">
+    <div class="row">
+      <p id="CategoryNameText"class="open_sans CategoryNameText">
+        {{info.CategoryName}}
+      </p>
     </div>
-    <!--**********  COL WITH NAME, CUPONS AND PROMOTIONS  **********-->
-    <div class="col col-90 pageStartColWithNameCuponsPromotions">
-        <!--*****  NAME OF CATEGORIES  *****-->
-        <p class = "pageStartCategoriesName open_sans" style="color:black;font-size:16px;font-weight:bolder;">
-            {{info.CategoryName}}
-        </p>
-        <!--*****  COUPONS AND PROMOTIONS  *****-->
-        <div class="pageStartCuponsPromotions">
-            <!--*****  CUPONS TITLE  *****-->
-            <spam  class="pageStartCuponsPromotionsTitle">
-                cupones {{info.QuantityCoupon}}
-            </spam>
-            <!--*****  PROMOTIONS TITLE  *****-->
-            <spam class="pageStartCuponsPromotionsTitle">
-                promociones {{info.QuantityPromotion}}
-            </spam>
-        </div>
-        <!--**********  SEPARATION LINE  **********-->
-        <div>
-            <hr class="pageStartSeparationLine">
-        </div>
+    <!-- Coupons and Promotions Count -->
+    <div class="row">
+      <!-- Coupons Count -->
+      <span>
+        {{info.QuantityCoupon}} cupones,&nbsp;
+      </span>
+      <!-- Promotions Count -->
+      <span>
+        {{info.QuantityPromotion}} promociones
+      </span>
     </div>
+  </div>
 </div>

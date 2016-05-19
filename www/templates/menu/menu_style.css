@@ -1,16 +1,45 @@
-.frenzyMainTitle{
-  height: 28px;
-  width: 110px;
-  align-content: center;
+/*Back Button header vertical centered*/
+#backButtonVerticalCentered.backButtonVerticalCentered {
+  padding:0px;
+  text-align:center;
+  height:100%;
 }
-
-.my-menu {
-  background-color: transparent;
-
+/*Back button header style*/
+#styleBackButton.styleBackButton {
+  font-size:25px;
+  color:white;
+  position:absolute;
+  left:2%;
+  z-index:1;
 }
-
-.my-menu .item, .my-menu .item-content, .my-menu .item-complex{
-background-color: rgba(0,0,0,0);
-border-style: none;
-border-color: red;
+/*Text vertical centered and text style*/
+.categoriesHeaderText {
+  font-size:18px;
+  /*For vertical centered*/
+  height:100%;
+  width:100%;
+  font-weight: bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/*Font size for Frenzy title*/
+.frenzyTitlePageStart {
+  font-size: 60px;
+  font-weight: normal;
+}
+/*Style for to quit border of footer*/
+#footerStyle {
+  border-style:none;
+}
+/*Div into footer for vertical center*/
+.footerVerticalCenter {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/*Icon footer Style*/
+.iconFooterStyle {
+  height:100%;
+  font-size:25px;
 }

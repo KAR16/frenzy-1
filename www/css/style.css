@@ -1,29 +1,41 @@
+/*This style works for give it padding to col class selected*/
+#GeneralPaddingCols.col {
+  padding: 5px !important;
+}
+
+#GeneralPaddingCols0.col {
+  padding: 0px !important
+}
+
+#no-scroll.overflow-scroll {
+  overflow-y: hidden;
+}
 /********************  MEDIA QUERIES  *************************/
-@media only screen and (min-device-width: 200px) and (max-device-width: 250px) {
+/*@media only screen and (min-device-width: 200px) and (max-device-width: 250px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: red;
         border-width: 3px;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 251px) and (max-device-width: 300px) {
+/*@media only screen and (min-device-width: 251px) and (max-device-width: 300px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: blue;
         border-width: 3px;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 301px) and (max-device-width: 350px) {
+/*@media only screen and (min-device-width: 301px) and (max-device-width: 350px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: orange;
         border-width: 3px;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 351px) and (max-device-width: 400px) {
+/*@media only screen and (min-device-width: 351px) and (max-device-width: 400px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: skyblue;
@@ -33,17 +45,17 @@
         color: white;
         margin-top: 10px;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 401px) and (max-device-width: 450px) {
+/*@media only screen and (min-device-width: 401px) and (max-device-width: 450px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: purple;
         border-width: 3px;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 451px) and (max-device-width: 500px) {
+/*@media only screen and (min-device-width: 451px) and (max-device-width: 500px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: green;
@@ -59,9 +71,9 @@
         margin-left: 10px;
         color: green;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 501px) and (max-device-width: 550px) {
+/*@media only screen and (min-device-width: 501px) and (max-device-width: 550px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: black;
@@ -75,23 +87,23 @@
         box-shadow: 3px 3px 2px #BDBDBD;
         background-color: white;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 551px) and (max-device-width: 1000px) {
+/*@media only screen and (min-device-width: 551px) and (max-device-width: 1000px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: grey;
         border-width: 3px;
     }
-}
+}*/
 /**********************/
-@media only screen and (min-device-width: 1001px) and (max-device-width: 2000px) {
+/*@media only screen and (min-device-width: 1001px) and (max-device-width: 2000px) {
     .bordeMediaQueri {
         border-style: solid;
         border-color: pink;
         border-width: 3px;
     }
-}
+}*/
 /**************************  TIPOGRAFY **************************************/
 @font-face {
     font-family: opensans;
@@ -564,8 +576,6 @@
     }
 }
 
-
-
 .spinner svg {
     width: 70px;
     height: 70px;
@@ -584,7 +594,102 @@
     display: none;
 }
 
-
 .button .ng-binding .button-default {
     height: 10px;
+}
+
+.margenes {
+  border: 1px solid red;
+}
+
+.totalHeight {
+  height: 100%;
+}
+
+
+/*Style for to Center vertically */
+.verticalCentered {
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
+}
+/*Display Inline Block*/
+.inlineBlockDisplay {
+  display:inline-block;
+}
+/*Text Decoration None for links*/
+.redirectionStyleNone {
+  text-decoration: none;
+}
+
+/*Donky Doesn't exist Coupons And Promotions*/
+.savedPageNoItemsIcon {
+  font-size: 70px;
+  margin-top: 125px;
+  text-align: center;
+  color: #9C28B0;
+}
+/*Uh-Ha-Ha-Ha Text*/
+.savedPageNoItemsTitle {
+  font-size: 25px;
+  margin-top: 7%;
+  text-align: center;
+}
+/*Doesn't exist Coupons And Promotions Text Description*/
+.savedPageNoItemsDescription {
+  color: silver;
+  text-align: center;
+  margin-bottom: -3px;
+}
+
+.verticalCenteredObjects {
+  -ms-display:flex;
+  display: flex;
+  /* alineacion vertical */
+  align-items: center;
+}
+
+.verticalAndHorizontalCenteredObjects {
+  -ms-display:flex;
+  display: flex;
+  /* alineacion vertical */
+  align-items: center;
+  justify-content: center;
+}
+
+.secondPopoverFacebookIcon {
+  height: 30px;
+  width: 30px;
+}
+
+.iconCenterDiv {
+  padding-left: 5px;
+}
+
+/*Mail Icon*/
+.secondPopoverMailIcon {
+  padding: 5px;
+  background-color: #FF5252;
+  border-radius: 3px;
+  font-size: 19px;
+  color: white;
+  border-radius: 3px;
+  margin: 0px !important;
+}
+
+.PaddingShare {
+  padding: 5%;
+}
+
+.secondPopoverTitle {
+  color: #A7A9AC;
+}
+
+/*hr Style between Facebook and Messages*/
+hr.style-hr {
+  margin: 0;
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }

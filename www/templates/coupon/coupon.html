@@ -1,297 +1,221 @@
 <style>
-.bar.bar-positive    {
-	box-shadow: 0 0 0px white;
-}
-hr     {
-	margin-bottom:-10px;
-	font-weight:lighter;
-	height: 3px;
-	background-color: white;
+	.bar.bar-positive    {
+		box-shadow: 0 0 0px white;
 }
 </style>
 <ion-view>
-	 	<!--*****  SECOND TAB HEADER  *****-->
- 		<!-- If this app is for IOS platform then modify the 15 line (height:40px;margin-top:60px) -->
-		<div class="row pageFavoritesSecondRow" style="height:35px;margin-top:44px;position:absolute; z-index:1;">
-			<!--**********  OFFERTS  **********-->
-			<div class="col col-33" ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'existe'}">
-				<a class="pageOffertsOffertsTitle"  href="#/app/ofertas/{{cupons[0][0].Category}}"  nav-transition="none">
-					<!--*****  TITLE AND FUNCITION OFFERTS  *****-->
-					<p class="pageFavoritesOurFavoritesTitle" style="color:#D8D8D8">
+	<ion-header-bar id="positive" class="bar bar-subheader bar-positive positive">
+		<!-- Offers and Coupons Tab with Popover -->
+		<div class="row">
+			<div id="GeneralPaddingCols" class="col col-33" ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'existe'}">
+				<a class="pageOffertsOffertsTitle" href="#/app/ofertas/{{cupons[0][0].Category}}" nav-transition="none">
+					<div class="OffersAndCouponsTabText" id="offertsFunction" onclick="offerts()" style="display:{{s.ocultar}}">
 						Ofertas ({{ofert.contPromotion}})
-					</p>
-					<!--**********  LINE DECORATION  **********-->
-					<hr class="pageFavoritesLineDecoration" id="lineOffertsFunction"  style="background-color:#D8D8D8">
+						<hr class="pageFavoritesLineDecorationOffers" id="lineOffertsFunction" style="display:{{s.ocultar}}">
+					</div>
 				</a>
 			</div>
-			<!--**********  CUPONS  **********-->
-
-			<div class="col col-33">
-				<a class="pageOffertsOffertsTitle" nav-transition="none">
-					<!--*****  TITLE AND FUNCITION OFFERTS  *****-->
-					<p class="pageFavoritesOurFavoritesTitle" ng-repeat="cupon in categoryNameCoupon[3]">
+			<!--  ng-repeat="s in chats[2] | filter: {Validar : 'existe'}" -->
+			<div id="GeneralPaddingCols" class="col col-33 CouponsTabOption">
+				<a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/cupones/{{s.t}}" >
+					<div class="OffersAndCouponsTabText" ng-repeat="cupon in categoryNameCoupon[3]" style="color:white;font-weight:bold">
 						Cupones ({{cupon.contCoupon}})
-					</p>
-					<!--**********  LINE DECORATION  **********-->
-					<hr class="pageFavoritesLineDecoration">
+						<hr class="pageFavoritesLineDecorationOffers" style="color:white;background-color:white">
+					</div>
 				</a>
 			</div>
-			<div style="margin-left:100px;"  ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'no'}"></div>
-
-			<!--**********  ICON POPOVER  *********-->
-
-			<div class="col col-33">
+			<!-- Popover Button -->
+			<div id="GeneralPaddingCols" class="col" style="align-items:center">
 				<div ng-repeat="s in cupons[1]">
-					<div style="margin-top:0px; position:absolute;  z-index:1;" id = "{{s.name}}" ng-click="heartPopover('{{s.name}}')">
+					<div id = "{{s.name}}" ng-click='heartPopover("{{s.name}}")'>
 						<div>
-							 <button class="popoverIcon home" ng-click="popover.show($event)"  ng-controller="PopoverCtrl2">
-								<p class="pageOffertsPopoverSimbol" style="vertical-aling:middle;">
-									N
-								</p>
+							<button class="popoverButton home" ng-click="popover.show($event)" ng-controller="PopoverCtrl2">
+								<!-- Popover Icon -->
+								<img class="PopoverIcon" src="img/icn-10.png" alt="PopoverIcon" />
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-	   </div>
-	<!--**********  CONTENT  **********-->
-	<ion-content class="pageFavoritesBodyColor" nav-transition="none">
-		<div style="height:35px;"></div>
-		<!--************  OFFERTS BODY WITH IMAGE **************-->
-		<div ng-repeat = "cupon in cupons[0] | filter: {nul : 'con'}">
-			<div class="nuevoDivContenedor">
-				<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
-					<!--*****  PRICE LABEL OFFERTS  *****-->
-					<div class="row pageFavoritesBoxPriceLabel">
-						<div class="col col-25">
-							<p class="pageFavoritesSavingTitle">
-								Canjea
-							</p>
-							<p class="pageFavoritesSavingPrice" style="margin-top:-10px; font-size:18px;">
-								Q.{{cupon.Canjea}}
-							</p>
-						</div>
+		</div>
+	</ion-header-bar>
+	<ion-content class="generalBackgroundFavorite" nav-transition="none">
+		<!-- Coupons With Image -->
+		<div ng-repeat = "cupon in cupons[0] | filter: {nul : 'con'}" >
+			<div class="OffersContainer">
+				<!-- Label Price -->
+				<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
+				<!-- Price Text Offers -->
+				<div class="row BoxPriceLabel">
+					<div class="col col-25 BoxLabel">
+						<p id="NothingSpace" class="AhorraTextLabel">
+							Canjea
+						</p>
+						<p class="SavingPriceLabel {{super.TypePromotion}}">
+							{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
+						</p>
 					</div>
-					<!--*****  MAIN IMAGE FAVORITE PAGE  *****-->
-					<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
-						  <img class="imageOffertsAndCupons" src="{{cupon.PhotoCupon._url}}" alt="pollo" style="height:200px;">
-					</a>
-					<!--**********  TITLE DESCRIPTION  **********-->
-				  	<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
-			  	 	<div style=" height:40%; background-color:;">
-					   	<div style="height:30%;">
-						  	<p class="pageFavoritesDescriptionTitle open_sans">
-						  		{{cupon.Presentation}}
-							</p>
-					   	</div>
-						<!--**********  DESCRIPTION  **********-->
-						<div class="ellipsify cajaTexto" style="height:50px;">
-							<div class="ellipsify">
-								<div class="pre-dots"></div>
-								<div class="dots">&hellip;</div>
-								<p class="pageFavoritesDescription open_sans">
-							  		{{cupon.description}}
-								</p>
-								<span class="hidedots1"></span>
-								<div class="hidedots2"></div>
-							</div>
-						</div>
+				</div>
+				<!-- Redirect to Offer Description -->
+				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
+					<!-- Width of the Offers Image -->
+					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCupon._url}}" alt="Promotions">
+				</a>
+				<!-- Promotion Description -->
+				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
+					<div class="row">
+						<p class="OfferDescriptionTitle open_sans">
+							{{cupon.Presentation}}
+						</p>
 					</div>
-				  </a>
-				 <!--*****  DIV TO PRICE AND ICONS  *****-->
-				<div class="row pageFavoritesDivIcons open_sans" style="height:38px;align-items:center">
-					<!--*****  ACTUAL PRICE  *****-->
-					<div class="col-25" style="text-align:center;align-items:center;margin-left:5px">
-						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')">
-							<spam class="pageOffertExchance" style="color:#3F51B5; font-size:16px;">
-						  		CANJEAR
+					<!-- Promotion Description Text -->
+					<div class="row">
+						<p class="pageFavoritesDescription open_sans">
+							{{cupon.description}}
+						</p>
+					</div>
+				</a>
+				<!-- Footer Box -->
+				<div class="row pageFavoritesDivIcons">
+					<!-- Change Coupon -->
+					<div class="col-25 colPrice">
+						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')" href="#/app/descripcionCupones/{{cupon.IDCupon}}">
+							<spam class="pageOffertExchance">
+								CANJEAR
 							</spam>
 						</a>
 					</div>
-					<!--*****   BEFORE PRICE  *****-->
-					<div class="col-33"  style="text-align:center;align-items:center">
-						<spam class="" style="color:silver;margin-top:-5px; font-size:17px;">
-						   <!-- (7 dias) -->
+					<!-- Rest Day -->
+					<div class="col-33 colPrice">
+						<spam class="pageOffertExchance">
+							(7 días)
 						</spam>
 					</div>
-					<!--*****  ICONS  *****-->
-					<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
-						<!-- Url Shop online Icon -->
-						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}};font-size:23px;">
-								j
+					<!-- Icons Promotion -->
+					<div class="col iconsFooterBox">
+						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}}">
+							j
 						</spam>
-							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
-									O
-							</spam>
-							<!-- Pin Icon -->
-							<spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}};font-size:23px;">
-							 W
-						 </spam>
+						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
+							O
+						</spam>
+						<spam class="home pageOffertsShareIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}}">
+							W
+						</spam>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--************  OFFERTS BODY WITHOUT IMAGE **************-->
-	   	<div class = "withoutImage" ng-repeat = "cupon in cupons[0] | filter: {nul : 'sin'}">
+		<!-- Coupons without image -->
+		<div ng-repeat = "cupon in cupons[0] | filter: {nul : 'sin'}">
+			<!-- Offer Container without image -->
 			<div class="boxResponsiveWithoutImage">
-				<!--*****  NAME OF OFFERTS  *****-->
-				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
+				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
 					<div class="row">
+						<!-- Purple label and Saving Price -->
 						<div class="col col-25">
-							<div class="row pageOffertsWithoutImageLabelTitle">
-								<!--*****  WITHOUT IMAGE LABEL TITLE  *****-->
-								<div class="col col-20">
-									<p class="pageOffertsTitleLabelWithoutImage" style="font-size:14px;">
-										Canjea
-									</p>
-									<!--*****  WITHOUT IMAGE PRICE LABEL  *****-->
-									<p class="pageOffertsPriceLabelWithoutImage" style="font-size:23px;">
-									   Q.{{cupon.Canjea}}
-									</p>
+							<!-- Purple Label -->
+							<div class="row pageOffertsWithoutImageLabel">
+								<div class="col labelPriceDescription">
+										<!-- Save Pricing Text -->
+										<spam class="pageOffertsTitleLabelWithoutImage">
+											Canjea
+										</spam>
+										<!-- Price -->
+										<spam class="pageOffertsPriceLabelWithoutImage" style="margin-top:{{super.marginTop}}">
+										{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
+										</spam>
 								</div>
 							</div>
-							<!--*****  LABEL IMAGE  *****-->
-							<img clas="offersLogo" src="img/logoOfertas2.png" alt="image" style="height:75px; width:75px;">
+							<!-- Purple Tag Image -->
+							<img clas="offersLogo" src="img/logoOfertas.png" alt="image" style="height:75px; width:75px;">
 						</div>
-						<!--*****  DESCRIPTION BOX WITHOUT IMAGE  *****-->
+						<!-- Offers Description without image -->
 						<div class="col col-75">
-							<p class="open_sans pageOffertsTitleDescriptionWithoutImage overFlowText">
-								{{cupon.Presentation}}
-							</p>
-							<!--*****  OFFERTS DESCRIPTION  *****-->
-							<div class="ellipsifyThreeLines" style="background-color:; height:px; margin-left:10px;">
-								<div class="pre-dots-threeLines-offerts"></div>
-								<div class="dots-threeLines">&hellip;</div>
-								<p class="pageFavoritesDescription open_sans">
+							<div class="row">
+								<spam class="open_sans pageOffertsTitleDescriptionWithoutImage overFlowText">
+									{{cupon.Presentation}}
+								</spam>
+							</div>
+							<div class="row">
+								<p class="pageFavoritesDescriptionWithoutImage open_sans">
 									{{cupon.description}}
 								</p>
-								<span class="hidedots1"></span>
-								<div class="hidedots2"></div>
 							</div>
 						</div>
 					</div>
 				</a>
-				<!--*****  DIVIDER LINE  *****-->
-				<!--*****  DIV TO PRICE AND ICONS  *****-->
-				<div class="row open_sans pageOffertsPriceIcons" style="padding-top:3px;border-style: solid;border-top:1px solid #F1F2F2;margin-top:5px;height:38px;align-items:center">
-				<!--*****  ACTUAL PRICE  *****-->
-				<div class="col-25">
-					<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')" style="text-align:center;align-items:center;margin-left:5px">
-						<spam class="pageOffertExchance" style="color:#3F51B5; font-size:16px;">
+				<!-- Footer Box -->
+				<div class="row pageFavoritesDivIcons">
+					<!-- Change Coupon -->
+					<div class="col-25 colPrice">
+						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')" href="#/app/descripcionCupones/{{cupon.IDCupon}}">
+							<spam class="pageOffertExchance">
 								CANJEAR
+							</spam>
+						</a>
+					</div>
+					<!-- Rest Day -->
+					<div class="col-33 colPrice">
+						<spam class="pageOffertExchance">
+							(7 días)
 						</spam>
-					</a>
-				</div>
-				<!--*****   BEFORE PRICE  *****-->
-				<div class="col-33"  style="text-align:center;align-items:center">
-					<spam class="" style="color:silver;margin-top:-5px; font-size:17px;">
-						 <!-- (7 dias) -->
-					</spam>
-				</div>
-				<!--*****  ICONS  *****-->
-				<div class="col-33" style="word-spacing:-30px;text-align:right;align-items:center">
-					<!-- Url Shop online Icon -->
-					<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}};font-size:23px;">
+					</div>
+					<!-- Icons Promotion -->
+					<div class="col iconsFooterBox">
+						<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}}">
 							j
-					</spam>
-						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl" style="font-size:23px;">
-								O
 						</spam>
-						<!-- Pin Icon -->
-						<spam class="home pageOffertsLikeIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}','{{cupon.Presentation}}')" style="color:{{cupon.ColorPinCupon}};font-size:23px;">
-						 W
-					 </spam>
-				</div>
+						<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
+							O
+						</spam>
+						<spam class="home pageOffertsShareIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}}">
+							W
+						</spam>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="pageOffertsBlanckDiv"></div>
-		<!--**************  BOX RED STYLE MISSING OFFERTS  ***************-->
-		<!--**********  TRIANGLES TOP  **********-->
-		<!--
-		<div class="row">
-			<p class="arrow-up-left2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-			<p class="arrow-up2"></p><p class="arrow-up2"></p>
-		</div>-->
-		<!--**********  PURPLE BOX  **********-->
-		<!-- Not found Content -->
-	<!--	<div class="pageOffertsBoxRedStyle">-->
-			<!-- **********  CLOCK ICON  **********-->
-		<!--	<h4 class="home clownStyle">
-				P
-			</h4>
-			<h4 class="open_sans pageStartBoxPurpleTitle" style="margin-top:-20px;">
-			   ¿No encontraste lo que
-			</h4>
-			<h4 class="open_sans pageStartBoxPurpleTitle ">
-				quieres.?
-			</h4>
-		</div>-->
-		<!--**********  TRIANGLES DOWN  **********-->
-	<!--	<div class="row">
-			<p class="arrow-dow-left2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-			<p class="arrow-dow2"></p><p class="arrow-dow2"></p>
-		</div>-->
-		<!--*************************************************** -->
+		<!-- If doesn't exist offers -->
 		<div ng-repeat="super in cupons[0]  | filter: {oferta : 'noHay'}">
-			<div class="open_sans boxbox">
-				<p class="savedPageNoItemBlankSpace">
+			<div class="open_sans">
+				<!-- Uh-uh Icon -->
+				<p class="home savedPageNoItemsIcon">
 					f
 				</p>
-				  <p class="home savedPageNoItemsIcon">f</p>
+				<!-- Description -->
 				<p class="savedPageNoItemsTitle">
 					Uh-uH
 				</p>
-				<p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
-				<p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
-				<p class="savedPageNoItemsDescription">para usarlos despues.</p>
+				<p class="savedPageNoItemsDescription">
+					Aun no tenemos ofertas disponibles para ti,<br>
+					Espera porque pronto tendremos las mejores ofertas<br>
+					para que puedas disfrutarlas.
+				</p>
 			</div>
 		</div>
-		<!--*************  FIRST POPOVER CONTENT  ******************-->
+		<!-- Blue Popover -->
 		<script id="templates/popover2.html" type="text/ng-template" >
-			<ion-popover-view  class="firstPopoverStyle" style="height:{{pixels}};width:180px; margin-top:20px;">
-				<!--*****  FIRST POPOVER CONTENT  *****-->
-				<ion-content >
-					<div class="list" ng-repeat="s in cupons[1]" >
-						<a class="item " target="_blank" ng-click="changeColorHeartFollow('{{s.name}}')" style="  text-align:right; color:silver;">
+			<ion-popover-view id="bluePopover" class="bluePopover" style="height:{{pixels}}">
+				<!-- Popover Content -->
+				<ion-content id="no-scroll">
+					<div id="list" class="list" ng-repeat="s in cupons[1]">
+						<a id="item" class="item" target="_blank" ng-click="changeColorHeartFollow('{{s.name}}')">
 							Seguir
-							<spam class="home pageOffertsPopoverIconsDescrpition" id="{{s.id}}" onclick="changeColorHeartFollow(id)" style="color:{{heartMenu}}">
+							<spam class="home pageOffertsPopoverIconsDescrpition"  style="color:{{heartMenu}}">
 								B
 							</spam>
 						</a>
-						<a class="item" id = "{{s.cel}}" ng-click="call({{s.cel}})" target="_blank" style="text-align:right; color:silver;">
-						{{s.call}}
+						<a id="item" id = "{{s.cel}}" ng-click="call({{s.cel}})" target="_blank">
+							{{s.call}}
 							<spam class="home pageOffertsPopoverIconsDescrpition">
-							  {{s.callIcon}}
+								{{s.callIcon}}
 							</spam>
 						</a>
-						<a class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}','web','{{s.name}}')" target="_blank" style="text-align:right; color:silver;margin-top:{{s.margin}}">
-							  {{s.webUrl}}
+						<a id="item" class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}','web','{{s.name}}')" target="_blank">
+							{{s.webUrl}}
 							<spam class="home pageOffertsPopoverIconsDescrpition">
-							{{s.webUrlIcon}}
+								{{s.webUrlIcon}}
 							</spam>
 						</a>
 					</div>
@@ -300,34 +224,36 @@ hr     {
 		</script>
 		<!--**********  SECOND POP OVER SHARE  **********-->
 		<script id="templates/popoverNew.html" type="text/ng-template">
-			<ion-popover-view style="height:150px; width:250px;">
-				<ion-content>
-					<!--***** MAIN CONTENT SECOND POPOVER *****-->
-					<div class="secondPopoverTextAling" style="text-aling:center;">
-						<spam class="secondPopoverTitle">Compartir Oferta</spam>
-					</div>
-					<hr class="secondPopoverHr">
-					<div>
-						<div ng-click= "Analytics('facebook','coupon')">
+			<ion-popover-view class="SharePopover">
+				<div class="PaddingShare"><spam class="secondPopoverTitle">Compartir Oferta</spam></div>
+				<hr class="style-hr">
+					<div class="row facebookShareContainer PaddingShare">
+						<div class="col-20 verticalCenteredObjects iconCenterDiv">
 							<img  class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
-							<a class="secondPopoverFacebookTitle" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank');" style="text-decoration:none;">Amigos de facebook</a>
 						</div>
-					  <div style="margin-top:25px;" onclick="window.open('sms:?body=www.Frenzy.com', '_system');" ng-click= "Analytics('message','coupon')">
+						<div class="col verticalCenteredObjects friendsOfFacebook">
+							<a class="secondPopoverText" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open=cordova.InAppBrowser.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank', 'location=yes');" style="text-decoration:none;">Amigos de facebook</a>
+						</div>
+					</div>
+					<div class="row PaddingShare">
+						<div class="col-20"></div>
+						<div class="col">
+							<hr class="style-hr">
+						</div>
+					</div>
+					<div class="row facebookShareContainer PaddingShare">
+						<div class="col-20 verticalCenteredObjects iconCenterDiv" onclick="window.open('sms:?body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '_system');" ng-click= "Analytics('message','promotion')">
 							<p class="home secondPopoverMailIcon">
 								V
 							</p>
-							<a href="sms:&body=www.frenzy.com.gt" style="text-decoration:none;">
-								<p class="secondPopoverMailTitle">
-									Enviar mensajes de texto
-								</p>
+						</div>
+						<div class="col verticalCenteredObjects friendsOfFacebook">
+							<a class="secondPopoverText" href="sms:&body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)" style="text-decoration:none;">
+								Enviar mensajes de texto
 							</a>
 						</div>
 					</div>
-				</ion-content>
-			</ion-popover-view>
-		</script>
-		<p>
-			{{turtle1[0][0]}}
-		</p>
+				</ion-popover-view>
+			</script>
 	</ion-content>
 </ion-view>
