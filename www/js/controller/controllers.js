@@ -526,6 +526,7 @@ $scope.display = OurFavorites.all();
 	var DirecParse = $.grep(Direc, function (e) {
 		 return e.name.indexOf($stateParams.IDcustomer) == 0;
 	});
+	var NameUser = String(IdUsuario)
 	console.log(DirecParse[0].name2);
 	var dimensions = {
 		name: DirecParse[0].name2
@@ -796,7 +797,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
 	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
-	$scope.custumerName = $stateParams.superId.replace("-"," ");
+	$scope.custumerName = $stateParams.superId.replace(/-/g," ");
 	$scope.$on('$ionicView.enter', function() {
 		console.log();
 		colorIconsFoother = []

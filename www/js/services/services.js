@@ -371,7 +371,7 @@ app.filter("commaBreak",
     function () {
 
         return function ( value ) {
-
+						
             if( !value.length ) return;
 
             return value.split('-').join(" ")
