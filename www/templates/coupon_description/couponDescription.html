@@ -6,7 +6,6 @@ box-shadow: 0 0 0px white;
 
 <ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Fecha'}">
 	<ion-content style="background-color:#F1F2F2;">
-
 		<div class="OffersContainer">
 			<!-- Label Price -->
 			<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
@@ -36,8 +35,6 @@ box-shadow: 0 0 0px white;
 				</p>
 			</div>
 		</div>
-
-
 		 <div class="row cuponsDescriptionDiv3">
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
@@ -60,10 +57,6 @@ box-shadow: 0 0 0px white;
 			</p>
 		</div>
 		<br>
-
-
-
-
 		<div>
 			<div class="loader" style="margin-top:px;">
 				<div class="side"></div>
@@ -77,9 +70,6 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<div class="availableCupones open_sans">Del {{cupon.Publication_Date.toLocaleDateString()}} Al {{cupon.End_Date.toLocaleDateString()}}</div>
-
-
-
 		<a style="text-decoration:none;"  class="botonCanjear">
 			<div style="display:{{noneDisplay[0].none}};">
 				<div ng-click="buttonCash(); countCoupon()"  >
@@ -91,8 +81,6 @@ box-shadow: 0 0 0px white;
 				</div>
 			</div>
 		</a>
-
-
 		<div>
 			<div class="row">
 				<div class="col col-10"></div>
@@ -109,8 +97,7 @@ box-shadow: 0 0 0px white;
 	</ion-content>
 </ion-view>
 
-
-<!-- *********************************************************************************************************** -->
+<!-- Coupon with Image -->
 <ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Cupon'}">
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
@@ -127,7 +114,8 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan" style="display:{{cupon.DisplayWithoutImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupons}}" alt="nissan" style="display:{{cupon.DisplayWithImageCoupons}}">
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
@@ -199,7 +187,7 @@ box-shadow: 0 0 0px white;
 			<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
 				<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
 				<div class="TermButton">
-					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditions"></a>
+					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditions/{{cupon.IDCupon}}"></a>
 				</div>
 			</div>
 		</div>

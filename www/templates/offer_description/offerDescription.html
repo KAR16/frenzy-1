@@ -1,4 +1,5 @@
 <ion-view>
+	<!-- Offers Description With and Withour Image -->
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
 		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
@@ -9,17 +10,17 @@
 					Ahorra
 				</p>
 				<p class="pageFavoritesSavingPrice">
-					Q.100
+					{{chats[0][0].ahorro}}
 				</p>
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="https://upload.wikimedia.org/wikipedia/en/3/3e/Pega-logo-300px.jpg" alt="nissan">
+		<img class="cuponsDescriptionImage" src="{{chats[0][0].photo}}" alt="PhotoOffersFrenzy">
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
 				<div class="col col-80 cuponsDescriptionTitle open_sans">
-					Presentacion
+					{{chats[0][0].name}}
 				</div>
 				<div class="col col-20">
 					<div class="cuponsDescriptionPinCircle home">W</div>
@@ -37,20 +38,20 @@
 		<br>
 		<!-- Description and Statements -->
 		<div>
-			<p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
+			<p class="cuponsDescriptionTitleDescription">Descripción de la Oferta</p>
 		</div>
 		<!-- Coupon Description -->
 		<div>
 			<p class="couponsDescriptionMainDescription">
-				Descripcion de la Oferta
+				{{chats[0][0].description}}
 			</p>
 		</div>
 		<br>
 			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-			<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
-				<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
+			<div class="bar subFooter" style="position:absolute;bottom:0">
+				<div class="LegalTerms verticalCenteredObjects col col-90">Términos y Condiciones</div>
 				<div class="TermButton">
-					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditions"></a>
+					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditionsOffers/{{chats[0][0].Category}}"></a>
 				</div>
 			</div>
 		</div>

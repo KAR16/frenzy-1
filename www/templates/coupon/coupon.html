@@ -110,7 +110,7 @@
 		<div ng-repeat = "cupon in cupons[0] | filter: {nul : 'sin'}">
 			<!-- Offer Container without image -->
 			<div class="boxResponsiveWithoutImage">
-				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
+				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()" style="text-decoration:none">
 					<div class="row">
 						<!-- Purple label and Saving Price -->
 						<div class="col col-25">
@@ -133,7 +133,7 @@
 						<!-- Offers Description without image -->
 						<div class="col col-75">
 							<div class="row">
-								<spam class="open_sans pageOffertsTitleDescriptionWithoutImage overFlowText">
+								<spam class="open_sans pageOffertsTitleDescriptionWithoutImage">
 									{{cupon.Presentation}}
 								</spam>
 							</div>

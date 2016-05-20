@@ -255,8 +255,9 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
+	var NameUser = String(IdUsuario);
 	Parse.Analytics.track("view", dimensions);
-	mixpanel.track("view", { "type" : "Categorys","Gender":IdGender});
+	mixpanel.track("view", { "type" : "Categorys","Gender":IdGender,"User":NameUser});
 	// Loading scope
 	$scope.loading = $ionicLoading.show({
 		noBackdrop: true,
@@ -288,7 +289,8 @@ angular.module('starter.controllers', ['ionic'])
 // ******************** OUR FAVORITES CONTROLLER **************************
 .controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
 /*************************************************/
-		mixpanel.track("view", { "type" : "Ourfavorites","Gender":IdGender});
+var NameUser = String(IdUsuario);
+		mixpanel.track("view", { "type" : "Ourfavorites","Gender":IdGender,"User":NameUser });
 		$scope.reload = function () {
 		    var PromoSavess = new Parse.Query('PromotionSaved')
 		    PromoSavess.equalTo("UserID", IdUsuario);
@@ -358,7 +360,8 @@ $scope.display = OurFavorites.all();
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
 	/*************************************************/
-		mixpanel.track("view", { "type" : "YourFavorites","Gender":IdGender});
+	var NameUser = String(IdUsuario);
+		mixpanel.track("view", { "type" : "YourFavorites","Gender":IdGender,"User":NameUser});
 		$scope.reload = function () {
 		    var PromoSavess = new Parse.Query('PromotionSaved')
 		    PromoSavess.equalTo("UserID", IdUsuario);
@@ -424,7 +427,8 @@ $scope.display = OurFavorites.all();
 })
 // *************************** SAVED CONTROLLER ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
-	mixpanel.track("view", { "type" : "PinSaved","Gender":IdGender});
+	var NameUser = String(IdUsuario);
+	mixpanel.track("view", { "type" : "PinSaved","Gender":IdGender,"User":NameUser});
 	var NameUser = String(IdUsuario)
 	var dimensions = {
 		name: 'Salvados',
@@ -526,8 +530,8 @@ $scope.display = OurFavorites.all();
 	var dimensions = {
 		name: DirecParse[0].name2
 	};
-mixpanel.track("view", { "type" : "Customers","Gender":IdGender});
-mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender":IdGender});
+mixpanel.track("view", { "type" : "Customers","Gender":IdGender,"User":NameUser});
+mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender":IdGender,"User":NameUser});
 		Parse.Analytics.track("view", dimensions);
 	// Loading scope
 	$scope.AppCategory = $stateParams.IDcustomer
@@ -567,7 +571,8 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	var dimensions = {
 		name: $stateParams.superId,
 	};
-	mixpanel.track("view", { "type" : "Promotions","Gender":IdGender});
+	var NameUser = String(IdUsuario);
+	mixpanel.track("view", { "type" : "Promotions","Gender":IdGender,"User":NameUser});
 	$ionicPopover.fromTemplateUrl('templates/popover.html', {
 		scope: $scope,
 	}).then(function(popover) {
@@ -800,7 +805,8 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 })
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams ,Coupons) {
-	mixpanel.track("view", { "type" : "copuns","Gender":IdGender});
+	var NameUser = String(IdUsuario);
+	mixpanel.track("view", { "type" : "copuns","Gender":IdGender,"User":NameUser});
 		// For to update QuantityExchanged
 		var CuponClassExchanged = Parse.Object.extend("Cupon");
 		var cuponClassExchanged = new CuponClassExchanged();
@@ -1330,6 +1336,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
+	// ****************  OFFERTS DESCRIPTION  *************
+	.state('app.descripcionOfertas', {
+		url: "/descripcionOfertas/:superId",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/offer_description/offerDescription.html",
+				controller: 'currentPromotionCtrl'
+			}
+		}
+	})
+	.state('app.termsAndConditionsOffers', {
+			url: "/termsAndConditionsOffers/:superId",
+			views: {
+				'menuContent': {
+					templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
+					controller: 'currentPromotionCtrl'
+				}
+			}
+		})
 	// ******* PLAYLIST *******
 	.state('app.playlists', {
 		url: "/playlists",
@@ -1340,7 +1365,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-
 	// ******* OTHER CATEGORIES *******
 	.state('app.singlessssss', {
 		url: "/playlists/:IDcustomer",
@@ -1361,16 +1385,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-	// ****************  OFFERTS DESCRIPTION  *************
-	.state('app.descripcionOfertas', {
-		url: "/descripcionOfertas/:descriptionIDS",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/offer_description/offerDescription.html",
-				// controller: 'homeCtrl'
-			}
-		}
-	})
 	//****************  CUPONS DESCRIPTION  *************
 	.state('app.descripcionCupones', {
 		url: "/descripcionCupones/:DescriptionID",
@@ -1382,16 +1396,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	})
 	.state('app.termsAndConditions', {
-		url: "/termsAndConditions",
+		url: "/termsAndConditions/:DescriptionID",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/term_and_conditions/termsAndConditions.html",
-				controller: ''
+				templateUrl: "templates/term_and_conditions/termsAndConditionsForCoupons.html",
+				controller: 'DescriptionCuponCtrl'
 			}
 		}
-	})
-
-	;
+	});
 	// if none of the above states are matched, use this as the fallback
 $urlRouterProvider.otherwise('/tutorial');
 })
@@ -1497,7 +1509,7 @@ mixpanel.track("viewTurorial");
 	  name: 'tools',
 	  user: NameUser
 	};
-	mixpanel.track("view", { "type" : "Tools","Gender":IdGender});
+	mixpanel.track("view", { "type" : "Tools","Gender":IdGender,"User":NameUser});
 	Parse.Analytics.track("Tools", Dimensions);
 	$scope.AnalyticsTools= function (id) {
 		var NameUser = String(IdUsuario)

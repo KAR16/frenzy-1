@@ -36,6 +36,7 @@ var InfoShop = [];
 var Cupons = [];
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', [])
+
 // ************* CATEGORIES APP FACTORY *************
 app.factory('Categorys', function() {
 	// Might use a resource here that returns a JSON array
@@ -300,6 +301,9 @@ app.factory('currentPromotion', function() {
 					}else {
 						CurrentPromotion[c].Display = "";
 					}
+					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
+						CurrentPromotion[c]["photo"] = "http://estaticos.tonterias.com/wp-content/uploads/2005/03/932_Reunion-en-una-sala-roja.jpg"
+					}
 					Category.push(CurrentPromotion[c]);
 				}
 			}
@@ -485,6 +489,13 @@ app.factory('Coupons', function() {
 						Cupons[a]["CanjeaQ"] = "Q."
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
+					}
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+						Cupons[a]["PhotoCupons"] = "http://estaticos.tonterias.com/wp-content/uploads/2005/03/932_Reunion-en-una-sala-roja.jpg"
+						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
+					}
+					if (Cupons[a].PhotoCupon !=null) {
+								Cupons[a]["DisplayWithImageCoupons"] = "none";
 					}
 					AllCupon.push(Cupons[a])
 				}
