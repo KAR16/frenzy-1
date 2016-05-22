@@ -55,24 +55,22 @@
 }
 /*Label Price Offers Style*/
 .labelOfferts {
-  height: 75px;
-  width: 100px;
+  height: 85px;
+  width: 130px;
   position: absolute;
 }
 /*Text Label Vertical Centered*/
 .BoxPriceLabel {
 	position:absolute;
-  margin-left: 2%;
-  margin-top: 2%;
 }
 /*Ahorra Text Style*/
 .AhorraTextLabel {
-	font-size:17px;
+	font-size:16px;
 	color:#E6E2E2;
 }
 /*Offer Price Text Style*/
 .SavingPriceLabel {
-	font-size:16px;
+	font-size:18px;
 	color:white;
 	font-weight:bold;
 }
@@ -163,7 +161,7 @@
 }
 /*Price without image Text*/
 .pageOffertsPriceLabelWithoutImage {
-  font-size: 16px;
+  font-size: 18px;
   color: white;
   font-weight: bold;
 }
@@ -240,4 +238,14 @@
   padding: 5px;
   height:auto;
   width:250px;
+}
+
+.BoxLabel {
+  position: absolute;
+  height: 65px;
+  width: 120px;
+  text-align: center;
+  left: 0;
+  padding-left: 0;
+  padding-top: 5px !important;
 }

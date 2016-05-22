@@ -302,7 +302,7 @@ app.factory('currentPromotion', function() {
 						CurrentPromotion[c].Display = "";
 					}
 					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
-						CurrentPromotion[c]["photo"] = "http://estaticos.tonterias.com/wp-content/uploads/2005/03/932_Reunion-en-una-sala-roja.jpg"
+						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
 					}
 					Category.push(CurrentPromotion[c]);
 				}
@@ -320,7 +320,7 @@ app.factory('currentPromotion', function() {
 					Category[c]["columIcon"] = "40"
 					Category[c]["columDisplay"] = "none"
 				}
-					console.log(Category[c]);
+				//	console.log(Category[c]);
 			}
 
 			if (Category.length == 0) {
@@ -371,7 +371,7 @@ app.filter("commaBreak",
     function () {
 
         return function ( value ) {
-						
+
             if( !value.length ) return;
 
             return value.split('-').join(" ")
@@ -491,7 +491,7 @@ app.factory('Coupons', function() {
 							Cupons[a]["CanjeaP"] = "%"
 					}
 					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
-						Cupons[a]["PhotoCupons"] = "http://estaticos.tonterias.com/wp-content/uploads/2005/03/932_Reunion-en-una-sala-roja.jpg"
+						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
 						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
 					}
 					if (Cupons[a].PhotoCupon !=null) {

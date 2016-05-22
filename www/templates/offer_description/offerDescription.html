@@ -1,11 +1,11 @@
 <ion-view>
-	<!-- Offers Description With and Withour Image -->
+	<!-- Offers Description With and Without Image -->
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
 		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
 		<!-- Price Text Offers -->
 		<div class="row BoxPriceLabel">
-			<div id="GeneralPaddingCols0" class="col col-25 BoxLabel">
+			<div class="col col-33 BoxLabel">
 				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance">
 					Ahorra
 				</p>
@@ -47,13 +47,13 @@
 			</p>
 		</div>
 		<br>
-			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
+		<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
+		<a href="#/app/termsAndConditionsOffers/{{chats[0][0].Category}}">
 			<div class="bar subFooter" style="position:absolute;bottom:0">
 				<div class="LegalTerms verticalCenteredObjects col col-90">Términos y Condiciones</div>
-				<div class="TermButton">
-					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditionsOffers/{{chats[0][0].Category}}"></a>
-				</div>
+				<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 			</div>
+		</a>
 		</div>
 	</ion-content>
 </ion-view>

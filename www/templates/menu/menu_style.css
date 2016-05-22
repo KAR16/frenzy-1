@@ -25,8 +25,9 @@
 }
 /*Font size for Frenzy title*/
 .frenzyTitlePageStart {
-  font-size: 60px;
+  /*font-size: 60px;
   font-weight: normal;
+  border: 1px solid red;*/
 }
 /*Style for to quit border of footer*/
 #footerStyle {

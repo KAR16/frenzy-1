@@ -283,7 +283,7 @@ angular.module('starter.controllers', ['ionic'])
 		});
 	}, 0);
       colorIconsFoother = []
-     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','Z','','none','none']);
+     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','img/icn-35.png','','none','none']);
   });
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
@@ -354,7 +354,7 @@ $scope.display = OurFavorites.all();
 
 			//	$ionicLoading.hide();
         colorIconsFoother = []
-      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
+      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','img/icn-35.png','','none']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
@@ -422,7 +422,7 @@ $scope.display = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
+       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','img/icn-35.png','','none']);
     });
 })
 // *************************** SAVED CONTROLLER ***************************
@@ -471,7 +471,7 @@ $scope.display = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-      colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','Z','','none']);
+      colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','img/icn-35.png','','none']);
     });
 })
 //********************** Customer CONTROLLER *****************************
@@ -1528,7 +1528,7 @@ mixpanel.track("viewTurorial");
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
 	$scope.$on('$ionicView.enter', function() {
 		colorIconsFoother = []
-		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','Z','','none']);
+		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','img/icn-35.png','','none']);
 	});
 }])
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/

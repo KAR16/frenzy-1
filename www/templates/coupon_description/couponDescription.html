@@ -11,7 +11,7 @@ box-shadow: 0 0 0px white;
 			<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
 			<!-- Price Text Offers -->
 			<div class="row BoxPriceLabel">
-				<div class="col col-25 BoxLabel">
+				<div class="col col-33 BoxLabel">
 					<p id="NothingSpace" class="AhorraTextLabel">
 						Canjea
 					</p>
@@ -104,7 +104,7 @@ box-shadow: 0 0 0px white;
 		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
 		<!-- Price Text Offers -->
 		<div class="row BoxPriceLabel">
-			<div id="GeneralPaddingCols0" class="col col-25 BoxLabel">
+			<div id="GeneralPaddingCols0" class="col col-33 BoxLabel">
 				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance">
 					Canjea
 				</p>
@@ -184,12 +184,12 @@ box-shadow: 0 0 0px white;
 				<div class="col col-10"></div>
 			</div>
 			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-			<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
-				<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
-				<div class="TermButton">
-					<a id="Terms" class="button icon icon-right ion-chevron-right col" href="#/app/termsAndConditions/{{cupon.IDCupon}}"></a>
+			<a href="#/app/termsAndConditions/{{cupon.IDCupon}}">
+				<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
+					<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
+					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 				</div>
-			</div>
+			</a>
 		</div>
 	</ion-content>
 </ion-view>
