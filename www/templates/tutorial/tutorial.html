@@ -26,7 +26,7 @@
         <!-- General Promotions for Average -->
         <div class="row">
           <!-- Offers and Promotions for Average -->
-          <div class="row tutorialCustomerColumns" ng-controller='TutorialCostumer'>
+          <div class="row tutorialCustomerColumns" ng-controller='TutorialCostumer' style="padding-top:0 !important;">
             <!-- If find offers or promotions -->
             <div class="col col-50" ng-repeat="customer in TutorialPromotion | orderBy:'-suma' | limitTo:6">
               <tutorial-info info="customer"></tutorial-info>

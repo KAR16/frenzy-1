@@ -304,6 +304,9 @@ app.factory('currentPromotion', function() {
 					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
 						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
 					}
+					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined) {
+								CurrentPromotion[c]["DisplayTerms"] = "none";
+					}
 					Category.push(CurrentPromotion[c]);
 				}
 			}
@@ -551,11 +554,38 @@ app.factory('DescriptionCupons', function() {
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
 					}
+					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined) {
+						Cupons[a]["DisplayTerms"] = "none";
+					}
 					AllCuponDescription.push(Cupons[a])
 				}
 			}
 			allCuponDescription = AllCuponDescription;
 			return allCuponDescription;
+		},get: function(){}
+	};
+});
+// ************* DESCRIPTION offert APP FACTORY *************
+app.factory('DescriptionOfferts', function() {
+	return {
+		all: function(superId) {
+			var AllOffertsDescription = [];
+			for (a in CurrentPromotion) {
+				if (superId == CurrentPromotion[a].IDpromotion) {
+					if (CurrentPromotion[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						CurrentPromotion[a]["CanjeaQ"] = "Q."
+					}else {
+							CurrentPromotion[a]["CanjeaP"] = "%"
+					}
+					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined) {
+						CurrentPromotion[a]["DisplayTerms"] = "none";
+					}
+					AllOffertsDescription.push(CurrentPromotion[a])
+				}
+			}
+			var allDescription = AllOffertsDescription	;
+			return allDescription;
 		},get: function(){}
 	};
 });

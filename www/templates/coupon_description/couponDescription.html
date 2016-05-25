@@ -29,11 +29,11 @@ box-shadow: 0 0 0px white;
 				</p>
 			</div>
 			<!-- Promotion Description Text -->
-			<div class="row">
+			<!-- <div class="row">
 				<p class="pageFavoritesDescription open_sans home">
 					W
 				</p>
-			</div>
+			</div> -->
 		</div>
 		 <div class="row cuponsDescriptionDiv3">
 			<p class="semi-circulo"></p><p class="semi-circulo"></p>
@@ -119,12 +119,12 @@ box-shadow: 0 0 0px white;
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
-				<div class="col col-80 cuponsDescriptionTitle open_sans">
+				<div class="col cuponsDescriptionTitle open_sans">
 					{{cupon.Presentation }}
 				</div>
-				<div class="col col-20">
-					<div class="cuponsDescriptionPinCircle home">W</div>
-				</div>
+				<!-- <div class="col col-20">
+					<div class="cuponsDescriptionPinCircle home" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}}">W</div>
+				</div> -->
 			</div>
 		</div>
 		<!-- Semi-Circle Container -->
@@ -184,7 +184,7 @@ box-shadow: 0 0 0px white;
 				<div class="col col-10"></div>
 			</div>
 			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-			<a href="#/app/termsAndConditions/{{cupon.IDCupon}}">
+			<a href="#/app/termsAndConditions/{{cupon.IDCupon}}"  style="display:{{cupon.DisplayTerms}}">
 				<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
 					<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
 					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>

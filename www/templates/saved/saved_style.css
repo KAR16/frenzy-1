@@ -46,24 +46,8 @@ p#NothingSpace {
     font-size: 30px;
 }
 
-
-/*.savedPageBoxStyle {
-    border-style: solid;
-    border-color: #E6E6E6
-    border-bottom-width: 1px;
-    height: 100px;
-    background-color: white;
+.noExisteSaved {
+  margin: auto;
+  position: absolute;
+  top: 10%; left: 0; bottom: 0; right: 0;
 }
-
-
-
-
-
-
-
-
-
-
-.savedPageNoItemBlankSpace {
-    color: white;
-}*/

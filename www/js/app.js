@@ -58,7 +58,7 @@ function onBackKeyDown() {
 						console.log("quedar");
 				}
 		})
-	} else if(document.URL == 'file:///android_asset/www/index.html#/login2'){
+	} else if(document.URL == 'file:///android_asset/www/index.html#/loginAndRegister'){
 
 			swal({
 				title: 'Salir',

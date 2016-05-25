@@ -63,7 +63,7 @@
 .Entretenimiento {
   background-color: #FFD922;
 }
-.Electrónicos {
+.Electronicos {
   background-color: #3F51B5;
 }
 .Otros {
@@ -148,22 +148,22 @@
   color: #263147;
 }
 /* Electronic Category */
-.PriceElectrónicos {
+.PriceElectronicos {
   color:white;
   font-size:12px;
   margin-left: 5px !important;
 }
-.TitleElectrónicos {
+.TitleElectronicos {
   font-size:13px;
   color:#C5C3C3;
 }
-.AveragePriceElectrónicos {
+.AveragePriceElectronicos {
   color:white;
   font-size:12px;
   font-weight: bolder;
   margin-left: 5px !important;
 }
-.AverageTitleElectrónicos {
+.AverageTitleElectronicos {
   font-size:11px;
   color: #C5C3C3;
 }

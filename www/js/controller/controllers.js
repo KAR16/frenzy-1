@@ -522,7 +522,7 @@ $scope.display = OurFavorites.all();
 
 })
 .controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
-	var Direc = [{name:"Supermercado",name2:"supermarketMenu"},{name:"Restaurantes",name2:"restaurantMenu"},{name:"Otros",name2:"otherMenu"},{name:"Electrónicos",name2:"entertainmentMenu"},{name:"Moda",name2:"fashionMenu"},{name:"Entretenimiento",name2:"entertainmentMenu"}]
+	var Direc = [{name:"Supermercado",name2:"supermarketMenu"},{name:"Restaurantes",name2:"restaurantMenu"},{name:"Otros",name2:"otherMenu"},{name:"Electronicos",name2:"entertainmentMenu"},{name:"Moda",name2:"fashionMenu"},{name:"Entretenimiento",name2:"entertainmentMenu"}]
 	var DirecParse = $.grep(Direc, function (e) {
 		 return e.name.indexOf($stateParams.IDcustomer) == 0;
 	});
@@ -566,6 +566,17 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
       colorIconsFoother = []
     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.AppCategory,'','none',]);
   });
+})
+.controller('PromotionsDescription',function($scope, $stateParams, DescriptionOfferts ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
+	$scope.chats = DescriptionOfferts.all($stateParams.superId);
+	console.log($scope.chats[0].Category);
+//	$scope.heartMenu = resultSetPopover[0].colorHeart;
+	$scope.custumerName = $scope.chats[0].Category.replace(/-/g," ");
+			$scope.$on('$ionicView.enter', function() {
+				console.log();
+				colorIconsFoother = []
+				colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.custumerName,'','none']);
+			});
 })
 // *************************  OFFERS CONTROLLER	***************************
 .controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
@@ -874,9 +885,10 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                             swal({
                                 title: 'Perfecto!',
                                 text: 'Has cambiado tu Cupón',
+																type: "success",
                                 timer: 2000,
                                 showConfirmButton: false,
-                                imageUrl: "../../img/Pulgar_Arriba.jpg"
+
                             });
 
                             cuponClassExchanged.id = id;
@@ -907,7 +919,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                                 text: 'Has cambiado tu Cupón',
                                 timer: 2000,
                                 showConfirmButton: false,
-                                imageUrl: "../../img/Pulgar_Arriba.jpg"
+                                type: "success"
                             });
 
                             couponCash.then(function(){
@@ -1053,7 +1065,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 									swal({
 											title: "Perfecto!",
 											text: "Has cambiado tu cupón",
-											imageUrl: "../../img/Pulgar_Arriba.jpg",
+											type: "success",
 											timer: 2000,
 											showConfirmButton: false
 									});
@@ -1343,7 +1355,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		views: {
 			'menuContent': {
 				templateUrl: "templates/offer_description/offerDescription.html",
-				controller: 'currentPromotionCtrl'
+				controller: 'PromotionsDescription'
 			}
 		}
 	})
@@ -1406,7 +1418,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-$urlRouterProvider.otherwise('/tutorial');
+ $urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //

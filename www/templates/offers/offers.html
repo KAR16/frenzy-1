@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<!-- Redirect to Offer Description -->
-				<a href="#/app/descripcionOfertas/{{super.Category}}" style="text-decoration:none">
+				<a href="#/app/descripcionOfertas/{{super.IDpromotion}}" style="text-decoration:none">
 					<!-- Width of the Offers Image -->
 					<img class="imageOffertsAndCoupons" ng-src="{{super.photo}}" alt="Promotions">
 				</a>
@@ -124,7 +124,7 @@
 		<div ng-repeat="super in chats[0] | filter: {nul : 'sin'}">
 			<!-- Offer Container without image -->
 			<div class="boxResponsiveWithoutImage">
-				<a href="#/app/descripcionOfertas/{{super.Category}}" style="text-decoration:none">
+				<a href="#/app/descripcionOfertas/{{super.IDpromotion}}" style="text-decoration:none">
 					<div class="row">
 						<!-- Purple label and Saving Price -->
 						<div class="col col-25">
@@ -205,7 +205,7 @@
 			</div>
 		</div>
 		<!-- If doesn't exist offers -->
-		<div ng-repeat="super in chats[0]  | filter: {oferta : 'noHay'}">
+		<div ng-repeat="super in chats[0]  | filter: {oferta : 'noHay'}" class="noExiste">
 			<div class="open_sans">
 				<!-- Uh-uh Icon -->
 				<p class="home savedPageNoItemsIcon">
