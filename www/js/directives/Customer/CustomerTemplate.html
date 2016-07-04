@@ -1,35 +1,31 @@
 <link rel="stylesheet" type="text/css" href="templates/categories/categories_style.css">
-<!--*****  BOXES DESIGN  *****-->
-<div class="categoriesBoxes {{info.Category}} col col-100">
-    <!--*****  LINK ONLY FOR THE IMAGE   href="#/app/ofertas/{{info.NameCategory}}"*****-->
-    <div  ng-controller = "changeColorHeartCtrl" id = "{{info.NameCategory}}">
-    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="image" ng-click = 'UrlC("{{info.NameCategory}}")'>
+<!-- Boxes Design -->
+<div class="categoriesBoxes col col-100">
+  <!-- Customer Image with Conexion -->
+  <div class="CenteredCustomerImage" ng-controller="changeColorHeartCtrl" id="{{info.Name}}">
+    <img class="imageCategoryBoxes" ng-src="{{info.Logo}}" alt="image" ng-click='UrlC("{{info.Name}}")'>
   </div>
-    <div class="row">
-        <!--*****  GREEN BOX FOR PROMOTIONS AND OFFERTS  *****-->
-        <div class="col col-80" style="margin-top:-5px;">
-            <!--*****  OFFERTS COUNT  *****-->
-            <spam class="Price{{info.Category}}">
-                {{info.suma}}
-            </spam>
-            <!--***** OFFERTS NAME  *****-->
-            <spam class="Title{{info.Category}}">
-                ofertas
-            </spam>
-            <br>
-            <!--*****  PROMOTIONS COUNT  *****-->
-            <spam class="AveragePrice{{info.Category}}">
-                Q{{info.promedio}}
-            </spam>
-            <!--*****  PROMOTIONS NAME  *****-->
-            <spam class="AverageTitle{{info.Category}}">
-                promedio
-            </spam>
-        </div>
-        <!--*****  SECOND ROW TO HEART ICON  *****-->
-        <div class="col col-20 categoriesHeartIcon" ng-controller = "changeColorHeartCtrl">
-            <!--*****  HEART ICON  *****-->
-            <div class="home" id="{{info.lastText}} {{info.NameCategory}}"  name = "{{info.NameCategory}}" ng-click='ChangeColorHeart("{{info.lastText}}","{{info.NameCategory}}")'style="color:{{info.colorHeart}}">B</div>
-        </div>
+  <div id="colRestaurantes" class="col {{info.CategoryApp}}">
+    <!-- Customer Description -->
+    <div id="infoCol1" class="row">
+      <div id="infoCol2" class="col col-80">
+        <spam class="Price{{info.CategoryApp}}">
+          {{info.suma}}
+        </spam>
+        <spam class="Title{{info.CategoryApp}}">
+          ofertas
+        </spam>
+        <br>
+        <spam class="AveragePrice{{info.CategoryApp}}">
+          Q{{info.AverageSaving}}
+        </spam>
+        <spam class="AverageTitle{{info.CategoryApp}}">
+          promedio
+        </spam>
+      </div>
+      <div id="infoCol3" class="col col-20 categoriesHeartIcon" ng-controller = "changeColorHeartCtrl">
+        <div class="home HeartCentered" id="{{info.lastText}} {{info.Name}}" name="{{info.Name}}" ng-click='ChangeColorHeart("{{info.lastText}}","{{info.Name}}")'style="color:{{info.colorHeart}}">B</div>
+      </div>
     </div>
+  </div>
 </div>

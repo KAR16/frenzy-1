@@ -1,0 +1,12 @@
+
+.TermContainer {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  height: auto;
+  box-shadow: 2px 2px 2px 2px #A7A9AC;
+}
+
+.TermText {
+  padding: 20px;
+  text-align: justify;
+}

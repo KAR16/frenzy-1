@@ -1,68 +1,58 @@
-.row-border {
-    border-width: thin;
-    border-color: #E6E7E8;
-    border-bottom-style: solid;
-}
-
-.pageOurFavoritesOurFavoritesTitle {
-    color: #D8D8D8;
-}
-
-.pageYourFavoritesLineDecoration {
-    background-color: #D8D8D8;
-}
-
+/*Customer with Heart Container Style*/
 .pageYourFavoritesGreyLine {
-    background-color: #E6E7E8;
-    height: 35px;
+  background-color: #E6E7E8;
+  height: 40px;
+  padding: 5px 5px 5px 20px;
 }
-
+/*Icon Heart Style*/
 .pageYourFavoritesIconHeart {
-    margin-left: 10px;
-    font-size: 27px;
-    color: #FF5252;
+  font-size: 27px;
+  color: #FF5252;
 }
-
+/*Customer Name Style for Heart Container*/
 .pageYourFavoritesStablishmentName {
-    margin-left: 15px;
-    font-size: 15px;
-    color: black;
+  height: 30px;
+  margin-left: 10px;
+  font-size: 15px;
+  color: black
 }
-
-.pageYourFavoritesIconArrow {
-    margin-left: 20px;
-    font-size: 25px;
-    padding-top: 25px;
-    color: #A7A9AC;
+/*Bigger Than Symbol style*/
+.BiggerThanColorAndPosition {
+  height: 30px;
+  color: silver;
+  font-size: 25px
 }
-
+/*Your Favorite Saved Style Box*/
 .pageYourFavoritesWhiteBox {
-    height: 100px;
+  height: 90px;
+  background-color: white;
+  padding: 12px 5px 5px 20px;
+  border-bottom: 1px solid #E6E7E8;
 }
-
-.pageYourFavoritesWhiteBoxTop {
-    margin-top: 15px;
-}
-
+/*Your FavoriteTitle*/
 .pageYourFavoritesOffert {
-    font-size: 13px;
-    font-weight: bold;
+  font-size: 13px;
+  font-weight: bold;
 }
-
+/*Your Favorite Price*/
 .pageYourFavoritesPriceOffert {
-    font-size: 11px;
-    margin-top: -8px;
+  font-size: 11px;
+  line-height: 2px;
 }
-
+/*Your Favorite Description*/
 .pageYourFavoritesOffertDescription {
-    font-size: 11px;
-    color: #A4A4A4;
-    margin-top: -8px;
+  font-size: 11px;
+  color: #A4A4A4;
 }
-
+/*Pin Icon Styles*/
+.pinIconContainer {
+  position: relative;
+}
 .pageYourFavoritesIconPin {
-    color: silver;
-    margin-top: 45px;
-    margin-left: 25px;
-    font-size: 30px;
+  width: 100%;
+  color: silver;
+  font-size: 30px;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
 }

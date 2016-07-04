@@ -32,10 +32,10 @@ var contt = 0;
 var AllFavorite = [];
 var AllPromotion = [];
 var InfoShop = [];
-// ********* CUPONS *********
-var Cupons = [];
+
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', [])
+
 // ************* CATEGORIES APP FACTORY *************
 app.factory('Categorys', function() {
 	// Might use a resource here that returns a JSON array
@@ -65,16 +65,13 @@ app.factory('CustomerAll', function() {
 				var AllCustomer = [];
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
+				if (IDCostumer == CustomerList[a].CategoryApp) {
 					console.log("encontro ");
 					AllCustomer.push(CustomerList[a])
 				}
 			}
 			if (AllCustomer.length == 0) {
 				AllCustomer.push({oferta:"noHay"});
-			}
-			for (g in AllCustomer) {
-				AllCustomer[g]["suma"] = AllCustomer[g]["promo"] +  AllCustomer[g]["coupon"]
 			}
 			console.log(AllCustomer);
 			return AllCustomer;
@@ -278,17 +275,19 @@ app.factory('currentPromotion', function() {
 			var validar = "existe"
 
 			var resultSet = $.grep(CustomerList, function (e) {
-				 return e.NameCategory.indexOf(superId) == 0;
+				 return e.Name.indexOf(superId) == 0;
 			});
 
 			//console.log(JSON.stringify(resultSet[0]["promo"]))
 
-			for (a in Cupons) {
-				if (superId == Cupons[a].Category) {
-					Cupcont.push(Cupons[a])
+				// for (a in Cupons) {
+				// 	if (superId == Cupons[a].Category) {
+				// 		Cupcont.push(Cupons[a])
+				//
+				// 	}
+				// }
 
-				}
-			}
+
 
 			for (c in CurrentPromotion) {
 			//	console.log(CurrentPromotion[c]);
@@ -299,6 +298,12 @@ app.factory('currentPromotion', function() {
 							CurrentPromotion[c].colPricePromo = "33"
 					}else {
 						CurrentPromotion[c].Display = "";
+					}
+					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
+						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
+					}
+					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined) {
+								CurrentPromotion[c]["DisplayTerms"] = "none";
 					}
 					Category.push(CurrentPromotion[c]);
 				}
@@ -316,7 +321,7 @@ app.factory('currentPromotion', function() {
 					Category[c]["columIcon"] = "40"
 					Category[c]["columDisplay"] = "none"
 				}
-					console.log(Category[c]);
+				//	console.log(Category[c]);
 			}
 
 			if (Category.length == 0) {
@@ -343,17 +348,17 @@ app.factory('currentPromotion', function() {
 			}
 
 			if (CurrentPromotion) {
-				if (resultSet[0]["coupon"] == 0) {
+				if (resultSet[0]["QuantityCoupon"] == 0) {
 					validar = "no"
 				}
-				if(resultSet[0]['promo'] == 0){
+				if(resultSet[0]['QuantityPromotion'] == 0){
 					ALL.push(Category)
 					ALL.push(dato)
-					ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar,ocultar:'none'}])
+					ALL.push([{contCoupon:resultSet[0]["QuantityCoupon"],contPromotion:resultSet[0]["QuantityPromotion"],t:dato[0].name,Validar:validar,ocultar:'none'}])
 				}
 				ALL.push(Category)
 				ALL.push(dato)
-				ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar}])
+				ALL.push([{contCoupon:resultSet[0]["QuantityCoupon"],contPromotion:resultSet[0]["QuantityPromotion"],t:dato[0].name,Validar:validar}])
 				console.log(ALL);
 				return ALL;
 			}
@@ -402,7 +407,7 @@ app.factory('AllPromotion', function() {
 				AllPromotion.push({oferta:"noHay"});
 			}
 			promotio = AllPromotion;
-		//	console.log(promotio);
+			console.log(promotio);
 			return promotio;
 		},
 		get: function() {
@@ -469,7 +474,7 @@ app.factory('Coupons', function() {
 			var ContCupon = []; //conteo de copunes
 			var validar = "existe";
 			var resultSetC = $.grep(CustomerList, function (e) {
-				 return e.NameCategory.indexOf(salvadosId) == 0;
+				 return e.Name.indexOf(salvadosId) == 0;
 			});
 
 			console.log(JSON.stringify(resultSetC[0]))
@@ -480,6 +485,20 @@ app.factory('Coupons', function() {
 					}else {
 						Cupons[a].Display = ""
 					}
+					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						Cupons[a]["CanjeaQ"] = "Q."
+					}else {
+							Cupons[a]["CanjeaP"] = "%"
+					}
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
+						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
+					}
+					if (Cupons[a].PhotoCupon !=null) {
+								Cupons[a]["DisplayWithImageCoupons"] = "none";
+					}
+
 					AllCupon.push(Cupons[a])
 				}
 			}
@@ -528,6 +547,15 @@ app.factory('DescriptionCupons', function() {
 			var AllCuponDescription = [];
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].IDCupon) {
+					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						Cupons[a]["CanjeaQ"] = "Q."
+					}else {
+							Cupons[a]["CanjeaP"] = "%"
+					}
+					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined) {
+						Cupons[a]["DisplayTerms"] = "none";
+					}
 					AllCuponDescription.push(Cupons[a])
 				}
 			}
@@ -536,6 +564,48 @@ app.factory('DescriptionCupons', function() {
 		},get: function(){}
 	};
 });
+// ************* DESCRIPTION offert APP FACTORY *************
+app.factory('DescriptionOfferts', function() {
+	return {
+		all: function(superId) {
+			var AllOffertsDescription = [];
+			for (a in CurrentPromotion) {
+				if (superId == CurrentPromotion[a].IDpromotion) {
+					if (CurrentPromotion[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						CurrentPromotion[a]["CanjeaQ"] = "Q."
+					}else {
+							CurrentPromotion[a]["CanjeaP"] = "%"
+					}
+					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined) {
+						CurrentPromotion[a]["DisplayTerms"] = "none";
+					}
+					AllOffertsDescription.push(CurrentPromotion[a])
+				}
+			}
+			var allDescription = AllOffertsDescription	;
+			return allDescription;
+		},get: function(){}
+	};
+});
+
+// ************* login FB ****************************
+app.service('UserService', function() {
+  // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
+  var setUser = function(user_data) {
+    window.localStorage.starter_facebook_user = JSON.stringify(user_data);
+  };
+
+  var getUser = function(){
+    return JSON.parse(window.localStorage.starter_facebook_user || '{}');
+  };
+
+  return {
+    getUser: getUser,
+    setUser: setUser
+  };
+});
+//************************************************
 // ************* CALL PARSE PROMOTIONS *************
 var Promo = Parse.Object.extend('Promotion');
 var promotion = new Parse.Query(Promo);
@@ -581,10 +651,21 @@ function couponFunction() {
 						}
 					});
 
+				}).then(function() {
+					for (a in Cupons){
+						var End_Date_Coupons = moment.tz(Cupons[a]["End_Date"],'America/Guatemala').format('DD/MM/YYYY');
+						var End_Date_Milisec = moment.tz(Cupons[a]["End_Date"], 'America/Guatemala').format('x');
+						var Guatemala_Date= moment.tz("America/Guatemala").format('x');
+						var DaysToFinalize = Math.round(((End_Date_Milisec - Guatemala_Date)/(24*60*60*1000)))
+
+						Cupons[a]["End_Date"] = End_Date_Coupons
+						Cupons[a]["DaysToFinalize"] = DaysToFinalize;
+					}
+
 				});
 }
 
-couponFunction();
+//couponFunction();
 // function couponFunction() {
 // 	Cupons = [];
 // 	var Cupon = new Parse.Query('Cupon');

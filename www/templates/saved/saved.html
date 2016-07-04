@@ -1,80 +1,82 @@
-<style>
-    .bar.bar-positive    {
-    box-shadow: 0 0 0px white;
-    }
-</style>
-<!-- if your code is uploader on ios you need to add this code of css in the line number 10 -->
-<!-- style="margin-top:-10px" -->
 <ion-view>
-    <!--**********  SALVED PAGE  **********-->
-    <ion-content>
-        <!--**********  MAIN BOXES  **********-->
-        <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {oferta : 'existe'}">
-            <!--**********  IMAGE ESTABLISHMENT  **********-->
-            <div class="col col-20">
-                <img class="savedPageImage" alt="pizza" src="{{promotion.photo}}">
-            </div>
-            <div class="col col-80">
-                <!--**********  TITLE OFFERT  **********-->
-                <p class="savedPageTitleDescription overFlowText">
-                    {{promotion.name}}
-                </p>
-                <!--**********  PRICE OFFERT  **********-->
-                <p class="savedPageOffert">
-                    Oferta - {{promotion.promotionalPrice | currency: 'Q'}}
-                </p>
-                <!--**********  DESCRIPTION OFFERT  **********-->
-                <p class="savedPageDescription overFlowText">
-                    {{promotion.description}}
-                </p>
-            </div>
-            <!--**********  PIN ICON  **********-->
-            <div class="col col-10 home">
-                <p class="savedPageIcon" id="{{promotion.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{promotion.IDpromotion}}')" style="color:{{promotion.ColorPin}}">
-                    W
-                </p>
-            </div>
+  <ion-content>
+    <!-- Promotion Saved -->
+    <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {oferta : 'existe'}">
+      <!-- Saved Image Promotion -->
+      <div class="col col-20 verticalAndHorizontalCenteredObjects">
+        <img class="savedPageImage" alt="PhotoSavedPromotions" src="{{promotion.Photo}}">
+      </div>
+      <!-- Saved Title Description -->
+      <div class="col col-80 SavedDescriptionPosition">
+        <div id="NothingSpace" class="savedPageTitleDescription">
+          {{promotion.Name}}
         </div>
-        <!--**********  CUPONS  **********-->
-        <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {cupon : 'existe'}">
-            <!--**********  IMAGE ESTABLISHMENT  **********-->
-            <div class="col col-20">
-                <img class="savedPageImage" alt="pizza" src="{{promotion.PhotoCupon._url}}">
-            </div>
-            <div class="col col-80">
-                <!--**********  TITLE OFFERT  **********-->
-                <p class="savedPageTitleDescription overFlowText">
-                    {{promotion.Presentation}}
-                </p>
-                <!--**********  PRICE OFFERT  **********-->
-                <p class="savedPageOffert">
-                    Cupon - {{promotion.Canjea | currency: 'Q'}}
-                </p>
-                <!--**********  DESCRIPTION OFFERT  **********-->
-                <p class="savedPageDescription overFlowText">
-                    {{promotion.description}}
-                </p>
-            </div>
-            <!--**********  PIN ICON  **********-->
-            <div class="col col-10 home">
-                <p class="savedPageIcon" id="{{promotion.PromotionId}}" onclick="SalvadosSaveAndDelete(id)" style="color:purple">
-                    W
-                </p>
-            </div>
+        <div class="row">
+          <div id="no-PaddingLeft" class="col col-80">
+            <!-- Saved Text Description -->
+            <spam class="savedPageOffert">
+              Oferta {{promotion.promotionalPrice | currency: 'Q'}}
+            </spam>
+            <p id="NothingSpace" class="savedPageDescription">
+              {{promotion.PromotionDescription}}
+            </p>
+          </div>
+          <!-- Pin Icon -->
+          <div class="col home pinIconContainer">
+            <p class="savedPageIcon pageYourFavoritesIconPin" id="{{promotion.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{promotion.IDpromotion}}')" style="color:{{promotion.ColorPin}}">
+              W
+            </p>
+          </div>
         </div>
-        <div ng-repeat="promotion in chats  | filter: {oferta : 'noHay'}">
-            <div class="open_sans boxbox">
-                <p class="savedPageNoItemBlankSpace">
-                    f
-                </p>
-                <p class="home savedPageNoItemsIcon">f</p>
-                <p class="savedPageNoItemsTitle">
-                    Uh-uH
-                </p>
-                <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
-                <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
-                <p class="savedPageNoItemsDescription">para usarlos despues.</p>
-            </div>
+      </div>
+    </div>
+    <!-- Coupon Saved -->
+    <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {cupon : 'existe'}">
+      <!-- Saved Image Promotion -->
+      <div class="col col-20 verticalAndHorizontalCenteredObjects">
+        <img class="savedPageImage" alt="PhotoSavedPromotions" src="{{promotion.PhotoCupon._url}}">
+      </div>
+      <!-- Saved Title Description -->
+      <div class="col col-80 SavedDescriptionPosition">
+        <p id="NothingSpace" class="savedPageTitleDescription">
+          {{promotion.Presentation}}
+        </p>
+        <div class="row">
+          <div id="no-PaddingLeft" class="col col-80">
+            <!-- Saved Text Description -->
+            <spam class="savedPageOffert">
+              Cupon {{promotion.Canjea | currency: 'Q'}}
+            </spam>
+            <p id="NothingSpace" class="savedPageDescription">
+              {{promotion.description}}
+            </p>
+          </div>
+          <!-- Pin Icon -->
+          <div class="col home pinIconContainer">
+            <p class="savedPageIcon pageYourFavoritesIconPin" id="{{promotion.PromotionId}}" onclick="SalvadosSaveAndDelete(id)" style="color:purple">
+              W
+            </p>
+          </div>
         </div>
-    </ion-content>
+      </div>
+    </div>
+    <!-- Doesn't exist Your Favorites -->
+    <div ng-repeat="promotion in chats  | filter: {oferta : 'noHay'}" class="noExisteSaved">
+      <div class="open_sans">
+        <!-- Donkey Icon -->
+        <p class="home savedPageNoItemsIcon">
+          f
+        </p>
+        <!-- Description -->
+        <p class="savedPageNoItemsTitle">
+          Uh-uH
+        </p>
+        <p class="savedPageNoItemsDescription">
+          No tienes ningún elemento agregado a<br>
+          esta lista. Agrega ofertas y cupones<br>
+          para usarlos después.
+        </p>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

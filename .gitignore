@@ -8,8 +8,6 @@ hooks/*
 resources/android/*
 resources/ios/*
 
-
-
 # -- Sistemas Operativos ------------------------------
 # Windows
 Thumbs.db
