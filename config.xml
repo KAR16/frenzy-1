@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="app.Frenzy" version="3.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="app.Frenzy" version="3.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>frenzy</name>
-  <description>        app promotion  </description>
-  <author email="info@cognits.co" href="http://www.cognits.co">      cognits developers  </author>
+  <description>
+        App Promotion
+  </description>
+  <author email="info@cognits.co" href="http://www.cognits.co">
+      cognits Developers
+  </author>
   <access origin="*.amazonaws.com"/>
   <access origin="*"/>
   <access launch-external="yes" origin="tel:*"/>

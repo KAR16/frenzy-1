@@ -290,7 +290,7 @@ angular.module('starter.controllers', ['ionic'])
 .controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
 /*************************************************/
 var NameUser = String(IdUsuario);
-		mixpanel.track("view", { "type" : "Ourfavorites","Gender":IdGender,"User":NameUser });
+
 		$scope.reload = function () {
 		    var PromoSavess = new Parse.Query('PromotionSaved')
 		    PromoSavess.equalTo("UserID", IdUsuario);
@@ -351,7 +351,7 @@ $scope.display = OurFavorites.all();
 			$scope.ourFavorites = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-
+				mixpanel.track("view", { "type" : "Ourfavorites","Gender":IdGender,"User":NameUser });
 			//	$ionicLoading.hide();
         colorIconsFoother = []
       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','img/icn-35.png','','none']);
@@ -568,6 +568,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
   });
 })
 .controller('PromotionsDescription',function($scope, $stateParams, DescriptionOfferts ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
+	mixpanel.track("view", { "type" : "PromotionsDescription","Gender":IdGender,"User":IdUsuario});
 	$scope.chats = DescriptionOfferts.all($stateParams.superId);
 	console.log($scope.chats[0].Category);
 //	$scope.heartMenu = resultSetPopover[0].colorHeart;
@@ -584,7 +585,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		name: $stateParams.superId,
 	};
 	var NameUser = String(IdUsuario);
-	mixpanel.track("view", { "type" : "Promotions","Gender":IdGender,"User":NameUser});
+	mixpanel.track("view", { "type" : "Promotions","Gender":IdGender,"User":NameUser,"Namepromotion": $stateParams.superId});
 	$ionicPopover.fromTemplateUrl('templates/popover.html', {
 		scope: $scope,
 	}).then(function(popover) {
@@ -816,7 +817,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams ,Coupons) {
+.controller('CuponCtrl', function($scope, $stateParams ,Coupons, $ionicLoading) {
 	var NameUser = String(IdUsuario);
 	mixpanel.track("view", { "type" : "copuns","Gender":IdGender,"User":NameUser});
 		// For to update QuantityExchanged
@@ -834,7 +835,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 						or hide it  ****/
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
-		alert("call 2")
 		a = cell.toString();
 		b = 'tel:'
 		window.open(b+a);
@@ -867,6 +867,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
         query.equalTo("objectId",id)
         var couponCash =	query.find({
             success: function(results){
+
                 console.log('entro a la funcion');
                 if(results[0].attributes.TypeCoupon === 'Fecha'){
 
@@ -890,7 +891,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                                 showConfirmButton: false,
 
                             });
-
+														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":id});
                             cuponClassExchanged.id = id;
                             cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
                             cuponClassExchanged.save();
@@ -902,47 +903,111 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                     });
 
                 }else if(results[0].attributes.TypeCoupon === 'Cupon'){
-                    swal({
-                        title: "Estas Seguro?",
-                        text: "Quieres canjear este cupon?",
-                        type: "warning",
-                        showCancelButton: true,
-                        cancelButtonText: 'No',
-                        confirmButtonColor: '#00BAB9',
-                        confirmButtonText: "Canjear!",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm){
-                        if (isConfirm) {
-                            swal({
-                                title: 'Perfecto!',
-                                text: 'Has cambiado tu Cupón',
-                                timer: 2000,
-                                showConfirmButton: false,
-                                type: "success"
-                            });
+										if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
+											$scope.cupons[0][0].QuantityExchanged +=1;
+											swal({
+	                        title: "Estas Seguro?",
+	                        text: "Quieres canjear este cupon?",
+	                        type: "warning",
+	                        showCancelButton: true,
+	                        cancelButtonText: 'No',
+	                        confirmButtonColor: '#00BAB9',
+	                        confirmButtonText: "Canjear!",
+	                        closeOnConfirm: false
+	                    },
+	                    function(isConfirm){
+	                        if (isConfirm) {
+	                            swal({
+	                                title: 'Perfecto!',
+	                                text: 'Has cambiado tu Cupón',
+	                                timer: 2000,
+	                                showConfirmButton: false,
+	                                type: "success"
+	                            });
+															mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":id});
+	                            couponCash.then(function(){
+																	var element = document.getElementById("QuantityExchangedText");
+																	element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
+	                                var couponPages="#/app/descripcionCupones/";
+	                                // IdPromotion with redirection page
+	                                couponPages = couponPages+id;
+	                                location.href=couponPages;
+	                            });
 
-                            couponCash.then(function(){
-                                $scope.cupons[0][0].QuantityExchanged +=1;
-                                var couponPages="#/app/descripcionCupones/";
-                                // IdPromotion with redirection page
-                                couponPages = couponPages+id;
-                                location.href=couponPages;
-                            });
+	                            cuponClassExchanged.id = id;
+	                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+	                            cuponClassExchanged.save();
+                      	} else {
+														$scope.cupons[0][0].QuantityExchanged -=1;
+														var element = document.getElementById("QuantityExchangedText");
+														element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
+	                      }
+	                    });
+										} else {
+												$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
+												cuponClassExchanged.id = id;
+												cuponClassExchanged.set("Status", false);
+												cuponClassExchanged.save();
 
-                            cuponClassExchanged.id = id;
-                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-                            cuponClassExchanged.save();
-                        } else {
-                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
-                        }
-                    });
-                }
-            }
-        })
+												swal({
+													title: 'Lo sentimos!',
+													text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+													type: 'warning'
+												},
+												function(isConfirm) {
+														if(isConfirm){
+															$scope.loading = $ionicLoading.show({
+																	showBackdrop: true,
+																	template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+														});
 
-    displayNoneInline=[{none:"none",inline:"inline",position:"absolute",bottom:0}];
-    }
+														Parse.Cloud.run('CountCouponCustomer', {}, {
+																success: function(resultCustomer) {
+																	console.log(resultCustomer);
+																		Parse.Cloud.run('CountCouponCategories', {}, {
+																				success:function(result) {
+																					CategoryListName = [];
+																					var query = new Parse.Query('AppCategory');
+																					query.each(function(results) {
+																							CategoryListName.push(results.attributes)
+																					}).then(function() {
+																							ReloadFavorite()
+																					}).then(function() {
+																							Parse.Cloud.run('GetCustomer', {},{
+																									success:function (results) {
+																										//	console.log(results);
+																										CustomerList = results
+																									},
+																									error:function (error) {
+																									 console.log(error);
+																									}
+																							}).then(function() {
+																								$ionicLoading.hide();
+																								var couponPages="#/app/playlists";
+																								location.href=couponPages;
+																							})
+																						});
+
+																				},
+																				error: function(error) {
+																						/* Show error if call failed */
+																						console.log(error);
+																				}
+																		});
+																},
+																error: function(error) {
+																		/* Show error if call failed */
+																		console.log(error);
+																}
+											});
+											}
+										})
+									}
+								}
+            	}
+        	});
+					displayNoneInline=[{none:"none",inline:"inline",position:"absolute",bottom:0}];
+  		}
 
 	$scope.llenar1=function(id){
 		$scope.countCoupon(id);
@@ -1014,7 +1079,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons, $ionicLoading) {
-
+	mixpanel.track("view", { "type" : "DescriptionCupon","Gender":IdGender,"User":IdUsuario});
 	$scope.reloadpage = function(){
 		$scope.cupons[0].QuantityExchanged +=1
 	}
@@ -1061,7 +1126,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 								    cuponClassExchanged.id = $stateParams.DescriptionID;
 									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 									cuponClassExchanged.save();
-
+									mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
 									swal({
 											title: "Perfecto!",
 											text: "Has cambiado tu cupón",
@@ -1086,11 +1151,8 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 										if(isConfirm){
 
 											$scope.loading = $ionicLoading.show({
-													content: 'Sending',
-													animation: 'fade-in',
-													showBackdrop: true,
-													maxWidth: 200,
-													showDelay: 0
+												showBackdrop: true,
+												template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
 											});
 
 											Parse.Cloud.run('CountCouponCustomer', {}, {
@@ -1141,6 +1203,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                         // ------------------------------------------------------------------------------------------------------------------------------------------------
                     } else if(results[0].attributes.TypeCoupon === "Fecha"){
                             console.log('tiene que sumar')
+														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
                                     cuponClassExchanged.id = $stateParams.DescriptionID;
 									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 									cuponClassExchanged.save();
@@ -1494,6 +1557,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	// mobileAnalyticsClient.renewSession();
 	// 	mobileAnalyticsClient.startSession()
 	// 	mobileAnalyticsClient.submitEvents();
+
+	var guate    = moment.tz("America/Guatemala");
+
+	// console.log("------" + guate.format('DD/MM/YYYY'));
+
 mixpanel.track("viewTurorial");
 	// IdUsuario of Facebook or Frenzy for Pines and hearts
 
@@ -1530,6 +1598,7 @@ mixpanel.track("viewTurorial");
 			name: 'tools_'+id,
 			user: NameUser
 		};
+		mixpanel.track("ClickOtros", { "type" : id,"Gender":IdGender,"User":NameUser});
 		Parse.Analytics.track("Tools", dimensions);
 	}
 	$scope.logout = function() {
