@@ -1,35 +1,28 @@
 <link rel="stylesheet" type="text/css" href="templates/categories/categories_style.css">
-<!--*****  BOXES DESIGN  *****-->
-<div class="categoriesBoxes {{info.Category}} col col-100">
-    <!--*****  LINK ONLY FOR THE IMAGE   href="#/app/ofertas/{{info.NameCategory}}"*****-->
-    <div  ng-controller = "changeColorHeartCtrl" id = "{{info.NameCategory}}">
-    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="image">
+<!-- Customer Boxes -->
+<div id="boxColorCustomer" class="col boxColorCustomer" class="{{info.Category[$index]}}" >
+  <!-- Customer Image -->
+  <div class="BoxSpace" ng-controller = "changeColorHeartCtrl" id="{{info.NameCategory}}">
+    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="imageCategoryBox">
   </div>
-    <div class="row">
-        <!--*****  GREEN BOX FOR PROMOTIONS AND OFFERTS  *****-->
-        <div class="col col-80" style="margin-top:-5px;">
-            <!--*****  OFFERTS COUNT  *****-->
-            <spam class="Price{{info.Category}}">
-                {{info.suma}}
-            </spam>
-            <!--***** OFFERTS NAME  *****-->
-            <spam class="Title{{info.Category}}">
-                ofertas
-            </spam>
-            <br>
-            <!--*****  PROMOTIONS COUNT  *****-->
-            <spam class="AveragePrice{{info.Category}}">
-                Q{{info.promedio}}
-            </spam>
-            <!--*****  PROMOTIONS NAME  *****-->
-            <spam class="AverageTitle{{info.Category}}">
-                promedio
-            </spam>
-        </div>
-        <!--*****  SECOND ROW TO HEART ICON  *****-->
-        <div class="col col-20 categoriesHeartIcon" ng-controller = "changeColorHeartCtrl">
-            <!--*****  HEART ICON  *****-->
-            <div class="home" id="{{info.lastText}} {{info.NameCategory}}"  name = "{{info.NameCategory}}" ng-click='ChangeColorHeart("{{info.lastText}}","{{info.NameCategory}}")'style="color:{{info.colorHeart}}">B</div>
-        </div>
-    </div>
+  <!-- Customer Description -->
+  <div class="col boxColorDescription">
+    <!-- Offers Count -->
+    <spam id="CountColor" class="Price{{info.Category}} CountColor">
+      {{info.suma}}
+    </spam>
+    <!-- Offers Name Text -->
+    <spam id="OfferText" class="Title{{info.Category}} OfferText">
+      ofertas
+    </spam>
+    <br>
+    <!-- Average for Customer in Price -->
+    <spam id="PriceColor" class="AveragePrice{{info.Category}} PriceColor">
+      Q{{info.promedio}}
+    </spam>
+    <!-- Average Name Text -->
+    <spam id="AverageText" class="AverageTitle{{info.Category}} AverageText">
+      promedio
+    </spam>
+  </div>
 </div>

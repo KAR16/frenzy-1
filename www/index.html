@@ -23,6 +23,8 @@
         <link rel="stylesheet" type="text/css" href="templates/tools/tools_style.css">
         <link rel="stylesheet" type="text/css" href="templates/your_favorites/yourFavorites_style.css">
         <link rel="stylesheet" href="templates/login_and_register/loginAndRegister.css">
+        <link rel="stylesheet" href="templates/categories/Customer.css">
+        <link rel="stylesheet" href="templates/term_and_conditions/termAndConditions.css">
         <!--  POP UP LINK-->
         <!-- <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet"> -->
         <!-- 6A9UYDRQAX  IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -72,12 +74,32 @@
         <script src="js/app.js"></script>
         <script src="js/controller/controllers.js"></script>
         <script src="js/services/services.js"></script>
+        <!-- <script src="js/directives/Promotion/AllPromotion.js"></script> -->
+        <!-- <script src="js/aws-sdk.min.js"></script>
+        <script src="js/aws-sdk-mobile-analytics.min.js"></script> -->
+
+
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+        <script src="lib/moment/builds/moment-timezone-with-data.js"></script>
+
         <!-- Directives -->
         <script src="js/directives/categoryApp/categoryApp.js"></script>
         <script src="js/directives/Customer/CustomerTemplate.js"></script>
         <script src="js/directives/Tutorial/tutorialTemplate.js"></script>
-        <!-- <script src="js/directives/Promotion/AllPromotion.js"></script> -->
+        <script src="js/index.js"></script>
+        <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        mixpanel.init("bb11147d64b3b33be8aa74e091f639c5");</script><!-- end Mixpanel -->
     </head>
+    <style type="text/css">
+  #mixpanel-notification-content{
+    font-size: 20px;
+    font-family: Impact;
+    font-style: bold;
+  }
+</style>
     <body class="platform-android" ng-app="starter" ng-controller='bodyCtrl'>
         <ion-nav-view></ion-nav-view>
         <div id="fb-root"></div>

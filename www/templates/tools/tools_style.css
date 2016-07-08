@@ -24,6 +24,7 @@
 .settingsTermsTitle {
     margin-top: 15px;
     font-size: 20px;
+    color: #263147;
 }
 
 .settingsRobotIcon {
@@ -77,4 +78,10 @@ input[id^="spoiler"]:checked + label + .spoiler {
   background-color: white;
   border-radius: 7px;
   box-shadow: 2px 2px 2px 2px grey;
+}
+
+.iconMenuOption {
+    color: white;
+
+    /*font-size: 35px;*/
 }

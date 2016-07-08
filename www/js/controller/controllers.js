@@ -76,8 +76,20 @@ angular.module('starter.controllers', ['ionic'])
         user.set("birthday", dateBirthday);
         user.set("gender",$scope.optionGender);
 
+
         user.signUp(null, {
             success: function(user) {
+							console.log(user);
+								 mixpanel.identify(user.id);
+								 mixpanel.people.set({
+									 "$email": user.attributes.email,
+									 "$gender": user.attributes.gender,
+									 "$created":user.attributes.createdAt,
+									 "$birthday":user.attributes.birthday,
+									 "$name": user.attributes.email,
+									 "$typeLogin": "Email"
+
+								 });
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
@@ -148,9 +160,13 @@ angular.module('starter.controllers', ['ionic'])
 		if ($scope.currentUser != null ){
 		     if ($scope.currentUser["attributes"].authData != undefined) {
 		            IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
+								console.log($scope.currentUser.attributes.gender);
+								IdGender = String($scope.currentUser.attributes.gender);
 		            viewPromotion();
 		            $state.go('app.playlists');
 		     } else {
+					 	console.log($scope.currentUser.attributes.gender);
+						IdGender = String($scope.currentUser.attributes.gender);
 		            IdUsuario = String($scope.currentUser.id);
 		            viewPromotion();
 		            $state.go('app.playlists');
@@ -188,6 +204,7 @@ angular.module('starter.controllers', ['ionic'])
 		};
 
     $scope.login = function() {
+			mixpanel.track("LoginClick", { "loginButton" : "Email"});
         $scope.loading = $ionicLoading.show({
             content: 'Logging in',
             animation: 'fade-in',
@@ -209,6 +226,8 @@ angular.module('starter.controllers', ['ionic'])
 							$rootScope.user = user;
 							$rootScope.isLoggedIn = true;
 							IdUsuario = String($rootScope.user.id);
+							IdGender = String($rootScope.user.attributes.gender);
+							//console.log($rootScope.user.attributes.gender);
 							viewPromotion();
 							$state.go('app.playlists', {
 							clear: true
@@ -236,8 +255,9 @@ angular.module('starter.controllers', ['ionic'])
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
+	var NameUser = String(IdUsuario);
 	Parse.Analytics.track("view", dimensions);
-
+	mixpanel.track("view", { "type" : "Categorys","Gender":IdGender,"User":NameUser});
 	// Loading scope
 	$scope.loading = $ionicLoading.show({
 		noBackdrop: true,
@@ -263,12 +283,13 @@ angular.module('starter.controllers', ['ionic'])
 		});
 	}, 0);
       colorIconsFoother = []
-     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','Z','','none','none']);
+     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','img/icn-35.png','','none','none']);
   });
 })
 // ******************** OUR FAVORITES CONTROLLER **************************
 .controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
 /*************************************************/
+var NameUser = String(IdUsuario);
 
 		$scope.reload = function () {
 		    var PromoSavess = new Parse.Query('PromotionSaved')
@@ -307,10 +328,12 @@ angular.module('starter.controllers', ['ionic'])
         Parse.Analytics.track("pin", Dimensions);
         var pin = document.getElementById(id).style.color;
         if (pin == "silver") {
+						mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"Gender":IdGender,"User":NameUser,"Action":"Add","Gender":IdGender});
             document.getElementById(id).style.color = "purple";
             SavePromotion(IdUsuario, id)
             // $scope.reload()
         } else {
+					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"Gender":IdGender,"User":NameUser,"Action":"Delete","Gender":IdGender});
             document.getElementById(id).style.color = "silver";
             DeletePromotion(IdUsuario, id)
           //  $scope.reload()
@@ -328,16 +351,17 @@ $scope.display = OurFavorites.all();
 			$scope.ourFavorites = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-
+				mixpanel.track("view", { "type" : "Ourfavorites","Gender":IdGender,"User":NameUser });
 			//	$ionicLoading.hide();
         colorIconsFoother = []
-      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
+      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','img/icn-35.png','','none']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
 	/*************************************************/
-
+	var NameUser = String(IdUsuario);
+		mixpanel.track("view", { "type" : "YourFavorites","Gender":IdGender,"User":NameUser});
 		$scope.reload = function () {
 		    var PromoSavess = new Parse.Query('PromotionSaved')
 		    PromoSavess.equalTo("UserID", IdUsuario);
@@ -373,10 +397,12 @@ $scope.display = OurFavorites.all();
         Parse.Analytics.track("pin", Dimensions);
         var pin = document.getElementById(id).style.color;
         if (pin == "silver") {
+					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
             document.getElementById(id).style.color = "purple";
             SavePromotion(IdUsuario, id)
           //  $scope.reload()
         } else {
+					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
             document.getElementById(id).style.color = "silver";
             DeletePromotion(IdUsuario, id)
           //  $scope.reload()
@@ -396,11 +422,13 @@ $scope.display = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','Z','','none']);
+       colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','img/icn-35.png','','none']);
     });
 })
 // *************************** SAVED CONTROLLER ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
+	var NameUser = String(IdUsuario);
+	mixpanel.track("view", { "type" : "PinSaved","Gender":IdGender,"User":NameUser});
 	var NameUser = String(IdUsuario)
 	var dimensions = {
 		name: 'Salvados',
@@ -424,10 +452,12 @@ $scope.display = OurFavorites.all();
 		Parse.Analytics.track("pin", Dimensions);
 		var pin = document.getElementById(id).style.color;
 		if (pin == "silver") {
+			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id).style.color = "purple";
 			SavePromotion(IdUsuario, id)
 			// $scope.reload()
 		} else {
+			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id).style.color = "silver";
 			DeletePromotion(IdUsuario, id)
 		//	$scope.reload()
@@ -441,7 +471,7 @@ $scope.display = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
-      colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','Z','','none']);
+      colorIconsFoother.push(['#A7A9AC','#A7A9AC','#9C28B0','#A7A9AC','','img/icn-35.png','','none']);
     });
 })
 //********************** Customer CONTROLLER *****************************
@@ -478,10 +508,12 @@ $scope.display = OurFavorites.all();
 
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
 		if (cssColor == "white") {
+			mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "red";
 			SaveFavorite(IdUsuario, category)
 				Parse.Analytics.track("AddHeart", Dimensions);
 		} else {
+				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "white";
 				Parse.Analytics.track("DelHeart", Dimensions);
 			DeleteFavorite(IdUsuario, category)
@@ -490,15 +522,17 @@ $scope.display = OurFavorites.all();
 
 })
 .controller('CustomerCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
-	var Direc = [{name:"Supermercado",name2:"supermarketMenu"},{name:"Restaurantes",name2:"restaurantMenu"},{name:"Otros",name2:"otherMenu"},{name:"Electrónicos",name2:"entertainmentMenu"},{name:"Moda",name2:"fashionMenu"},{name:"Entretenimiento",name2:"entertainmentMenu"}]
+	var Direc = [{name:"Supermercado",name2:"supermarketMenu"},{name:"Restaurantes",name2:"restaurantMenu"},{name:"Otros",name2:"otherMenu"},{name:"Electronicos",name2:"entertainmentMenu"},{name:"Moda",name2:"fashionMenu"},{name:"Entretenimiento",name2:"entertainmentMenu"}]
 	var DirecParse = $.grep(Direc, function (e) {
 		 return e.name.indexOf($stateParams.IDcustomer) == 0;
 	});
+	var NameUser = String(IdUsuario)
 	console.log(DirecParse[0].name2);
 	var dimensions = {
 		name: DirecParse[0].name2
 	};
-
+mixpanel.track("view", { "type" : "Customers","Gender":IdGender,"User":NameUser});
+mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender":IdGender,"User":NameUser});
 		Parse.Analytics.track("view", dimensions);
 	// Loading scope
 	$scope.AppCategory = $stateParams.IDcustomer
@@ -533,12 +567,25 @@ $scope.display = OurFavorites.all();
     colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.AppCategory,'','none',]);
   });
 })
+.controller('PromotionsDescription',function($scope, $stateParams, DescriptionOfferts ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
+	mixpanel.track("view", { "type" : "PromotionsDescription","Gender":IdGender,"User":IdUsuario});
+	$scope.chats = DescriptionOfferts.all($stateParams.superId);
+	console.log($scope.chats[0].Category);
+//	$scope.heartMenu = resultSetPopover[0].colorHeart;
+	$scope.custumerName = $scope.chats[0].Category.replace(/-/g," ");
+			$scope.$on('$ionicView.enter', function() {
+				console.log();
+				colorIconsFoother = []
+				colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.custumerName,'','none']);
+			});
+})
 // *************************  OFFERS CONTROLLER	***************************
 .controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
-
+	var NameUser = String(IdUsuario);
+	mixpanel.track("view", { "type" : "Promotions","Gender":IdGender,"User":NameUser,"Namepromotion": $stateParams.superId});
 	$ionicPopover.fromTemplateUrl('templates/popover.html', {
 		scope: $scope,
 	}).then(function(popover) {
@@ -588,11 +635,13 @@ $scope.display = OurFavorites.all();
 		var cssColorpinOfferts = document.getElementById(id+" "+IDPromotion).style.color;
 
 		if (cssColorpinOfferts == "silver") {
+			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
 			SavePromotion(IdUsuario, IDPromotion)
 		//	$scope.reload()
 	    //viewPromotion()
 		} else {
+			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
 			DeletePromotion(IdUsuario, IDPromotion)
 		//	$scope.reload()
@@ -621,7 +670,7 @@ $scope.display = OurFavorites.all();
 			name: 'Promotion_call'+name,
 			user: NameUser
 		};
-
+		mixpanel.track("ClickCall", {"Costumer" :name,"User":NameUser,"Gender":IdGender});
 		Parse.Analytics.track("CallsPromotion", Dimensions);
 		var a = cell.toString();
 		var b = 'tel:'
@@ -639,10 +688,12 @@ $scope.display = OurFavorites.all();
 		  user: NameUser
 		};
 		if (id == "web") {
+			mixpanel.track("ClickWeb", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("WebShopPromotion", Dimensions);
 		}else {
+				mixpanel.track("ClickCartShop", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("cartShopPromotion", Dimensions);
@@ -693,10 +744,12 @@ $scope.display = OurFavorites.all();
 		$scope.changeColorHeartFollow = function(id) {
 
 			if ($scope.heartMenu == "silver") {
+				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 				Parse.Analytics.track("AddHeartPopover", Dimensions);
 				$scope.heartMenu = "red";
 				SaveFavorite(IdUsuario, id)
 			} else {
+				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 				Parse.Analytics.track("DelHeartPopover", Dimensions);
 				$scope.heartMenu = "silver";
 				DeleteFavorite(IdUsuario, id)
@@ -722,6 +775,7 @@ $scope.display = OurFavorites.all();
 			},
 			function(isConfirm) {
 				if(isConfirm){
+					mixpanel.track("ClickRequestPromotion", { "NameCostumer" : NamePromo,"User":NameUser,"Gender":IdGender});
 					Parse.Analytics.track("petition", Dimensions);
 					SaveFavorite(IdUsuario, IDPromotion)
 					$scope.loading = $ionicLoading.show({
@@ -755,7 +809,7 @@ $scope.display = OurFavorites.all();
 	});
 	//***** FUNCTION FOOTER CHANCE COLOR  *****
 	//***** SCOPE $ON TO REFRESH MENU CONTROLLER
-	$scope.custumerName = $stateParams.superId.replace("-"," ");
+	$scope.custumerName = $stateParams.superId.replace(/-/g," ");
 	$scope.$on('$ionicView.enter', function() {
 		console.log();
 		colorIconsFoother = []
@@ -763,8 +817,9 @@ $scope.display = OurFavorites.all();
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams ,Coupons) {
-
+.controller('CuponCtrl', function($scope, $stateParams ,Coupons, $ionicLoading) {
+	var NameUser = String(IdUsuario);
+	mixpanel.track("view", { "type" : "copuns","Gender":IdGender,"User":NameUser});
 		// For to update QuantityExchanged
 		var CuponClassExchanged = Parse.Object.extend("Cupon");
 		var cuponClassExchanged = new CuponClassExchanged();
@@ -780,7 +835,6 @@ $scope.display = OurFavorites.all();
 						or hide it  ****/
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
-		alert("call 2")
 		a = cell.toString();
 		b = 'tel:'
 		window.open(b+a);
@@ -796,9 +850,11 @@ $scope.display = OurFavorites.all();
 
 		if (id == "web") {
 			z = Url;
+			mixpanel.track("ClickWeb", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("WebShopCoupon", Dimensions);
 		}else {
+			mixpanel.track("ClickCartShop", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
 			Parse.Analytics.track("cartShopCoupon", Dimensions);
@@ -811,6 +867,7 @@ $scope.display = OurFavorites.all();
         query.equalTo("objectId",id)
         var couponCash =	query.find({
             success: function(results){
+
                 console.log('entro a la funcion');
                 if(results[0].attributes.TypeCoupon === 'Fecha'){
 
@@ -829,11 +886,12 @@ $scope.display = OurFavorites.all();
                             swal({
                                 title: 'Perfecto!',
                                 text: 'Has cambiado tu Cupón',
+																type: "success",
                                 timer: 2000,
                                 showConfirmButton: false,
-                                imageUrl: "../../img/Pulgar_Arriba.jpg"
-                            });
 
+                            });
+														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":id});
                             cuponClassExchanged.id = id;
                             cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
                             cuponClassExchanged.save();
@@ -845,47 +903,111 @@ $scope.display = OurFavorites.all();
                     });
 
                 }else if(results[0].attributes.TypeCoupon === 'Cupon'){
-                    swal({
-                        title: "Estas Seguro?",
-                        text: "Quieres canjear este cupon?",
-                        type: "warning",
-                        showCancelButton: true,
-                        cancelButtonText: 'No',
-                        confirmButtonColor: '#00BAB9',
-                        confirmButtonText: "Canjear!",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm){
-                        if (isConfirm) {
-                            swal({
-                                title: 'Perfecto!',
-                                text: 'Has cambiado tu Cupón',
-                                timer: 2000,
-                                showConfirmButton: false,
-                                imageUrl: "../../img/Pulgar_Arriba.jpg"
-                            });
+										if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
+											$scope.cupons[0][0].QuantityExchanged +=1;
+											swal({
+	                        title: "Estas Seguro?",
+	                        text: "Quieres canjear este cupon?",
+	                        type: "warning",
+	                        showCancelButton: true,
+	                        cancelButtonText: 'No',
+	                        confirmButtonColor: '#00BAB9',
+	                        confirmButtonText: "Canjear!",
+	                        closeOnConfirm: false
+	                    },
+	                    function(isConfirm){
+	                        if (isConfirm) {
+	                            swal({
+	                                title: 'Perfecto!',
+	                                text: 'Has cambiado tu Cupón',
+	                                timer: 2000,
+	                                showConfirmButton: false,
+	                                type: "success"
+	                            });
+															mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":id});
+	                            couponCash.then(function(){
+																	var element = document.getElementById("QuantityExchangedText");
+																	element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
+	                                var couponPages="#/app/descripcionCupones/";
+	                                // IdPromotion with redirection page
+	                                couponPages = couponPages+id;
+	                                location.href=couponPages;
+	                            });
 
-                            couponCash.then(function(){
-                                $scope.cupons[0][0].QuantityExchanged +=1;
-                                var couponPages="#/app/descripcionCupones/";
-                                // IdPromotion with redirection page
-                                couponPages = couponPages+id;
-                                location.href=couponPages;
-                            });
+	                            cuponClassExchanged.id = id;
+	                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
+	                            cuponClassExchanged.save();
+                      	} else {
+														$scope.cupons[0][0].QuantityExchanged -=1;
+														var element = document.getElementById("QuantityExchangedText");
+														element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
+	                      }
+	                    });
+										} else {
+												$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
+												cuponClassExchanged.id = id;
+												cuponClassExchanged.set("Status", false);
+												cuponClassExchanged.save();
 
-                            cuponClassExchanged.id = id;
-                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-                            cuponClassExchanged.save();
-                        } else {
-                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
-                        }
-                    });
-                }
-            }
-        })
+												swal({
+													title: 'Lo sentimos!',
+													text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+													type: 'warning'
+												},
+												function(isConfirm) {
+														if(isConfirm){
+															$scope.loading = $ionicLoading.show({
+																	showBackdrop: true,
+																	template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+														});
 
-    displayNoneInline=[{none:"none",inline:"inline"}];
-    }
+														Parse.Cloud.run('CountCouponCustomer', {}, {
+																success: function(resultCustomer) {
+																	console.log(resultCustomer);
+																		Parse.Cloud.run('CountCouponCategories', {}, {
+																				success:function(result) {
+																					CategoryListName = [];
+																					var query = new Parse.Query('AppCategory');
+																					query.each(function(results) {
+																							CategoryListName.push(results.attributes)
+																					}).then(function() {
+																							ReloadFavorite()
+																					}).then(function() {
+																							Parse.Cloud.run('GetCustomer', {},{
+																									success:function (results) {
+																										//	console.log(results);
+																										CustomerList = results
+																									},
+																									error:function (error) {
+																									 console.log(error);
+																									}
+																							}).then(function() {
+																								$ionicLoading.hide();
+																								var couponPages="#/app/playlists";
+																								location.href=couponPages;
+																							})
+																						});
+
+																				},
+																				error: function(error) {
+																						/* Show error if call failed */
+																						console.log(error);
+																				}
+																		});
+																},
+																error: function(error) {
+																		/* Show error if call failed */
+																		console.log(error);
+																}
+											});
+											}
+										})
+									}
+								}
+            	}
+        	});
+					displayNoneInline=[{none:"none",inline:"inline",position:"absolute",bottom:0}];
+  		}
 
 	$scope.llenar1=function(id){
 		$scope.countCoupon(id);
@@ -906,9 +1028,11 @@ $scope.display = OurFavorites.all();
 		Parse.Analytics.track("pin", Dimensions);
 		var cssColorCuponPin = document.getElementById(id).style.color;
 		if (cssColorCuponPin == "silver") {
+			mixpanel.track("ClickPin", { "NameCategory" :NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id).style.color = "purple";
 			saveCuponFavorite(IdUsuario, id)
 		} else {
+			mixpanel.track("ClickPin", { "NameCategory" :NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			deleteFavoriteCupon(IdUsuario, id)
 			document.getElementById(id).style.color = "silver";
 		}
@@ -948,13 +1072,14 @@ $scope.display = OurFavorites.all();
 
  $scope.$on('$ionicView.enter', function() {
 	  	$scope.categoryNameCoupon = Coupons.all($stateParams.CuponID);
+			console.log($scope.categoryNameCoupon);
 		 colorIconsFoother = []
 		 colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
  });
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons, $ionicLoading) {
-
+	mixpanel.track("view", { "type" : "DescriptionCupon","Gender":IdGender,"User":IdUsuario});
 	$scope.reloadpage = function(){
 		$scope.cupons[0].QuantityExchanged +=1
 	}
@@ -985,24 +1110,27 @@ $scope.display = OurFavorites.all();
 		query.equalTo("objectId",$stateParams.DescriptionID);
 		query.equalTo("Status",true);
 
+		$scope.HideStyleButtonExchangePosition = "absolute";
+		$scope.HideStyleButtonExchangeBottom = "0";
+
 		$scope.countCoupon = function(){
+
+			$scope.HideStyleButtonExchangePosition = "none"
+			$scope.HideStyleButtonExchangeBottom = "none"
+
 				var couponCash2 = query.find({
 					success: function(results){
-
-                        console.log(results[0].attributes.TypeCoupon)
-
-
                         if(results[0].attributes.TypeCoupon === "Cupon"){
                             // ------------------------------------------------------------------------------------------------------------------------------------------------
                                if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
 								    cuponClassExchanged.id = $stateParams.DescriptionID;
 									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 									cuponClassExchanged.save();
-
+									mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
 									swal({
 											title: "Perfecto!",
 											text: "Has cambiado tu cupón",
-											imageUrl: "../../img/Pulgar_Arriba.jpg",
+											type: "success",
 											timer: 2000,
 											showConfirmButton: false
 									});
@@ -1023,11 +1151,8 @@ $scope.display = OurFavorites.all();
 										if(isConfirm){
 
 											$scope.loading = $ionicLoading.show({
-													content: 'Sending',
-													animation: 'fade-in',
-													showBackdrop: true,
-													maxWidth: 200,
-													showDelay: 0
+												showBackdrop: true,
+												template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
 											});
 
 											Parse.Cloud.run('CountCouponCustomer', {}, {
@@ -1078,6 +1203,7 @@ $scope.display = OurFavorites.all();
                         // ------------------------------------------------------------------------------------------------------------------------------------------------
                     } else if(results[0].attributes.TypeCoupon === "Fecha"){
                             console.log('tiene que sumar')
+														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
                                     cuponClassExchanged.id = $stateParams.DescriptionID;
 									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
 									cuponClassExchanged.save();
@@ -1095,6 +1221,12 @@ $scope.display = OurFavorites.all();
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
 			$scope.noneDisplay=displayNoneInline;
+			// console.log($scope.noneDisplay[0].position);
+			if ($scope.noneDisplay[0].position == "absolute") {
+				$scope.HideStyleButtonExchangePosition = "none"
+				$scope.HideStyleButtonExchangeBottom = "none"
+			}
+
 			$scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
         colorIconsFoother = []
           colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.cupons[0].Category,'','none']);
@@ -1124,8 +1256,6 @@ $scope.display = OurFavorites.all();
 		$scope.message = 'hello';
 	});
 })
-
-
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
 $scope.Analytics = function (id,nameShare) {
@@ -1135,8 +1265,10 @@ $scope.Analytics = function (id,nameShare) {
 	  user: NameUser
 	};
 	if (nameShare == "promotion") {
+		mixpanel.track("ClickShare", { "NameShareID" :id,"User":NameUser,"Gender":IdGender});
 		Parse.Analytics.track("SharePromotion", Dimensions);
 	}else {
+		mixpanel.track("ClickShare", { "NameShareID" :id,"User":NameUser,"Gender":IdGender});
 		Parse.Analytics.track("ShareCoupon", Dimensions);
 	}
 
@@ -1165,6 +1297,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .run(function($ionicPlatform) {
 
 		$ionicPlatform.ready(function() {
+
 			StatusBar.hide();
 			if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
 				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -1279,6 +1412,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
+	// ****************  OFFERTS DESCRIPTION  *************
+	.state('app.descripcionOfertas', {
+		url: "/descripcionOfertas/:superId",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/offer_description/offerDescription.html",
+				controller: 'PromotionsDescription'
+			}
+		}
+	})
+	.state('app.termsAndConditionsOffers', {
+			url: "/termsAndConditionsOffers/:superId",
+			views: {
+				'menuContent': {
+					templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
+					controller: 'currentPromotionCtrl'
+				}
+			}
+		})
 	// ******* PLAYLIST *******
 	.state('app.playlists', {
 		url: "/playlists",
@@ -1289,7 +1441,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-
 	// ******* OTHER CATEGORIES *******
 	.state('app.singlessssss', {
 		url: "/playlists/:IDcustomer",
@@ -1310,16 +1461,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-	// ****************  OFFERTS DESCRIPTION  *************
-	.state('app.descripcionOfertas', {
-		url: "/descripcionOfertas",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/offer_description/offerDescription.html",
-				controller: 'homeCtrl'
-			}
-		}
-	})
 	//****************  CUPONS DESCRIPTION  *************
 	.state('app.descripcionCupones', {
 		url: "/descripcionCupones/:DescriptionID",
@@ -1329,9 +1470,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 				controller: 'DescriptionCuponCtrl'
 			}
 		}
+	})
+	.state('app.termsAndConditions', {
+		url: "/termsAndConditions/:DescriptionID",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/term_and_conditions/termsAndConditionsForCoupons.html",
+				controller: 'DescriptionCuponCtrl'
+			}
+		}
 	});
 	// if none of the above states are matched, use this as the fallback
-$urlRouterProvider.otherwise('/tutorial');
+ $urlRouterProvider.otherwise('/tutorial');
 })
 // ############## //
 //  Controllers   //
@@ -1343,15 +1493,30 @@ $urlRouterProvider.otherwise('/tutorial');
 	var userVerificate= Parse.User.current();
 	// *********** DEVICE READY SPLASHSCREEN  *******************
 	document.addEventListener("deviceready", function($scope) {
+		var notificationOpenedCallback = function(jsonData) {
+		console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+	};
+
+	window.plugins.OneSignal.init("b95e0734-b67a-400e-bfd3-a494d841d736",
+																 {googleProjectNumber: "621898809225"},
+																 notificationOpenedCallback);
+
+	// Show an alert box if a notification comes in when the user is in your app.
+	window.plugins.OneSignal.enableInAppAlertNotification(true);
+		///////////////////////////////////////
 		$scope.currentUser = Parse.User.current();
 			 if (userVerificate==null) {
 					 $state.go('tutorial');
 			}else {
 					if (userVerificate["attributes"].authData == undefined) {
+						console.log("---------------------------------******************************************************************************");
 							IdUsuario = String($scope.currentUser.id)
+							IdGender = String($scope.currentUser.attributes.gender);
 											viewPromotion()
 					}else {
+						console.log("---------------------------------******************************************************************************");
 							IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
+							IdGender = String($scope.currentUser.attributes.gender);
 											viewPromotion()
 					}
 					$state.go('app.playlists');
@@ -1372,6 +1537,33 @@ $urlRouterProvider.otherwise('/tutorial');
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
+	// AWS.config.region = 'us-east-1';
+	// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	//     IdentityPoolId: 'us-east-1:c1876a25-393e-46ae-bb48-244ff2f5aa76'
+	// });
+	//
+	//
+	// var options = {
+	//     appId : 'e375a354c38c4928b00222315df3d4b6',
+	//     platform: 'Android',
+	//     logger: console ,
+	// 		appTitle : 'Frenzy'//Remove this line to turn off log messages
+	// };
+	// mobileAnalyticsClient = new AMA.Manager(options);
+	// console.log('Analytics initialized');
+	//
+	// mobileAnalyticsClient.createEvent("example");
+	//
+	// mobileAnalyticsClient.renewSession();
+	// 	mobileAnalyticsClient.startSession()
+	// 	mobileAnalyticsClient.submitEvents();
+
+	var guate    = moment.tz("America/Guatemala");
+
+	// console.log("------" + guate.format('DD/MM/YYYY'));
+
+mixpanel.track("viewTurorial");
+	// IdUsuario of Facebook or Frenzy for Pines and hearts
 
 	$scope.slideChanged = function(index) {
     switch(index) {
@@ -1398,6 +1590,7 @@ $urlRouterProvider.otherwise('/tutorial');
 	  name: 'tools',
 	  user: NameUser
 	};
+	mixpanel.track("view", { "type" : "Tools","Gender":IdGender,"User":NameUser});
 	Parse.Analytics.track("Tools", Dimensions);
 	$scope.AnalyticsTools= function (id) {
 		var NameUser = String(IdUsuario)
@@ -1405,6 +1598,7 @@ $urlRouterProvider.otherwise('/tutorial');
 			name: 'tools_'+id,
 			user: NameUser
 		};
+		mixpanel.track("ClickOtros", { "type" : id,"Gender":IdGender,"User":NameUser});
 		Parse.Analytics.track("Tools", dimensions);
 	}
 	$scope.logout = function() {
@@ -1415,7 +1609,7 @@ $urlRouterProvider.otherwise('/tutorial');
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
 	$scope.$on('$ionicView.enter', function() {
 		colorIconsFoother = []
-		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','Z','','none']);
+		colorIconsFoother.push(['#A7A9AC','#A7A9AC','#A7A9AC','#3F51B5','','img/icn-35.png','','none']);
 	});
 }])
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
@@ -1462,6 +1656,7 @@ $urlRouterProvider.otherwise('/tutorial');
 
  //===============LOGIN WITH FB==========//
  $scope.loginfb = function(){
+	 	mixpanel.track("LoginClick", { "loginButton" : "Facebook"});
 			setTimeout(function(){
 
 				 if(!window.cordova){
@@ -1471,14 +1666,26 @@ $urlRouterProvider.otherwise('/tutorial');
 				 facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
 
 				 fbLogged.then(function(authData) {
+
 						 $state.go('app.playlists');
 						 return Parse.FacebookUtils.logIn(authData);
 				 })
 
 				 .then(function(userObject) {
 							 var authData = userObject.get('authData');
-							 facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender', null,
+							 var consoles = Parse.User.current();
+							 facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender,email', null,
 							 function(response) {
+								 mixpanel.identify(consoles.id);
+								 mixpanel.people.set({
+									 "$email": consoles.attributes.email,
+									 "$gender": consoles.attributes.gender,
+									 "$created":consoles.attributes.createdAt,
+									 "$birthday":consoles.attributes.birthday,
+									 "$name": consoles.attributes.name,
+									 "$typeLogin": "Facebook"
+
+								 });
 									 userObject.set('name', response.name);
 									 userObject.set('birthday', response.birthday);
 									 userObject.set('gender', response.gender);

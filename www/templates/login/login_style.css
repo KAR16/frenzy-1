@@ -1,6 +1,31 @@
-.spacingpenguin {
-    line-height: 40%;
+.LoginCenteredDiv .scroll-content {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  /*margin-top: -30px; */
 }
+.LoginCenteredDiv .scroll {
+  display: table-cell;
+  vertical-align: middle;
+}
+/*Background for Login Template*/
+.BackgroundColorLogin {
+  background-color: #3F51B5;
+  height: 100%;
+}
+/*Position top Header Bar*/
+.PositionHeaderBar {
+  /*position:absolute;*/
+  top:0;
+}
+/*Back Button Style*/
+.BackButtonStyleLogin {
+  background-color:#3F51B5;
+  font-size:25px;
+  color:white;
+  float:right;
+}
+/*Facebook Login Button Style*/
 .fbLoginButton{
   background-color: #FFFFFF;
   border-radius: 12px;
@@ -9,12 +34,57 @@
   border: none;
   margin-left: 7px;
   box-shadow: 0px 3px 0px #D2D8D7;
-
 }
+.fbLoginButton:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*Email Login Button Style*/
 .emailLoginButton{
   text-align: center;
   background-color: #00BAB9;
   border-radius: 12px;
   height: 45px;
   box-shadow: 0px 3px 0px #1E8E7F;
+}
+.emailLoginButton:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #1A8072, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #1A8072, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #1A8072, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*Information of the Login Text*/
+.InfoLoginText{
+  color: white;
+  font-size: 17px;
+  margin-top: 8px;
+}
+
+.PaddingBeforeButtons {
+  padding:0px 5px 5px 0px;
+}
+/*Text in Buttons Centered*/
+#SignUpTextCenter {
+  height:46px;
+  display:table-cell;
+  vertical-align:middle;
+}
+#FacebookTextCenter {
+  height:46px;
+  display:table-cell;
+  vertical-align:middle;
+}
+/*Forgot Your Password Text*/
+.forgotYourPassword{
+  color:white;
+  font-weight: bolder;
+  text-decoration: underline;
 }

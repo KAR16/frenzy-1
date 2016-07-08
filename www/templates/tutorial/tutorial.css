@@ -1,128 +1,57 @@
-/******************************************/
-/***********  SLIDER NO.1  ****************/
-.backgroundTutorialNo1 {
-  background-color:#9C28B0;
+/*Purple Color for Tutorial Templet*/
+.backgroundTutorial {
+  background-color:#9C28B0
+}
+/*Background Color for the first slide secuencial of the Tutorial tools*/
+.backgroundTutorialSecuencial {
+  background-color: #00BAB9;
+  width: 100%;
+  height: 100%;
+}
+/*First Tutorial (Search and Share Promotions)*/
+.backgroundTutorial1 {
   width: 100%;
   height: 100%;
   padding-top: 10%;
 }
-.imageHouseTutorialNo1{
+/*Icon Tutorial for size and position centered*/
+.iconTutorial {
   width: 20%;
   display: block;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
-.titleTutorial1-1{
+/*Style for Each Title of the Tutorial*/
+.titlesOfTheTutorial {
   font-size: 18px;
   color:white;
   font-weight: bolder;
   text-align: center;
 }
-.titleTutorial1-2{
-    font-size: 18px;
-    color:white;
-    font-weight: bolder;
-    text-align: center;
-    margin-top: -8px;
-}
-.imageTutorialNo1{
-    width: 75%;
-    height: 85%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto
-}
-.greyBoxTutorial{
-  background-color: #E6E7E8;
-  position: absolute;
-  opacity: 0.9;
-  width: 100%;
-  height: 15%;
-  margin-top: -15%;
-}
-/******************************************/
-/***********  SLIDER NO.2  ****************/
-.backgroundTutorialNo2 {
-  background-color:#00BAB9;
-  width: 100%;
-  height: 100%;
-  padding-top: 10%;
-}
-/******************************************/
-/***********  SLIDER NO.3  ****************/
-.backgroundTutorialNo3 {
-  background-color:#FF5252;
-  width: 100%;
-  height: 100%;
-  padding-top: 10%;
-}
-/******************************************/
-/***********  SLIDER NO.3  ****************/
-.backgroundTutorialNo4 {
-  background-color:#00BAB9;
-  width: 100%;
-  height: 100%;
-  padding-top: 10%;
-}
-/********************************************/
-/***************  GREY BOX ******************/
-.tut1{
-  text-align: center;
-  padding-top: 5%;
-  font-size: 15px;
-  font-weight: bolder;
-  color: #A7A9AC;
-}
-/********************************************/
-.text {
-  font-size:28px;
-  font-family:helvetica;
-  font-weight:bold;
-  color:#71d90b;
-  text-transform:uppercase;
-}
-.parpadea {
-  animation-name: parpadeo;
-  animation-duration: 3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-
-  -webkit-animation-name:parpadeo;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-}
-@keyframes parpadeo {
-  0% { opacity: 1.0; }
-   50% { opacity: 0.0; }
-  100% { opacity: 1.0; }
-}
-/********************************************/
-.finalDivTutorialPage{
-  background-color:#3F51B5;
-  width: 100%;
-  height: 100%;
-  padding-top: 5%;
-}
-.finalDivTutorialPage2{
-  background-color:#FF5252;
-  width: 100%;
-  height: 100%;
-  padding-top: 5%;
-}
-.frenzyImageTutorial{
-  height: 30%;
-  width: 50%;
-  margin-top: 40%;
+/*Style for First image of the Tutorial*/
+.PhoneFrenzyImage {
+  width: 75%;
+  height: 85%;
   display: block;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
-
+/*The Zigzag Style is general. You can find it in PageStart.css*/
+.containerZigzag {
+  background: #F1F2F2;
+  opacity: 0.9;
+  margin-top:-70px;
+}
+.containerZigzag:before {
+  background:linear-gradient(45deg, transparent 33.333%,#F1F2F2 33.333%, #F1F2F2 66.667%,transparent 66.667%),
+  linear-gradient(-45deg, transparent 33.333%,#F1F2F2 33.333%, #F1F2F2 66.667%,transparent 66.667%);
+  background-size: 20px 40px;
+}
+/*Style for to center hand slider image*/
 .slide-image-center {
   text-align: center;
 }
-
+/*Size for hand slider image*/
 .slide-image-size {
   margin-top: 2%;
   width: 80px;
@@ -154,7 +83,68 @@
    50% { opacity: 0.0; }
   100% { opacity: 1.0; }
 }
-/* Style for to quit icon slider page */
-.slider-pager-page i.icon:before {
-  display: none
+/*Style for Second Tutorial Slide*/
+.backgroundTutorial2 {
+  background-color:#00BAB9;
+  width: 100%;
+  height: 100%;
+  padding-top: 10%;
+}
+/*Style for Third Tutorial Slide*/
+.backgroundTutorial3 {
+  background-color:#FF5252;
+  width: 100%;
+  height: 100%;
+  padding-top: 10%;
+}
+/*Style for Final Tutorial*/
+.finalDivTutorialPage{
+  background-color:#3F51B5;
+  width: 100%;
+  height: 100%;
+  padding-top: 5%;
+  display:table;
+}
+/*Width for Frenzy Image*/
+.frenzyImage {
+  width:150px;
+}
+/*Height for Scroll of Customer*/
+.HeightScroll {
+  height:400px;
+}
+/*Style for to Hide The Second Scroll Bar*/
+#hideSecondScroll.scroll-view.scroll-y {
+  overflow-x: hidden;
+  /*overflow-y: hidden;*/
+}
+/*Style Tutorial Template*/
+#boxColorCustomer.boxColorCustomer {
+  background-color:#FFFFFF;
+  padding: 0px;
+}
+/*Padding Top and Padding Bottom for the Image for the Customer Box*/
+.BoxSpace {
+  padding:5px 0px 5px 0px;
+}
+/*Color gray for Box Description*/
+.boxColorDescription {
+  background-color:#F1F2F2;
+}
+/*Blue color Text and Margin Left Text Description*/
+#CountColor.CountColor {
+  color:#263147;
+  margin-left: 5px;
+}
+#PriceColor.PriceColor {
+  color:#263147;
+  margin-left: 5px;
+}
+/*Gray Color Text and Font Size Text Description*/
+#OfferText.OfferText {
+  color:#A7A9AC;
+}
+#AverageText.AverageText {
+  color:#A7A9AC;
+  font-size: 13px;
 }

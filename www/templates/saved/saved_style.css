@@ -1,66 +1,53 @@
-.savedPageBoxStyle {
-    border-style: solid;
-    border-color: #E6E6E6;
-    border-bottom-width: 1px;
-    height: 100px;
+/*Modifing ionic global classes*/
+#no-PaddingLeft.col {
+  padding-left: 0px;
 }
-
+/*General Container for Saved Promotions*/
+.savedPageBoxStyle {
+  height: auto;
+  padding: 0px 10px 0px 5px !important;
+  border-bottom: 1px solid #E6E7E8 !important;
+}
+/*Style for the image saved*/
 .savedPageImage {
-    height: 50px;
-    width: 55px;
-    margin-left: 5px;
-    margin-top: 13px;
-    border-style: solid;
-    border-color: #F1F2F2;
-    border-width: 1px;
-    border-radius: 4px;
+  height: 50px;
+  width: 55px;
+  border-style: solid;
+  border-color: #F1F2F2;
+  border-width: 1px;
+  border-radius: 4px;
+}
+/*Title of the Description for the Saved Promotions and Coupons*/
+.savedPageTitleDescription {
+  padding-right: 10px;
+  padding-left: 5px;
+  height: auto;
+  font-size: 15px;
+  font-weight: bold;
+}
+/*For to block the Ionic style*/
+p#NothingSpace {
+  margin: 0px;
+}
+/*Position And Style for the Description of the Saved Promotions*/
+.SavedDescriptionPosition {
+  margin-top: 10px;
+}
+.savedPageOffert {
+  font-size: 14px;
+}
+.savedPageDescription {
+    font-size: 12px;
+    color: #848484;
+    text-align: justify;
 }
 
 .savedPageIcon {
     font-size: 30px;
-    margin-top: 50px;
-    margin-left: -35px;
 }
 
-.savedPageTitleDescription {
-    font-size: 17px;
-    font-weight: bold;
-    width: 95%;
-    margin-top: 12px;
-}
-
-.savedPageOffert {
-    font-size: 14px;
-    margin-top: -10px;
-}
-
-.savedPageDescription {
-    font-size: 12px;
-    color: #848484;
-    margin-top: -10px;
-    width: 85%;
-}
-
-.savedPageNoItemBlankSpace {
-    color: white;
-}
-
-.savedPageNoItemsIcon {
-    font-size: 70px;
-    margin-top: 125px;
-    ;
-    text-align: center;
-    color: #9C28B0;
-}
-
-.savedPageNoItemsTitle {
-    font-size: 25px;
-    margin-top: 7%;
-    text-align: center;
-}
-
-.savedPageNoItemsDescription {
-    color: silver;
-    text-align: center;
-    margin-bottom: -3px;
+.noExisteSaved {
+  margin: auto;
+  position: absolute;
+  top: 10%; left: 0; bottom: 0; right: 0;
 }

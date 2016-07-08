@@ -1,66 +1,59 @@
-<style>
-    .bar.bar-positive    {
-    box-shadow: 0 0 0px white;
-    }
-</style>
 <ion-view>
-    <ion-content style="background-color:#F1F2F2;">
-        <!--**********************************************************************-->
-        <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
-        <!--*****  PRICE LABEL OFFERTS  *****-->
-        <div class="row pageFavoritesBoxPriceLabel">
-            <div class="col col-25">
-                <p class="cuponsDescriptionsLabelExchance">
-                    Ahorra
-                </p>
-                <p class="pageFavoritesSavingPrice">
-                    Q.100
-                </p>
-            </div>
-        </div>
-        <img class="cuponsDescriptionImage" src="img/pollo.JPG" alt="nissan">
-        <div class="cuponsDescriptionDiv2">
-            <div class="row">
-                <div class="col col-75 cuponsDescriptionTitle open_sans">
-                    pollo rey - pollo sin menudo libra
-                </div>
-                <div class="col col-25">
-                    <div class="cuponsDescriptionPinCircle home">W</div>
-                </div>
-            </div>
-        </div>
-        <div class="row cuponsDescriptionDiv3">
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-            <p class="semi-circulo"></p>
-        </div>
-        <br>
-        <div>
-            <p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
-        </div>
-        <div>
-            <p class="cuponsDescriptionMainDescription">
-                Another trick up flexbox's sleeve is the ability to easily vertically align columns. Vertical alignment includes top, center and bottom, and can be applied to every column in a row, or to specific columns.
-            </p>
-        </div>
-        <br>
-        <!--*****************  ORANGE BOX STYLE  ******************-->
-    </ion-content>
+	<!-- Offers Description With and Without Image -->
+	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
+		<!-- Label Price -->
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{chats[0].display}};">
+		<!-- Price Text Offers -->
+		<div class="row BoxPriceLabel">
+			<div class="col col-33 BoxLabel">
+				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance" style="display:{{chats[0].display}};">
+					Ahorra
+				</p>
+				<p class="pageFavoritesSavingPrice">
+					{{chats[0].ahorro}}
+				</p>
+			</div>
+		</div>
+		<!-- Coupon Image -->
+		<img class="cuponsDescriptionImage" src="{{chats[0].photo}}" alt="PhotoOffersFrenzy">
+		<!-- Purple Container -->
+		<div class="PurpleCouponsDescription">
+			<div class="row">
+				<div class="col col cuponsDescriptionTitle open_sans">
+					{{chats[0].name}}
+				</div>
+				<!-- <div class="col col-20">
+					<div class="cuponsDescriptionPinCircle home" id="{{chats[0][0].ID}} {{chats[0][0].IDpromotion}}" ng-click="changeColorPinOfferts('{{chats[0][0].ID}}','{{chats[0][0].IDpromotion}}','{{chats[0][0].name}}')" style="color:{{chats[0][0].ColorPin}}">W</div>
+				</div> -->
+			</div>
+		</div>
+		<!-- Semi-Circle Container -->
+		<div class="row cuponsDescriptionDiv3">
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+			<p class="semi-circulo"></p><p class="semi-circulo"></p>
+		</div>
+		<br>
+		<!-- Description and Statements -->
+		<div>
+			<p class="cuponsDescriptionTitleDescription">Descripción de la Oferta</p>
+		</div>
+		<!-- Coupon Description -->
+		<div>
+			<p class="couponsDescriptionMainDescription">
+				{{chats[0].description}}
+			</p>
+		</div>
+		<br>
+		<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
+		<a href="#/app/termsAndConditionsOffers/{{chats[0].Category}}" style="display:{{chats[0].DisplayTerms}}">
+			<div class="bar subFooter" style="position:absolute;bottom:0">
+				<div class="LegalTerms verticalCenteredObjects col col-90">Términos y Condiciones</div>
+				<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
+			</div>
+		</a>
+		</div>
+	</ion-content>
 </ion-view>

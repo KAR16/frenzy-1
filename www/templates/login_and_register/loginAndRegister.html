@@ -1,53 +1,36 @@
-<ion-view class="BackgroundColor ContentCenter">
-  <style>
-    .col {
-      padding: 0px;
-    }
-    .ContentCenter .scroll-content {
-      display: table !important;
-      width: 100% !important;
-      height: 100% !important;
-      margin-top: -30px; /* the height of the centered content */
-      text-align: center;
-    }
-    .ContentCenter .scroll {
-      display: table-cell;
-      vertical-align: middle;
-    }
-  </style>
+<ion-view class="BackgroundColorLoginAndRegister LoginAndRegisterCenteredDiv">
   <ion-content>
-    <!--  style="align-items: center;display: flex;" -->
-    <div class="container">
+    <div class="container" >
       <!-- Penguin Icon and Login Sesion Text -->
       <div class="row">
-        <div class="col" style="text-align:center">
+        <div class="col">
           <!-- Penguin Icon -->
-          <img src="img/pinguino2.png" alt="" style="width:120px;height:120px">
+          <img class="PenguinWidth" src="img/pinguino2.png" alt="Penguin2">
           <!-- Login Sesion Text -->
           <div>
-            <h4 class="SesionTitle" style="padding:0px;margin:0px">Inicia Sesión</h4>
+            <h4 class="SesionTitle">Inicia Sesión</h4>
           </div>
         </div>
       </div>
       <br>
       <!-- Facebook Login Button -->
       <div class="row" ng-controller='loginCtrlFacebook'>
-        <div class="col" style="text-align:center">
-          <div class="FacebookButtonLogin" ng-click="loginfb()" style="display:inline-block">
-            <div class="" style="align-items:center;display:flex;height:60px;">
-              <p class="FacebookTextLogin" style="display:inline-block;text-align:center;width:170px">Facebook</p>
+        <div class="col">
+          <div class="FacebookButtonLogin inlineBlockDisplay" ng-click="loginfb()">
+            <div class="FacebookButtonStyle">
+              <p class="FacebookTextLogin">Facebook</p>
             </div>
           </div>
         </div>
       </div>
       <br>
-      <!-- Separate Line -->
+      <!-- Diving Line -->
       <div class="row">
         <div class="col col-10"></div>
         <div class="col col-33">
           <hr>
         </div>
-        <div class="col" style="text-align:center;color:#FFFFFF;font-size:22px;">
+        <div class="col orTextLogin">
           O
         </div>
         <div class="col col-33">
@@ -58,11 +41,12 @@
       <br>
       <!-- Frenzy Login Button -->
       <div class="row" ng-controller='LoginCtrlEmail'>
-        <div class="col" style="text-align:center">
-          <div class="EmailLogin" style="display:inline-block">
-            <div class="" style="align-items:center;display:flex;height:55px;">
-              <a href="#/login2" nav-transition="none" style="text-decoration:none;">
-                <p class="singupTitle open_sans" style="text-align:center;width:170px;">Correo Electrónico</p>
+        <div class="col">
+          <div class="EmailLogin inlineBlockDisplay">
+            <div class="loginButtonStyle">
+              <a  class="redirectionStyleNone" nav-transition="none" href="#/login2">
+                <!-- signupTitle Style is found in login2.css -->
+                <p class="singupTitle open_sans emailCenteredLoginAndRegister">Correo Electrónico</p><!--signUp class is found in login2.css-->
               </a>
             </div>
           </div>
@@ -70,5 +54,4 @@
       </div>
     </div>
   </ion-content>
-
 </ion-view>

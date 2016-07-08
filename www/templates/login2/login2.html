@@ -1,20 +1,21 @@
-<ion-view class="BackgroundColor">
+<ion-view class="BackgroundColorLogin2">
   <style>
     .col {
       padding: 0px;
     }
+    /*This Style works for to hide ionic header line */
     .bar-header {
-    border: 0px !important;
-    border-bottom-color: transparent !important;
-    background-image: none !important;
-    border-bottom: none !important;
-}
+      border: 0px !important;
+      border-bottom-color: transparent !important;
+      background-image: none !important;
+      border-bottom: none !important;
+    }
   </style>
   <!-- Back Header to Register and Login -->
-  <ion-header-bar align-title="left" style="background-color:transparent;padding-top:2%;">
+  <ion-header-bar class="BackgroundHeader" align-title="left">
     <div class="col col-10">
       <a href="#loginAndRegister">
-        <button class="button ion-chevron-left" style="background-color:#3F51B5;font-size:25px;color:white;float:right"></button>
+        <button id="BackButtonStyleLogin2" class="button ion-chevron-left button-clear BackButtonStyleLogin2"></button>
       </a>
     </div>
     <div class="col"></div>
@@ -27,56 +28,62 @@
       <div class="col col-80 mainDiv">
         <!--*****  row from icon penguin  *****-->
         <div class="row">
-          <div class="col" style="text-align:center;padding:3%">
+          <div class="col PenguinIconCenter">
             <!--*****  penguin icon-->
-            <img style="width:70px" src="img/pinguino.png" alt="penguin" />
+            <img class="PenguinSize" src="img/pinguino.png" alt="penguin"/>
             <!--***** title  *****-->
             <p class="title-spacing">Crea una cuenta</p>
           </div>
         </div>
-        <hr color='#F1F2F2' style="margin-top:-10px">
+        <!-- Diving Line -->
+        <hr class="DivingLineUp" color='#F1F2F2'>
         <!-- Principal row -->
-        <div class="row" style="padding:0px 10px 0px 10px">
+        <div class="row PaddingDiv">
           <div class="col col-100 open_sans">
-            <!--*****  mail  *****-->
-            <p class="subtitle" style="margin-left:10px">Correo electrónico (*)</p>
-            <!--*****  MAIL INPUT BOX  *****-->
+            <!-- Name -->
+            <p class="NameTextLogin Left10px">Nombre (*)</p>
+            <!-- Name input Box -->
             <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
-              <input type="email" ng-model="user.email" placeholder="correo@ejemplo.com" style="font-size:18px">
+              <input id="EmailSizeText" type="text" ng-model="user.NameRegister" placeholder="">
             </label>
-            <!--*****  password  *****-->
-            <!--*****  PASSWORD TITLE  *****-->
-            <p class="subtitle2" style="margin-left:10px">Contraseña (*)</p>
-            <!--*****  PASSSWORD INPUT BOX  *****-->
-            <label class="item item-input inputBox" style="border:{{Validarpassword}}" >
-              <input type="password" ng-model="user.password" style="font-size:18px">
+            <!-- Email -->
+            <p class="EmailTextLogin Left10px">Correo electrónico (*)</p>
+            <!-- Email input Box -->
+            <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
+              <input id="EmailSizeText" type="email" ng-model="user.email" placeholder="correo@ejemplo.com">
             </label>
-​            <!--*****  GENDER DIV  *****-->
-            <p class="genderTitle" style="margin-left:10px">Género</p>
-            <!--*****  MALE  *****-->
-            <div class="row genderRow" style="padding:10px 5px 5px 0px">
-              <div class="col col-50 genderBoxMale item item-input" style="display:table" value="set background" ng-click="genderMaleStyle()" ng-style="genderMaleBStyle">
-                <div class="" style="height:46px;display:table-cell;vertical-align:middle">
-                  Femenino
+            <!-- Password -->
+            <p class="PasswordTextLogin Left10px">Contraseña (*)</p>
+            <!-- Password Input Box -->
+            <label class="item item-input inputBox" style="border:{{Validarpassword}}">
+              <input id="PasswordSizeText" type="password" ng-model="user.password">
+            </label>
+            <!-- ​ Gender Container -->
+            <p class="genderTitle Left10px">Género</p>
+            <!-- Male Button Option -->
+            <div class="row genderRow">
+              <div class="col col-50 genderBoxMale item item-input" value="set background" ng-click="genderMaleStyle()" ng-style="genderMaleBStyle">
+                <div class="MaleTextCenter">
+                  Masculino
                 </div>
               </div>
-              <!--*****  FEMALE  *****-->
-              <div class="col col-50 genderBoxFemale item item-input" style="display:table" value="set background" ng-click="genderFemaleleStyle()" ng-style="genderFemaleleBStyle">
-                <div class="" style="height:46px;display:table-cell;vertical-align:middle">
+              <!-- Female Button Option -->
+              <div class="col col-50 genderBoxFemale item item-input" value="set background" ng-click="genderFemaleleStyle()" ng-style="genderFemaleleBStyle">
+                <div class="FemaleTextCenter">
                   Femenino
                 </div>
               </div>
             </div>
-            <!--*****  BIRTHDAY TITLE  *****-->
-            <p class="dateTitle"  style="margin-left:10px">Fecha de nacimiento</p>
-            <!--*****  BIRTHDAY INPUT  *****-->
+            <!-- Birthday Title -->
+            <p class="dateTitle Left10px">Fecha de nacimiento</p>
+            <!-- Birthday Input -->
             <label class="item item-input dateBox"  style="height:48px">
-              <input type="date" ng-model='user.birthday' style="font-size:18px">
+              <input id="BirthdaySizeText" type="date" ng-model='user.birthday'>
             </label>
-            <div class="" style="padding:15px">
+            <div class="PaddingSignUpButton">
               <center>
-                <div class="enterButton" ng-click='Alert()' style="height:45px;display:table">
-                  <div class="enterButtonTitle open_sans" style="display:table-cell;vertical-align:middle;">
+                <div class="enterButtonStyle" ng-click='Alert()' style="">
+                  <div class="enterButtonTitle open_sans">
                     Crear
                   </div>
                 </div>
@@ -90,7 +97,7 @@
     <div class="row">
       <div class="col col-10"></div>
       <div class="col col-80">
-        <p class="loginTitle8">
+        <p class="loginTitleDescription">
           Inicia sesión con Facebook o con una cuenta existente.
         </p>
       </div>
@@ -99,18 +106,18 @@
     <div class="row" ng-controller="loginCtrlFacebook">
       <div class="col col-10"></div>
       <div class="col col-80" ng-controller="loginCtrlFacebook">
-        <div class="row" style="padding:10px 5px 10px 0px">
-        <!-- Sign Up Button -->
-          <div class="col col-50 emailLoginButton" style="display:table">
-            <a href="#/login" nav-transition="none" style="text-decoration:none;">
-              <div class="singupTitle open_sans" style="height:46px;display:table-cell;vertical-align:middle">
+        <div class="row PaddingOptionButtons">
+          <!-- Sign Up Button -->
+          <div class="col col-50 emailLoginButton verticalAndHorizontalCenteredObjects"><!--emailLoginButton is found in login.css-->
+            <a class="redirectionStyleNone" href="#/login" nav-transition="none">
+              <div id="EmailTextLoginCenter" class="singupTitle open_sans EmailTextLoginCenter">
                 Iniciar Sesión
               </div>
             </a>
           </div>
           <!-- Facebook Login Button -->
-          <div class="col col-50 fbLoginButton" ng-click="loginfb()" style="display:table">
-            <div class="FacebookTextLogin" style="height:46px;display:table-cell;vertical-align:middle">
+          <div class="col col-50 fbLoginButton" ng-click="loginfb()"><!--fbLoginButton is found in login.css-->
+            <div id="FacebookTextLoginCenter" class="FacebookTextLogin FacebookTextLoginCenter"><!--FacebookTextLogin class is found in LoginAndRegister.css-->
               Facebook
             </div>
           </div>

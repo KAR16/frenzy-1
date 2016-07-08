@@ -1,33 +1,40 @@
-.cuponsDescriptionDiv {
-	height: 6px;
-	background-color: #9C28B0;
-	border-bottom: solid;
-	border-bottom-color: #BDBDBD;
-	border-width: 1px;
+/*Label Price Offers Style*/
+.labelCoupon {
+  height: 75px;
+  width: 100px;
+  position: absolute;
 }
-
+/*Canjea Label Text*/
 .cuponsDescriptionsLabelExchance {
-	font-size: 17px;
+	font-size: 15px;
 	color:#E6E2E2;
 }
-
+/*Price Label Text*/
 .pageFavoritesSavingPrice {
-	margin-top: -5px;
 	font-weight: bolder;
 	font-size: 20px;
+  color: white;
 }
-
+/*Total width for Coupon Image*/
 .cuponsDescriptionImage {
 	height: 225px;
 	width: 100%;
 }
-
-.cuponsDescriptionDiv2 {
+/*Style for the purple coupon container*/
+.PurpleCouponsDescription {
 	height: 40px;
 	background-color: #9C28B0;
 	margin-top: -5px;
 }
-
+/*Style for the text of purple coupon container*/
+.cuponsDescriptionTitle {
+	font-size: 20px;
+	color:white;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+/*Pin Icon*/
 .cuponsDescriptionPinCircle {
 	height: 50px;
 	width: 50px;
@@ -37,25 +44,17 @@
 	font-size: 40px;
 	color: white;
 	position:relative;
-	margin-top: -45px;
-	padding-top: 20px;
-	box-shadow: 0px 3px 10px 1px black;
+	margin-top: -40px;
+	padding-top: 10px;
+	box-shadow: 0px 3px 10px 1px #263147;
 }
-
-.cuponsDescriptionTitle {
-	font-size: 20px;
-	color:white;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
+/*Container for the Semi-Circles*/
 .cuponsDescriptionDiv3 {
 	background-color: #9C28B0;
 	height: 17px;
 	width: 1000px;
 }
-
+/*Semi-Circle Div Style*/
 .semi-circulo {
 	width: 23px;
 	height: 13px;
@@ -66,76 +65,86 @@
 	-webkit-box-shadow:  inset 9px 8px 10px 80px rgba(190,190,190,1);
 	-moz-box-shadow:     inset 9px 8px 10px 80px rgba(190,190,190,1);
 	box-shadow:          inset 9px 8px 10px -8px rgba(190,190,190,1);
-	margin-left: 18px;
+	margin-left: 11px;
 	display: inline-block;
+	background-repeat: repeat-x;
 }
-
+/*Condition and Statements Style*/
 .cuponsDescriptionTitleDescription {
 	color:#A7A9AC;
 	margin-left: 15px;
 	font-size:15px;
 	font-weight: bolder;
 }
-
-.cuponsDescriptionMainDescription {
+/*Coupon Description Style*/
+.couponsDescriptionMainDescription {
 	font-size: 13px;
 	margin-left:15px;
 	margin-right: 15px;
 }
-
-.cuponsDescriptionButtonExchange {
-	height: 35px;
-	width: 175px;
-	color:#3F51B5;
-	font-size: 25px;
-	font-weight: bolder;
-	background-color: white;
-	border-radius: 10px;
-	text-align: center;
-}
-
-.settingsTermsTitle {
-	color:black;
-}
-
- .exchangeButonStyle {
-	text-align: center;
-	color:#3F51B5;
-	font-size: 25px;
-	font-weight: bolder;
-	background-color: white;
-	height: 35px;
-	width: 50%;
-	padding-top: 7px;
-	margin-top: 15px;
-	border-radius: 10px;
-	margin-left: 25%;
-}
-
-.exchangeBoxBarCode {
-	background-color: white;
-	border-radius: 10px;
-	margin-top: 15px;
-}
-
-.exchangeBoxBarCodeImage {
-	text-align: center;
-	margin-left: 19%;
-}
-
-a.disabled {
-	pointer-events: none;
-	cursor: default;
-}
-
-.exchangeButtonBlankSpaceButton {
-	height: 100px;
-}
-
+/*Coupon Existent*/
 .availableCupones {
 	font-size: 15px;
 	font-weight: bolder;
 	color:black;
 	margin-left:100px;
 	margin-top: -10px;
+}
+/*Change Button Style*/
+.exchangeButonStyle {
+	 text-align: center;
+	 color:#3F51B5;
+	 font-size: 25px;
+	 font-weight: bolder;
+	 background-color: white;
+	 height: 35px;
+	 width: 50%;
+	 padding-top: 7px;
+	 margin-top: 15px;
+	 border-radius: 10px;
+	 margin-left: 25%;
+   box-shadow: 0px 3px 0px #D2D8D7;
+}
+.exchangeButonStyle:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*Bar Code Style*/
+.exchangeBoxBarCode {
+	background-color: white;
+	border-radius: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px
+	/*text-align: center;*/
+}
+.exchangeBoxBarCodeImage {
+	position: relative;
+	margin: 0 auto;
+  width: 180px;
+}
+/*Legal Terms Text subFooter style*/
+.LegalTerms {
+  color: #A7A9AC;
+  margin-left: 15px;
+  margin-left: 10px;
+}
+/*Legal Term subFooter Style*/
+.subFooter {
+  background-color: #F1F2F2;
+  border-top: 1px solid #A7A9AC;
+  border-bottom: none;
+}
+/*Legal Term Scroll*/
+.scroll {
+  position: static;
+  height: 100%;
+}
+/*Background for the Term Button*/
+#Terms {
+  background-color: #F1F2F2;
 }
