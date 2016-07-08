@@ -47,7 +47,7 @@
 				<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
 				<!-- Price Text Offers -->
 				<div class="row BoxPriceLabel">
-					<div class="col col-25 BoxLabel">
+					<div class="col col-33 BoxLabel">
 						<p id="NothingSpace" class="AhorraTextLabel">
 							Canjea
 						</p>
@@ -88,7 +88,7 @@
 					<!-- Rest Day -->
 					<div class="col-33 colPrice">
 						<spam class="pageOffertExchance">
-							(7 días)
+							{{cupon.DaysToFinalize}}&nbsp; Días
 						</spam>
 					</div>
 					<!-- Icons Promotion -->
@@ -113,7 +113,7 @@
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()" style="text-decoration:none">
 					<div class="row">
 						<!-- Purple label and Saving Price -->
-						<div class="col col-25">
+						<div class="col col-33">
 							<!-- Purple Label -->
 							<div class="row pageOffertsWithoutImageLabel">
 								<div class="col labelPriceDescription">
@@ -158,7 +158,7 @@
 					<!-- Rest Day -->
 					<div class="col-33 colPrice">
 						<spam class="pageOffertExchance">
-							(7 días)
+							{{cupon.DaysToFinalize}}&nbsp; DÍas
 						</spam>
 					</div>
 					<!-- Icons Promotion -->
@@ -194,34 +194,35 @@
 				</p>
 			</div>
 		</div>
-		<!-- Blue Popover -->
-		<script id="templates/popover2.html" type="text/ng-template" >
-			<ion-popover-view id="bluePopover" class="bluePopover" style="height:{{pixels}}">
-				<!-- Popover Content -->
-				<ion-content id="no-scroll">
-					<div id="list" class="list" ng-repeat="s in cupons[1]">
-						<a id="item" class="item" target="_blank" ng-click="changeColorHeartFollow('{{s.name}}')">
-							Seguir
-							<spam class="home pageOffertsPopoverIconsDescrpition"  style="color:{{heartMenu}}">
-								B
-							</spam>
-						</a>
-						<a id="item" id = "{{s.cel}}" ng-click="call({{s.cel}})" target="_blank">
-							{{s.call}}
-							<spam class="home pageOffertsPopoverIconsDescrpition">
-								{{s.callIcon}}
-							</spam>
-						</a>
-						<a id="item" class="item" id ="{{s.url}}" ng-click="shopUrl('{{s.url}}','web','{{s.name}}')" target="_blank">
-							{{s.webUrl}}
-							<spam class="home pageOffertsPopoverIconsDescrpition">
-								{{s.webUrlIcon}}
-							</spam>
-						</a>
-					</div>
-				</ion-content>
-			</ion-popover-view>
-		</script>
+
+	<!-- Blue Popover -->
+    <script id="templates/popover2.html" type="text/ng-template" >
+        <ion-popover-view id="bluePopover" class="bluePopover" style="height:{{pixels}}">
+            <!-- Popover Content -->
+            <ion-content id="no-scroll">
+                <div id="list" class="list" ng-repeat="s in cupons[1]">
+                    <a id="item" class="item" target="_blank" id="{{s.name}}"  ng-click='changeColorHeartFollow("{{s.name}}")'>
+                        Seguir
+                        <spam class="home pageOffertsPopoverIconsDescrpition"  style="color:{{heartMenu}}">
+                            B
+                        </spam>
+                    </a>
+                    <a id="item" class="item" id = "{{s.cel}}" ng-click='call("{{s.cel}}","{{s.name}}")' target="_blank">
+                        {{s.call}}
+                        <spam class="home pageOffertsPopoverIconsDescrpition">
+                            {{s.callIcon}}
+                        </spam>
+                    </a>
+                    <a id="item" class="item" id ="{{s.url}}" ng-click='shopUrl("{{s.url}}","web","{{s.name}}")' target="_blank" style="margin-top:{{s.margin}}">
+                        {{s.webUrl}}
+                        <spam class="home pageOffertsPopoverIconsDescrpition">
+                            {{s.webUrlIcon}}
+                        </spam>
+                    </a>
+                </div>
+            </ion-content>
+        </ion-popover-view>
+    </script>
 		<!--**********  SECOND POP OVER SHARE  **********-->
 		<script id="templates/popoverNew.html" type="text/ng-template">
 			<ion-popover-view class="SharePopover">

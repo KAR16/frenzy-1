@@ -500,6 +500,7 @@ app.factory('Coupons', function() {
 					if (Cupons[a].PhotoCupon !=null) {
 								Cupons[a]["DisplayWithImageCoupons"] = "none";
 					}
+
 					AllCupon.push(Cupons[a])
 				}
 			}
@@ -633,6 +634,17 @@ function couponFunction() {
 							console.log( error );
 						}
 					});
+
+				}).then(function() {
+					for (a in Cupons){
+						var End_Date_Coupons = moment.tz(Cupons[a]["End_Date"],'America/Guatemala').format('DD/MM/YYYY');
+						var End_Date_Milisec = moment.tz(Cupons[a]["End_Date"], 'America/Guatemala').format('x');
+						var Guatemala_Date= moment.tz("America/Guatemala").format('x');
+						var DaysToFinalize = Math.round(((End_Date_Milisec - Guatemala_Date)/(24*60*60*1000)))
+
+						Cupons[a]["End_Date"] = End_Date_Coupons
+						Cupons[a]["DaysToFinalize"] = DaysToFinalize;
+					}
 
 				});
 }
