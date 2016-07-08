@@ -36,6 +36,7 @@ var InfoShop = [];
 var Cupons = [];
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', [])
+
 // ************* CATEGORIES APP FACTORY *************
 app.factory('Categorys', function() {
 	// Might use a resource here that returns a JSON array
@@ -300,6 +301,12 @@ app.factory('currentPromotion', function() {
 					}else {
 						CurrentPromotion[c].Display = "";
 					}
+					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
+						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
+					}
+					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined) {
+								CurrentPromotion[c]["DisplayTerms"] = "none";
+					}
 					Category.push(CurrentPromotion[c]);
 				}
 			}
@@ -316,7 +323,7 @@ app.factory('currentPromotion', function() {
 					Category[c]["columIcon"] = "40"
 					Category[c]["columDisplay"] = "none"
 				}
-					console.log(Category[c]);
+				//	console.log(Category[c]);
 			}
 
 			if (Category.length == 0) {
@@ -480,6 +487,20 @@ app.factory('Coupons', function() {
 					}else {
 						Cupons[a].Display = ""
 					}
+					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						Cupons[a]["CanjeaQ"] = "Q."
+					}else {
+							Cupons[a]["CanjeaP"] = "%"
+					}
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
+						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
+					}
+					if (Cupons[a].PhotoCupon !=null) {
+								Cupons[a]["DisplayWithImageCoupons"] = "none";
+					}
+
 					AllCupon.push(Cupons[a])
 				}
 			}
@@ -528,11 +549,44 @@ app.factory('DescriptionCupons', function() {
 			var AllCuponDescription = [];
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].IDCupon) {
+					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						Cupons[a]["CanjeaQ"] = "Q."
+					}else {
+							Cupons[a]["CanjeaP"] = "%"
+					}
+					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined) {
+						Cupons[a]["DisplayTerms"] = "none";
+					}
 					AllCuponDescription.push(Cupons[a])
 				}
 			}
 			allCuponDescription = AllCuponDescription;
 			return allCuponDescription;
+		},get: function(){}
+	};
+});
+// ************* DESCRIPTION offert APP FACTORY *************
+app.factory('DescriptionOfferts', function() {
+	return {
+		all: function(superId) {
+			var AllOffertsDescription = [];
+			for (a in CurrentPromotion) {
+				if (superId == CurrentPromotion[a].IDpromotion) {
+					if (CurrentPromotion[a].TypeOfExchange == "DirectDiscount") {
+						console.log("directe");
+						CurrentPromotion[a]["CanjeaQ"] = "Q."
+					}else {
+							CurrentPromotion[a]["CanjeaP"] = "%"
+					}
+					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined) {
+						CurrentPromotion[a]["DisplayTerms"] = "none";
+					}
+					AllOffertsDescription.push(CurrentPromotion[a])
+				}
+			}
+			var allDescription = AllOffertsDescription	;
+			return allDescription;
 		},get: function(){}
 	};
 });
@@ -580,6 +634,17 @@ function couponFunction() {
 							console.log( error );
 						}
 					});
+
+				}).then(function() {
+					for (a in Cupons){
+						var End_Date_Coupons = moment.tz(Cupons[a]["End_Date"],'America/Guatemala').format('DD/MM/YYYY');
+						var End_Date_Milisec = moment.tz(Cupons[a]["End_Date"], 'America/Guatemala').format('x');
+						var Guatemala_Date= moment.tz("America/Guatemala").format('x');
+						var DaysToFinalize = Math.round(((End_Date_Milisec - Guatemala_Date)/(24*60*60*1000)))
+
+						Cupons[a]["End_Date"] = End_Date_Coupons
+						Cupons[a]["DaysToFinalize"] = DaysToFinalize;
+					}
 
 				});
 }

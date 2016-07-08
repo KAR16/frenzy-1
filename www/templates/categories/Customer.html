@@ -1,26 +1,30 @@
+<!-- The classes that are not can be found in style.css  -->
 <ion-view  view-title="{{AppCategory}}">
-    <!--**********  ESTABLISHMENTS  **********-->
-    <ion-content class="backgroundCategories"  nav-transition="none">
-      <!-- If this app is for IOS platform then modify the 5 line (margin-top:8px) -->
-        <div class="col">
-            <!--*****  BOXES ENLINE BLOCK  *****-->
-            <div class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in chats | filter: {oferta : 'existe'}">
-              <customer-info info ="customer"></customer-info>
-            </div>
-            <div ng-repeat="customer in chats  | filter: {oferta : 'noHay'}">
-                <div class="open_sans boxbox">
-                    <p class="savedPageNoItemBlankSpace">
-                        f
-                    </p>
-                    <p class="home savedPageNoItemsIcon">g</p>
-                    <p class="savedPageNoItemsTitle">
-                        Uh-ha-Ha-ha
-                    </p>
-                    <p class="savedPageNoItemsDescription"  style="margin-top:15px;">Espera nuestros monitos </p>
-                    <p class="savedPageNoItemsDescription"> estan trabajando para traerte las</p>
-                    <p class="savedPageNoItemsDescription"> nuevas promociones para que ahorres a lo loco...!!</p>
-                </div>
-            </div>
+  <!-- Customers -->
+  <ion-content class="backgroundCategories"  nav-transition="none"><!-- backgroundCategories class is found in categories_style.css -->
+    <div id="PaddingBoxBefore" class="col"><!-- If this app is for IOS platform then modify to (margin-top:8px) -->
+      <!-- Category Boxes -->
+      <div id="PaddingBox" class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in chats | filter: {oferta : 'existe'} | orderBy:'-suma'">
+        <customer-info info ="customer"></customer-info>
+      </div>
+      <!-- Doesn't exist Coupons or Promotions -->
+      <div ng-repeat="customer in chats  | filter: {oferta : 'noHay'}">
+        <div class="open_sans">
+          <!-- Donkey Icon -->
+          <p class="home savedPageNoItemsIcon">
+            g
+          </p>
+          <!-- Description -->
+          <p class="savedPageNoItemsTitle">
+            Uh-ha-Ha-ha
+          </p>
+          <p class="savedPageNoItemsDescription">
+            Espera nuestros monitos<br>
+            están trabajando para traerte las<br>
+            nuevas promociones para que ahorres a lo loco...!!
+          </p>
         </div>
-    </ion-content>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="templates/categories/categories_style.css">
+<!-- Customer Boxes -->
+<div id="boxColorCustomer" class="col boxColorCustomer" class="{{info.Category[$index]}}" >
+  <!-- Customer Image -->
+  <div class="BoxSpace" ng-controller = "changeColorHeartCtrl" id="{{info.NameCategory}}">
+    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="imageCategoryBox">
+  </div>
+  <!-- Customer Description -->
+  <div class="col boxColorDescription">
+    <!-- Offers Count -->
+    <spam id="CountColor" class="Price{{info.Category}} CountColor">
+      {{info.suma}}
+    </spam>
+    <!-- Offers Name Text -->
+    <spam id="OfferText" class="Title{{info.Category}} OfferText">
+      ofertas
+    </spam>
+    <br>
+    <!-- Average for Customer in Price -->
+    <spam id="PriceColor" class="AveragePrice{{info.Category}} PriceColor">
+      Q{{info.promedio}}
+    </spam>
+    <!-- Average Name Text -->
+    <spam id="AverageText" class="AverageTitle{{info.Category}} AverageText">
+      promedio
+    </spam>
+  </div>
+</div>

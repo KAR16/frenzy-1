@@ -1,90 +1,73 @@
-<ion-slide-box class="tutorialPageBackgroundColor" does-continue="true" show-pager="false" on-slide-changed="slideChanged(index)">
-  <!--**********************************************************-->
+<style>
+.slider {
+  height: 100%;
+}
+</style>
+<ion-slide-box class="backgroundTutorial" does-continue="true" on-slide-changed="slideChanged(index)" show-pager="false">
+  <!-- Secuencial Slide -->
   <ion-slide>
-    <!--**********  SLIDER BOXES  **********-->
-    <!--*****  DIV RESPONSIVE NO.3  *****-->
-    <div class="backgroundTutorialNo4 open_sans" >
-      <!--*****  MAIN IMAGE NO.3  *****-->
-      <img class="frenzyImageTutorial" src="img/frenzy.png" alt="nissan">
-      <!--*****  BOTTOM BOX  *****-->
-      <!--*****  TRIANGLES  *****-->
+    <div class="backgroundTutorialSecuencial open_sans verticalAndHorizontalCenteredObjects" >
+      <img class="frenzyImage" src="img/frenzy.png" alt="nissan">
+    </div
+    <!-- Triangles Div -->
+    <div class="containerZigzag zigzag slide-image-center">
+      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
-    <!--*****  DIV GREY  *****-->
-    <div class="container6 zigzag" style="margin-top:-70px;">
-      <p class="tut1">Desliza hacia la izquierda</p>
-      <div class="container5 zigzag"></div>
-  </div>
   </ion-slide>
-    <!--**************************  FIRST SLIDE  *****************************-->
-    <ion-slide>
-      <!--**********  SLIDER BOXES  **********-->
-      <!--*****  DIV RESPONSIVE NO.1  *****-->
-      <div class="backgroundTutorialNo1 open_sans" >
-        <!--*****  HOUSE IMAGE NO.1  *****-->
-        <img class="imageHouseTutorialNo1" src="img/house.png" alt="nissan">
-        <!--*****  TITLE NO.1.1  *****-->
-        <p class="titleTutorial1-1">Busca y comparte promos y</p>
-        <!--*****  TITLE NO.1.2  *****-->
-        <p  class="titleTutorial1-2">cupones en toda Guate</p>
-        <!--*****  MAIN IMAGE NO.1  *****-->
-        <img class="imageTutorialNo1" src="img/1.png" alt="nissan">
-        <!--*****  BOTTOM BOX  *****-->
-        <!--*****  TRIANGLES  *****-->
-
+  <!-- First Slide -->
+  <ion-slide>
+    <div class="backgroundTutorial1 open_sans" >
+      <!-- House Icon -->
+      <img class="iconTutorial" src="img/house.png" alt="HouseIconFrenzy">
+      <!-- Titles -->
+      <p class="titlesOfTheTutorial">Busca y comparte promos y<br>cupones en toda Guate</p>
+      <!-- Frenzy Phone for Tutorial Number 1 -->
+      <img class="PhoneFrenzyImage" src="img/1.png" alt="SearchAndSharePromotions">
     </div>
-    <!--*****  DIV GREY  *****-->
-    <div class="container6 zigzag" style="margin-top:-70px;">
-      <p class="tut1">Desliza hacia la izquierda</p>
-      <div class="container5 zigzag"></div>
-  </div>
-    </ion-slide>
-  <!--***********************************************************************-->
-  <!--**************************  SECOND SLIDE  *****************************-->
+    <!-- Triangles Div -->
+    <div class="containerZigzag zigzag slide-image-center">
+      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
+    </div>
+  </ion-slide>
+  <!-- Second Slide -->
   <ion-slide on-slide-changed="slideChanged(index)">
-    <!--**********  SLIDER BOXES  **********-->
-    <!--*****  DIV RESPONSIVE NO.2  *****-->
-    <div class="backgroundTutorialNo2 open_sans" >
-      <!--*****  HOUSE IMAGE NO.2  *****-->
-      <img class="imageHouseTutorialNo1" src="img/heart.png" alt="nissan">
-      <!--*****  TITLE NO.2.1  *****-->
-      <p class="titleTutorial1-1">Recibe nuevas promos y</p>
-      <!--*****  TITLE NO.2.2  *****-->
-      <p  class="titleTutorial1-2">cupones de tus marcas favoritas</p>
-      <!--*****  MAIN IMAGE NO.2  *****-->
-      <img class="imageTutorialNo1" src="img/2.png" alt="nissan">
-      <!--*****  BOTTOM BOX  *****-->
-      <!--*****  TRIANGLES  *****-->
-  </div>
-      <!--*****  DIV GREY  *****-->
-      <!--*****  DIV GREY  *****-->
-      <div class="container6 zigzag" style="margin-top:-70px;">
-        <p class="tut1">Desliza hacia la izquierda</p>
-        <div class="container5 zigzag"></div>
+    <div class="backgroundTutorial2 open_sans" >
+      <!-- Pig Icon -->
+      <img class="iconTutorial" src="img/cerdo.png" alt="PigIconFrenzy">
+      <!-- Titles -->
+      <p class="titlesOfTheTutorial"><br>Ahorra en tus marcas favoritas</p>
+      <!-- Scroll for the Six First Customer with more Promotions -->
+      <ion-scroll id="hideSecondScroll"direction="y" class="HeightScroll">
+        <!-- General Promotions for Average -->
+        <div class="row">
+          <!-- Offers and Promotions for Average -->
+          <div class="row tutorialCustomerColumns" ng-controller='TutorialCostumer'>
+            <!-- If find offers or promotions -->
+            <div id="GeneralPaddingCols" class="col col-50" ng-repeat="customer in TutorialPromotion | orderBy:'-suma' | limitTo:6">
+              <tutorial-info info="customer"></tutorial-info>
+            </div>
+          </div>
+        </div>
+      </ion-scroll>
+    </div>
+    <!-- Triangles Div -->
+    <div class="containerZigzag zigzag slide-image-center">
+      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
   </ion-slide>
-  <!--**********************************************************************-->
-  <!--**************************  THIRD SLIDE  *****************************-->
+  <!-- Third Slide -->
   <ion-slide  on-slide-changed="slideChanged(index)">
-    <!--**********  SLIDER BOXES  **********-->
-    <!--*****  DIV RESPONSIVE NO.3  *****-->
-    <div class="backgroundTutorialNo3 open_sans" >
-      <!--*****  HOUSE IMAGE NO.3  *****-->
-      <img class="imageHouseTutorialNo1" src="img/pin.png" alt="nissan">
-      <!--*****  TITLE NO.3.1  *****-->
-      <p class="titleTutorial1-1">Guarda ofertas y cupones para</p>
-      <!--*****  TITLE NO.3.2  *****-->
-      <p  class="titleTutorial1-2">despues</p>
-      <!--*****  MAIN IMAGE NO.3  *****-->
-      <img class="imageTutorialNo1" src="img/3.png" alt="nissan">
-      <!--*****  BOTTOM BOX  *****-->
-      <!--*****  TRIANGLES  *****-->
-  </div>
-  <!--*****  DIV GREY  *****-->
-  <div class="container6 zigzag" style="margin-top:-70px;">
-    <p class="tut1">Desliza hacia la izquierda</p>
-    <div class="container5 zigzag"></div>
-</div>
+    <div class="backgroundTutorial3 open_sans" >
+      <!-- Frenzy Phone Icon -->
+      <img class="iconTutorial" src="img/telefono.png" alt="FrenzyPhone">
+      <!-- Title -->
+      <p class="titlesOfTheTutorial">El directorio telefónico y web de <br>tus marcas favoritas</p>
+      <!-- Frenzy Phone for Tutorial Number 3 -->
+      <img class="PhoneFrenzyImage" src="img/phone3.png" alt="CallFrenzyImage">
+    </div>
+    <!-- Triangles Div -->
+    <div class="containerZigzag zigzag slide-image-center">
+      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
+    </div>
   </ion-slide>
-  <!--**********************************************************-->
-
 </ion-slide-box>

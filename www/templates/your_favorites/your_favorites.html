@@ -4,86 +4,89 @@
     }
 </style>
 <ion-view>
-    <!--*****  SECOND TAB HEADER  *****-->
-    <!-- If this app is for IOS platform then modify the 9 line (height:40px;margin-top:60px) -->
-    <div class="row pageFavoritesSecondRow" style="height:35px;margin-top:44px;position:absolute; z-index:1;">
-        <!--**********  OFFERTS  **********-->
-        <div class="col col-50">
-            <a class="pageFavoritesOurFavorites" nav-transition="none" href="#/app/favoritos">
-                <!--*****  TITLE AND FUNCITION OUR FAVORITES  *****-->
-                <p class="pageFavoritesOurFavoritesTitle" id="offertsFunction" style="color:#D8D8D8;">
-                    Nuestros Favoritos
-                </p>
-                <!--**********  OUR FAVORITES LINE DECORATION  **********-->
-                <hr  class="pageFavoritesLineDecoration" id="lineOffertsFunction" style="background-color:#D8D8D8;">
-            </a>
+  <ion-header-bar id="positive" class="bar bar-subheader bar-positive positive">
+		<!-- Offers and Coupons Tab with Popover -->
+		<div class="row">
+			<div id="GeneralPaddingCols" class="col col-50">
+				<a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/favoritos">
+					<div class="OffersAndCouponsTabText" id="offertsFunction">
+						Nuestros Favoritos
+						<hr class="pageFavoritesLineDecorationOffers" id="lineOffertsFunction">
+					</div>
+				</a>
+			</div>
+			<div id="GeneralPaddingCols" class="col col-50" style="margin-left:5px">
+				<a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/tusFavoritos" >
+					<div class="OffersAndCouponsTabText" style="color:white">
+						Tus Favoritos
+						<hr class="pageFavoritesLineDecorationOffers" style="color:white;background-color:white">
+					</div>
+				</a>
+			</div>
+		</div>
+	</ion-header-bar>
+
+  <!-- Your Favorites Container -->
+  <ion-content class="backgroundCategories" ng-controller="AllFavoriteCtrl" ng-init="chats[$index -1].Category != chats[$index - 1].Category">
+    <!-- Customer Info Container -->
+    <div id="GeneralPaddingCols0" class="col" ng-repeat="favorite in chats">
+      <a style="text-decoration:none;" nav-transition="none" ng-if="chats[$index].Category != chats[$index - 1].Category">
+        <div class="row pageYourFavoritesGreyLine">
+          <!-- Heart Icon -->
+          <div id="GeneralPaddingCols0" class="col col-10 pageYourFavoritesIconHeart verticalAndHorizontalCenteredObjects">
+            <spam class="home">B</spam>
+          </div>
+          <!-- Customer Name -->
+          <div id="GeneralPaddingCols0" class="col col-75">
+            <spam class="open_sans pageYourFavoritesStablishmentName verticalCenteredObjects">{{favorite.Category | commaBreak}}</spam>
+          </div>
+          <!-- Bigger Than Symbol -->
+          <div id="GeneralPaddingCols0" class="col col-10 BiggerThanColorAndPosition verticalAndHorizontalCenteredObjects">
+            <spam class="home">></spam>
+          </div>
         </div>
-        <div class="col col-50">
-            <a class="pageFavoritesYourFavorites" nav-transition="none" href="#/app/tusFavoritos"  >
-                <!--**********  TITLE AND FUNCTION YOUR FAVORITES  **********-->
-                <p class="pageFavoritesOurFavoritesTitle" id="cuponsFunction" style="color:white">
-                    Tus Favoritos
-                </p>
-                <!--**********  YOUR FAVORITES LINE DECORATION  **********-->
-                <hr class="pageFavoritesLineDecoration pageFavoritesLineDecorationYourFavorites" id="lineCuponsFunction" style="background-color:white;">
-            </a>
+      </a>
+      <!-- Your Favorite Saved Container -->
+      <div class="row row-border pageYourFavoritesWhiteBox" ng-if="chats[$index].Category != chats[$index - 2].Category">
+        <div id="GeneralPaddingCols0" class="col col-80">
+          <!-- Your Favorite Customer Title -->
+          <p class="overFlowText pageYourFavoritesOffert">
+            {{favorite.name}} - {{favorite.presentation}}
+          </p>
+          <!-- Promotional Price for Your Favorite -->
+          <p class="pageYourFavoritesPriceOffert">
+            Oferta - {{favorite.promotionalPrice | currency: 'Q'}}
+          </p>
+          <!-- Favorite Description for Your Favorite -->
+          <p class="overFlowText pageYourFavoritesOffertDescription">
+            {{favorite.description}}
+          </p>
         </div>
+        <!-- Pin Icon -->
+        <div id="GeneralPaddingCols0" class="col pinIconContainer">
+          <p class="home pageYourFavoritesIconPin" id="{{favorite.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{favorite.IDpromotion}}')"  style="color:{{favorite.ColorPin}}">
+            W
+          </p>
+        </div>
+      </div>
     </div>
-    <!--*****  SECOND TAB HEADER  *****-->
-    <ion-content ng-controller="AllFavoriteCtrl" ng-init="chats[$index -1].Category != chats[$index - 1].Category">
-        <div style="height:31px;"></div>
-        <div ng-repeat="favorite in chats">
-            <!--************  YOUR FAVORITES BODY  *******************-->
-            <a style="text-decoration:none;" nav-transition="none" ng-if="chats[$index].Category != chats[$index - 1].Category">
-                <div class="row pageYourFavoritesGreyLine" style="margin-top:1px;">
-                    <!--*****  ICON HEART COLOR RED  *****-->
-                    <div class="col col-10 pageYourFavoritesIconHeart">
-                        <spam class="home">B</spam>
-                    </div>
-                    <!--*****  NAME'S STABLISHMENT  *****-->
-                    <div class="col col-75" style="margin-top:-5px;">
-                        <spam class="open_sans overFlowText pageYourFavoritesStablishmentName">{{favorite.Category | commaBreak}}</spam>
-                    </div>
-                    <!--*****  ICON ARROW RIGHT  *****-->
-                    <div class="col col-10 ">
-                        <spam class="home" style="color:silver; padding-top:-3px;">></spam>
-                    </div>
-                </div>
-            </a>
-            <!--*****  SECOND ROW DESCRIPTION OF YOUR FAVORITE STABLISHMENT  *****-->
-            <div class="row row-border pageYourFavoritesWhiteBox" ng-if="chats[$index].Category != chats[$index - 2].Category">
-                <div class="col col-80 pageYourFavoritesWhiteBoxTop">
-                    <!--**********  OFFERT  **********-->
-                    <p class="overFlowText pageYourFavoritesOffert">
-                        {{favorite.name}} - {{favorite.presentation}}
-                    </p>
-                    <!--**********  PRICE OFFERT  **********-->
-                    <p class="pageYourFavoritesPriceOffert">
-                        Oferta - {{favorite.promotionalPrice | currency: 'Q'}}
-                    </p>
-                    <!--**********  OFFERT DESCRIPTION  **********-->
-                    <p class="overFlowText pageYourFavoritesOffertDescription">
-                        {{favorite.description}}
-                    </p>
-                </div>
-                <!--**********  PIN ICON**********-->
-                <div class="col col-20">
-                    <p class="home pageYourFavoritesIconPin" id="{{favorite.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{favorite.IDpromotion}}')"  style="color:{{favorite.ColorPin}}">
-                        W
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div ng-repeat="favorite in chats  | filter: {oferta : 'noHay'}">
-            <div class="open_sans boxbox">
-                <p class="home savedPageNoItemsIcon">f</p>
-                <p class="savedPageNoItemsTitle">
-                    Uh-uH
-                </p>
-                <p class="savedPageNoItemsDescription">No tienes ningun elemento agregado a</p>
-                <p class="savedPageNoItemsDescription">esta lista. Agrega ofertas y cupones</p>
-                <p class="savedPageNoItemsDescription">para usarlos despues.</p>
-            </div>
-        </div>
-    </ion-content>
+    <!-- Doesn't exist Your Favorites -->
+    <div ng-repeat="favorite in chats  | filter: {oferta : 'noHay'}" class="noExiste">
+      <div class="open_sans">
+        <!-- Donkey Icon -->
+        <p class="home savedPageNoItemsIcon">
+          f
+        </p>
+        <!-- Description -->
+        <p class="savedPageNoItemsTitle">
+          Uh-uH
+        </p>
+        <p class="savedPageNoItemsDescription">
+          No tienes ningún elemento agregado a<br>
+          esta lista. Agrega ofertas y cupones<br>
+          para usarlos después.
+        </p>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

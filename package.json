@@ -27,7 +27,10 @@
     "cordova-plugin-contacts",
     "cordova-plugin-inappbrowser",
     "cordova-plugin-whitelist@~1.0.0",
-    "cordova-sms-plugin"
+    "cordova-sms-plugin",
+    "phonegap-facebook-plugin@~0.12.0",
+    "onesignal-cordova-plugin",
+    "cordova-plugin-statusbar"
   ],
   "cordovaPlatforms": []
 }

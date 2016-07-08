@@ -1,129 +1,205 @@
-.BackgroundColor{
+/*Background Color Transparent for the Header Bar*/
+.BackgroundHeader {
+  background-color:transparent;
+  padding-top:2%;
+}
+/*Background for Login2 Template*/
+.BackgroundColorLogin2 {
   background-color: #3F51B5;
   height: 100%;
 }
-/** if your code is upload on ios you need to add margin-top: 35px instead 10px **/
+/*Back Button Style*/
+#BackButtonStyleLogin2.BackButtonStyleLogin2 {
+  background-color:#3F51B5;
+  font-size:25px;
+  color:white;
+  float:right;
+}
+/*Style for Div Login2 and Login(Form)*/
 .mainDiv{
   background-color: white;
   margin-top: 10px;
   border-radius: 4px;
   box-shadow: 2px 2px 2px #64718f;
 }
-.penguin{
-  font-size: 85px;
-  padding-top: 30px;
-  text-align: center;
-  color:#3F51B5;
+/*This Style is for to Center Penguin Icon*/
+.PenguinIconCenter {
+  text-align:center;
+  padding:3%
 }
-.title{
+/*Size of the Penguin Login2*/
+.PenguinSize {
+  width:70px;
+}
+/*Style for SignUp Account Text*/
+.title-spacing {
+  font-weight: bold;
   color:black;
   font-size: 17px;
-  padding-top: 10px;
   text-align: center;
 }
-.subtitle{
+/*Climbing Line*/
+.DivingLineUp {
+  margin-top:-5%;
+}
+/*Padding into Form Div*/
+.PaddingDiv {
+  /*10px Padding for left and right direction*/
+  padding:0px 10px 0px 10px;
+}
+/*Name Style*/
+.NameTextLogin{
   font-weight: bolder;
   font-size: 17px;
   color: #263147;
 }
-.subtitle2{
+/*Style for Email Text in Form*/
+.EmailTextLogin{
+  font-weight: bolder;
+  font-size: 17px;
+  color: #263147;
+  margin-top:10px;
+}
+/*Style for Email, Password, Gender and Birthday form*/
+.Left10px {
+  margin-left: 10px;
+}
+/*Input Styles*/
+.inputBox{
+  background-color: #E6E7E8;
+  border-radius: 12px;
+}
+/*Font Size for Input Box Form*/
+#EmailSizeText {
+  font-size: 18px;
+}
+#PasswordSizeText {
+  font-size: 18px;
+}
+#BirthdaySizeText {
+  font-size: 18px;
+}
+/*Style for Password Text in Form*/
+.PasswordTextLogin {
   color: #263147;
   font-size: 17px;
   margin-top: 8px;
 }
-.inputBox{
-  background-color: #E6E7E8;
-  border-radius: 12px;
-  height: 33px;
+/*Gender Style Div*/
+.genderRow{
   margin-top: -8px;
+  padding:10px 5px 5px 0px;
 }
+/*Gender Title Style*/
 .genderTitle{
   color: #263147;
   font-size: 17px;
-  margin-top: -8px;
+  margin-top: 8px;
 }
-.genderRow{
-  margin-top: -8px;
-}
+/*genderBoxMale Style Button*/
 .genderBoxMale{
   background-color: #E6E7E8;
   border-radius: 12px;
   text-align: center;
+  height: 48px;
+  display:table;
 }
+/*Centered Text Male Gender*/
+.MaleTextCenter {
+  height:46px;
+  display:table-cell;
+  vertical-align:middle;
+}
+/*genderBoxFemale Style Button*/
 .genderBoxFemale{
   background-color: #E6E7E8;
   border-radius: 12px;
   margin-left: 7px;
   text-align: center;
+  height: 48px;
+  display:table;
 }
+/*Centered Text Female Gender*/
+.FemaleTextCenter {
+  height:46px;
+  display:table-cell;
+  vertical-align:middle;
+}
+/*Birthday Text*/
 .dateTitle{
   color: #263147;
   font-size: 17px;
   margin-top: 8px;
 }
+/*Input Box Birthday Style*/
 .dateBox{
   background-color: #E6E7E8;
   border-radius: 12px;
   height: 33px;
 }
-.enterButton{
-  background-color: #FF5252;
-  height: 30px;
-  width: 150px;
-  margin-top: 20px;
-  border-radius: 10px;
-  border-bottom: solid;
-  border-color: red;
+/*Padding for the SignUp Button*/
+.PaddingSignUpButton {
+  padding:15px;
 }
+/*SignUp Button Style*/
+.enterButtonStyle{
+  background-color: #FF5252;
+  width: 150px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 0px #D24646;
+  height:45px;
+  display:table;
+}
+.enterButtonStyle:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*SignUp Button Style Text and Centered Text*/
 .enterButtonTitle{
   color: white;
   font-size: 20px;
   padding-top: 2px;
+  display:table-cell;
+  vertical-align:middle;
 }
-.subtitle3{
-  color: white;
-  font-size: 17px;
-  margin-top: 8px;
-}
-.loginTitle8{
+/*Info to Register Style*/
+.loginTitleDescription{
   color:white;
   font-size: 11px;
   font-weight: bolder;
   margin-bottom: -5px;
 }
-.facebookButon{
-  background-color:white;
-  height: 35px;
-  border-radius: 12px;
-  border:none;
+#EmailTextLoginCenter.EmailTextLoginCenter {
+  height:46px;
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
 }
-.facebookTitle{
-  font-size: 19px;
-  font-weight: bolder;
-  color: #3F51B5;
-  text-align: center;
-  padding-top: 2px;
+.PaddingOptionButtons {
+  padding:10px 5px 10px 0px;
 }
-.singupButon{
-  background-color: #00BAB9;
-  border-radius: 12px;
-  height: 35px;
-  margin-left: 5px;
+/*Facebook Title Centered into Button*/
+#FacebookTextLoginCenter.FacebookTextLoginCenter {
+  height:46px;
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
 }
+/*Login and SignUp Title*/
 .singupTitle{
   text-align: center;
   font-size: 16px;
-  padding-top: 2px;
   color: white;
 }
+/*Terms Text Style*/
 .termsLogin{
   color:white;
   font-size:12px;
   font-weight: bolder;
   text-align: center;
-}
-.forgotYourPassword{
-  color:white;
-  font-weight: bolder;
-  text-decoration: underline;
 }
