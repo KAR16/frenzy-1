@@ -3,6 +3,8 @@ var colorIconsFoother = []
 var pix = "170px"
 var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
+var AllFavoriteF = [];
+var AllPromotionF = [];
 /****FIREBASE***/
 var config = {
   apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
@@ -404,346 +406,315 @@ angular.module('starter.controllers', ['ionic'])
 	};
 })
 // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
-// ******************* REGISTER FACEBOOK *******************
+// ************************* LOGIN WITH FACEBOOK *************************
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
-   $scope.user = {};
-   $scope.error = {};
-   // Object styles for Option Gender Button to Register Account
-   $scope.genderMaleBStyle = {};
-   $scope.genderFemaleleBStyle = {};
-   // Gender variable for to save in Parse
-   $scope.optionGender = '';
 
-        $scope.genderMaleStyle= function(){
-               $scope.genderMaleBStyle = {'background-color':'#263147 ','color':'white'};
-               $scope.genderFemaleleBStyle = {'color':'#263147  '};
-               $scope.optionGender = 'male';
-           }
+  $scope.user = {};
+  $scope.error = {};
+  // Object styles for Option Gender Button to Register Account
+  $scope.genderMaleBStyle = {};
+  $scope.genderFemaleleBStyle = {};
+  // Gender variable for to save in Parse
+  $scope.optionGender = '';
+  // Color Button Selected in Register Form if the user is Male or Female
+  $scope.genderMaleStyle= function(){
+    $scope.genderMaleBStyle = {'background-color':'#263147 ','color':'white'};
+    $scope.genderFemaleleBStyle = {'color':'#263147  '};
+    $scope.optionGender = 'male';
+  }
+  $scope.genderFemaleleStyle= function(){
+    $scope.genderFemaleleBStyle = {'background-color':'#263147 ','color':'white'};
+    $scope.genderMaleBStyle = {'color':'#263147  '};
+    $scope.optionGender = 'female';
+  }
+  // This Function works for to send email to the new User Firebase before of the register
+  $scope.SendEmail = function() {
+    // This Function works for to send email verification
+    mainApp.auth().currentUser.sendEmailVerification().then(function() {
+      /* Alert for validate email */
+      swal({
+        title: "Bien Hecho!",
+        text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
+        imageUrl: "img/sobre.png",
+        timer: 3000,
+        /* Button ok disable */
+        showConfirmButton: false
+      },
+      function() {
+        setTimeout(function() {
+          // Logout User Firebase
+          mainApp.auth().signOut(); //Else bug
+          swal.close(); //Close Alert
+          $state.go('login'); //Redirect to Login
+        },2000);
+      });
+    })
+  }
+  // This Function works for to Validate fields of the form
+  $scope.Alert = function () {
+    if ($scope.user.email == undefined ) {
+      sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
+    }else if($scope.user.password == undefined) {
+      sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
+    }else {
+      $scope.ValidarEmail = "none"
+      $scope.Validarpassword = "none"
+      // Redirect to Register Function for to create a new user in Firebase
+      $scope.register()
+    }
+  }
+  // Register Function for to create a new User in Firebase
+  $scope.register = function() {
 
-            $scope.genderFemaleleStyle= function(){
-               $scope.genderFemaleleBStyle = {'background-color':'#263147 ','color':'white'};
-               $scope.genderMaleBStyle = {'color':'#263147  '};
-               $scope.optionGender = 'female';
-           }
+    $ionicLoading.show({
+  		noBackdrop: true,
+  		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+  	});
 
- $scope.SendEmail = function() {
-   // This Function works for to send email verification
-   mainApp.auth().currentUser.sendEmailVerification().then(function() {
-     /* Alert for validate email */
-     swal({
-         title: "Bien Hecho!",
-         text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
-         imageUrl: "img/sobre.png",
-         timer: 3000,
-         /* Button ok disable */
-         showConfirmButton: false
-     },
-     function() {
-       setTimeout(function() {
-         swal.close();
-         $state.go('login');
-       },2000);
-     });
-   })
- }
+    mainApp.auth().signOut();
+    // Global Variables
+    var name = $scope.user.NameRegister;
+    var email = $scope.user.email;
+    var password = $scope.user.password;
+    var gender = $scope.optionGender;
+    var dateBirthday = $scope.user.birthday;
+    // To convert a date the birthday field
+    if (dateBirthday) {
+      dateBirthday = dateBirthday.toLocaleDateString()
+    }
+    // Save Users in Firebase Auth
+    mainApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      var ErrorCodeFirebase = error.code;
+      if(ErrorCodeFirebase == 'auth/email-already-in-use'){
+        $ionicLoading.hide();
+        // Alert and Functionality when the user is registered in Firebase
+        swal({
+          title: 'Lo sentimos',
+          text: 'El usuario ya está registrado, por favor inicia sesión.',
+          type: 'error',
+          showCancelButton: false,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+        },
+        // On click Event Alert
+        function() {
+          setTimeout(function() {
+            // Clean Register Form
+            $('.createUserName').val('');
+            $('.createUserEmail').val('');
+            $('.createUserPassword').val('');
+            $('.createUserBirthday').val('');
+            $scope.genderMaleBStyle = {};
+            $scope.genderFemaleleBStyle = {};
+            // Close the SweetAlert
+            swal.close();
+            // Redirect to Login Form
+            $state.go('login');
+          },2000)
+        });
+      }
+    }).then(function() {
+      // Clean Register Form
+      $('.createUserName').val('');
+      $('.createUserEmail').val('');
+      $('.createUserPassword').val('');
+      $('.createUserBirthday').val('');
+      $scope.genderMaleBStyle = {};
+      $scope.genderFemaleleBStyle = {};
 
- $scope.Alert = function () {
-     if ($scope.user.email == undefined ) {
-         sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
-     }else if($scope.user.password == undefined) {
-         sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
-     }else {
-       $scope.ValidarEmail = "none"
-       $scope.Validarpassword = "none"
-       $scope.register()
-     }
- }
-
- $scope.register = function() {
-   var name = $scope.user.NameRegister;
-   var email = $scope.user.email;
-   var password = $scope.user.password;
-   var gender = $scope.optionGender;
-   var dateBirthday = $scope.user.birthday;
-
-        if (dateBirthday) {
-            dateBirthday = dateBirthday.toLocaleDateString()
+      // Connect to User Entity on Firebase
+      var user = mainApp.auth().currentUser;
+      // Call to Users Entity Firebase Data
+      mainApp.database().ref('Users').once('value', function(snapshot) {
+        // If doesn't exist anything data then to save the new data
+        if(snapshot.val() == null) {
+          mainApp.database().ref('Users/' + user.uid).update({
+            Username: name,
+            Email: email,
+            Gender: gender,
+            Birthday: dateBirthday
+          });
+          $ionicLoading.hide();
+          $scope.SendEmail();
+        } else {
+          // Verify each UID user and if doesn't exist add the new register
+          for(x in snapshot.val()){
+            if(x != user.uid) {
+            mainApp.database().ref('Users/' + user.uid).update({
+              Username: name,
+              Email: email,
+              Gender: gender,
+              Birthday: dateBirthday
+            });
+            $ionicLoading.hide();
+            $scope.SendEmail();
+            }
+          }
         }
-
-   // Save Users in Firebase Auth
-   mainApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-     var ErrorCodeFirebase = error.code;
-     if(ErrorCodeFirebase == 'auth/email-already-in-use'){
-       sweetAlert('Lo sentimos', 'El Usario ya está Registrado', 'error');
-     }
-   }).then(function() {
-
-     $('.createUserName').val('');
-     $('.createUserEmail').val('');
-     $('.createUserPassword').val('');
-     $('.createUserBirthday').val('');
-     $scope.genderMaleBStyle = {};
-     $scope.genderFemaleleBStyle = {};
-
-     var user = firebase.auth().currentUser;
-     // Call to Users Entity Firebase Data
-     mainApp.database().ref('Users').once('value', function(snapshot) {
-       // If doesn't exist anything data then to save the new data
-       if(snapshot.val() == null) {
-         mainApp.database().ref('Users/' + user.uid).update({
-           Username: name,
-           Email: email,
-           Gender: gender,
-           Birthday: dateBirthday
-         })
-         $scope.SendEmail();
-       } else {
-         // Verify each UID user and if doesn't exist add the new register
-         for(x in snapshot.val()){
-           if(x != user.uid) {
-               mainApp.database().ref('Users/' + user.uid).update({
-               Username: name,
-               Email: email,
-               Gender: gender,
-               Birthday: dateBirthday
-             })
-             $scope.SendEmail();
-           }
-         }
-       }
-     });
-   })
- };
+      });
+    });
+  }
 })
 
-// ************************ LOGIN WITHOUT FACEBOOK **********************************
+// ************************* LOGIN WITH FRENZY *************************
 .controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading) {
-		// Parse.Cloud.run('verifyFinalizedPromotions',{}, {
-		// 	success: function(result) {
-		// 	},
-		// 		error: function(error) {
-		// 		console.log(error)
-		// 	}
-		// });
-		// Parse.Cloud.run('verifyFinalizedCoupons',{}, {
-		// 	success: function(result) {
-		// 	},
-		// 		error: function(error) {
-		// 		console.log(error)
-		// 	}
-		// });
-		// $scope.user = {
-    //     username: null,
-    //     password: null
-    // };
-    // $scope.error = {};
-		// $scope.currentUser = Parse.User.current();
-		// ******* LOGIN VALIDATION *******
-		if ($scope.currentUser != null ){
-		     if ($scope.currentUser["attributes"].authData != undefined) {
-		            IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
-								IdGender = String($scope.currentUser.attributes.gender);
-		            viewPromotion();
-		            $state.go('app.playlists');
-		     } else {
-						IdGender = String($scope.currentUser.attributes.gender);
-		            IdUsuario = String($scope.currentUser.id);
-		            viewPromotion();
-		            $state.go('app.playlists');
-		     }
-		}
-
-		$scope.forgot = function() {
-      firebase.auth().signOut();
-
-
-      swal({
-        title: "Restablecer Contraseña",
-        text: "Se te enviará un correo con la información para cambiar tu contraseña.",
-        type: "input",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        confirmButtonText: "Continuar",
-        cancelButtonText: "Cancelar",
-        animation: "slide-from-top",
-        inputPlaceholder: "correo@ejemplo.com"
-      },
-      function(emailAddress){
-        if (emailAddress === false) return false;
-        if (emailAddress === "") {
-          swal.showInputError("Necesitas ingresar un correo electrónico!");
-          return false
-        }
-
-        swal.close();
-        // $scope.userChoice = prompt("Enter your email")
-        // $scope.loading = $ionicLoading.show({
-        //     content: 'Sending',
-        //     animation: 'fade-in',
-        //     showBackdrop: true,
-        //     maxWidth: 200,
-        //     showDelay: 0
-        // });
-        var auth = firebase.auth();
-        auth.sendPasswordResetEmail(emailAddress).then(function() {
-            $ionicLoading.hide();
-            // Email sent.
-        }, function(error) {
-            // An error happened.
-        });
-      });
-
-			// Parse.User.requestPasswordReset($scope.userChoice, {
-			// 		success: function() {
-			// 				// TODO: show success
-			// 				$ionicLoading.hide();
-			// 				$scope.$apply();
-			// 		},
-			// 		error: function(err) {
-			// 				$ionicLoading.hide();
-			// 				if (err.code === 125) {
-			// 						$scope.error.message = 'La dirección de correo electrónico no existe';
-			// 						sweetAlert('Ha ocurrido un Error', 'La direccón de correo electrónico no existe', 'error');
-			// 				} else {
-			// 						$scope.error.message = 'Ha ocurrido un Error, ' + 'Por favor intentelo nuevamente';
-			// 								sweetAlert('Ha ocurrido un Error', 'Por favor intentelo nuevamente', 'error');
-			// 				}
-			// 				$scope.$apply();
-			// 		}
-			// });
-		};
 
     // Verify Email with Firebase
     $scope.VerifyEmail = function() {
-      firebase.auth().onAuthStateChanged(function(user) {
-        console.log('entra al user');
-        console.log(user);
+      mainApp.auth().onAuthStateChanged(function(user) {
+        // Email already verified
+
         if (user.emailVerified) {
-          $state.go('app.playlists');
+          $state.go('loadingLoginUser');
+          IdUsuario = user.uid
+          mainApp.database().ref('Users').on('value', function(snapshot) {
+            for (x in snapshot.val()) {
+              if (x == IdUsuario) {
+                IdGender =snapshot.val()[x].Gender
+              }
+            }
+          });
         } else {
           sweetAlert('Oops', 'Por favor verifica tu correo electrónico e intenta nuevamente.', 'warning');
         }
       })
     }
+    // This Function works for to do Login with Parse and to migrate the data to Firebase
+    $scope.loginWithParse = function(user) {
 
-  $scope.login = function(user) {
-    console.clear();
-    console.log(user.username);
-    var email = user.username;
+      // New Users Variables
+      $scope.newUserFirebase = '';
+      $scope.newPasswordFirebase = user.password;
+      $scope.newEmailFirebase = '';
+      $scope.newGenderFirebase = '';
+      $scope.newBirthdayFirebase = '';
 
-    console.log(email);
-    var password = user.password;
+      $scope.parseCurrentUser = Parse.User.current();
 
-    if (firebase.auth().currentUser) {
-      firebase.auth().signOut();
+      // Login ParseJS
+      Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
+        success: function(userSuccess) {
+
+            // $rootScope.userSuccess = userSuccess;
+            // $rootScope.isLoggedIn = true;
+            // IdUsuario = String($rootScope.userSuccess.id);
+
+            // Connect to User entity Parse
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("username", user.username);
+            // Retrieve Data User Parse
+            query.each(function(userParse) {
+              // Validate if the user in ParseJS have a name
+              if(userParse.attributes.name == undefined){
+                $scope.newUserFirebase = userParse.attributes.username;
+              } else {
+                $scope.newUserFirebase = userParse.attributes.name;
+              }
+              // Save Data User into Variable
+              $scope.newEmailFirebase = userParse.attributes.username;
+              $scope.newGenderFirebase = userParse.attributes.gender;
+              $scope.newBirthdayFirebase = userParse.attributes.birthday;
+            }).then(function() {
+              // Save Users in Firebase Auth
+              mainApp.auth().createUserWithEmailAndPassword($scope.newEmailFirebase, $scope.newPasswordFirebase).then(function() {
+                // Call to Users Entity Firebase Data
+                mainApp.database().ref('Users').once('value', function(snapshot) {
+                  // If doesn't exist anything data then to save the new data
+                  if(snapshot.val() == null) {
+                    mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
+                      Username: $scope.newUserFirebase,
+                      Email: $scope.newEmailFirebase,
+                      Gender: $scope.newGenderFirebase,
+                      Birthday: $scope.newBirthdayFirebase,
+                      Parse: true
+                    })
+                  } else {
+                    mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
+                      Username: $scope.newUserFirebase,
+                      Email: $scope.newEmailFirebase,
+                      Gender: $scope.newGenderFirebase,
+                      Birthday: $scope.newBirthdayFirebase,
+                      Parse: true
+                    })
+                  }
+                })
+              }).then(function() {
+                // Login With Firebase
+                mainApp.auth().signInWithEmailAndPassword(user.username,user.password).then(function() {
+                  $scope.parseCurrentUser = Parse.User.current();
+                  // Delete User of ParseJS
+                  var query = new Parse.Query(Parse.User);
+                  query.get($scope.parseCurrentUser.id, {
+                    success: function(deleteUser) {
+                      deleteUser.destroy({});
+                    },
+                    error: function(object, error) {}
+                  });
+                })
+              }).then(function() {
+                $state.go('loadingLoginUser');
+              })
+            })
+        },
+        error: function(user, err) {
+          // $ionicLoading.hide();
+          // The login failed. Check error to see why.
+          if (err.code === 101) {
+            Parse.User.logOut();
+            mainApp.auth().signOut();
+            sweetAlert('Datos Inválidos', 'Por favor verifica tu correo y tu contraseña', 'error');
+          }
+        }
+      })
     }
 
-    mainApp.auth().signInWithEmailAndPassword(email,password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // [START_EXCLUDE]
-      if (errorCode === 'auth/wrong-password') {
-        sweetAlert('Oops', 'Contraseña Incorrecta, Intenta nuevamente', 'error');
+    $scope.loginWithEmail = function(user) {
+
+      if(typeof user==='undefined'){
+        sweetAlert('Datos Inválidos', 'Debes ingresar correo y contraseña', 'error');
+      } else if(user['username']===undefined || user['username']==='') {
+        sweetAlert('Datos Inválidos', 'Por favor Verifica los campos requeridos', 'error');
+        delete user;
+      } else if(user['password']===undefined || user['password']==='') {
+        sweetAlert('Datos Inválidos', 'Por favor Verifica los campos requeridos', 'error');
+        delete user
       } else {
-        // If the User aren't registered
-        swal({
-          title: "Lo sentimos",
-          text: "Aún no haz creado una cuenta con nosotros. ¿Deseas crearla ahora?",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Registrarme",
-          cancelButtonText: "Intentar Nuevamente",
-          closeOnConfirm: false,
-          closeOnCancel: false
-        },
-        // Try again
-        function(isConfirm){
-          if (isConfirm) {
-            $('#username').val('');
-            $('#password').val('');
-            swal.close();
-            $state.go('login2');
-          } else {
-            $('#username').val('');
-            $('#password').val('');
-            swal.close();
-          }
-        });
+        // If the User is Logged
+        if (mainApp.auth().currentUser) {
+          mainApp.auth().signOut(); //Loggout Sesion Firebase
         }
-      }).then(function() {
-        $scope.VerifyEmail();
-      })
-
-      // mainApp.auth().onAuthStateChanged(function(InfoUser) {
-      //
-      //   if (InfoUser.emailVerified) {
-      //
-      //     console.clear()
-      //     console.log('Email is verified');
-      //     console.log(InfoUser);
-      //   } else {
-      //     console.clear()
-      //     console.log('Email is not verified');
-      //     console.log(InfoUser);
-      //   }
-      // });
-
-      // mainApp.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      //   // Handle Errors here.
-      //   var errorCode = error.code;
-      //   var errorMessage = error.message;
-      //   console.clear();
-      //   console.log(errorCode);
-      // });
-
-
-			mixpanel.track("LoginClick", { "loginButton" : "Email"});
-      //   $scope.loading = $ionicLoading.show({
-      //       content: 'Logging in',
-      //       animation: 'fade-in',
-      //       showBackdrop: true,
-      //       maxWidth: 200,
-      //       showDelay: 0
-      //   });
-      //
-      //   var user = $scope.user;
-      //   Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
-			// 		success: function(user) {
-			// 			if (user.attributes.emailVerified == false) {
-			// 				$ionicLoading.hide();
-			// 				$rootScope.user = user;
-			// 				$rootScope.isLoggedIn = true;
-			// 				sweetAlert('Atención', 'Aún no se ha confirmado su correo', 'warning');
-			// 			}else {
-			// 				$ionicLoading.hide();
-			// 				$rootScope.user = user;
-			// 				$rootScope.isLoggedIn = true;
-			// 				IdUsuario = String($rootScope.user.id);
-			// 				IdGender = String($rootScope.user.attributes.gender);
-			// 				//console.log($rootScope.user.attributes.gender);
-			// 				viewPromotion();
-			// 				$state.go('app.playlists', {
-			// 				clear: true
-			// 				});
-			// 			}
-      //
-			// 		},
-      //       error: function(user, err) {
-      //           $ionicLoading.hide();
-      //           // The login failed. Check error to see why.
-      //           if (err.code === 101) {
-      //               sweetAlert('Lo sentimos', 'Verifica los datos ingresados', 'error');
-      //           } else {
-      //               sweetAlert('Lo sentimos', 'Ha ocurrido un error. Intentalo nuevamente', 'error');
-      //           }
-      //           $scope.$apply();
-      //       }
-      //   });
-    };
+        var currentUser = Parse.User.current();
+        if (currentUser) {
+          Parse.User.logOut();
+        }
+        // Login With Firebase
+        mainApp.auth().signInWithEmailAndPassword(user.username,user.password).catch(function(error) {
+          // // Handle Errors here.
+          // var errorCode = error.code;
+          // var errorMessage = error.message;
+          // // If the User password is incorrect
+          // if (errorCode === 'auth/wrong-password') {
+          //   sweetAlert('Oops', 'Contraseña Incorrecta, Intenta nuevamente', 'error');
+          // }
+          //  else {
+          // $scope.loginWithParse()
+          // }
+        }).then(function() {
+          if(mainApp.auth().currentUser==null){
+            $scope.loginWithParse(user);
+          } else {
+            mainApp.database().ref('Users').once('value', function(snapshot) {
+              if(snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == true){
+                $state.go('loadingLoginUser');
+              } else if(snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == undefined){
+                $scope.VerifyEmail()
+              }
+            })
+          }
+        })
+      }
+    }
 })
-
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('CategoryCtrl', function($scope, $ionicLoading) {
 	var dimensions = {
@@ -760,20 +731,21 @@ angular.module('starter.controllers', ['ionic'])
 	});
 	CategoryListName = [];
 	var query = new Parse.Query('AppCategory');
-
-	query.each(function(results) {
-			//	CategoryListName.push(results.attributes)
-	}).then(function() {
-		ReloadFavorite()
-	}).then(function() {
-
-
-		$('.pageStartBoxPurple').show();
-		$('.flechitas').show();
-	});
+  //
+	// query.each(function(results) {
+	// 		//	CategoryListName.push(results.attributes)
+	// }).then(function() {
+	// 	ReloadFavorite()
+	// }).then(function() {
+  //
+  //
+	// 	$('.pageStartBoxPurple').show();
+	// 	$('.flechitas').show();
+	// });
 	/////////////////////////////////////////////////////////////////////////////
-
-	mainApp.database().ref('AppCategory').on('value', function(snapshot) {
+var UsuarioF = true;
+var UsuarioP = true;
+	mainApp.database().ref('AppCategory').once('value', function(snapshot) {
 
 			 for (x in snapshot.val()) {
 				 CategoryListName[countApp] = snapshot.val()[x]
@@ -781,7 +753,111 @@ angular.module('starter.controllers', ['ionic'])
 			 }
 			// console.log("askjkdhakjshdkajsdh");
 			 countApp = 0
-			 $ionicLoading.hide();
+
+ }).then(function() {
+   ///////////////////////////Favorite heart////////////////////////////////////
+
+   mainApp.database().ref('Favorite').on('value', function(snapshot) {
+     console.log("entro----------------------------Favorite reload-----------------------------------");
+     console.log(IdUsuario);
+     var CountFF = 0;
+     var countFavorite = 0;
+     for (x in snapshot.val()) {
+       if (snapshot.val()[x].UserID == IdUsuario) {
+         UsuarioF = false
+         for (i in snapshot.val()[x].CustomerID) {
+           for (c in CustomerList) {
+
+             if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
+               console.log("--------------------------------------");
+               console.log(snapshot.val()[x].CustomerID[i]);
+               console.log("--------------------------------------");
+               CustomerList[c].colorHeart = "red"
+             //  AllFavoriteF[countFavorite] = CustomerList[c]
+             //  countFavorite++
+             }
+           }
+         }
+         console.log("usario encontrado");
+         FirebaseFavorite[CountFF] = snapshot.val()[x]
+         FirebaseFavorite[CountFF]["FavoriteID"] = x
+         console.log(FirebaseFavorite);
+         CountFF++
+       }
+
+     }
+     if (UsuarioF == true) {
+       mainApp.database().ref('Favorite/').push({
+         UserID: IdUsuario
+         });
+     }
+
+  });
+   //////////////////////////////////////////////////////////////////////////
+   ///////////////////////////SAVED PIN////////////////////////////////////
+
+   mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
+     console.log("entro----------------------------PromotionSaved reload-----------------------------------");
+     console.log(CurrentPromotion);
+     var CountPS = 0;
+     var countPromo = 0;
+     for (x in snapshot.val()) {
+       if (snapshot.val()[x].UserID == IdUsuario) {
+         UsuarioP = false;
+         for (i in snapshot.val()[x].PromotionID) {
+           for (c in CurrentPromotion) {
+             // console.log("/////////////////////////////////////////////////");
+             // console.log(snapshot.val()[x].PromotionID[i]);
+             // console.log(CurrentPromotion[c].Name);
+             // console.log("/////////////////////////////////////////////////");
+             if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
+               console.log(snapshot.val()[x].PromotionID[i]);
+               console.log(CurrentPromotion[c].IDpromotion);
+               console.log("---------------*****************************-----------------------");
+               console.log(snapshot.val()[x].PromotionID[i]);
+               console.log("--------------------*********************------------------");
+               console.log("purple");
+               AllPromotionF[countPromo] = CurrentPromotion[c]
+               countPromo++
+               CurrentPromotion[c].ColorPin = "purple"
+
+             }else {
+               console.log("no encontro nada ");
+             }
+           }
+         }
+         console.log("usario encontrado");
+         console.log(AllPromotionF);
+         FirebasePromotionSaved[CountPS] = snapshot.val()[x]
+         FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
+         console.log(FirebasePromotionSaved);
+         CountPS++
+       }
+
+     }
+
+     if (UsuarioP == true) {
+       mainApp.database().ref('PromotionSaved/').push({
+         UserID: IdUsuario
+         });
+     }
+  });
+   //////////////////////////////////////////////////////////////////////////
+
+
+
+ }).then(function () {
+   // mainApp.database().ref('Favorite/').push({
+   //   CustomerID: ["Dominos"],
+   //   UserID: "Facebook"
+   //   });
+   // mainApp.database().ref('PromotionSaved/').push({
+   //   UserID: "Facebook"
+   //   });
+   console.log(FirebaseFavorite.length);
+   console.log(FirebasePromotionSaved.length);
+
+   $ionicLoading.hide();
  });
  ////////////////////////////////////////////////////////////////////////////////////
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
@@ -830,18 +906,52 @@ angular.module('starter.controllers', ['ionic'])
           name: 'FavoritePin_'+NamePromo,
           user: NameUser
         };
-        Parse.Analytics.track("pin", Dimensions);
+        var ValSend = true
+        for (x in FirebasePromotionSaved[0].PromotionID) {
+          console.log(FirebasePromotionSaved[0].PromotionID[x]);
+          if (FirebasePromotionSaved[0].PromotionID[x] == id) {
+            console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
+
+            ValSend = false
+            console.log("son iguales-------------------------------------");
+          }
+        }
+
+//        Parse.Analytics.track("pin", Dimensions);
         var pin = document.getElementById(id).style.color;
         if (pin == "silver") {
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
             document.getElementById(id).style.color = "purple";
-            SavePromotion(IdUsuario, id)
+            if (ValSend == true) {
+            //  alert("se puede mandar")
+              var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
+              var Cus = {}
+              Cus[newPostKey] = id
+              firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
+            }
+            //SavePromotion(IdUsuario, id)
           //  $scope.reload()
         } else {
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
             document.getElementById(id).style.color = "silver";
-            DeletePromotion(IdUsuario, id)
+            for (i in FirebasePromotionSaved[0].PromotionID) {
+
+              if (FirebasePromotionSaved[0].PromotionID[i] == id) {
+                firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
+                console.log(FirebasePromotionSaved[0].PromotionID[i]);
+                console.log(i);
+                console.log("-------------asdasd--------aqui-------");
+              }
+            }
+
+            for (a in CurrentPromotion) {
+                if (CurrentPromotion[a].IDpromotion == id) {
+                  CurrentPromotion[a].ColorPin = "silver"
+                }
+            }
+          //  DeletePromotion(IdUsuario, id)
           //  $scope.reload()
+
         }
       //  $scope.reload()
     }
@@ -885,17 +995,50 @@ angular.module('starter.controllers', ['ionic'])
 		  name: 'FavoritePin_'+NamePromo,
 		  user: NameUser
 		};
-		Parse.Analytics.track("pin", Dimensions);
+    var ValSend = true
+    for (x in FirebasePromotionSaved[0].PromotionID) {
+      console.log(FirebasePromotionSaved[0].PromotionID[x]);
+      if (FirebasePromotionSaved[0].PromotionID[x] == id) {
+        console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
+
+        ValSend = false
+        console.log("son iguales-------------------------------------");
+      }
+    }
+
+		//Parse.Analytics.track("pin", Dimensions);
 		var pin = document.getElementById(id).style.color;
 		if (pin == "silver") {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id).style.color = "purple";
-			SavePromotion(IdUsuario, id)
+      if (ValSend == true) {
+      //  alert("se puede mandar")
+        var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
+        var Cus = {}
+        Cus[newPostKey] = id
+        firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
+      }
+			//SavePromotion(IdUsuario, id)
 			// $scope.reload()
 		} else {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id).style.color = "silver";
-			DeletePromotion(IdUsuario, id)
+      for (i in FirebasePromotionSaved[0].PromotionID) {
+
+        if (FirebasePromotionSaved[0].PromotionID[i] == id) {
+          firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
+          console.log(FirebasePromotionSaved[0].PromotionID[i]);
+          console.log(i);
+          console.log("-------------asdasd--------aqui-------");
+        }
+      }
+
+      for (a in CurrentPromotion) {
+          if (CurrentPromotion[a].IDpromotion == id) {
+            CurrentPromotion[a].ColorPin = "silver"
+          }
+      }
+			//DeletePromotion(IdUsuario, id)
 		//	$scope.reload()
 		}
 	//	$scope.reload()
@@ -934,10 +1077,10 @@ angular.module('starter.controllers', ['ionic'])
 	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
-    alert("firebase")
+    //alert("firebase")
 
     console.log("************************************************************");
-    console.log(FirebaseFavorite[0].FavoriteID);
+console.log(FirebaseFavorite);
     var ValSend = true
     for (x in FirebaseFavorite[0].CustomerID) {
       console.log(FirebaseFavorite[0].CustomerID[x]);
@@ -963,12 +1106,12 @@ angular.module('starter.controllers', ['ionic'])
 			mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "red";
       if (ValSend == true) {
-        alert("se puede mandar")
+      //  alert("se puede mandar")
         var newPostKey = firebase.database().ref().child('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').push().key;
         var Cus = {}
         Cus[newPostKey] = category
         firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').update(Cus);
-      }
+        }
 
 		//	SaveFavorite(IdUsuario, category)
 			//	Parse.Analytics.track("AddHeart", Dimensions);
@@ -980,10 +1123,15 @@ angular.module('starter.controllers', ['ionic'])
 
         if (FirebaseFavorite[0].CustomerID[i] == category) {
           firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID/'+i).remove();
-          console.log(FirebaseFavorite[0].CustomerID[i]);
+          //console.log(FirebaseFavorite[0].CustomerID[i]);
           console.log(i);
           console.log("-------------asdasd--------aqui-------");
         }
+      }
+      for (a in CustomerList) {
+          if (CustomerList[a].Name == category) {
+            CustomerList[a].colorHeart = "white"
+          }
       }
 
 			//	Parse.Analytics.track("DelHeart", Dimensions);
@@ -1127,7 +1275,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
       if (ValSend == true) {
-        alert("se puede mandar")
+      //  alert("se puede mandar")
         var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
         var Cus = {}
         Cus[newPostKey] = IDPromotion
@@ -1137,6 +1285,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		//	$scope.reload()
 	    //viewPromotion()
 		} else {
+      AllPromotionF = [];
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
       for (i in FirebasePromotionSaved[0].PromotionID) {
@@ -1148,6 +1297,20 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
           console.log("-------------asdasd--------aqui-------");
         }
       }
+
+      for (a in CurrentPromotion) {
+        //console.log(IDPromotion);
+          if (CurrentPromotion[a].IDpromotion == IDPromotion) {
+            CurrentPromotion[a].ColorPin = "silver"
+            console.log("--------------puto aquiiiiiiiiiiiiiiiiiiiiiiii---------------------------");
+            console.log(CurrentPromotion[a].IDpromotion);
+            console.log(CurrentPromotion[a].ColorPin);
+          }
+
+      }
+
+      console.log(CurrentPromotion);
+
 		//	DeletePromotion(IdUsuario, IDPromotion)
 		//	$scope.reload()
 	    //viewPromotion()
@@ -1247,6 +1410,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		  user: NameUser
 		};
 		$scope.changeColorHeartFollow = function(id) {
+      alert("popover");
       var ValSend = true
       for (x in FirebaseFavorite[0].CustomerID) {
         console.log(FirebaseFavorite[0].CustomerID[x]);
@@ -1266,7 +1430,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			//	Parse.Analytics.track("AddHeartPopover", Dimensions);
       if (ValSend == true) {
-          alert("se puede mandar")
+        //  alert("se puede mandar")
           var newPostKey = firebase.database().ref().child('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').push().key;
           var Cus = {}
           Cus[newPostKey] = id
@@ -1288,6 +1452,11 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
           }
         }
 				$scope.heartMenu = "silver";
+        for (a in CustomerList) {
+            if (CustomerList[a].Name == category) {
+              CustomerList[a].colorHeart = "white"
+            }
+        }
 			//	DeleteFavorite(IdUsuario, id)
 			}
 		}
@@ -1868,7 +2037,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/menu/menu.html",
 		controller: 'menuCtrl'
 	})
-
+  // ******** loading *****
+  	.state('loading', {
+  		url: "/loading",
+  		templateUrl: "templates/loading/loading.html",
+  		controller:"loadingCtrl"
+  })
+  // ******** loading For Login User *****
+  	.state('loadingLoginUser', {
+  		url: "/loadingLoginUser",
+  		templateUrl: "templates/loading/loading.html",
+  		controller:"loadingCtrlLogin"
+  })
   // ******** TUTORIAL *****
 	.state('tutorial', {
 		url: "/tutorial",
@@ -2007,7 +2187,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tutorial');
+  $urlRouterProvider.otherwise('/loading');
 })
 // ############## //
 //  Controllers   //
@@ -2015,19 +2195,196 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 /*************************  BODY CONTROLLER  ******************************/
 
-.controller('bodyCtrl', ['$state', function($state) {
-	var userVerificate= Parse.User.current();
-	// *********** DEVICE READY SPLASHSCREEN  *******************
-	document.addEventListener("deviceready", function($scope) {
-    var user = firebase.auth().currentUser;
+.controller('loadingCtrlLogin', function($scope, $state,$ionicLoading,$timeout) {
+
+  // Loading Login User
+  $scope.$on('$ionicView.enter', function() {
+    $ionicLoading.show({
+      noBackdrop: true,
+      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+    });
+
+    $timeout(function () {
+      $ionicLoading.hide();
+      $state.go('app.playlists');
+    }, 2000);
+
+  });
+
+
+
+})
+
+
+
+
+.controller('loadingCtrl', function($scope, $state,$ionicLoading,$timeout) {
+  $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+	});
+  //var user = firebase.auth().currentUser;
+  var credential;
+
+  // Prompt the user to re-provide their sign-in credentials
+  console.clear()
+
+mainApp.auth().onAuthStateChanged(function(user) {
+
 
     if (user) {
-      // User is signed in.
-      $state.go('app.playlists');
-    } else {
-      // No user is signed in.
-    }
 
+      //$state.go('app.playlists');
+      // User is signed in.
+      console.log("/////////////////////////////user///////////////////////////////////////////");
+      console.log(user);
+      console.log(user.providerData[0].uid);
+      if(user.providerData[0].providerId == 'facebook.com'){
+
+          IdUsuario = user.providerData[0].uid;
+          console.log("facebook");
+          console.log(IdUsuario);
+          firebase.database().ref('Users').once('value', function(snapshot) {
+
+                  console.log('---------------------');
+
+                  for (x in snapshot.val()) {
+                     if (x == IdUsuario) {
+                       IdGender =snapshot.val()[x].Gender
+                  //      console.log("asdasd");
+                  //    console.log(snapshot.val()[x]);
+                  //   console.log(snapshot.val()[x]);
+                  //  console.log(snapshot.val()[x].Gender);
+                     }
+
+
+                  }
+
+        }).then(function() {
+
+        });
+
+        $timeout(function () {
+          $ionicLoading.hide();
+          $state.go('app.playlists');
+
+        }, 1000);
+      }else{
+        console.clear()
+        IdUsuario = user.uid;
+        console.log("correo");
+        console.log(IdUsuario);
+          firebase.database().ref('Users').once('value', function(snapshot) {
+
+                  console.log('---------------------');
+
+                  for (x in snapshot.val()) {
+                     if (x == IdUsuario) {
+                       IdGender =snapshot.val()[x].Gender
+                  //      console.log("asdasd");
+                  //    console.log(snapshot.val()[x]);
+                  //   console.log(snapshot.val()[x]);
+                  //  console.log(snapshot.val()[x].Gender);
+                     }
+
+
+                  }
+
+        });
+      }
+
+      //alert("user signed")
+    //  $state.go('app.playlists');
+
+    } else {
+      $timeout(function () {
+        $ionicLoading.hide();
+        $state.go('tutorial');
+
+}, 1000);
+
+      // No user is signed in.
+      //alert("no login")
+    }
+});
+
+        // setTimeout(function() {
+        // 		navigator.splashscreen.hide();
+        // }, 4000);
+
+})
+
+.controller('bodyCtrl', ['$state', function($state,$ionicLoading) {
+	var userVerificate= Parse.User.current();
+
+	// *********** DEVICE READY SPLASHSCREEN  *******************
+	document.addEventListener("deviceready", function($scope) {
+    // var user = firebase.auth().currentUser;
+    //
+    //
+    //   if (user) {
+    //     $state.go('app.playlists');
+    //     // User is signed in.
+    //     console.log("/////////////////////////////user///////////////////////////////////////////");
+    //     console.log(user);
+    //     console.log(user.providerData[0].uid);
+    //     if(user.providerData[0].providerId == 'facebook.com'){
+    //       console.clear()
+    //         IdUsuario = user.providerData[0].uid;
+    //         console.log("facebook");
+    //         console.log(IdUsuario);
+    //         firebase.database().ref('Users').on('value', function(snapshot) {
+    //
+    //                 console.log('---------------------');
+    //
+    //                 for (x in snapshot.val()) {
+    //                    if (x == IdUsuario) {
+    //                      IdGender =snapshot.val()[x].Gender
+    //                 //      console.log("asdasd");
+    //                 //    console.log(snapshot.val()[x]);
+    //                 //   console.log(snapshot.val()[x]);
+    //                 //  console.log(snapshot.val()[x].Gender);
+    //                    }
+    //
+    //
+    //                 }
+    //
+    //       });
+    //     }else{
+    //       console.clear()
+    //       IdUsuario = user.uid;
+    //       console.log("correo");
+    //       console.log(IdUsuario);
+    //         firebase.database().ref('Users').on('value', function(snapshot) {
+    //
+    //                 console.log('---------------------');
+    //
+    //                 for (x in snapshot.val()) {
+    //                    if (x == IdUsuario) {
+    //                      IdGender =snapshot.val()[x].Gender
+    //                 //      console.log("asdasd");
+    //                 //    console.log(snapshot.val()[x]);
+    //                 //   console.log(snapshot.val()[x]);
+    //                 //  console.log(snapshot.val()[x].Gender);
+    //                    }
+    //
+    //
+    //                 }
+    //
+    //       });
+    //     }
+    //
+    //     //alert("user signed")
+    //   //  $state.go('app.playlists');
+    //
+    //   } else {
+    //     $state.go('tutorial');
+    //     // No user is signed in.
+    //     //alert("no login")
+    //   }
+    //   		// setTimeout(function() {
+		// 			// 		navigator.splashscreen.hide();
+		// 			// }, 4000);
 		var notificationOpenedCallback = function(jsonData) {
 		console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
 	};
@@ -2041,7 +2398,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		///////////////////////////////////////
 
 
-		$scope.currentUser = Parse.User.current();
+		//$scope.currentUser = Parse.User.current();
     // var user = firebase.auth().currentUser;
     //
     // if (user) {
@@ -2133,6 +2490,25 @@ mixpanel.track("viewTurorial");
           break;
       }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    		var FireCustomer;
+    		var CustomerF = [];
+
+    		var countC = 0;
+    	 secondaryApp.database().ref('Customer').on('value', function(snapshot) {
+    			 FireCustomer = snapshot.val();
+    				for (x in snapshot.val()) {
+    					CustomerF[countC] = snapshot.val()[x]
+    					CustomerF[countC]["suma"] =snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
+    					countC++
+    				}
+    				countC = 0
+
+    	///	console.log(CustomerF);
+    	});
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    		$scope.TutorialPromotion = CustomerF;
 }])
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
@@ -2170,6 +2546,8 @@ mixpanel.track("viewTurorial");
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
 .controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook,UserService,$q) {
+
+/*
   var user = firebase.auth().currentUser;
 
   if (user) {
@@ -2177,84 +2555,133 @@ mixpanel.track("viewTurorial");
     console.log("/////////////////////////////user///////////////////////////////////////////");
     console.log(user);
     console.log(user.providerData[0].uid);
-    IdUsuario = user.providerData[0].uid;
-    alert("user signed")
+
+    if(user.providerData[0].providerId == 'facebook.com'){
+      console.clear()
+        IdUsuario = user.providerData[0].uid;
+        console.log("facebook");
+        console.log(IdUsuario);
+
+        mainApp.database().ref('Users').on('value', function(snapshot) {
+
+                console.log('---------------------');
+
+                for (x in snapshot.val()) {
+                   if (x == IdUsuario) {
+                     IdGender =snapshot.val()[x].Gender
+                //      console.log("asdasd");
+                //    console.log(snapshot.val()[x]);
+                //   console.log(snapshot.val()[x]);
+                //  console.log(snapshot.val()[x].Gender);
+                   }
+
+
+                }
+
+      });
+    }else{
+      console.clear()
+      IdUsuario = user.uid;
+      console.log("correo");
+      console.log(IdUsuario);
+        mainApp.database().ref('Users').on('value', function(snapshot) {
+
+                console.log('---------------------');
+
+                for (x in snapshot.val()) {
+                   if (x == IdUsuario) {
+                     IdGender =snapshot.val()[x].Gender
+                //      console.log("asdasd");
+                //    console.log(snapshot.val()[x]);
+                //   console.log(snapshot.val()[x]);
+                //  console.log(snapshot.val()[x].Gender);
+                   }
+
+
+                }
+
+      });
+    }
+    //alert("user signed")
     $state.go('app.playlists');
-    ///////////////////////////Favorite heart////////////////////////////////////
-
-    mainApp.database().ref('Favorite').on('value', function(snapshot) {
-      console.log("entro----------------------------Favorite reload-----------------------------------");
-      var CountFF = 0;
-      for (x in snapshot.val()) {
-        if (snapshot.val()[x].UserID == user.providerData[0].uid) {
-          for (i in snapshot.val()[x].CustomerID) {
-            for (c in CustomerList) {
-
-              if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-                console.log("--------------------------------------");
-                console.log(snapshot.val()[x].CustomerID[i]);
-                console.log("--------------------------------------");
-                CustomerList[c].colorHeart = "red"
-              }
-            }
-          }
-          console.log("usario encontrado");
-          FirebaseFavorite[CountFF] = snapshot.val()[x]
-          FirebaseFavorite[CountFF]["FavoriteID"] = x
-          console.log(FirebaseFavorite);
-          CountFF++
-        }
-
-      }
-   });
-    //////////////////////////////////////////////////////////////////////////
-    ///////////////////////////SAVED PIN////////////////////////////////////
-
-    mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-      console.log("entro----------------------------PromotionSaved reload-----------------------------------");
-      console.log(CurrentPromotion);
-      var CountPS = 0;
-      var countPromo = 0;
-      for (x in snapshot.val()) {
-        if (snapshot.val()[x].UserID == user.providerData[0].uid) {
-
-          for (i in snapshot.val()[x].PromotionID) {
-            for (c in CurrentPromotion) {
-              // console.log("/////////////////////////////////////////////////");
-              // console.log(snapshot.val()[x].PromotionID[i]);
-              // console.log(CurrentPromotion[c].Name);
-              // console.log("/////////////////////////////////////////////////");
-              if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-                console.log(snapshot.val()[x].PromotionID[i]);
-                console.log(CurrentPromotion[c].IDpromotion);
-                console.log("---------------*****************************-----------------------");
-                console.log(snapshot.val()[x].PromotionID[i]);
-                console.log("--------------------*********************------------------");
-                console.log("purple");
-                AllPromotion[countPromo] = CurrentPromotion[c]
-                countPromo++
-                CurrentPromotion[c].ColorPin = "purple"
-
-              }else {
-                console.log("no encontro nada ");
-              }
-            }
-          }
-          console.log("usario encontrado");
-          console.log(AllPromotion);
-          FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-          FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-          console.log(FirebasePromotionSaved);
-          CountPS++
-        }
-
-      }
-   });
-    //////////////////////////////////////////////////////////////////////////
+  //   ///////////////////////////Favorite heart////////////////////////////////////
+   //
+  //   mainApp.database().ref('Favorite').on('value', function(snapshot) {
+  //     console.log("entro----------------------------Favorite reload-----------------------------------");
+  //     var CountFF = 0;
+  //     var countFavorite = 0;
+  //     for (x in snapshot.val()) {
+  //       if (snapshot.val()[x].UserID == user.providerData[0].uid) {
+  //         for (i in snapshot.val()[x].CustomerID) {
+  //           for (c in CustomerList) {
+   //
+  //             if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
+  //               console.log("--------------------------------------");
+  //               console.log(snapshot.val()[x].CustomerID[i]);
+  //               console.log("--------------------------------------");
+  //               CustomerList[c].colorHeart = "red"
+  //             //  AllFavoriteF[countFavorite] = CustomerList[c]
+  //             //  countFavorite++
+  //             }
+  //           }
+  //         }
+  //         console.log("usario encontrado");
+  //         FirebaseFavorite[CountFF] = snapshot.val()[x]
+  //         FirebaseFavorite[CountFF]["FavoriteID"] = x
+  //         console.log(FirebaseFavorite);
+  //         CountFF++
+  //       }
+   //
+  //     }
+  //  });
+  //   //////////////////////////////////////////////////////////////////////////
+  //   ///////////////////////////SAVED PIN////////////////////////////////////
+   //
+  //   mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
+  //     console.log("entro----------------------------PromotionSaved reload-----------------------------------");
+  //     console.log(CurrentPromotion);
+  //     var CountPS = 0;
+  //     var countPromo = 0;
+  //     for (x in snapshot.val()) {
+  //       if (snapshot.val()[x].UserID == user.providerData[0].uid) {
+   //
+  //         for (i in snapshot.val()[x].PromotionID) {
+  //           for (c in CurrentPromotion) {
+  //             // console.log("/////////////////////////////////////////////////");
+  //             // console.log(snapshot.val()[x].PromotionID[i]);
+  //             // console.log(CurrentPromotion[c].Name);
+  //             // console.log("/////////////////////////////////////////////////");
+  //             if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
+  //               console.log(snapshot.val()[x].PromotionID[i]);
+  //               console.log(CurrentPromotion[c].IDpromotion);
+  //               console.log("---------------*****************************-----------------------");
+  //               console.log(snapshot.val()[x].PromotionID[i]);
+  //               console.log("--------------------*********************------------------");
+  //               console.log("purple");
+  //               AllPromotionF[countPromo] = CurrentPromotion[c]
+  //               countPromo++
+  //               CurrentPromotion[c].ColorPin = "purple"
+   //
+  //             }else {
+  //               console.log("no encontro nada ");
+  //             }
+  //           }
+  //         }
+  //         console.log("usario encontrado");
+  //         console.log(AllPromotionF);
+  //         FirebasePromotionSaved[CountPS] = snapshot.val()[x]
+  //         FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
+  //         console.log(FirebasePromotionSaved);
+  //         CountPS++
+  //       }
+   //
+  //     }
+  //  });
+  //   //////////////////////////////////////////////////////////////////////////
 
   } else {
     // No user is signed in.
-    alert("no login")
+    //alert("no login")
   }
  // $scope.currentUser = Parse.User.current();
  // console.log($scope.currentUser)
@@ -2292,6 +2719,7 @@ mixpanel.track("viewTurorial");
  var fbLoginError = function(error){
 		 fbLogged.reject(error);
  };
+ */
  // This method is to get the user profile info from the facebook api
 var getFacebookProfileInfo = function (authResponse) {
   var info = $q.defer();
@@ -2380,7 +2808,6 @@ $cordovaFacebook.login(["public_profile","user_birthday" ,"email","user_hometown
                       var UserUID = user.providerData[0].uid;
                       console.log(user);
                       ///////////////////////////Favorite heart////////////////////////////////////
-
                       mainApp.database().ref('Favorite').on('value', function(snapshot) {
                         console.log("entro----------------------------Favorite reload-----------------------------------");
                         var CountFF = 0;

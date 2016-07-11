@@ -385,6 +385,45 @@ app.factory('AllFavorite', function() {
 
 	return {
 		all: function() {
+			AllFavorite = [];
+			for (c in CustomerList) {
+
+				 if (CustomerList[c].colorHeart == 'red') {
+					 console.log("favorite");
+					 console.log(CustomerList[c].Name);
+					 	for (x in CurrentPromotion) {
+							if (CustomerList[c].Name == CurrentPromotion[x].Category) {
+								console.log("promociones encontradas");
+								console.log(CurrentPromotion[x]);
+								AllFavorite.push(CurrentPromotion[x])
+							}
+						//	console.log(CurrentPromotion[x]);
+							// 	for (a in CustomerList[c].CustomerID) {
+	 					// 		if (CustomerList[c].CustomerID[a] == CurrentPromotion[x].category) {
+	 					// 			console.log("--------------------*********************");
+	 					// 			console.log(CurrentPromotion[x]);
+	 					// 		}else {
+	 					// 			alert("no encontro nada")
+	 					// 		}
+							// 	}
+
+	 					}
+				 }
+				// if (CustomerList[c].colorHeart == 'red') {
+				// 	for (x in CurrentPromotion) {
+				// 		for (a in CustomerList[c].CustomerID) {
+				// 			if (CustomerList[c].CustomerID[a] == CurrentPromotion[x].category) {
+				// 				console.log("--------------------*********************");
+				// 				console.log(CurrentPromotion[x]);
+				// 			}else {
+				// 				alert("no encontro nada")
+				// 			}
+				// 		}
+				//
+				// 	}
+				// }
+
+			}
 			if (AllFavorite.length == 0) {
 				AllFavorite.push({oferta:"noHay"});
 			}
@@ -399,14 +438,21 @@ app.factory('AllFavorite', function() {
 });
 // ************* ALL PROMOTION APP FACTORY *************
 app.factory('AllPromotion', function() {
-	var promotio = AllPromotion;
+	var promotio = AllPromotionF;
 
 	return {
 		all: function(salvadosId) {
-			if (AllPromotion.length == 0) {
-				AllPromotion.push({oferta:"noHay"});
+			AllPromotionF = [];
+			for (x in CurrentPromotion) {
+				console.log("--------------------entro al for--------------------------------");
+					if (CurrentPromotion[x].ColorPin == 'purple') {
+						AllPromotionF.push(CurrentPromotion[x])
+					}
 			}
-			promotio = AllPromotion;
+			if (AllPromotionF.length == 0) {
+				AllPromotionF.push({oferta:"noHay"});
+			}
+			promotio = AllPromotionF;
 			console.log(promotio);
 			return promotio;
 		},
@@ -1117,7 +1163,7 @@ function SavePromotion(UserId, PromotionId) {
 	var Savepromotion = Parse.Cloud.run('SavePromotion', {"Array":result});
 
 	Savepromotion.then(function(){
-		viewPromotion()
+		//viewPromotion()
 	});
 };
 // *************** DELETE PROMOTION FUNCTION ***************
@@ -1131,7 +1177,7 @@ function DeletePromotion(UserId, PromotionId) {
 	var Deletepromotion = Parse.Cloud.run('DeletePromotion', {"Array":result});
 
 	Deletepromotion.then(function(){
-		viewPromotion(PromotionId,"eliminar")
+		//viewPromotion(PromotionId,"eliminar")
 	});
 };
 // *************** SAVE FAVORITE CUPON FUNCTION ***************
@@ -1144,7 +1190,7 @@ function saveCuponFavorite(UserId, CuponID) {
 	var saveCupon = Parse.Cloud.run('saveFavoriteCupon', {"Array":result});
 
 	saveCupon.then(function(){
-		viewPromotion()
+		//viewPromotion()
 	});
 };
 
@@ -1159,7 +1205,7 @@ function deleteFavoriteCupon(UserId, CuponID) {
   };
   var deleteCupon = Parse.Cloud.run('deleteFavoriteCupon', {"Array":result});
   deleteCupon.then(function(){
-    viewPromotion()
+  //  viewPromotion()
   });
 
 };
