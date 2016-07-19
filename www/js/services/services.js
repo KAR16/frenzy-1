@@ -424,6 +424,8 @@ app.factory('AllFavorite', function() {
 				// }
 
 			}
+			console.log("---/*/*/**/*//*-----------/*/*/*/*/*//*/**//*/**/*/*/*/**//*/*");
+			console.log(AllFavorite);
 			if (AllFavorite.length == 0) {
 				AllFavorite.push({oferta:"noHay"});
 			}
@@ -513,6 +515,7 @@ app.factory('OurFavorites', function() {
 app.factory('Coupons', function() {
 	return {
 		all: function(salvadosId) {
+			console.clear();
 			console.log(Cupons);
 			var AllCupon = [];
 			var DatoCupon = [];
@@ -522,7 +525,7 @@ app.factory('Coupons', function() {
 			var resultSetC = $.grep(CustomerList, function (e) {
 				 return e.Name.indexOf(salvadosId) == 0;
 			});
-
+			console.log("*---------------------------**********************---------------*************---------*********");
 			console.log(JSON.stringify(resultSetC[0]))
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].Category) {
@@ -542,6 +545,7 @@ app.factory('Coupons', function() {
 						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
 					}
 					if (Cupons[a].PhotoCupon !=null) {
+							console.log('jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 								Cupons[a]["DisplayWithImageCoupons"] = "none";
 					}
 
@@ -568,7 +572,7 @@ app.factory('Coupons', function() {
 					}
 				}
 			}
-			if (resultSetC[0]["promo"] == 0) {
+			if (resultSetC[0]["QuantityPromotion"] == 0) {
 				validar = "no"
 			}
 
@@ -579,7 +583,7 @@ app.factory('Coupons', function() {
 				CuponALL.push(allCupon)
 				CuponALL.push(DatoCupon)
 				CuponALL.push(ContCupon)
-				CuponALL.push([{contCoupon:resultSetC[0]["coupon"],contPromotion:resultSetC[0]["promo"],Validar:validar}])
+				CuponALL.push([{contCoupon:resultSetC[0]["QuantityCoupon"],contPromotion:resultSetC[0]["QuantityPromotion"],Validar:validar}])
 				console.log(CuponALL);
 				return CuponALL;
 			}
@@ -593,11 +597,16 @@ app.factory('DescriptionCupons', function() {
 			var AllCuponDescription = [];
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].IDCupon) {
+					Cupons[a]["DisplayWithImageCoupons"] = 'none'
 					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
 						console.log("directe");
 						Cupons[a]["CanjeaQ"] = "Q."
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
+					}
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
+						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
 					}
 					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined) {
 						Cupons[a]["DisplayTerms"] = "none";

@@ -49,7 +49,7 @@
 				<div class="row BoxPriceLabel">
 					<div class="col col-33 BoxLabel">
 						<p id="NothingSpace" class="AhorraTextLabel">
-							Canjea
+							Canjeas
 						</p>
 						<p class="SavingPriceLabel {{super.TypePromotion}}">
 							{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
@@ -59,7 +59,7 @@
 				<!-- Redirect to Offer Description -->
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
 					<!-- Width of the Offers Image -->
-					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCupon._url}}" alt="Promotions">
+					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCupon}}" alt="Promotions">
 				</a>
 				<!-- Promotion Description -->
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
@@ -79,7 +79,7 @@
 				<div class="row pageFavoritesDivIcons">
 					<!-- Change Coupon -->
 					<div class="col-25 colPrice">
-						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')" href="#/app/descripcionCupones/{{cupon.IDCupon}}">
+						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')">
 							<spam class="pageOffertExchance">
 								CANJEAR
 							</spam>

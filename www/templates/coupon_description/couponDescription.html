@@ -20,8 +20,8 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan" style="display:{{cupon.DisplayWithoutImageCoupons}}">
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupons}}" alt="nissan" style="display:{{cupon.DisplayWithImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="frenzy" style="display:{{cupon.DisplayWithoutImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupons}}" alt="frenzy" style="display:{{cupon.DisplayWithImageCoupons}}">
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
@@ -67,7 +67,7 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Exchanged -->
-		<div class="availableCupones open_sans">Del {{cupon.Publication_Date.toLocaleDateString()}} Al {{cupon.End_Date}}</div>
+		<div class="availableCupones open_sans">Del {{cupon.Publication_Date}} Al {{cupon.End_Date}}</div>
 		<!-- Button Coupon Exchanged -->
 		<a style="text-decoration:none;"  class="botonCanjear">
 			<div style="display:{{noneDisplay[0].none}};">
@@ -83,11 +83,12 @@ box-shadow: 0 0 0px white;
 		<!-- Bar Code Image Coupon -->
 		<div>
 			<div class="row">
-				<div class="col col-10"></div>
-				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}}">
-					<img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto._url}}" alt="BarCodeFrenzy" >
+				<div class="col col-20"></div>
+				<div class="col col-60 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}};text-align:center">
+					<!-- <img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto.url}}" alt="BarCodeFrenzy" > -->
+						<h1 class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects">{{cupon.CodeCoupon}}</h1>
 				</div>
-				<div class="col col-10"></div>
+				<div class="col col-20"></div>
 			</div>
 			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
 			<a href="#/app/termsAndConditions/{{cupon.IDCupon}}"  style="display:{{cupon.DisplayTerms}}">
@@ -116,8 +117,8 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan" style="display:{{cupon.DisplayWithoutImageCoupons}}">
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupons}}" alt="nissan" style="display:{{cupon.DisplayWithImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="nissan" style="display:{{cupon.DisplayWithoutImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon}}" alt="nissan" style="display:{{cupon.DisplayWithImageCoupons}}">
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
@@ -181,7 +182,7 @@ box-shadow: 0 0 0px white;
 			<div class="row">
 				<div class="col col-10"></div>
 				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}}">
-					<img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto._url}}" alt="BarCodeFrenzy" >
+					<img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto.url}}" alt="BarCodeFrenzy" >
 				</div>
 				<div class="col col-10"></div>
 			</div>

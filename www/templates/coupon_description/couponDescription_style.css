@@ -117,15 +117,16 @@
 /*Bar Code Style*/
 .exchangeBoxBarCode {
 	background-color: white;
+  height: 80px;
 	border-radius: 10px;
 	margin-top: 15px;
-	margin-bottom: 15px
+	margin-bottom: 15px;
 	/*text-align: center;*/
 }
 .exchangeBoxBarCodeImage {
-	position: relative;
-	margin: 0 auto;
-  width: 180px;
+  font-family: letra;
+  font-weight: bold;
+  height: 70px
 }
 /*Legal Terms Text subFooter style*/
 .LegalTerms {
@@ -138,6 +139,8 @@
   background-color: #F1F2F2;
   border-top: 1px solid #A7A9AC;
   border-bottom: none;
+  position: fixed;
+  bottom: 0 !important;
 }
 /*Legal Term Scroll*/
 .scroll {
