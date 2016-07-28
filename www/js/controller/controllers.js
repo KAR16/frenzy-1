@@ -25,18 +25,9 @@ var config2 = {
 
 var mainApp =  firebase.initializeApp(config);
 	var secondaryApp = firebase.initializeApp(config2, "Secondary");
-  // mainApp.database().ref('Favorite/').push({
-  //   CustomerID: ["Dominos"],
-  //   UserID: "Facebook"
-  //   });
-  // mainApp.database().ref('PromotionSaved/').push({
-  //   UserID: "Facebook"
-  //   });
-
 	///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
 			var countC2 = 0;
 		 secondaryApp.database().ref('Customer').once('value', function(snapshot) {
-			console.log("entro----------------------------customer---------------------------------------------------");
 
 					for (x in snapshot.val()) {
 						CustomerList[countC2] = snapshot.val()[x]
@@ -50,68 +41,31 @@ var mainApp =  firebase.initializeApp(config);
 
 		///	console.log(CustomerF);
 		}).then(function () {
-    //   console.log("funcionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    //   console.log(CustomerList);
-    //   ///////////////////////////Favorite heart////////////////////////////////////
-     //
-    //   mainApp.database().ref('Favorite').on('value', function(snapshot) {
-    //     console.log("entro----------------------------Favorite reload-----------------------------------");
-    //     var CountFF = 0;
-    //     for (x in snapshot.val()) {
-    //       if (snapshot.val()[x].UserID == "896608317075508") {
-    //         for (i in snapshot.val()[x].CustomerID) {
-    //           for (c in CustomerList) {
-     //
-    //             if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-    //               console.log("--------------------------------------");
-    //               console.log(snapshot.val()[x].CustomerID[i]);
-    //               console.log("--------------------------------------");
-    //               CustomerList[c].colorHeart = "red"
-    //             }
-    //           }
-    //         }
-    //         console.log("usario encontrado");
-    //         FirebaseFavorite[CountFF] = snapshot.val()[x]
-    //         FirebaseFavorite[CountFF]["FavoriteID"] = x
-    //         console.log(FirebaseFavorite);
-    //         CountFF++
-    //       }
-     //
-    //     }
-    //  });
-      //////////////////////////////////////////////////////////////////////////
+
     }).then(function() {
-      console.log("3ro-------------------------------------------------------------");
 
       	/////////////////////////////////////////////CALL PROMOTION//////////////////////////////////////////////////////////////////
       			var countP = 0;
       		 mainApp.database().ref('Promotion').on('value', function(snapshot) {
-      			 //console.log("entro---------------------------------------promooooo----------------------------------------");
-      			 //	console.log(snapshot.val());
       			 var GuatemalaDay= moment.tz("America/Guatemala").format('DD/MM/YYYY');
       			 var GuatemalaMonth =moment.tz("America/Guatemala").format('MM');
       			 var GuatemalaYear =moment.tz("America/Guatemala").format('YYYY');
-
-      			 console.log(GuatemalaDay);
-      			  //console.log(GuatemalaMonth);
-      				 //console.log(GuatemalaYear);
-      					for (x in snapshot.val()) {
-      					// var moment =  moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY');
-      					// console.log(moment);
-      					//console.log(snapshot.val()[x]["EndDate"].iso);
+             console.log(GuatemalaDay);
+             console.log(GuatemalaMonth);
+             console.log(GuatemalaYear);
+             //console.log(JSON.stringify(snapshot.val()));
+      			for (x in snapshot.val()) {
       					var DatePromoDay = moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY')
       					var DatePromoMonth = moment(snapshot.val()[x]["EndDate"].iso).format('MM')
       					var DatePromoYear = moment(snapshot.val()[x]["EndDate"].iso).format('YYYY')
       					var fre = moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY')
 
+
       					////////////////////////////////////////////////////////////////////////////////////////////
-      					if (DatePromoYear >= GuatemalaYear) {
-      					//	console.log("las promociones son de este anio");
-      						if (DatePromoMonth  >=  GuatemalaMonth) {
-      								//console.log("las promociones son despues del 6 o son del 6");
-      								if (DatePromoDay > GuatemalaDay) {
-      									//console.log("promociones disponibles");
-      									//console.log(fre);
+      					if (snapshot.val()[x].Status === true) {
+
+
+
       									for (i in snapshot.val()[x].Customer) {
       										if (snapshot.val()[x].Photo === null || snapshot.val()[x].Photo === undefined) {
       											if (snapshot.val()[x].TypePromotion === 'DirectDiscount') {
@@ -235,36 +189,16 @@ var mainApp =  firebase.initializeApp(config);
       										}
       									}
       									countP++
-      								}
-      						}else {
-      						//	console.log("antes del 6");
-      						}
+
+
       					}else {
       						//console.log("no lo son");
       					}
       					/////////////////////////////////////////////////////////////////////////////////////////////////
-      					// var DayPromo =  GuatemalaDay - DatePromoDay;
-      					// var MonthPromo = GuatemalaMonth - DatePromoMonth;
-      					// var YearPromo = GuatemalaYear - DatePromoYear;
-      					// console.log("----------verificando------------");
-      					// console.log(DayPromo);
-      					// console.log(MonthPromo);
-      					// console.log(YearPromo);
-      					console.log("---------------------------------");
-      					//console.log(prueba);
-      				//console.log("************************************");;
-
-
-
-
-      						// CustomerList[countC2]["oferta"] = 'existe';
-      						// CustomerList[countC2]["colorHeart"] = 'white';
-      						// CustomerList[countC2]["lastText"] = 'favorite';
 
       					}
-      					countP = 0
-      		console.log("*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*");
-      		console.log(CurrentPromotion);
+      					countP = 0;
+                    console.log(CurrentPromotion);
       		});
       	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -273,16 +207,15 @@ var mainApp =  firebase.initializeApp(config);
       			// ********* CUPONS *********
       			//xvar Cupons = [];
       		 mainApp.database().ref('Coupon').on('value', function(snapshot) {
-      			 console.log("entro----------------------------Cupones----------------------------------------------");
-      			 	console.log(snapshot.val());
+             console.log('-------------------');
+             console.log(snapshot);
       					for (x in snapshot.val()) {
       						for (i in snapshot.val()[x].Customer) {
       							if (snapshot.val()[x].PhotoCoupon === null || snapshot.val()[x].PhotoCoupon === undefined) {
-      								console.log('sin imagen');
       									CurrentPromotion[countP] = snapshot.val()[x];
       									Cupons[countCp]["nul"] = 'sin';
       									Cupons[countCp]["name"] = snapshot.val()[x].Name;
-      									Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
+      									Cupons[countCp]["description"] = snapshot.val()[x].CouponDescription;
       									Cupons[countCp]["Canjea"] = snapshot.val()[x].CouponDiscount;
       									Cupons[countCp]["Category"] = snapshot.val()[x].Customer[i];
       									Cupons[countCp]["cupon"] = "existe";
@@ -292,7 +225,7 @@ var mainApp =  firebase.initializeApp(config);
       									Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
       									Cupons[countCp]["customer"] = snapshot.val()[x].Customer[i];
       									Cupons[countCp]["PhotoCupon"] = snapshot.val()[x].PhotoCoupon;
-      									Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.iso;
+      									Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.substring(0, 10);
       									Cupons[countCp]["End_Date"] = snapshot.val()[x].EndDate;
       									Cupons[countCp]["IDCupon"] = x;
       									Cupons[countCp]["TermsAndConditions"] = snapshot.val()[x].TermsAndConditions;
@@ -304,12 +237,11 @@ var mainApp =  firebase.initializeApp(config);
       									Cupons[countCp]["Display"] = '';
       									Cupons[countCp]["TypeOfExchange"] = snapshot.val()[x].TypeOfExchange;
       							}else {
-      								console.log('con imagen');
       								Cupons[countCp] = snapshot.val()[x];
       								Cupons[countCp]["nul"] = "con";
       								Cupons[countCp]["name"] = snapshot.val()[x].Name;
 
-      								Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
+      								Cupons[countCp]["description"] = snapshot.val()[x].CouponDescription;
       								Cupons[countCp]["Canjea"] = snapshot.val()[x].CouponDiscount;
       								Cupons[countCp]["Category"] = snapshot.val()[x].Customer[i];
       								Cupons[countCp]["cupon"] = "existe";
@@ -319,7 +251,7 @@ var mainApp =  firebase.initializeApp(config);
       								Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
       								Cupons[countCp]["customer"] = snapshot.val()[x].Customer[i];
       								Cupons[countCp]["PhotoCupon"] = snapshot.val()[x].PhotoCoupon;
-      								Cupons[countCp]["Publication_Date"] = moment(snapshot.val()[x].PublicationDate.iso).format('DD/MM/YYYY');
+      								Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.substring(0, 10);
       								Cupons[countCp]["End_Date"] = moment(snapshot.val()[x].EndDate.iso).format('DD/MM/YYYY');
       								Cupons[countCp]["IDCupon"] = x;
       								Cupons[countCp]["TermsAndConditions"] = snapshot.val()[x].TermsAndConditions;
@@ -334,53 +266,30 @@ var mainApp =  firebase.initializeApp(config);
       						}
       						countCp++
       					}
+                for (a in Cupons){
+                  console.log('++++++++++++++++++++++++++++++++++++');
+                  console.log(Cupons[a]);
+                  console.log(Cupons[a]["EndDate"]);
+                  console.log('++++++++++++++++++++++++++++++++++++');
+                  var EndDateC = new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY'));
+                  console.log('/******************************************************///');
+                  console.log(EndDateC);
+                  var fechaFinal =  new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY HH:mm:ss'));
+                  fechaFinal = moment(fechaFinal).format('x')
+                  console.log(fechaFinal);
+                  var End_Date_Coupons = moment.tz(EndDateC,'America/Guatemala').format('DD/MM/YYYY');
+                  var End_Date_Milisec = fechaFinal
+                  var Guatemala_Date= moment.tz("America/Guatemala").format('x');
+                  var DaysToFinalize = Math.round(((End_Date_Milisec - Guatemala_Date)/(24*60*60*1000)))
+
+                  Cupons[a]["EndDate"] = End_Date_Coupons
+                  Cupons[a]["DaysToFinalize"] = DaysToFinalize;
+                }
+
       					countCp = 0
-      console.log("************************************");
-      			console.log(Cupons);
-      console.log("************************************");
       		});
       	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }).then(function() {
-    //   ///////////////////////////SAVED PIN////////////////////////////////////
-     //
-    //   mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-    //     console.log("entro----------------------------PromotionSaved reload-----------------------------------");
-    //     console.log(CurrentPromotion);
-    //     var CountPS = 0;
-    //     for (x in snapshot.val()) {
-    //       if (snapshot.val()[x].UserID == "896608317075508") {
-     //
-    //         for (i in snapshot.val()[x].PromotionID) {
-    //           for (c in CurrentPromotion) {
-    //             // console.log("/////////////////////////////////////////////////");
-    //             // console.log(snapshot.val()[x].PromotionID[i]);
-    //             // console.log(CurrentPromotion[c].Name);
-    //             // console.log("/////////////////////////////////////////////////");
-    //             if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-    //               console.log(snapshot.val()[x].PromotionID[i]);
-    //               console.log(CurrentPromotion[c].IDpromotion);
-    //               console.log("---------------*****************************-----------------------");
-    //               console.log(snapshot.val()[x].PromotionID[i]);
-    //               console.log("--------------------*********************------------------");
-    //               console.log("purple");
-    //               CurrentPromotion[c].ColorPin = "purple"
-    //             }else {
-    //               console.log("no encontro nada ");
-    //             }
-    //           }
-    //         }
-    //         console.log("usario encontrado");
-    //         FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-    //         FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-    //         console.log(FirebasePromotionSaved);
-    //         CountPS++
-    //       }
-     //
-    //     }
-    //  });
-    //   //////////////////////////////////////////////////////////////////////////
-
-
 
     });
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -627,6 +536,17 @@ angular.module('starter.controllers', ['ionic'])
             }).then(function() {
               // Save Users in Firebase Auth
               mainApp.auth().createUserWithEmailAndPassword($scope.newEmailFirebase, $scope.newPasswordFirebase).then(function() {
+
+                mixpanel.identify($scope.newEmailFirebase);
+                  mixpanel.people.set({
+                    "$email": $scope.newEmailFirebase,
+                    "$gender": $scope.newGenderFirebase,
+                    "$birthday":$scope.newBirthdayFirebase,
+                    "$name": $scope.newUserFirebase,
+                    "$typeLogin": "Email"
+
+                  });
+
                 // Call to Users Entity Firebase Data
                 mainApp.database().ref('Users').once('value', function(snapshot) {
                   // If doesn't exist anything data then to save the new data
@@ -679,7 +599,7 @@ angular.module('starter.controllers', ['ionic'])
     }
 
     $scope.loginWithEmail = function(user) {
-
+      	mixpanel.track("LoginClick", { "loginButton" : "Email"});
       if(typeof user==='undefined'){
         sweetAlert('Datos Inválidos', 'Debes ingresar correo y contraseña', 'error');
       } else if(user['username']===undefined || user['username']==='') {
@@ -714,8 +634,10 @@ angular.module('starter.controllers', ['ionic'])
           if(mainApp.auth().currentUser==null){
             $scope.loginWithParse(user);
           } else {
+            IdUsuario = mainApp.auth().currentUser.uid;
             mainApp.database().ref('Users').once('value', function(snapshot) {
               if(snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == true){
+                IdGender = snapshot.val()[mainApp.auth().currentUser.uid].Gender;
                 $state.go('loadingLoginUser');
               } else if(snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == undefined){
                 $scope.VerifyEmail()
@@ -727,7 +649,7 @@ angular.module('starter.controllers', ['ionic'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('CategoryCtrl', function($scope, $ionicLoading) {
+.controller('CategoryCtrl', function($scope, $ionicLoading,$timeout) {
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
@@ -743,16 +665,6 @@ angular.module('starter.controllers', ['ionic'])
 	CategoryListName = [];
 	var query = new Parse.Query('AppCategory');
   //
-	// query.each(function(results) {
-	// 		//	CategoryListName.push(results.attributes)
-	// }).then(function() {
-	// 	ReloadFavorite()
-	// }).then(function() {
-  //
-  //
-	// 	$('.pageStartBoxPurple').show();
-	// 	$('.flechitas').show();
-	// });
 	/////////////////////////////////////////////////////////////////////////////
 var UsuarioF = true;
 var UsuarioP = true;
@@ -769,8 +681,6 @@ var UsuarioP = true;
    ///////////////////////////Favorite heart////////////////////////////////////
 
    mainApp.database().ref('Favorite').on('value', function(snapshot) {
-     console.log("entro----------------------------Favorite reload-----------------------------------");
-     console.log(IdUsuario);
      var CountFF = 0;
      var countFavorite = 0;
      for (x in snapshot.val()) {
@@ -780,19 +690,12 @@ var UsuarioP = true;
            for (c in CustomerList) {
 
              if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-               console.log("--------------------------------------");
-               console.log(snapshot.val()[x].CustomerID[i]);
-               console.log("--------------------------------------");
                CustomerList[c].colorHeart = "red"
-             //  AllFavoriteF[countFavorite] = CustomerList[c]
-             //  countFavorite++
              }
            }
          }
-         console.log("usario encontrado");
          FirebaseFavorite[CountFF] = snapshot.val()[x]
          FirebaseFavorite[CountFF]["FavoriteID"] = x
-         console.log(FirebaseFavorite);
          CountFF++
        }
 
@@ -808,8 +711,6 @@ var UsuarioP = true;
    ///////////////////////////SAVED PIN////////////////////////////////////
 
    mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-     console.log("entro----------------------------PromotionSaved reload-----------------------------------");
-     console.log(CurrentPromotion);
      var CountPS = 0;
      var countPromo = 0;
      for (x in snapshot.val()) {
@@ -817,17 +718,7 @@ var UsuarioP = true;
          UsuarioP = false;
          for (i in snapshot.val()[x].PromotionID) {
            for (c in CurrentPromotion) {
-             // console.log("/////////////////////////////////////////////////");
-             // console.log(snapshot.val()[x].PromotionID[i]);
-             // console.log(CurrentPromotion[c].Name);
-             // console.log("/////////////////////////////////////////////////");
              if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-               console.log(snapshot.val()[x].PromotionID[i]);
-               console.log(CurrentPromotion[c].IDpromotion);
-               console.log("---------------*****************************-----------------------");
-               console.log(snapshot.val()[x].PromotionID[i]);
-               console.log("--------------------*********************------------------");
-               console.log("purple");
                AllPromotionF[countPromo] = CurrentPromotion[c]
                countPromo++
                CurrentPromotion[c].ColorPin = "purple"
@@ -837,11 +728,8 @@ var UsuarioP = true;
              }
            }
          }
-         console.log("usario encontrado");
-         console.log(AllPromotionF);
          FirebasePromotionSaved[CountPS] = snapshot.val()[x]
          FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-         console.log(FirebasePromotionSaved);
          CountPS++
        }
 
@@ -858,17 +746,10 @@ var UsuarioP = true;
 
 
  }).then(function () {
-   // mainApp.database().ref('Favorite/').push({
-   //   CustomerID: ["Dominos"],
-   //   UserID: "Facebook"
-   //   });
-   // mainApp.database().ref('PromotionSaved/').push({
-   //   UserID: "Facebook"
-   //   });
-   console.log(FirebaseFavorite.length);
-   console.log(FirebasePromotionSaved.length);
 
-   $ionicLoading.hide();
+           $timeout(function () {
+             $ionicLoading.hide();
+           }, 2000);
  });
  ////////////////////////////////////////////////////////////////////////////////////
 	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
@@ -919,12 +800,8 @@ var UsuarioP = true;
         };
         var ValSend = true
         for (x in FirebasePromotionSaved[0].PromotionID) {
-          console.log(FirebasePromotionSaved[0].PromotionID[x]);
           if (FirebasePromotionSaved[0].PromotionID[x] == id) {
-            console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
-
             ValSend = false
-            console.log("son iguales-------------------------------------");
           }
         }
 
@@ -934,14 +811,11 @@ var UsuarioP = true;
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
             document.getElementById(id).style.color = "purple";
             if (ValSend == true) {
-            //  alert("se puede mandar")
               var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
               var Cus = {}
               Cus[newPostKey] = id
               firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
             }
-            //SavePromotion(IdUsuario, id)
-          //  $scope.reload()
         } else {
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
             document.getElementById(id).style.color = "silver";
@@ -949,9 +823,6 @@ var UsuarioP = true;
 
               if (FirebasePromotionSaved[0].PromotionID[i] == id) {
                 firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
-                console.log(FirebasePromotionSaved[0].PromotionID[i]);
-                console.log(i);
-                console.log("-------------asdasd--------aqui-------");
               }
             }
 
@@ -960,11 +831,8 @@ var UsuarioP = true;
                   CurrentPromotion[a].ColorPin = "silver"
                 }
             }
-          //  DeletePromotion(IdUsuario, id)
-          //  $scope.reload()
 
         }
-      //  $scope.reload()
     }
 	/**************************************************/
 	var dimensions = {
@@ -1010,27 +878,19 @@ var UsuarioP = true;
     for (x in FirebasePromotionSaved[0].PromotionID) {
       console.log(FirebasePromotionSaved[0].PromotionID[x]);
       if (FirebasePromotionSaved[0].PromotionID[x] == id) {
-        console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
-
-        ValSend = false
-        console.log("son iguales-------------------------------------");
+        ValSend = false;
       }
     }
-
-		//Parse.Analytics.track("pin", Dimensions);
 		var pin = document.getElementById(id).style.color;
 		if (pin == "silver") {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id).style.color = "purple";
       if (ValSend == true) {
-      //  alert("se puede mandar")
         var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
         var Cus = {}
         Cus[newPostKey] = id
         firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
       }
-			//SavePromotion(IdUsuario, id)
-			// $scope.reload()
 		} else {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id).style.color = "silver";
@@ -1038,9 +898,6 @@ var UsuarioP = true;
 
         if (FirebasePromotionSaved[0].PromotionID[i] == id) {
           firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
-          console.log(FirebasePromotionSaved[0].PromotionID[i]);
-          console.log(i);
-          console.log("-------------asdasd--------aqui-------");
         }
       }
 
@@ -1049,10 +906,7 @@ var UsuarioP = true;
             CurrentPromotion[a].ColorPin = "silver"
           }
       }
-			//DeletePromotion(IdUsuario, id)
-		//	$scope.reload()
 		}
-	//	$scope.reload()
 	}
 
 	$scope.$on('$ionicView.enter', function() {
@@ -1078,13 +932,13 @@ var UsuarioP = true;
     console.log(resultSetCs[0]);
 		// Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
 		if (resultSetCs[0].QuantityPromotion > 0  &&  resultSetCs[0].QuantityCoupon > 0) {
-      console.log('las dos tienen');
+
 				location.href=promotionPage+id
 		}else if (resultSetCs[0].QuantityPromotion > 0) {
-      console.log('solo hay promos');
+
 				location.href=promotionPage+id
 		}else if( resultSetCs[0].QuantityCoupon > 0){
-      console.log('solo hay cupoones');
+
 			location.href=couponPage+id
 		}else {
 				location.href=promotionPage+id
@@ -1092,23 +946,14 @@ var UsuarioP = true;
 	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
-    //alert("firebase")
-
-    console.log("************************************************************");
-console.log(FirebaseFavorite);
     var ValSend = true
     for (x in FirebaseFavorite[0].CustomerID) {
       console.log(FirebaseFavorite[0].CustomerID[x]);
       if (FirebaseFavorite[0].CustomerID[x] == category) {
-        console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
-
-        ValSend = false
-        console.log("son iguales-------------------------------------");
+        ValSend = false;
       }
     }
 
-
-		console.log(category);
 		var NamePromo = category
 		var NameUser = String(IdUsuario)
 		var Dimensions = {
@@ -1121,15 +966,11 @@ console.log(FirebaseFavorite);
 			mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "red";
       if (ValSend == true) {
-      //  alert("se puede mandar")
         var newPostKey = firebase.database().ref().child('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').push().key;
         var Cus = {}
         Cus[newPostKey] = category
         firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').update(Cus);
         }
-
-		//	SaveFavorite(IdUsuario, category)
-			//	Parse.Analytics.track("AddHeart", Dimensions);
 		} else {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "white";
@@ -1138,9 +979,6 @@ console.log(FirebaseFavorite);
 
         if (FirebaseFavorite[0].CustomerID[i] == category) {
           firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID/'+i).remove();
-          //console.log(FirebaseFavorite[0].CustomerID[i]);
-          console.log(i);
-          console.log("-------------asdasd--------aqui-------");
         }
       }
       for (a in CustomerList) {
@@ -1148,9 +986,6 @@ console.log(FirebaseFavorite);
             CustomerList[a].colorHeart = "white"
           }
       }
-
-			//	Parse.Analytics.track("DelHeart", Dimensions);
-		//remove	DeleteFavorite(IdUsuario, category)
 		}
 	};
 
@@ -1161,14 +996,12 @@ console.log(FirebaseFavorite);
 		 return e.name.indexOf($stateParams.IDcustomer) == 0;
 	});
 	var NameUser = String(IdUsuario)
-//	console.log(DirecParse[0].name2);
 
 	var dimensions = {
 		name: DirecParse[0].name2
 	};
 mixpanel.track("view", { "type" : "Customers","Gender":IdGender,"User":NameUser});
 mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender":IdGender,"User":NameUser});
-		Parse.Analytics.track("view", dimensions);
 	// Loading scope
 	$scope.AppCategory = $stateParams.IDcustomer
 	$scope.loading = $ionicLoading.show({
@@ -1209,7 +1042,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	mixpanel.track("view", { "type" : "PromotionsDescription","Gender":IdGender,"User":IdUsuario});
 	$scope.chats = DescriptionOfferts.all($stateParams.superId);
 	console.log($scope.chats[0].Category);
-//	$scope.heartMenu = resultSetPopover[0].colorHeart;
 	$scope.custumerName = $scope.chats[0].Category.replace(/-/g," ");
 			$scope.$on('$ionicView.enter', function() {
 				console.log();
@@ -1218,7 +1050,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			});
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading,$cordovaSocialSharing) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
@@ -1235,7 +1067,12 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 //	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
-
+  $scope.sendSms = function(){
+   $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {
+   }, function(err) {
+   console.log('error mensaje');
+   });
+   }
 	$scope.reload = function () {
 	    var PromoSavess = new Parse.Query('PromotionSaved')
 	    PromoSavess.equalTo("UserID", IdUsuario);
@@ -1270,35 +1107,24 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		  user: NameUser
 		};
 
-    console.log("************************************************************");
-    console.log(FirebasePromotionSaved[0].PromotionSavedID);
     var ValSend = true
     for (x in FirebasePromotionSaved[0].PromotionID) {
       console.log(FirebasePromotionSaved[0].PromotionID[x]);
       if (FirebasePromotionSaved[0].PromotionID[x] == IDPromotion) {
-        console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
-
-        ValSend = false
-        console.log("son iguales-------------------------------------");
+        ValSend = false;
       }
     }
-
-		//Parse.Analytics.track("pin", Dimensions);
 		var cssColorpinOfferts = document.getElementById(id+" "+IDPromotion).style.color;
 
 		if (cssColorpinOfferts == "silver") {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
       if (ValSend == true) {
-      //  alert("se puede mandar")
         var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
         var Cus = {}
         Cus[newPostKey] = IDPromotion
         firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
       }
-		//	SavePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
-	    //viewPromotion()
 		} else {
       AllPromotionF = [];
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
@@ -1307,30 +1133,16 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
         if (FirebasePromotionSaved[0].PromotionID[i] == IDPromotion) {
           firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
-          console.log(FirebasePromotionSaved[0].PromotionID[i]);
-          console.log(i);
-          console.log("-------------asdasd--------aqui-------");
         }
       }
 
       for (a in CurrentPromotion) {
-        //console.log(IDPromotion);
           if (CurrentPromotion[a].IDpromotion == IDPromotion) {
             CurrentPromotion[a].ColorPin = "silver"
-            console.log("--------------puto aquiiiiiiiiiiiiiiiiiiiiiiii---------------------------");
-            console.log(CurrentPromotion[a].IDpromotion);
-            console.log(CurrentPromotion[a].ColorPin);
           }
 
       }
-
-      console.log(CurrentPromotion);
-
-		//	DeletePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
-	    //viewPromotion()
 		}
-	//$scope.reload()
 	};
 	// *********** FUNCTION CHANGE COLOR PIN OFFERTS WITHOUT IMAGE **********
 	$scope.changeColorPinOffertsWithoutImage = function (id, IDPromotion) {
@@ -1338,12 +1150,10 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
 		if (cssColorpinOffertsWithoutImage == "silver") {
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
-			SavePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
+			SavePromotion(IdUsuario, IDPromotion);
 		} else {
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
-			DeletePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
+			DeletePromotion(IdUsuario, IDPromotion);
 		}
 	};
 	// *************** CALL PHONE FUNCTION ***************
@@ -1374,12 +1184,10 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			mixpanel.track("ClickWeb", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
-			Parse.Analytics.track("WebShopPromotion", Dimensions);
 		}else {
 				mixpanel.track("ClickCartShop", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
-			Parse.Analytics.track("cartShopPromotion", Dimensions);
 		}
 
 	}
@@ -1425,45 +1233,30 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		  user: NameUser
 		};
 		$scope.changeColorHeartFollow = function(id) {
-    //  alert("popover");
       var ValSend = true
       for (x in FirebaseFavorite[0].CustomerID) {
         console.log(FirebaseFavorite[0].CustomerID[x]);
         if (FirebaseFavorite[0].CustomerID[x] == id) {
-          console.log("//////////*//*/*/*/*/*/**//*/*/*/*/*/**//*/*/*/*/*/*/*/*/*/*/*/*/*");
-
-          ValSend = false
-          console.log("son iguales-------------------------------------");
+          ValSend = false;
         }
       }
 
-
-
-
-    //  alert("popover heart")
 			if ($scope.heartMenu == "silver") {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
-			//	Parse.Analytics.track("AddHeartPopover", Dimensions);
       if (ValSend == true) {
-        //  alert("se puede mandar")
           var newPostKey = firebase.database().ref().child('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').push().key;
           var Cus = {}
           Cus[newPostKey] = id
           firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').update(Cus);
         }
 				$scope.heartMenu = "red";
-//SaveFavorite(IdUsuario, id)
+
 			} else {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
-				//Parse.Analytics.track("DelHeartPopover", Dimensions);
         console.log("-*-*-*-*-asdas*d-as*d-as*d-a*s-*as-d*a-sd*a-s*d");
         for (i in FirebaseFavorite[0].CustomerID) {
-
           if (FirebaseFavorite[0].CustomerID[i] == id) {
             firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID/'+i).remove();
-            //console.log(FirebaseFavorite[0].CustomerID[i]);
-            console.log(i);
-            console.log("-------------asdasd--------aqui-------");
           }
         }
 				$scope.heartMenu = "silver";
@@ -1472,7 +1265,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
               CustomerList[a].colorHeart = "white"
             }
         }
-			//	DeleteFavorite(IdUsuario, id)
 			}
 		}
 		/* **************************************************** */
@@ -1537,7 +1329,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams ,Coupons, $ionicLoading) {
+.controller('CuponCtrl', function($scope, $stateParams ,Coupons, $ionicLoading,$cordovaSocialSharing) {
 	var NameUser = String(IdUsuario);
 	mixpanel.track("view", { "type" : "copuns","Gender":IdGender,"User":NameUser});
 		// For to update QuantityExchanged
@@ -1553,6 +1345,13 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
 						or hide it  ****/
+
+    $scope.sendSms = function(){
+      $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {
+        }, function(err) {
+        console.log('error mensaje');
+      });
+    }
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
 		a = cell.toString();
@@ -1590,7 +1389,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
             if (x == id) {
 
               if(snapshot.val()[x].TypeCoupon === 'Fecha'){
-                // alert("vamo a calmarnos")
                           swal({
                               title: "Estas Seguro?",
                               text: "Quieres canjear este cupon?",
@@ -1621,10 +1419,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                                   mainApp.database().ref('Coupon/'+x).update({
                                         QuantityExchanged: QuantityExchangedSuma
                                   });
-                                  //cuponClassExchanged.id = id; //////////////// //////////////// ////////////////
-                                //  cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1); //////////////// //////////////// //////////////// ////////////////
-                                //  cuponClassExchanged.save(); //////////////// //////////////// ////////////////
-                                //console.clear();
                               } else {
                               swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
 
@@ -1632,7 +1426,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                           });
 
                       }else if(snapshot.val()[x].TypeCoupon === 'Cupon'){
-                        alert("vamo a calmarno 2")
               					if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
               											$scope.cupons[0][0].QuantityExchanged +=1;
               											swal({
@@ -1655,21 +1448,18 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
               	                                type: "success"
               	                            });
               															mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":id});
-              	                            // couponCash.then(function(){
+
               																	var element = document.getElementById("QuantityExchangedText");
               																	element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
               	                                var couponPages="#/app/descripcionCupones/";
               	                                // IdPromotion with redirection page
               	                                couponPages = couponPages+id;
               	                                location.href=couponPages;
-              	                            // });
+
                                             QuantityExchangedSuma = snapshot.val()[x].QuantityExchanged + 1
                                             mainApp.database().ref('Coupon/'+x).update({
                                                   QuantityExchanged: QuantityExchangedSuma
                                             });
-              	                           // cuponClassExchanged.id = id;  //////////////// //////////////// //////////////// ////////////////
-              	                            //cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1); ///// /////////////////////////// //////////////// ////////////////
-              	                            //cuponClassExchanged.save(); //////////////// //////////////// //////////////// ////////////////
                                     	} else {
               														$scope.cupons[0][0].QuantityExchanged -=1;
               														var element = document.getElementById("QuantityExchangedText");
@@ -1682,10 +1472,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                                       mainApp.database().ref('Cupon/'+x).update({
                                             Status: false
                                       });
-              											//	cuponClassExchanged.id = id;  //////////////// //////////////// //////////////// ////////////////
-              											//	cuponClassExchanged.set("Status", false); //////////////// //////////////// ////////////////
-              											//	cuponClassExchanged.save(); //////////////// / /////////////////////////////// ////////////////
-
               												swal({
               													title: 'Lo sentimos!',
               													text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
@@ -1698,45 +1484,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
               																	template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
               														});
 
-              											// 			Parse.Cloud.run('CountCouponCustomer', {}, {
-              											// 					success: function(resultCustomer) {
-              											// 						console.log(resultCustomer);
-              											// 							Parse.Cloud.run('CountCouponCategories', {}, {
-              											// 									success:function(result) {
-              											// 										CategoryListName = [];
-              											// 										var query = new Parse.Query('AppCategory');
-              											// 										query.each(function(results) {
-              											// 												CategoryListName.push(results.attributes)
-              											// 										}).then(function() {
-              											// 												ReloadFavorite()
-              											// 										}).then(function() {
-              											// 												Parse.Cloud.run('GetCustomer', {},{
-              											// 														success:function (results) {
-              											// 															//	console.log(results);
-              											// 															CustomerList = results
-              											// 														},
-              											// 														error:function (error) {
-              											// 														 console.log(error);
-              											// 														}
-              											// 												}).then(function() {
-              											// 													$ionicLoading.hide();
-              											// 													var couponPages="#/app/playlists";
-              											// 													location.href=couponPages;
-              											// 												})
-              											// 											});
-                                    //
-              											// 									},
-              											// 									error: function(error) {
-              											// 											/* Show error if call failed */
-              											// 											console.log(error);
-              											// 									}
-              											// 							});
-              											// 					},
-              											// 					error: function(error) {
-              											// 							/* Show error if call failed */
-              											// 							console.log(error);
-              											// 					}
-              											// });
 
                                     $ionicLoading.hide();
                                   	var couponPages="#/app/playlists";
@@ -1753,149 +1500,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
           }
        });
-        //
-        // query.equalTo("objectId",id)
-        // var couponCash =	query.find({
-        //     success: function(results){
-        //
-        //         console.log('entro a la funcion');
-        //         if(results[0].attributes.TypeCoupon === 'Fecha'){
-        //
-        //             swal({
-        //                 title: "Estas Seguro?",
-        //                 text: "Quieres canjear este cupon?",
-        //                 type: "warning",
-        //                 showCancelButton: true,
-        //                 cancelButtonText: 'No',
-        //                 confirmButtonColor: '#00BAB9',
-        //                 confirmButtonText: "Canjear!",
-        //                 closeOnConfirm: false
-        //             },
-        //             function(isConfirm){
-        //                 if (isConfirm) {
-        //                     swal({
-        //                         title: 'Perfecto!',
-        //                         text: 'Has cambiado tu Cupón',
-				// 												type: "success",
-        //                         timer: 2000,
-        //                         showConfirmButton: false,
-        //
-        //                     });
-				// 										mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":id});
-        //                     cuponClassExchanged.id = id; //////////////// //////////////// ////////////////
-        //                     cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1); //////////////// //////////////// //////////////// ////////////////
-        //                     cuponClassExchanged.save(); //////////////// //////////////// ////////////////
-        //                     var couponPages="#/app/descripcionCupones/";
-        //                     location.href=couponPages+id;
-        //                 } else {
-        //                 swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
-        //                 }
-        //             });
-        //
-        //         }else if(results[0].attributes.TypeCoupon === 'Cupon'){
-				// 						if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
-				// 							$scope.cupons[0][0].QuantityExchanged +=1;
-				// 							swal({
-	      //                   title: "Estas Seguro?",
-	      //                   text: "Quieres canjear este cupon?",
-	      //                   type: "warning",
-	      //                   showCancelButton: true,
-	      //                   cancelButtonText: 'No',
-	      //                   confirmButtonColor: '#00BAB9',
-	      //                   confirmButtonText: "Canjear!",
-	      //                   closeOnConfirm: false
-	      //               },
-	      //               function(isConfirm){
-	      //                   if (isConfirm) {
-	      //                       swal({
-	      //                           title: 'Perfecto!',
-	      //                           text: 'Has cambiado tu Cupón',
-	      //                           timer: 2000,
-	      //                           showConfirmButton: false,
-	      //                           type: "success"
-	      //                       });
-				// 											mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":id});
-	      //                       couponCash.then(function(){
-				// 													var element = document.getElementById("QuantityExchangedText");
-				// 													element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
-	      //                           var couponPages="#/app/descripcionCupones/";
-	      //                           // IdPromotion with redirection page
-	      //                           couponPages = couponPages+id;
-	      //                           location.href=couponPages;
-	      //                       });
-        //
-	      //                       cuponClassExchanged.id = id;  //////////////// //////////////// //////////////// ////////////////
-	      //                       cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1); ///// /////////////////////////// //////////////// ////////////////
-	      //                       cuponClassExchanged.save(); //////////////// //////////////// //////////////// ////////////////
-        //               	} else {
-				// 										$scope.cupons[0][0].QuantityExchanged -=1;
-				// 										var element = document.getElementById("QuantityExchangedText");
-				// 										element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
-	      //                 }
-	      //               });
-				// 						} else {
-				// 								$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
-				// 								cuponClassExchanged.id = id;  //////////////// //////////////// //////////////// ////////////////
-				// 								cuponClassExchanged.set("Status", false); //////////////// //////////////// ////////////////
-				// 								cuponClassExchanged.save(); //////////////// / /////////////////////////////// ////////////////
-        //
-				// 								swal({
-				// 									title: 'Lo sentimos!',
-				// 									text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-				// 									type: 'warning'
-				// 								},
-				// 								function(isConfirm) {
-				// 										if(isConfirm){
-				// 											$scope.loading = $ionicLoading.show({
-				// 													showBackdrop: true,
-				// 													template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-				// 										});
-        //
-				// 										Parse.Cloud.run('CountCouponCustomer', {}, {
-				// 												success: function(resultCustomer) {
-				// 													console.log(resultCustomer);
-				// 														Parse.Cloud.run('CountCouponCategories', {}, {
-				// 																success:function(result) {
-				// 																	CategoryListName = [];
-				// 																	var query = new Parse.Query('AppCategory');
-				// 																	query.each(function(results) {
-				// 																			CategoryListName.push(results.attributes)
-				// 																	}).then(function() {
-				// 																			ReloadFavorite()
-				// 																	}).then(function() {
-				// 																			Parse.Cloud.run('GetCustomer', {},{
-				// 																					success:function (results) {
-				// 																						//	console.log(results);
-				// 																						CustomerList = results
-				// 																					},
-				// 																					error:function (error) {
-				// 																					 console.log(error);
-				// 																					}
-				// 																			}).then(function() {
-				// 																				$ionicLoading.hide();
-				// 																				var couponPages="#/app/playlists";
-				// 																				location.href=couponPages;
-				// 																			})
-				// 																		});
-        //
-				// 																},
-				// 																error: function(error) {
-				// 																		/* Show error if call failed */
-				// 																		console.log(error);
-				// 																}
-				// 														});
-				// 												},
-				// 												error: function(error) {
-				// 														/* Show error if call failed */
-				// 														console.log(error);
-				// 												}
-				// 							});
-				// 							}
-				// 						})
-				// 					}
-				// 				}
-        //     	}
-        // 	});
 					displayNoneInline=[{none:"none",inline:"inline",position:"absolute",bottom:0}];
   		}
 
@@ -2016,8 +1620,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
       // mainApp.database().ref('Cupon/'+x).update({
       //       Status: false
       // });
-console.clear();
-console.log($stateParams.DescriptionID);
+
 
         mainApp.database().ref('Coupon').once('value', function(snapshot) {
             for (x in snapshot.val()) {
@@ -2030,9 +1633,6 @@ console.log($stateParams.DescriptionID);
                                   mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
                                         QuantityExchanged: QuantityExchangedsu
                                   });
-                  								  // cuponClassExchanged.id = $stateParams.DescriptionID;
-                  									// cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-                  									// cuponClassExchanged.save();
                   									mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
                   									swal({
                   											title: "Perfecto!",
@@ -2048,9 +1648,6 @@ console.log($stateParams.DescriptionID);
                                   mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
                                         Status: false
                                   });
-                  								// cuponClassExchanged.id = $stateParams.DescriptionID;
-                  								// cuponClassExchanged.set("Status", false);
-                  								// cuponClassExchanged.save();
 
                   								swal({
                   									title: 'Lo sentimos!',
@@ -2064,48 +1661,7 @@ console.log($stateParams.DescriptionID);
                   												showBackdrop: true,
                   												template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
                   											});
-                                        //
-                  											// Parse.Cloud.run('CountCouponCustomer', {}, {
-                  											// 		success: function(resultCustomer) {
-                  											// 			console.log(resultCustomer);
-                  											// 				Parse.Cloud.run('CountCouponCategories', {}, {
-                  											// 						success:function(result) {
-                                        //
-                  											// 							CategoryListName = [];
-                  											// 							var query = new Parse.Query('AppCategory');
-                  											// 							query.each(function(results) {
-                  											// 										CategoryListName.push(results.attributes)
-                  											// 							}).then(function() {
-                  											// 								ReloadFavorite()
-                  											// 							}).then(function() {
-                                        //
-                  											// 								Parse.Cloud.run('GetCustomer', {},{
-                  											// 									success:function (results) {
-                  											// 									//	console.log(results);
-                  											// 										CustomerList = results
-                  											// 									},
-                  											// 									error:function (error) {
-                  											// 									 console.log(error);
-                  											// 									}
-                  											// 								}).then(function() {
-                  											// 									$ionicLoading.hide();
-                  											// 									var couponPages="#/app/playlists";
-                  											// 									location.href=couponPages;
-                  											// 								})
-                  											// 							});
-                                        //
-                  											// 						},
-                  											// 						error: function(error) {
-                  											// 								/* Show error if call failed */
-                  											// 								console.log(error);
-                  											// 						}
-                  											// 				});
-                  											// 		},
-                  											// 		error: function(error) {
-                  											// 		/* Show error if call failed */
-                  											// 		console.log(error);
-                  											// 		}
-                  											// });
+
                                         $ionicLoading.hide();
                                       	var couponPages="#/app/playlists";
                                         location.href=couponPages;
@@ -2116,116 +1672,15 @@ console.log($stateParams.DescriptionID);
                           } else if(snapshot.val()[x].TypeCoupon === "Fecha"){
                                   console.log('tiene que sumar')
       														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
-                                          // cuponClassExchanged.id = $stateParams.DescriptionID;
-      									                  // cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-      									                  // cuponClassExchanged.save();
                                           QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
                                           mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
                                                 QuantityExchanged: QuantityExchangedsu
                                           });
                           }
 
-
-
-
-
                   }
 
         });
-
-				// var couponCash2 = query.find({
-				// 	success: function(results){
-        //       if(results[0].attributes.TypeCoupon === "Cupon"){
-        //                                 // ------------------------------------------------------------------------------------------------------------------------------------------------
-        //           if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
-        //     								  cuponClassExchanged.id = $stateParams.DescriptionID;
-        //     									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-        //     									cuponClassExchanged.save();
-        //     									mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
-        //     									swal({
-        //     											title: "Perfecto!",
-        //     											text: "Has cambiado tu cupón",
-        //     											type: "success",
-        //     											timer: 2000,
-        //     											showConfirmButton: false
-        //     									});
-        //                                   } else {
-        //
-        //     								$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
-        //
-        //     								cuponClassExchanged.id = $stateParams.DescriptionID;
-        //     								cuponClassExchanged.set("Status", false);
-        //     								cuponClassExchanged.save();
-        //
-        //     								swal({
-        //     									title: 'Lo sentimos!',
-        //     									text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-        //     									type: 'warning'
-        //     								},
-        //     								function(isConfirm) {
-        //     										if(isConfirm){
-        //
-        //     											$scope.loading = $ionicLoading.show({
-        //     												showBackdrop: true,
-        //     												template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-        //     											});
-        //
-        //     											Parse.Cloud.run('CountCouponCustomer', {}, {
-        //     													success: function(resultCustomer) {
-        //     														console.log(resultCustomer);
-        //     															Parse.Cloud.run('CountCouponCategories', {}, {
-        //     																	success:function(result) {
-        //
-        //     																		CategoryListName = [];
-        //     																		var query = new Parse.Query('AppCategory');
-        //     																		query.each(function(results) {
-        //     																					CategoryListName.push(results.attributes)
-        //     																		}).then(function() {
-        //     																			ReloadFavorite()
-        //     																		}).then(function() {
-        //
-        //     																			Parse.Cloud.run('GetCustomer', {},{
-        //     																				success:function (results) {
-        //     																				//	console.log(results);
-        //     																					CustomerList = results
-        //     																				},
-        //     																				error:function (error) {
-        //     																				 console.log(error);
-        //     																				}
-        //     																			}).then(function() {
-        //     																				$ionicLoading.hide();
-        //     																				var couponPages="#/app/playlists";
-        //     																				location.href=couponPages;
-        //     																			})
-        //     																		});
-        //
-        //     																	},
-        //     																	error: function(error) {
-        //     																			/* Show error if call failed */
-        //     																			console.log(error);
-        //     																	}
-        //     															});
-        //     													},
-        //     													error: function(error) {
-        //     													/* Show error if call failed */
-        //     													console.log(error);
-        //     													}
-        //     											});
-        //
-        //     										}
-        //     								})
-        //     						}
-        //                 // ------------------------------------------------------------------------------------------------------------------------------------------------
-        //             } else if(results[0].attributes.TypeCoupon === "Fecha"){
-        //                     console.log('tiene que sumar')
-				// 										mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
-        //                             cuponClassExchanged.id = $stateParams.DescriptionID;
-				// 					cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-				// 					cuponClassExchanged.save();
-        //             }
-        //
-				// 	}
-				// })
 
 		}
 		/*****  noneDisplay equalTo displayNoneInline for
@@ -2236,7 +1691,6 @@ console.log($stateParams.DescriptionID);
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
 			$scope.noneDisplay=displayNoneInline;
-			// console.log($scope.noneDisplay[0].position);
 			if ($scope.noneDisplay[0].position == "absolute") {
 				$scope.HideStyleButtonExchangePosition = "none"
 				$scope.HideStyleButtonExchangeBottom = "none"
@@ -2520,13 +1974,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     }, 2000);
 
   });
-
-
-
 })
-
-
-
 
 .controller('loadingCtrl', function($scope, $state,$ionicLoading,$timeout) {
   $ionicLoading.show({
@@ -2535,80 +1983,48 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	});
   $timeout(function () {
 
-
-
   var user = firebase.auth().currentUser;
   var credential;
 
-  // Prompt the user to re-provide their sign-in credentials
-  console.clear()
 
-//mainApp.auth().onAuthStateChanged(function(user) {
+
 
 
     if (user) {
-
-      //$state.go('app.playlists');
-      // User is signed in.
-      console.log("/////////////////////////////user///////////////////////////////////////////");
       console.log(user);
       console.log(user.providerData[0].uid);
       if(user.providerData[0].providerId == 'facebook.com'){
 
           IdUsuario = user.providerData[0].uid;
-          console.log("facebook");
-          console.log(IdUsuario);
           mainApp.database().ref('Users').once('value', function(snapshot) {
-
-                  console.log('---------------------');
 
                   for (x in snapshot.val()) {
                      if (x == IdUsuario) {
                        IdGender =snapshot.val()[x].Gender
-                  //      console.log("asdasd");
-                  //    console.log(snapshot.val()[x]);
-                  //   console.log(snapshot.val()[x]);
-                  //  console.log(snapshot.val()[x].Gender);
                      }
-
-
                   }
 
         }).then(function() {
-
+          console.log();
         });
 
         $timeout(function () {
           $ionicLoading.hide();
           $state.go('app.playlists');
 
-        }, 1000);
+        }, 2000);
       }else{
-        console.clear()
         IdUsuario = user.uid;
-        console.log("correo");
-        console.log(IdUsuario);
+
           mainApp.database().ref('Users').once('value', function(snapshot) {
-
-                  console.log('---------------------');
-
                   for (x in snapshot.val()) {
                      if (x == IdUsuario) {
                        IdGender =snapshot.val()[x].Gender
-                  //      console.log("asdasd");
-                  //    console.log(snapshot.val()[x]);
-                  //   console.log(snapshot.val()[x]);
-                  //  console.log(snapshot.val()[x].Gender);
                      }
-
-
                   }
-
-        });
-      }
-
-      //alert("user signed")
-    //  $state.go('app.playlists');
+              });
+            }
+            $state.go('app.playlists');
 
     } else {
       $timeout(function () {
@@ -2617,8 +2033,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
         }, 1000);
 
-      // No user is signed in.
-      //alert("no login")
     }
 
 
@@ -2636,72 +2050,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 	// *********** DEVICE READY SPLASHSCREEN  *******************
 	document.addEventListener("deviceready", function($scope) {
-    // var user = firebase.auth().currentUser;
-    //
-    //
-    //   if (user) {
-    //     $state.go('app.playlists');
-    //     // User is signed in.
-    //     console.log("/////////////////////////////user///////////////////////////////////////////");
-    //     console.log(user);
-    //     console.log(user.providerData[0].uid);
-    //     if(user.providerData[0].providerId == 'facebook.com'){
-    //       console.clear()
-    //         IdUsuario = user.providerData[0].uid;
-    //         console.log("facebook");
-    //         console.log(IdUsuario);
-    //         firebase.database().ref('Users').on('value', function(snapshot) {
-    //
-    //                 console.log('---------------------');
-    //
-    //                 for (x in snapshot.val()) {
-    //                    if (x == IdUsuario) {
-    //                      IdGender =snapshot.val()[x].Gender
-    //                 //      console.log("asdasd");
-    //                 //    console.log(snapshot.val()[x]);
-    //                 //   console.log(snapshot.val()[x]);
-    //                 //  console.log(snapshot.val()[x].Gender);
-    //                    }
-    //
-    //
-    //                 }
-    //
-    //       });
-    //     }else{
-    //       console.clear()
-    //       IdUsuario = user.uid;
-    //       console.log("correo");
-    //       console.log(IdUsuario);
-    //         firebase.database().ref('Users').on('value', function(snapshot) {
-    //
-    //                 console.log('---------------------');
-    //
-    //                 for (x in snapshot.val()) {
-    //                    if (x == IdUsuario) {
-    //                      IdGender =snapshot.val()[x].Gender
-    //                 //      console.log("asdasd");
-    //                 //    console.log(snapshot.val()[x]);
-    //                 //   console.log(snapshot.val()[x]);
-    //                 //  console.log(snapshot.val()[x].Gender);
-    //                    }
-    //
-    //
-    //                 }
-    //
-    //       });
-    //     }
-    //
-    //     //alert("user signed")
-    //   //  $state.go('app.playlists');
-    //
-    //   } else {
-    //     $state.go('tutorial');
-    //     // No user is signed in.
-    //     //alert("no login")
-    //   }
-    //   		// setTimeout(function() {
-		// 			// 		navigator.splashscreen.hide();
-		// 			// }, 4000);
+
 		var notificationOpenedCallback = function(jsonData) {
 		console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
 	};
@@ -2714,36 +2063,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	window.plugins.OneSignal.enableInAppAlertNotification(true);
 		///////////////////////////////////////
 
-
-		//$scope.currentUser = Parse.User.current();
-    // var user = firebase.auth().currentUser;
-    //
-    // if (user) {
-    //   // User is signed in.
-    //   $state.go('app.playlists');
-    // } else {
-    //   // No user is signed in.
-    // }
-
-			//  if (userVerificate==null) {
-			// 		 $state.go('tutorial');
-			// }else {
-			// 		if (userVerificate["attributes"].authData == undefined) {
-			// 			console.log("---------------------------------******************************************************************************");
-			// 				IdUsuario = String($scope.currentUser.id)
-			// 				IdGender = String($scope.currentUser.attributes.gender);
-			// 								viewPromotion()
-			// 		}else {
-			// 			console.log("---------------------------------******************************************************************************");
-			// 				IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
-			// 				IdGender = String($scope.currentUser.attributes.gender);
-			// 								viewPromotion()
-			// 		}
-			// 		$state.go('app.playlists');
-			// 		// setTimeout(function() {
-			// 		// 		navigator.splashscreen.hide();
-			// 		// }, 6000);
-			// 	}
 	}, false);
 }])
 
@@ -2757,18 +2076,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-
-// mainApp.auth().signOut().then(function() {
-//   // Sign-out successful.
-//   console.log("Sign-out successful.");
-// }, function(error) {
-//   // An error happened.
-// });
-	var guate    = moment.tz("America/Guatemala");
-
-
-
-mixpanel.track("viewTurorial");
+  var guate    = moment.tz("America/Guatemala");
+  mixpanel.track("viewTurorial");
 	// IdUsuario of Facebook or Frenzy for Pines and hearts
 
 	$scope.slideChanged = function(index) {
@@ -2792,8 +2101,6 @@ mixpanel.track("viewTurorial");
 					countC++
 				}
 				countC = 0
-
-	///	console.log(CustomerF);
 	});
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		$scope.TutorialPromotion = CustomerF;
@@ -2820,9 +2127,7 @@ mixpanel.track("viewTurorial");
     					CustomerF[countC]["suma"] =snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
     					countC++
     				}
-    				countC = 0
-
-    	///	console.log(CustomerF);
+    				countC = 0;
     	});
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     		$scope.TutorialPromotion = CustomerF;
@@ -2862,181 +2167,8 @@ mixpanel.track("viewTurorial");
 }])
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
-.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook,UserService,$q) {
+.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook,UserService,$q,$ionicLoading,$timeout) {
 
-/*
-  var user = firebase.auth().currentUser;
-
-  if (user) {
-    // User is signed in.
-    console.log("/////////////////////////////user///////////////////////////////////////////");
-    console.log(user);
-    console.log(user.providerData[0].uid);
-
-    if(user.providerData[0].providerId == 'facebook.com'){
-      console.clear()
-        IdUsuario = user.providerData[0].uid;
-        console.log("facebook");
-        console.log(IdUsuario);
-
-        mainApp.database().ref('Users').on('value', function(snapshot) {
-
-                console.log('---------------------');
-
-                for (x in snapshot.val()) {
-                   if (x == IdUsuario) {
-                     IdGender =snapshot.val()[x].Gender
-                //      console.log("asdasd");
-                //    console.log(snapshot.val()[x]);
-                //   console.log(snapshot.val()[x]);
-                //  console.log(snapshot.val()[x].Gender);
-                   }
-
-
-                }
-
-      });
-    }else{
-      console.clear()
-      IdUsuario = user.uid;
-      console.log("correo");
-      console.log(IdUsuario);
-        mainApp.database().ref('Users').on('value', function(snapshot) {
-
-                console.log('---------------------');
-
-                for (x in snapshot.val()) {
-                   if (x == IdUsuario) {
-                     IdGender =snapshot.val()[x].Gender
-                //      console.log("asdasd");
-                //    console.log(snapshot.val()[x]);
-                //   console.log(snapshot.val()[x]);
-                //  console.log(snapshot.val()[x].Gender);
-                   }
-
-
-                }
-
-      });
-    }
-    //alert("user signed")
-    $state.go('app.playlists');
-  //   ///////////////////////////Favorite heart////////////////////////////////////
-   //
-  //   mainApp.database().ref('Favorite').on('value', function(snapshot) {
-  //     console.log("entro----------------------------Favorite reload-----------------------------------");
-  //     var CountFF = 0;
-  //     var countFavorite = 0;
-  //     for (x in snapshot.val()) {
-  //       if (snapshot.val()[x].UserID == user.providerData[0].uid) {
-  //         for (i in snapshot.val()[x].CustomerID) {
-  //           for (c in CustomerList) {
-   //
-  //             if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-  //               console.log("--------------------------------------");
-  //               console.log(snapshot.val()[x].CustomerID[i]);
-  //               console.log("--------------------------------------");
-  //               CustomerList[c].colorHeart = "red"
-  //             //  AllFavoriteF[countFavorite] = CustomerList[c]
-  //             //  countFavorite++
-  //             }
-  //           }
-  //         }
-  //         console.log("usario encontrado");
-  //         FirebaseFavorite[CountFF] = snapshot.val()[x]
-  //         FirebaseFavorite[CountFF]["FavoriteID"] = x
-  //         console.log(FirebaseFavorite);
-  //         CountFF++
-  //       }
-   //
-  //     }
-  //  });
-  //   //////////////////////////////////////////////////////////////////////////
-  //   ///////////////////////////SAVED PIN////////////////////////////////////
-   //
-  //   mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-  //     console.log("entro----------------------------PromotionSaved reload-----------------------------------");
-  //     console.log(CurrentPromotion);
-  //     var CountPS = 0;
-  //     var countPromo = 0;
-  //     for (x in snapshot.val()) {
-  //       if (snapshot.val()[x].UserID == user.providerData[0].uid) {
-   //
-  //         for (i in snapshot.val()[x].PromotionID) {
-  //           for (c in CurrentPromotion) {
-  //             // console.log("/////////////////////////////////////////////////");
-  //             // console.log(snapshot.val()[x].PromotionID[i]);
-  //             // console.log(CurrentPromotion[c].Name);
-  //             // console.log("/////////////////////////////////////////////////");
-  //             if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-  //               console.log(snapshot.val()[x].PromotionID[i]);
-  //               console.log(CurrentPromotion[c].IDpromotion);
-  //               console.log("---------------*****************************-----------------------");
-  //               console.log(snapshot.val()[x].PromotionID[i]);
-  //               console.log("--------------------*********************------------------");
-  //               console.log("purple");
-  //               AllPromotionF[countPromo] = CurrentPromotion[c]
-  //               countPromo++
-  //               CurrentPromotion[c].ColorPin = "purple"
-   //
-  //             }else {
-  //               console.log("no encontro nada ");
-  //             }
-  //           }
-  //         }
-  //         console.log("usario encontrado");
-  //         console.log(AllPromotionF);
-  //         FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-  //         FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-  //         console.log(FirebasePromotionSaved);
-  //         CountPS++
-  //       }
-   //
-  //     }
-  //  });
-  //   //////////////////////////////////////////////////////////////////////////
-
-  } else {
-    // No user is signed in.
-    //alert("no login")
-  }
- // $scope.currentUser = Parse.User.current();
- // console.log($scope.currentUser)
- // if ($scope.currentUser != null ){
- //  if ($scope.currentUser["attributes"].authData != undefined) {
- // 		IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
- // 		viewPromotion();
- // 		$state.go('app.playlists');
- //  } else {
- // 		IdUsuario = String($scope.currentUser.id);
- // 		viewPromotion();
- // 		$state.go('app.playlists');
- //  }
- //
- // }
-
-			var fbLogged = new Parse.Promise();
- var fbLoginSuccess = function(response) {
-		 if (!response.authResponse){
-				 fbLoginError("Cannot find the authResponse");
-				 return;
-		 }
-		 var expDate = new Date(
-				 new Date().getTime() + response.authResponse.expiresIn * 1000
-		 ).toISOString();
-
-		 var authData = {
-				 id: String(response.authResponse.userID),
-				 access_token: response.authResponse.accessToken,
-				 expiration_date: expDate
-		 }
-		 fbLogged.resolve(authData);
- };
-
- var fbLoginError = function(error){
-		 fbLogged.reject(error);
- };
- */
  // This method is to get the user profile info from the facebook api
 var getFacebookProfileInfo = function (authResponse) {
   var info = $q.defer();
@@ -3059,34 +2191,18 @@ var getFacebookProfileInfo = function (authResponse) {
 
  //===============LOGIN WITH FB==========//
  $scope.loginfb = function(){
-	 	mixpanel.track("LoginClick", { "loginButton" : "Facebook"});
-    console.log("tutoriaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal");
-
-// var p1 = new Promise(
-//   function () {
-//     console.log("hola");
-//
-//   }
-// )
-//
-// p1.then(function (val) {
-//   console.log(val);
-//   console.log("promesa activada");
-//   alert("promoesa")
-// });
-// facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError)
-// console.log(facebookConnectPlugin);
-// console.log(fbLoginSuccess);
-////////////////////////////////////////////////////////////
+    mixpanel.track("LoginClick", { "loginButton" : "Facebook"});
 
 
-
-$cordovaFacebook.login(["public_profile","user_birthday" ,"email","user_hometown"])
+ $ionicLoading.show({
+  noBackdrop: true,
+  template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+ });
+ var UserUID;
+ $cordovaFacebook.login(["public_profile","user_birthday" ,"email","user_hometown"])
   .then(function(success) {
-    console.log(success);
-    //alert("suceeces")
+
     var credential = firebase.auth.FacebookAuthProvider.credential(success.authResponse.accessToken);
-    console.log(credential);
       mainApp.auth().signInWithCredential(credential).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -3098,319 +2214,113 @@ $cordovaFacebook.login(["public_profile","user_birthday" ,"email","user_hometown
       // ...
     });
 
-    // { id: "634565435",
-    //   lastName: "bob"
-    //   ...
-    // }
   }, function (error) {
-    alert(error)
+    //alert(error)
     // error
   }).then(function() {
-    //alert("ultima promesa")
 
-      //alert(UserUID)
-      //
-      //
+    mainApp.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        UserUID = user.providerData[0].uid;
 
+      } else {
+        // No user is signed in.
+      }
+    });
+  }).then(function() {
 
-          $cordovaFacebook.getLoginStatus()
-            .then(function(success) {
-              console.log(success);
-              $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
-                  .then(function(success) {
-                    mixpanel.identify(success.id);
-                    mixpanel.people.set({
-                      "$email":success.email,
-                      "$gender": success.gender,
-                      "$birthday":success.birthday,
-                      "$name": success.name,
-                      "$typeLogin": "Facebook"
+      $timeout(function () {
+        $cordovaFacebook.getLoginStatus()
+          .then(function(success) {
+            console.log(success);
+            $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
+                .then(function(success) {
+                  mixpanel.identify(success.id);
+                  mixpanel.people.set({
+                    "$email":success.email,
+                    "$gender": success.gender,
+                    "$birthday":success.birthday,
+                    "$name": success.name,
+                    "$typeLogin": "Facebook"
 
-                    });
-                    // success
-                    var UserUID;
-                    mainApp.auth().onAuthStateChanged(function(user) {
-                      if (user) {
-                        // User is signed in.
-                        var UserUID = user.providerData[0].uid;
-                        console.log("useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer");
-                        console.log(success);
-                        console.log(user);
-                      } else {
-                        // No user is signed in.
-                      }
-                    });
-                  //  var user = firebase.auth().currentUser;
-
-                      ///////////////////////////Favorite heart////////////////////////////////////
-                      mainApp.database().ref('Favorite').on('value', function(snapshot) {
-                        console.log("entro----------------------------Favorite reload-----------------------------------");
-                        var CountFF = 0;
-                        for (x in snapshot.val()) {
-                          if (snapshot.val()[x].UserID == UserUID) {
-                            for (i in snapshot.val()[x].CustomerID) {
-                              for (c in CustomerList) {
-
-                                if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-                                  console.log("--------------------------------------");
-                                  console.log(snapshot.val()[x].CustomerID[i]);
-                                  console.log("--------------------------------------");
-                                  CustomerList[c].colorHeart = "red"
-                                }
-                              }
-                            }
-                            console.log("usario encontrado------------------------------****************************");
-                            FirebaseFavorite[CountFF] = snapshot.val()[x]
-                            FirebaseFavorite[CountFF]["FavoriteID"] = x
-                            console.log("mi lista---------------------------------------------------------//////////////////////////");
-                            console.log(FirebaseFavorite);
-                            CountFF++
-                          }
-
-                        }
-                     });
-                      //////////////////////////////////////////////////////////////////////////
-                      ///////////////////////////SAVED PIN////////////////////////////////////
-
-                      mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-                        console.log("entro----------------------------PromotionSaved reload-----------------------------------");
-                        console.log(CurrentPromotion);
-                        var CountPS = 0;
-                        for (x in snapshot.val()) {
-                          if (snapshot.val()[x].UserID == UserUID) {
-
-                            for (i in snapshot.val()[x].PromotionID) {
-                              for (c in CurrentPromotion) {
-                                // console.log("/////////////////////////////////////////////////");
-                                // console.log(snapshot.val()[x].PromotionID[i]);
-                                // console.log(CurrentPromotion[c].Name);
-                                // console.log("/////////////////////////////////////////////////");
-                                if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-                                  console.log(snapshot.val()[x].PromotionID[i]);
-                                  console.log(CurrentPromotion[c].IDpromotion);
-                                  console.log("---------------*****************************-----------------------");
-                                  console.log(snapshot.val()[x].PromotionID[i]);
-                                  console.log("--------------------*********************------------------");
-                                  console.log("purple");
-                                  CurrentPromotion[c].ColorPin = "purple"
-                                }else {
-                                  console.log("no encontro nada ");
-                                }
-                              }
-                            }
-                            console.log("usario encontrado");
-                            FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-                            FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-                            console.log("mi lista---------------------------------------------------------");
-                            console.log(FirebasePromotionSaved);
-                            CountPS++
-                          }
-
-                        }
-                     });
-                      //////////////////////////////////////////////////////////////////////////
-                      IdUsuario = UserUID;
-                      IdGender = success.gender;
-                    mainApp.database().ref('Users/' + UserUID).update({
-                                Username: success.name,
-                                Email: success.email,
-                                Gender: success.gender,
-                                Birthday: success.birthday,
-                                Hometown: success.hometown,
-                                IdFacebook: success.id
-                              })
-                    console.log(success);
-                      $state.go('app.playlists');
-                  }, function (error) {
-                    // error
                   });
-            }, function (error) {
-              // error
-            });
+                  // success
+                    ///////////////////////////Favorite heart////////////////////////////////////
+                    mainApp.database().ref('Favorite').on('value', function(snapshot) {
+                      var CountFF = 0;
+                      for (x in snapshot.val()) {
+                        if (snapshot.val()[x].UserID == UserUID) {
+                          for (i in snapshot.val()[x].CustomerID) {
+                            for (c in CustomerList) {
+
+                              if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
+                                CustomerList[c].colorHeart = "red"
+                              }
+                            }
+                          }
+                          FirebaseFavorite[CountFF] = snapshot.val()[x]
+                          FirebaseFavorite[CountFF]["FavoriteID"] = x
+                          CountFF++
+                        }
+
+                      }
+                   });
+                    //////////////////////////////////////////////////////////////////////////
+                    ///////////////////////////SAVED PIN////////////////////////////////////
+
+                    mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
+                      var CountPS = 0;
+                      for (x in snapshot.val()) {
+                        if (snapshot.val()[x].UserID == UserUID) {
+
+                          for (i in snapshot.val()[x].PromotionID) {
+                            for (c in CurrentPromotion) {
+                              if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
+                                CurrentPromotion[c].ColorPin = "purple"
+                              }else {
+                                console.log("no encontro nada ");
+                              }
+                            }
+                          }
+                          FirebasePromotionSaved[CountPS] = snapshot.val()[x]
+                          FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
+                          CountPS++
+                        }
+
+                      }
+                   });
+                    //////////////////////////////////////////////////////////////////////////
+                    IdUsuario = UserUID;
+                    IdGender = success.gender;
+                  mainApp.database().ref('Users/' + UserUID).update({
+                              Username: success.name,
+                              Email: success.email,
+                              Gender: success.gender,
+                              Birthday: success.birthday,
+                              Hometown: success.hometown,
+                              IdFacebook: success.id
+                            })
+
+                    $state.go('app.playlists');
+                }, function (error) {
+                  // error
+                });
+          }, function (error) {
+            // error
+          });
+          $ionicLoading.hide();
+        }, 2000);
 
 
 
   });
 
-/*
-    facebookConnectPlugin.getLoginStatus(function(success){
 
-      if(success.status === 'connected'){
-        // The user is logged in and has authenticated your app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed request, and the time the access token
-        // and signed request each expire
-        alert("login con facebookConnectPlugin")
-        alert(success)
-        console.log('getLoginStatus', success);
-
-
-        // Check if we have our user saved
-        var user = UserService.getUser('facebook');
-
-        if(!user.userID){
-          getFacebookProfileInfo(success.authResponse)
-          .then(function(profileInfo) {
-            // For the purpose of this example I will store user data on local storage
-            UserService.setUser({
-              authResponse: success.authResponse,
-              userID: profileInfo.id,
-              name: profileInfo.name,
-              email: profileInfo.email,
-              picture : "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
-            });
-
-            //$state.go('app.home');
-          }, function(fail){
-            // Fail get profile info
-            console.log('profile info fail', fail);
-          });
-        }else{
-          alert("ya tenia login");
-          getFacebookProfileInfo(success.authResponse)
-          .then(function(profileInfo) {
-            // For the purpose of this example I will store user data on local storage
-            UserService.setUser({
-              authResponse: success.authResponse,
-              userID: profileInfo.id,
-              name: profileInfo.name,
-              email: profileInfo.email,
-              picture : "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
-            });
-
-            //$state.go('app.home');
-          }, function(fail){
-            // Fail get profile info
-            console.log('profile info fail', fail);
-          });
-        //  $state.go('app.home');
-        }
-      } else {
-        // If (success.status === 'not_authorized') the user is logged in to Facebook,
-        // but has not authenticated your app
-        // Else the person is not logged into Facebook,
-        // so we're not sure if they are logged into this app or not.
-        alert("no login")
-        alert(success.status)
-        alert(success)
-        console.log('getLoginStatus', success.status);
-
-        // $ionicLoading.show({
-        //   template: 'Logging in...'
-        // });
-
-        // Ask the permissions you need. You can learn more about
-        // FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.4
-        //facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
-
-
-          facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError)
-          console.log(facebookConnectPlugin);
-          $state.go('app.playlists');
-
-
-
-
-
-
-      }
-
-
-
-    });
-*/
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-    // var provider = new firebase.auth.FacebookAuthProvider();
-    //  provider.addScope('user_birthday');
-    //  provider.addScope('email');
-    //  provider.addScope('user_friends');
-    //  provider.addScope('user_hometown');
-    //
-    //  secondaryApp.auth().signInWithPopup(provider).then(function(result) {
-    //    var token = result.credential.accessToken;
-    //    FB.api(
-    //    '/me?fields=id,name,birthday,gender,hometown,email', {access_token: token}, function(response) {
-    //        console.log(response);
-    //    }
-    // );
-    // $state.go('app.playlists');
-    // console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwww");
-    //  }).catch(function(error) {
-    //    // Handle Errors here.
-    //    alert(error);
-    //    var errorCode = error.code;
-    //    var errorMessage = error.message;
-    //    // The email of the user's account used.
-    //    var email = error.email;
-    //    // The firebase.auth.AuthCredential type that was used.
-    //    var credential = error.credential;
-    //    // ...
-    //  })
-			// setTimeout(function(){
-      //
-			// 	 if(!window.cordova){
-			// 			 facebookConnectPlugin.browserInit('426922250825103');
-			// 	 }
-      //
-			// 	 facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
-      //
-			// 	 fbLogged.then(function(authData) {
-      //
-			// 			 $state.go('app.playlists');
-			// 			 return Parse.FacebookUtils.logIn(authData);
-			// 	 })
-      //
-			// 	 .then(function(userObject) {
-			// 				 var authData = userObject.get('authData');
-			// 				 var consoles = Parse.User.current();
-			// 				 facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender,email', null,
-			// 				 function(response) {
-			// 					 mixpanel.identify(consoles.id);
-			// 					 mixpanel.people.set({
-			// 						 "$email": consoles.attributes.email,
-			// 						 "$gender": consoles.attributes.gender,
-			// 						 "$created":consoles.attributes.createdAt,
-			// 						 "$birthday":consoles.attributes.birthday,
-			// 						 "$name": consoles.attributes.name,
-			// 						 "$typeLogin": "Facebook"
-      //
-			// 					 });
-			// 						 userObject.set('name', response.name);
-			// 						 userObject.set('birthday', response.birthday);
-			// 						 userObject.set('gender', response.gender);
-			// 						 userObject.set('hometown', response.hometown);
-			// 						 userObject.save();
-			// 				 },
-			// 				 function(error) {
-			// 												 console.log(error);
-			// 				 })
-			// 	 })
-			//  }, 1000);
-
-	 };
+   };
  // //===============/LOGIN WITH FB==========//
 })
 
 
 .controller('TutorialCostumer', function($scope, $ionicPopover) {
-
-
-
-
-//CustomerF.push(snapshot.val()[x]);
-	// Parse.Cloud.run('GetCustomer', {},{
-	// 	success:function (results) {
-	// 		console.log(results);
-	// 		var Result = results
-	// 		for (g in Result) {
-	// 			Result[g]["suma"] = Result[g]["promo"] +  Result[g]["coupon"]
-	// 		}
-	// 		$scope.TutorialPromotion = Result
-	// 	},
-	// 	error:function (error) {
-	// 	 console.log(error);
-	// 	}
-	// })
-	//[{"Category":"Restaurantes","NameCategory":"Mr-Sushi","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-3a4902eb-7c6a-4419-84fe-93d852ffec9e-logo%20mr%20sushi.png","oferta":"existe","promedio":15,"promo":1,"suma":1},{"Category":"Restaurantes","NameCategory":"Dominos","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-5814f869-746e-4030-a5d7-17616c55870a-220x220.jpg","oferta":"existe","promedio":59,"promo":3,"suma":3},{"Category":"Restaurantes","NameCategory":"MARGHERITA","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-52085c6c-ffb3-4739-a50b-43f81e54173a-Logo_Margherita_converted.png","oferta":"existe","promedio":52,"promo":2,"suma":2},{"Category":"Restaurantes","NameCategory":"Astoria","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-35023ccc-d86e-43ec-929f-12999efb0480-LOGO.png","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Restaurantes","NameCategory":"ALTUNA","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-d3818ae3-0aae-403b-b84d-d59c60c98bfe-imagen%202%2072%20dpi-01.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Restaurantes","NameCategory":"Don-Carnitas","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-aafa6d05-f2d6-4227-b037-92be2848e58d-Nuestro%20Logo.jpg","oferta":"existe","promedio":24.67,"promo":3,"suma":3},{"Category":"Moda","NameCategory":"MNG","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-bdaee8f4-36f2-4cd5-ba9b-2a7909065e81-logoMNGBjpg_converted.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Moda","NameCategory":"Piel-De-Toro","colorHeart":"red","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-66f5b440-3f8b-4002-a89e-b587fb9a14d2-rsz_logo_piel.png","oferta":"existe","promedio":892.5,"promo":4,"suma":4},{"Category":"Moda","NameCategory":"Claire's","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-bddb919b-4a61-4fb7-bd36-bbcf1bf4debe-claire.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Moda","NameCategory":"TIFFANY-HAIR-FASHION","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-d54c21…4299-9510-6f9cd80e8004-10991123_1074933285855798_5623932414552156501_n.png","oferta":"existe","promedio":0,"promo":0,"suma":0}]
 });

@@ -276,14 +276,14 @@
 							<hr class="style-hr">
 						</div>
 					</div>
-					<div class="row facebookShareContainer PaddingShare" onclick="window.open('sms:?body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '_system');" ng-click= "Analytics('message','promotion')">
+					<div class="row facebookShareContainer PaddingShare" ng-click= "Analytics('message','promotion'); sendSms()">
 						<div class="col-20 verticalCenteredObjects iconCenterDiv" >
 							<p class="home secondPopoverMailIcon">
 								V
 							</p>
 						</div>
 						<div class="col verticalCenteredObjects friendsOfFacebook">
-							<a class="secondPopoverText" href="sms:&body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)" style="text-decoration:none;">
+							<a class="secondPopoverText">
 								Enviar mensajes de texto
 							</a>
 						</div>
