@@ -1583,6 +1583,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	$scope.reloadpage = function(){
 		$scope.cupons[0].QuantityExchanged +=1
 	}
+  
 	// ***************  EXCHANGE BUTTON DISPLAY NONE********************
 	$scope.buttonCash = function(){
 		$('.botonCanjear').click(function(){

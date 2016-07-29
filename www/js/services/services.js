@@ -273,17 +273,17 @@ app.factory('currentPromotion', function() {
 
 			for (c in CurrentPromotion) {
 				if (superId === CurrentPromotion[c].Category) {
-					if (CurrentPromotion[c].ShopOnline == undefined) {
+					if (CurrentPromotion[c].ShopOnline == undefined || CurrentPromotion[c].ShopOnline == '') {
 							CurrentPromotion[c].Display = "none"
 							CurrentPromotion[c].colPrice = "33"
 							CurrentPromotion[c].colPricePromo = "33"
 					}else {
 						CurrentPromotion[c].Display = "";
 					}
-					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
+					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined || CurrentPromotion[c].photo == ''){
 						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
 					}
-					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined) {
+					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined || CurrentPromotion[c].TermsAndConditions =='') {
 								CurrentPromotion[c]["DisplayTerms"] = "none";
 					}
 					Category.push(CurrentPromotion[c]);
@@ -316,11 +316,11 @@ app.factory('currentPromotion', function() {
 			for (z in InfoShop) {
 
 				if (superId === InfoShop[z].name){
-					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					if (InfoShop[z].url == '' && InfoShop[z].cel == '') {
 					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
-				}else if (InfoShop[z].cel == undefined) {
+				}else if (InfoShop[z].cel == '') {
 					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
-				}else if (InfoShop[z].url == undefined) {
+				}else if (InfoShop[z].url == '') {
 						dato.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
 				}else {
 						dato.push(InfoShop[z]);
@@ -475,7 +475,7 @@ app.factory('Coupons', function() {
 			});
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].Category) {
-					if (Cupons[a].ShopOnline == undefined) {
+					if (Cupons[a].ShopOnline == undefined || Cupons[a].ShopOnline == '') {
 							Cupons[a].Display = "none"
 					}else {
 						Cupons[a].Display = ""
@@ -485,11 +485,11 @@ app.factory('Coupons', function() {
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
 					}
-					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined || Cupons[a].PhotoCupon == ''){
 						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
 						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
 					}
-					if (Cupons[a].PhotoCupon !=null) {
+					if (Cupons[a].PhotoCupon !=null || Cupons[a].PhotoCupon != '') {
 								Cupons[a]["DisplayWithImageCoupons"] = "none";
 					}
 
@@ -505,11 +505,11 @@ app.factory('Coupons', function() {
 
 			for (z in InfoShop) {
 				if (salvadosId === InfoShop[z].name){
-					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					if (InfoShop[z].url == '' && InfoShop[z].cel == '') {
 					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
-				}else if (InfoShop[z].cel == undefined) {
+				}else if (InfoShop[z].cel == '') {
 					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
-				}else if (InfoShop[z].url == undefined) {
+				}else if (InfoShop[z].url == '') {
 						DatoCupon.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
 				}else {
 						DatoCupon.push(InfoShop[z]);
@@ -548,11 +548,11 @@ app.factory('DescriptionCupons', function() {
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
 					}
-					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined || Cupons[a].PhotoCupon == ''){
 						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
 						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
 					}
-					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined) {
+					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined || Cupons[a].TermsAndConditions == '') {
 						Cupons[a]["DisplayTerms"] = "none";
 					}
 					AllCuponDescription.push(Cupons[a])
@@ -575,7 +575,7 @@ app.factory('DescriptionOfferts', function() {
 					}else {
 							CurrentPromotion[a]["CanjeaP"] = "%"
 					}
-					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined) {
+					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined || CurrentPromotion[a].TermsAndConditions == '') {
 						CurrentPromotion[a]["DisplayTerms"] = "none";
 					}
 					AllOffertsDescription.push(CurrentPromotion[a])
