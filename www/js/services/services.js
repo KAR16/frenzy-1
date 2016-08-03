@@ -31,7 +31,7 @@ var contt = 0;
 // ********* ALL FAVORITE, PROMOTION, INFOSHOP VARIABLE *********
 var AllFavorite = [];
 var AllPromotion = [];
-var InfoShop = [];
+//var InfoShop = [];
 
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', [])
@@ -314,7 +314,7 @@ app.factory('currentPromotion', function() {
 			}
 
 			for (z in InfoShop) {
-
+			
 				if (superId === InfoShop[z].name){
 					if (InfoShop[z].url == '' && InfoShop[z].cel == '') {
 					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
@@ -711,10 +711,10 @@ function AddPromotions(Array) {
 		for (x in results) {
 			var CountPromotions = 0;
 			listaNameSuperConteo.push(results[x].attributes.Name)
-			InfoShop.push({
-				cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
-				namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
-			});
+			// InfoShop.push({
+			// 	cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
+			// 	namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
+			// });
 
 			if ("Supermercado" ==  results[x].attributes.CategoryApp){
 				name = results[x].attributes.Name;

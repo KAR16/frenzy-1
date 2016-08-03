@@ -22,11 +22,12 @@ var config2 = {
     databaseURL: "https://frenzydashboard.firebaseio.com",
     storageBucket: "frenzydashboard.appspot.com",
 };
-
+var InfoShop = [];
 var mainApp =  firebase.initializeApp(config);
 	var secondaryApp = firebase.initializeApp(config2, "Secondary");
 	///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
 			var countC2 = 0;
+      var info = 0;
 		 secondaryApp.database().ref('Customer').once('value', function(snapshot) {
 
 					for (x in snapshot.val()) {
@@ -35,13 +36,25 @@ var mainApp =  firebase.initializeApp(config);
 						CustomerList[countC2]["oferta"] = 'existe';
 						CustomerList[countC2]["colorHeart"] = 'white';
 						CustomerList[countC2]["lastText"] = 'favorite';
+
 						countC2++
 					}
-					countC2 = 0
+          	countC2 = 0
+
+
 
 		///	console.log(CustomerF);
 		}).then(function () {
-
+      for (x in CustomerList) {
+        InfoShop.push({
+        	cel:CustomerList[x].PhoneNumber,name:CustomerList[x].Name,url:CustomerList[x].URL,id:"favorite"+x,
+        	namecategory:CustomerList[x].CategoryApp,id:CustomerList[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
+        });
+      }
+      // InfoShop.push({
+			// 	cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
+			// 	namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
+			// });
     }).then(function() {
 
       	/////////////////////////////////////////////CALL PROMOTION//////////////////////////////////////////////////////////////////
@@ -64,10 +77,10 @@ var mainApp =  firebase.initializeApp(config);
       					////////////////////////////////////////////////////////////////////////////////////////////
       					if (snapshot.val()[x].Status === true) {
 
-
+                  console.log(snapshot.val()[x]);
 
       									for (i in snapshot.val()[x].Customer) {
-      										if (snapshot.val()[x].Photo === null || snapshot.val()[x].Photo === undefined) {
+      										if (snapshot.val()[x].Photo === null || snapshot.val()[x].Photo === undefined || snapshot.val()[x].Photo === '') {
       											if (snapshot.val()[x].TypePromotion === 'DirectDiscount') {
       													var ahorroString = snapshot.val()[x].BasePrice - snapshot.val()[x].PromotionalPrice;
       													var basePriceString = snapshot.val()[x].BasePrice;
@@ -198,7 +211,7 @@ var mainApp =  firebase.initializeApp(config);
 
       					}
       					countP = 0;
-                    console.log(CurrentPromotion);
+                  //  console.log(CurrentPromotion);
       		});
       	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -207,8 +220,8 @@ var mainApp =  firebase.initializeApp(config);
       			// ********* CUPONS *********
       			//xvar Cupons = [];
       		 mainApp.database().ref('Coupon').on('value', function(snapshot) {
-             console.log('-------------------');
-             console.log(snapshot);
+             //console.log('-------------------');
+            // console.log(snapshot);
       					for (x in snapshot.val()) {
       						for (i in snapshot.val()[x].Customer) {
       							if (snapshot.val()[x].PhotoCoupon === null || snapshot.val()[x].PhotoCoupon === undefined) {
@@ -267,16 +280,9 @@ var mainApp =  firebase.initializeApp(config);
       						countCp++
       					}
                 for (a in Cupons){
-                  console.log('++++++++++++++++++++++++++++++++++++');
-                  console.log(Cupons[a]);
-                  console.log(Cupons[a]["EndDate"]);
-                  console.log('++++++++++++++++++++++++++++++++++++');
                   var EndDateC = new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY'));
-                  console.log('/******************************************************///');
-                  console.log(EndDateC);
                   var fechaFinal =  new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY HH:mm:ss'));
                   fechaFinal = moment(fechaFinal).format('x')
-                  console.log(fechaFinal);
                   var End_Date_Coupons = moment.tz(EndDateC,'America/Guatemala').format('DD/MM/YYYY');
                   var End_Date_Milisec = fechaFinal
                   var Guatemala_Date= moment.tz("America/Guatemala").format('x');
@@ -876,7 +882,7 @@ var UsuarioP = true;
 		};
     var ValSend = true
     for (x in FirebasePromotionSaved[0].PromotionID) {
-      console.log(FirebasePromotionSaved[0].PromotionID[x]);
+
       if (FirebasePromotionSaved[0].PromotionID[x] == id) {
         ValSend = false;
       }
@@ -974,7 +980,7 @@ var UsuarioP = true;
 		} else {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "white";
-        console.log("-*-*-*-*-asdas*d-as*d-as*d-a*s-*as-d*a-sd*a-s*d");
+
       for (i in FirebaseFavorite[0].CustomerID) {
 
         if (FirebaseFavorite[0].CustomerID[i] == category) {
@@ -1253,7 +1259,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
 			} else {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
-        console.log("-*-*-*-*-asdas*d-as*d-as*d-a*s-*as-d*a-sd*a-s*d");
+
         for (i in FirebaseFavorite[0].CustomerID) {
           if (FirebaseFavorite[0].CustomerID[i] == id) {
             firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID/'+i).remove();
@@ -1310,7 +1316,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			var resultSetPopover = $.grep(CustomerList, function (e) {
 				 return e.Name.indexOf(id) == 0;
 			});
-			console.log(resultSetPopover);
+
 			if (resultSetPopover[0].colorHeart == "white") {
 					$scope.heartMenu = "silver";
 			}else {
@@ -1544,7 +1550,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			var resultSetPopover = $.grep(CustomerList, function (e) {
 				 return e.NameCategory.indexOf(id) == 0;
 			});
-			console.log(resultSetPopover);
 			if (resultSetPopover[0].colorHeart == "white") {
 					$scope.heartMenu = "silver";
 			}else {
@@ -1567,7 +1572,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
  $scope.$on('$ionicView.enter', function() {
 	  	$scope.categoryNameCoupon = Coupons.all($stateParams.CuponID);
-			console.log($scope.categoryNameCoupon);
+
 		 colorIconsFoother = []
 		 colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
  });
@@ -1583,7 +1588,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	$scope.reloadpage = function(){
 		$scope.cupons[0].QuantityExchanged +=1
 	}
-  
+
 	// ***************  EXCHANGE BUTTON DISPLAY NONE********************
 	$scope.buttonCash = function(){
 		$('.botonCanjear').click(function(){
@@ -1671,7 +1676,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                   						}
                               // ------------------------------------------------------------------------------------------------------------------------------------------------
                           } else if(snapshot.val()[x].TypeCoupon === "Fecha"){
-                                  console.log('tiene que sumar')
+
       														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
                                           QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
                                           mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
@@ -1992,8 +1997,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 
     if (user) {
-      console.log(user);
-      console.log(user.providerData[0].uid);
+
       if(user.providerData[0].providerId == 'facebook.com'){
 
           IdUsuario = user.providerData[0].uid;
