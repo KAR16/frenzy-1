@@ -1047,7 +1047,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 .controller('PromotionsDescription',function($scope, $stateParams, DescriptionOfferts ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
 	mixpanel.track("view", { "type" : "PromotionsDescription","Gender":IdGender,"User":IdUsuario});
 	$scope.chats = DescriptionOfferts.all($stateParams.superId);
-	console.log($scope.chats[0].Category);
+  console.log($scope.chats);
 	$scope.custumerName = $scope.chats[0].Category.replace(/-/g," ");
 			$scope.$on('$ionicView.enter', function() {
 				console.log();
@@ -1308,7 +1308,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		}
 		/* **************************************************** */
 		$scope.chats = currentPromotion.get($stateParams.superId);
-
+    console.log($scope.chats);
 		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
@@ -1903,7 +1903,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			views: {
 				'menuContent': {
 					templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
-					controller: 'currentPromotionCtrl'
+					controller: 'PromotionsDescription'
 				}
 			}
 		})

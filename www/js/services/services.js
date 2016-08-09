@@ -280,8 +280,8 @@ app.factory('currentPromotion', function() {
 					}else {
 						CurrentPromotion[c].Display = "";
 					}
-					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined || CurrentPromotion[c].photo == ''){
-						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
+					if (CurrentPromotion[c].Photo ==null || CurrentPromotion[c].Photo ==undefined || CurrentPromotion[c].Photo == ''){
+						CurrentPromotion[c]["Photo"] = "img/frenzy_back.png"
 					}
 					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined || CurrentPromotion[c].TermsAndConditions =='') {
 								CurrentPromotion[c]["DisplayTerms"] = "none";
@@ -314,7 +314,7 @@ app.factory('currentPromotion', function() {
 			}
 
 			for (z in InfoShop) {
-			
+
 				if (superId === InfoShop[z].name){
 					if (InfoShop[z].url == '' && InfoShop[z].cel == '') {
 					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
@@ -567,9 +567,11 @@ app.factory('DescriptionCupons', function() {
 app.factory('DescriptionOfferts', function() {
 	return {
 		all: function(superId) {
+			console.clear();
 			var AllOffertsDescription = [];
 			for (a in CurrentPromotion) {
 				if (superId == CurrentPromotion[a].IDpromotion) {
+
 					if (CurrentPromotion[a].TypeOfExchange == "DirectDiscount") {
 						CurrentPromotion[a]["CanjeaQ"] = "Q."
 					}else {
@@ -578,6 +580,7 @@ app.factory('DescriptionOfferts', function() {
 					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined || CurrentPromotion[a].TermsAndConditions == '') {
 						CurrentPromotion[a]["DisplayTerms"] = "none";
 					}
+
 					AllOffertsDescription.push(CurrentPromotion[a])
 				}
 			}
