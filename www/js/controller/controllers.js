@@ -1068,6 +1068,17 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		$scope.popover = popover;
 		$scope.message = 'hello';
 	});
+  $scope.share = function (images) {
+    console.log(images);
+window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas promocioines",null,images)
+
+  }
+  // // Share via native share sheet
+  // $cordovaSocialSharing.share("frenzyapplication", "hora de compartir","https://firebasestorage.googleapis.com/v0/b/frenzyapplication.appspot.com/o/imagePromotion%2F20160719_134442-1.jpg?alt=media&token=c5162cd3-f16c-4725-9549-bc77987580b3" ,null).then(function(result) {
+  //     // Success!
+  //   }, function(err) {
+  //     // An error occured. Show a message to the user
+  //   });
 	// Pixels quantity of Popover for height div
 	$scope.pix = currentPromotion.get($stateParams.superId);
 //	console.log($scope.pix);
@@ -1388,12 +1399,14 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	}
 
     $scope.showCouponDescription = function(id){
-      var QuantityExchangedSum =0;
+      var QuantityExchangedSuma =0;
         mainApp.database().ref('Coupon').once('value', function(snapshot) {
-
+          console.clear();
+          console.log(id);
           for (x in snapshot.val()) {
             if (x == id) {
-
+              console.log(id);
+              console.log(x);
               if(snapshot.val()[x].TypeCoupon === 'Fecha'){
                           swal({
                               title: "Estas Seguro?",
@@ -1407,7 +1420,10 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                           },
                           function(isConfirm){
                               if (isConfirm) {
-
+                                console.log("----------------------------------");
+                                console.log(id);
+                                console.log(x);
+                                  console.log("confirmo");
                                   swal({
                                       title: 'Perfecto!',
                                       text: 'Has cambiado tu Cupón',
@@ -1416,15 +1432,18 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                                       showConfirmButton: false,
 
                                   })
-
-                                  var couponPages="#/app/descripcionCupones/";
-                                  location.href=couponPages+id;
+                                  console.log("----------------------------");
+                                  console.log(snapshot.val()[id].QuantityExchanged);
 
               										mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":id});
-                                  QuantityExchangedSuma = snapshot.val()[x].QuantityExchanged + 1
-                                  mainApp.database().ref('Coupon/'+x).update({
+                                  QuantityExchangedSuma = snapshot.val()[id].QuantityExchanged + 1
+                                  mainApp.database().ref('Coupon/'+id
+                                ).update({
                                         QuantityExchanged: QuantityExchangedSuma
                                   });
+
+                                                                    var couponPages="#/app/descripcionCupones/";
+                                                                    location.href=couponPages+id;
                               } else {
                               swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
 
@@ -1677,7 +1696,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
                               // ------------------------------------------------------------------------------------------------------------------------------------------------
                           } else if(snapshot.val()[x].TypeCoupon === "Fecha"){
 
-      														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
+      														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":IdUsuario,"NameCoupon":$stateParams.DescriptionID});
                                           QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
                                           mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
                                                 QuantityExchanged: QuantityExchangedsu
