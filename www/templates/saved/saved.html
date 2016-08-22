@@ -4,12 +4,12 @@
     <div class="row savedPageBoxStyle" ng-repeat="promotion in chats | filter: {oferta : 'existe'}">
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
-        <img class="savedPageImage" alt="PhotoSavedPromotions" src="{{promotion.photo}}">
+        <img class="savedPageImage" alt="PhotoSavedPromotions" src="{{promotion.Photo}}">
       </div>
       <!-- Saved Title Description -->
       <div class="col col-80 SavedDescriptionPosition">
         <div id="NothingSpace" class="savedPageTitleDescription">
-          {{promotion.name}}
+          {{promotion.Name}}
         </div>
         <div class="row">
           <div id="no-PaddingLeft" class="col col-80">
@@ -18,7 +18,7 @@
               Oferta {{promotion.promotionalPrice | currency: 'Q'}}
             </spam>
             <p id="NothingSpace" class="savedPageDescription">
-              {{promotion.description}}
+              {{promotion.PromotionDescription}}
             </p>
           </div>
           <!-- Pin Icon -->

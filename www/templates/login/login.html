@@ -40,17 +40,17 @@
             <p class="EmailTextLogin Left10px">Correo electrónico</p>
             <!-- Email Input Box -->
             <label class="item item-input inputBox">
-              <input type="email" ng-model="user.username" placeholder="correo@ejemplo.com">
+              <input id='username' type="email" ng-model="user.username" placeholder="correo@ejemplo.com">
             </label>
             <!-- Password -->
             <p class="PasswordTextLogin Left10px">Contraseña</p>
             <!-- Password Input Box -->
             <label class="item item-input inputBox">
-              <input type="password" ng-model="user.password">
+              <input id='password' type="password" ng-model="user.password">
             </label>
             <div class="PaddingSignUpButton">
               <center>
-                <div class="enterButtonStyle" ng-click='login()'>
+                <div class="enterButtonStyle" ng-click='loginWithEmail(user)'>
                   <div class="enterButtonTitle open_sans">
                     Entrar
                   </div>

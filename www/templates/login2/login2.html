@@ -44,19 +44,19 @@
             <p class="NameTextLogin Left10px">Nombre (*)</p>
             <!-- Name input Box -->
             <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
-              <input id="EmailSizeText" type="text" ng-model="user.NameRegister" placeholder="">
+              <input id="EmailSizeText" class='createUserName' type="text" ng-model="user.NameRegister" placeholder="">
             </label>
             <!-- Email -->
             <p class="EmailTextLogin Left10px">Correo electrónico (*)</p>
             <!-- Email input Box -->
             <label class="item item-input inputBox" style="border:{{ValidarEmail}}" >
-              <input id="EmailSizeText" type="email" ng-model="user.email" placeholder="correo@ejemplo.com">
+              <input id="EmailSizeText" class="createUserEmail" type="email" ng-model="user.email" placeholder="correo@ejemplo.com">
             </label>
             <!-- Password -->
             <p class="PasswordTextLogin Left10px">Contraseña (*)</p>
             <!-- Password Input Box -->
             <label class="item item-input inputBox" style="border:{{Validarpassword}}">
-              <input id="PasswordSizeText" type="password" ng-model="user.password">
+              <input id="PasswordSizeText" class='createUserPassword' type="password" ng-model="user.password">
             </label>
             <!-- ​ Gender Container -->
             <p class="genderTitle Left10px">Género</p>
@@ -78,7 +78,7 @@
             <p class="dateTitle Left10px">Fecha de nacimiento</p>
             <!-- Birthday Input -->
             <label class="item item-input dateBox"  style="height:48px">
-              <input id="BirthdaySizeText" type="date" ng-model='user.birthday'>
+              <input id="BirthdaySizeText" class='createUserBirthday' type="date" ng-model='user.birthday'>
             </label>
             <div class="PaddingSignUpButton">
               <center>

@@ -7,27 +7,8 @@ function goBack() {
 	window.history.back();
 }
 /********************************************/
-var CustomerList;
-Parse.Cloud.run('GetCustomer', {},{
-	success:function (results) {
-	//	console.log(results);
-	console.log("tiendas");
-		CustomerList = results
-	},
-	error:function (error) {
-	 console.log(error);
-	}
-});
-// Parse.Cloud.run('Push', {},{
-// 	success:function (results) {
-// 			console.log(results);
-//
-// 		//CustomerList = results
-// 	},
-// 	error:function (error) {
-// 	 console.log(error);
-// 	}
-// });
+var CustomerList = [];
+
 // ************* THIS FUNCTION IS FOR HIDE THE OPTIONS IN TOOLS ***********************/
 document.write('<style type="text/css">div.cp_oculta{display: none;}</style>');
 function MostrarOcultar(capa,enlace){
@@ -118,13 +99,3 @@ function ReloadFavorite() {
 	});
 }
 var ListPromotion;
-Parse.Cloud.run('GetPromotionsApp', {},{
-	success:function (results) {
-		console.log("promociones");
-		console.log(results);
-		CurrentPromotion = results
-	},
-	error:function (error) {
-	 console.log(error);
-	}
-})

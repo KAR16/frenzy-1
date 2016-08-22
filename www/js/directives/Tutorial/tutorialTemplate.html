@@ -2,26 +2,26 @@
 <!-- Customer Boxes -->
 <div id="boxColorCustomer" class="col boxColorCustomer" class="{{info.Category[$index]}}" >
   <!-- Customer Image -->
-  <div class="BoxSpace" ng-controller = "changeColorHeartCtrl" id="{{info.NameCategory}}">
-    <img class="imageCategoryBoxes" ng-src="{{info.name}}" alt="imageCategoryBox">
+  <div class="BoxSpace" ng-controller = "changeColorHeartCtrl" id="{{info.Name}}">
+    <img class="imageCategoryBoxes" ng-src="{{info.Logo}}" alt="imageCategoryBox">
   </div>
   <!-- Customer Description -->
   <div class="col boxColorDescription">
     <!-- Offers Count -->
-    <spam id="CountColor" class="Price{{info.Category}} CountColor">
+    <spam id="CountColor" class="Price{{info.CategoryApp}} CountColor">
       {{info.suma}}
     </spam>
     <!-- Offers Name Text -->
-    <spam id="OfferText" class="Title{{info.Category}} OfferText">
+    <spam id="OfferText" class="Title{{info.CategoryApp}} OfferText">
       ofertas
     </spam>
     <br>
     <!-- Average for Customer in Price -->
-    <spam id="PriceColor" class="AveragePrice{{info.Category}} PriceColor">
-      Q{{info.promedio}}
+    <spam id="PriceColor" class="AveragePrice{{info.CategoryApp}} PriceColor">
+      Q{{info.AverageSaving}}
     </spam>
     <!-- Average Name Text -->
-    <spam id="AverageText" class="AverageTitle{{info.Category}} AverageText">
+    <spam id="AverageText" class="AverageTitle{{info.CategoryApp}} AverageText">
       promedio
     </spam>
   </div>

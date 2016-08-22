@@ -7,22 +7,18 @@
   <ion-header-bar id="positive" class="bar bar-subheader bar-positive positive">
 		<!-- Offers and Coupons Tab with Popover -->
 		<div class="row">
-			<div id="GeneralPaddingCols" class="col col-50">
-				<a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/favoritos">
-					<div class="OffersAndCouponsTabText" id="offertsFunction">
-						Nuestros Favoritos
-						<hr class="pageFavoritesLineDecorationOffers" id="lineOffertsFunction">
-					</div>
-				</a>
-			</div>
-			<div id="GeneralPaddingCols" class="col col-50" style="margin-left:5px">
-				<a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/tusFavoritos" >
-					<div class="OffersAndCouponsTabText" style="color:white">
-						Tus Favoritos
-						<hr class="pageFavoritesLineDecorationOffers" style="color:white;background-color:white">
-					</div>
-				</a>
-			</div>
+
+      <div id="GeneralPaddingCols" class="col col-50" style="margin-left:5px">
+        <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/tusFavoritos" >
+          <div class="OffersAndCouponsTabText" style="color:white">
+            Tus Favoritos
+            <hr class="pageFavoritesLineDecorationOffers" style="color:white;background-color:white">
+          </div>
+        </a>
+      </div>
+
+			<div id="GeneralPaddingCols" class="col col-50"></div>
+
 		</div>
 	</ion-header-bar>
 
@@ -51,7 +47,7 @@
         <div id="GeneralPaddingCols0" class="col col-80">
           <!-- Your Favorite Customer Title -->
           <p class="overFlowText pageYourFavoritesOffert">
-            {{favorite.name}} - {{favorite.presentation}}
+            {{favorite.Name}} - {{favorite.Presentation}}
           </p>
           <!-- Promotional Price for Your Favorite -->
           <p class="pageYourFavoritesPriceOffert">
@@ -59,7 +55,7 @@
           </p>
           <!-- Favorite Description for Your Favorite -->
           <p class="overFlowText pageYourFavoritesOffertDescription">
-            {{favorite.description}}
+            {{favorite.PromotionDescription}}
           </p>
         </div>
         <!-- Pin Icon -->

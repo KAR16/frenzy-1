@@ -59,19 +59,19 @@
 				<!-- Redirect to Offer Description -->
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
 					<!-- Width of the Offers Image -->
-					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCupon._url}}" alt="Promotions">
+					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCupon}}" alt="Promotions">
 				</a>
 				<!-- Promotion Description -->
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
 					<div class="row">
 						<p class="OfferDescriptionTitle open_sans">
-							{{cupon.Presentation}}
+							{{cupon.Name}}
 						</p>
 					</div>
 					<!-- Promotion Description Text -->
 					<div class="row">
 						<p class="pageFavoritesDescription open_sans">
-							{{cupon.description}}
+							{{cupon.CouponDescription}}
 						</p>
 					</div>
 				</a>
@@ -79,7 +79,7 @@
 				<div class="row pageFavoritesDivIcons">
 					<!-- Change Coupon -->
 					<div class="col-25 colPrice">
-						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')" href="#/app/descripcionCupones/{{cupon.IDCupon}}">
+						<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')">
 							<spam class="pageOffertExchance">
 								CANJEAR
 							</spam>
@@ -134,12 +134,12 @@
 						<div class="col col-75">
 							<div class="row">
 								<spam class="open_sans pageOffertsTitleDescriptionWithoutImage">
-									{{cupon.Presentation}}
+									{{cupon.Name}}
 								</spam>
 							</div>
 							<div class="row">
 								<p class="pageFavoritesDescriptionWithoutImage open_sans">
-									{{cupon.description}}
+									{{cupon.CouponDescription}}
 								</p>
 							</div>
 						</div>
@@ -242,14 +242,14 @@
 							<hr class="style-hr">
 						</div>
 					</div>
-					<div class="row facebookShareContainer PaddingShare">
-						<div class="col-20 verticalCenteredObjects iconCenterDiv" onclick="window.open('sms:?body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '_system');" ng-click= "Analytics('message','promotion')">
+					<div class="row facebookShareContainer PaddingShare" ng-click= "Analytics('message','promotion'); sendSms()">
+						<div class="col-20 verticalCenteredObjects iconCenterDiv">
 							<p class="home secondPopoverMailIcon">
 								V
 							</p>
 						</div>
 						<div class="col verticalCenteredObjects friendsOfFacebook">
-							<a class="secondPopoverText" href="sms:&body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)" style="text-decoration:none;">
+							<a class="secondPopoverText" style="text-decoration:none;">
 								Enviar mensajes de texto
 							</a>
 						</div>

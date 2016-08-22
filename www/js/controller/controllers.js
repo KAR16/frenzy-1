@@ -1,6 +1,306 @@
 var displayNoneInline = []
 var colorIconsFoother = []
 var pix = "170px"
+var FirebaseFavorite = [];
+var FirebasePromotionSaved = [];
+var AllFavoriteF = [];
+var AllPromotionF = [];
+var Cupons = [];
+/****FIREBASE***/
+var config = {
+  apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
+  authDomain: "frenzyapplication.firebaseapp.com",
+  databaseURL: "https://frenzyapplication.firebaseio.com",
+  storageBucket: "frenzyapplication.appspot.com",
+};
+
+
+
+var config2 = {
+  apiKey: "AIzaSyDIbQh6IA6D9HHhfogQUZP63omtjwzAiBA",
+    authDomain: "frenzydashboard.firebaseapp.com",
+    databaseURL: "https://frenzydashboard.firebaseio.com",
+    storageBucket: "frenzydashboard.appspot.com",
+};
+var InfoShop = [];
+var mainApp =  firebase.initializeApp(config);
+	var secondaryApp = firebase.initializeApp(config2, "Secondary");
+	///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
+			var countC2 = 0;
+      var info = 0;
+		 secondaryApp.database().ref('Customer').once('value', function(snapshot) {
+
+					for (x in snapshot.val()) {
+						CustomerList[countC2] = snapshot.val()[x]
+						CustomerList[countC2]["suma"] =snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
+						CustomerList[countC2]["oferta"] = 'existe';
+						CustomerList[countC2]["colorHeart"] = 'white';
+						CustomerList[countC2]["lastText"] = 'favorite';
+
+						countC2++
+					}
+          	countC2 = 0
+
+
+
+		///	console.log(CustomerF);
+		}).then(function () {
+      for (x in CustomerList) {
+        InfoShop.push({
+        	cel:CustomerList[x].PhoneNumber,name:CustomerList[x].Name,url:CustomerList[x].URL,id:"favorite"+x,
+        	namecategory:CustomerList[x].CategoryApp,id:CustomerList[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
+        });
+      }
+      // InfoShop.push({
+			// 	cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
+			// 	namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
+			// });
+    }).then(function() {
+
+      	/////////////////////////////////////////////CALL PROMOTION//////////////////////////////////////////////////////////////////
+      			var countP = 0;
+      		 mainApp.database().ref('Promotion').on('value', function(snapshot) {
+      			 var GuatemalaDay= moment.tz("America/Guatemala").format('DD/MM/YYYY');
+      			 var GuatemalaMonth =moment.tz("America/Guatemala").format('MM');
+      			 var GuatemalaYear =moment.tz("America/Guatemala").format('YYYY');
+             console.log(GuatemalaDay);
+             console.log(GuatemalaMonth);
+             console.log(GuatemalaYear);
+             //console.log(JSON.stringify(snapshot.val()));
+      			for (x in snapshot.val()) {
+      					var DatePromoDay = moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY')
+      					var DatePromoMonth = moment(snapshot.val()[x]["EndDate"].iso).format('MM')
+      					var DatePromoYear = moment(snapshot.val()[x]["EndDate"].iso).format('YYYY')
+      					var fre = moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY')
+
+
+      					////////////////////////////////////////////////////////////////////////////////////////////
+      					if (snapshot.val()[x].Status === true) {
+
+                  console.log(snapshot.val()[x]);
+
+      									for (i in snapshot.val()[x].Customer) {
+      										if (snapshot.val()[x].Photo === null || snapshot.val()[x].Photo === undefined || snapshot.val()[x].Photo === '') {
+      											if (snapshot.val()[x].TypePromotion === 'DirectDiscount') {
+      													var ahorroString = snapshot.val()[x].BasePrice - snapshot.val()[x].PromotionalPrice;
+      													var basePriceString = snapshot.val()[x].BasePrice;
+      													var PromotionalPriceString = snapshot.val()[x].PromotionalPrice;
+      													ahorroString = ahorroString.toString();
+      													basePriceString = basePriceString.toString();
+      													PromotionalPriceString = PromotionalPriceString.toString();
+      													CurrentPromotion[countP] = snapshot.val()[x];
+      													CurrentPromotion[countP]["nul"] = "sin";
+      													CurrentPromotion[countP]["basePrice"] = 'Q'+basePriceString;
+      													CurrentPromotion[countP]["promotionalPrice"] = 'Q'+PromotionalPriceString;
+      													CurrentPromotion[countP]["texDiscount"] = "Ahorra";
+      													CurrentPromotion[countP]["ahorro"] = 'Q'+ahorroString;
+      													CurrentPromotion[countP]["before"] = "Antes";
+      													CurrentPromotion[countP]["ID"] = "pinOfferts";
+      													CurrentPromotion[countP]["IDpromotion"] = x;
+      													CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
+      													CurrentPromotion[countP]["conteo"] = 0;
+      													CurrentPromotion[countP]["oferta"] = 'existe';
+      													CurrentPromotion[countP]["ColorPin"] = 'silver';
+      													CurrentPromotion[countP]["IconShopOnline"] = 'j';
+      													CurrentPromotion[countP]["Display"] = '';
+      													CurrentPromotion[countP]["Logo"] = '';
+
+
+
+      											}else if (snapshot.val()[x].TypePromotion === 'Percentage') {
+      												CurrentPromotion[countP] = snapshot.val()[x];
+      												CurrentPromotion[countP]["nul"] = "sin";
+      												CurrentPromotion[countP]["promotionalPrice"] = 'Descuento '+snapshot.val()[x].Percentage+'%';
+      												CurrentPromotion[countP]["ID"] = "pinOfferts";
+      												CurrentPromotion[countP]["IDpromotion"] = x;
+      												CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
+      												CurrentPromotion[countP]["conteo"] = 0;
+      												CurrentPromotion[countP]["oferta"] = 'existe';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["display"] = 'none';
+      												CurrentPromotion[countP]["logo"] = '';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["IconShopOnline"] = 'j';
+      												CurrentPromotion[countP]["Display"] = '';
+
+      											}else if (snapshot.val()[x].TypePromotion === 'SpecialPromotion') {
+      												CurrentPromotion[countP] = snapshot.val()[x];
+      												CurrentPromotion[countP]["nul"] = "sin";
+      												CurrentPromotion[countP]["promotionalPrice"] = 'Promoción Especial';
+      												CurrentPromotion[countP]["ID"] = "pinOfferts";
+      												CurrentPromotion[countP]["IDpromotion"] = x;
+      												CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
+      												CurrentPromotion[countP]["conteo"] = 0;
+      												CurrentPromotion[countP]["oferta"] = 'existe';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["display"] = 'none';
+      												CurrentPromotion[countP]["logo"] = '';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["IconShopOnline"] = 'j';
+      												CurrentPromotion[countP]["Display"] = '';
+      												CurrentPromotion[countP]["icon"] = 'c';
+      											}
+      										}else {
+      											if (snapshot.val()[x].TypePromotion === 'DirectDiscount') {
+      													var ahorroString = snapshot.val()[x].BasePrice - snapshot.val()[x].PromotionalPrice;
+      													var basePriceString = snapshot.val()[x].BasePrice;
+      													var PromotionalPriceString = snapshot.val()[x].PromotionalPrice;
+      													ahorroString = ahorroString.toString();
+      													basePriceString = basePriceString.toString();
+      													PromotionalPriceString = PromotionalPriceString.toString();
+      													CurrentPromotion[countP] = snapshot.val()[x];
+      													CurrentPromotion[countP]["nul"] = "con";
+      													CurrentPromotion[countP]["basePrice"] = 'Q'+basePriceString;
+      													CurrentPromotion[countP]["promotionalPrice"] = 'Q'+PromotionalPriceString;
+      													CurrentPromotion[countP]["texDiscount"] = "Ahorra";
+      													CurrentPromotion[countP]["ahorro"] = 'Q'+ahorroString;
+      													CurrentPromotion[countP]["before"] = "Antes";
+      													CurrentPromotion[countP]["ID"] = "pinOfferts";
+      													CurrentPromotion[countP]["IDpromotion"] = x;
+      													CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
+      													CurrentPromotion[countP]["conteo"] = 0;
+      													CurrentPromotion[countP]["oferta"] = 'existe';
+      													CurrentPromotion[countP]["ColorPin"] = 'silver';
+      													CurrentPromotion[countP]["IconShopOnline"] = 'j';
+      													CurrentPromotion[countP]["Display"] = '';
+      													CurrentPromotion[countP]["Logo"] = '';
+
+
+      											}else if (snapshot.val()[x].TypePromotion === 'Percentage') {
+      												CurrentPromotion[countP] = snapshot.val()[x];
+      												CurrentPromotion[countP]["nul"] = "con";
+      												CurrentPromotion[countP]["promotionalPrice"] = 'Descuento '+snapshot.val()[x].Percentage+'%';
+      												CurrentPromotion[countP]["ID"] = "pinOfferts";
+      												CurrentPromotion[countP]["IDpromotion"] = x;
+      												CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
+      												CurrentPromotion[countP]["conteo"] = 0;
+      												CurrentPromotion[countP]["oferta"] = 'existe';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["display"] = 'none';
+      												CurrentPromotion[countP]["logo"] = '';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["IconShopOnline"] = 'j';
+      												CurrentPromotion[countP]["Display"] = '';
+
+      											}else if (snapshot.val()[x].TypePromotion === 'SpecialPromotion') {
+      												CurrentPromotion[countP] = snapshot.val()[x];
+      												CurrentPromotion[countP]["nul"] = "con";
+      												CurrentPromotion[countP]["promotionalPrice"] = 'Promoción Especial';
+      												CurrentPromotion[countP]["ID"] = "pinOfferts";
+      												CurrentPromotion[countP]["IDpromotion"] = x;
+      												CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
+      												CurrentPromotion[countP]["conteo"] = 0;
+      												CurrentPromotion[countP]["oferta"] = 'existe';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["display"] = 'none';
+      												CurrentPromotion[countP]["logo"] = '';
+      												CurrentPromotion[countP]["ColorPin"] = 'silver';
+      												CurrentPromotion[countP]["IconShopOnline"] = 'j';
+      												CurrentPromotion[countP]["Display"] = '';
+      												CurrentPromotion[countP]["icon"] = 'c';
+      											}
+      										}
+      									}
+      									countP++
+
+
+      					}else {
+      						//console.log("no lo son");
+      					}
+      					/////////////////////////////////////////////////////////////////////////////////////////////////
+
+      					}
+      					countP = 0;
+                  //  console.log(CurrentPromotion);
+      		});
+      	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      	///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
+      			var countCp = 0;
+      			// ********* CUPONS *********
+      			//xvar Cupons = [];
+      		 mainApp.database().ref('Coupon').on('value', function(snapshot) {
+             //console.log('-------------------');
+            // console.log(snapshot);
+      					for (x in snapshot.val()) {
+      						for (i in snapshot.val()[x].Customer) {
+      							if (snapshot.val()[x].PhotoCoupon === null || snapshot.val()[x].PhotoCoupon === undefined) {
+      									CurrentPromotion[countP] = snapshot.val()[x];
+      									Cupons[countCp]["nul"] = 'sin';
+      									Cupons[countCp]["name"] = snapshot.val()[x].Name;
+      									Cupons[countCp]["description"] = snapshot.val()[x].CouponDescription;
+      									Cupons[countCp]["Canjea"] = snapshot.val()[x].CouponDiscount;
+      									Cupons[countCp]["Category"] = snapshot.val()[x].Customer[i];
+      									Cupons[countCp]["cupon"] = "existe";
+      									Cupons[countCp]["ColorPinCupon"] = "silver";
+      									Cupons[countCp]["BarCodePhoto"] = snapshot.val()[x].BarCodePhoto;
+      									Cupons[countCp]["Presentation"] = snapshot.val()[x].Presentation;
+      									Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
+      									Cupons[countCp]["customer"] = snapshot.val()[x].Customer[i];
+      									Cupons[countCp]["PhotoCupon"] = snapshot.val()[x].PhotoCoupon;
+      									Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.substring(0, 10);
+      									Cupons[countCp]["End_Date"] = snapshot.val()[x].EndDate;
+      									Cupons[countCp]["IDCupon"] = x;
+      									Cupons[countCp]["TermsAndConditions"] = snapshot.val()[x].TermsAndConditions;
+      									Cupons[countCp]["Categoryapp"] = snapshot.val()[x].CategoryApp;
+      									Cupons[countCp]["TypeCoupon"] = snapshot.val()[x].TypeCoupon;
+      									Cupons[countCp]["QuantityCoupons"] = snapshot.val()[x].QuantityCoupons;
+      									Cupons[countCp]["QuantityExchanged"] = snapshot.val()[x].QuantityExchanged;
+      									Cupons[countCp]["ShopOnline"] = snapshot.val()[x].ShopOnline;
+      									Cupons[countCp]["Display"] = '';
+      									Cupons[countCp]["TypeOfExchange"] = snapshot.val()[x].TypeOfExchange;
+      							}else {
+      								Cupons[countCp] = snapshot.val()[x];
+      								Cupons[countCp]["nul"] = "con";
+      								Cupons[countCp]["name"] = snapshot.val()[x].Name;
+
+      								Cupons[countCp]["description"] = snapshot.val()[x].CouponDescription;
+      								Cupons[countCp]["Canjea"] = snapshot.val()[x].CouponDiscount;
+      								Cupons[countCp]["Category"] = snapshot.val()[x].Customer[i];
+      								Cupons[countCp]["cupon"] = "existe";
+      								Cupons[countCp]["ColorPinCupon"] = "silver";
+      								Cupons[countCp]["BarCodePhoto"] = snapshot.val()[x].BarCodePhoto;
+      								Cupons[countCp]["Presentation"] = snapshot.val()[x].Presentation;
+      								Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
+      								Cupons[countCp]["customer"] = snapshot.val()[x].Customer[i];
+      								Cupons[countCp]["PhotoCupon"] = snapshot.val()[x].PhotoCoupon;
+      								Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.substring(0, 10);
+      								Cupons[countCp]["End_Date"] = moment(snapshot.val()[x].EndDate.iso).format('DD/MM/YYYY');
+      								Cupons[countCp]["IDCupon"] = x;
+      								Cupons[countCp]["TermsAndConditions"] = snapshot.val()[x].TermsAndConditions;
+      								Cupons[countCp]["Categoryapp"] = snapshot.val()[x].CategoryApp;
+      								Cupons[countCp]["TypeCoupon"] = snapshot.val()[x].TypeCoupon;
+      								Cupons[countCp]["QuantityCoupons"] = snapshot.val()[x].QuantityCoupons;
+      								Cupons[countCp]["QuantityExchanged"] = snapshot.val()[x].QuantityExchanged;
+      								Cupons[countCp]["ShopOnline"] = snapshot.val()[x].ShopOnline;
+      								Cupons[countCp]["Display"] = '';
+      								Cupons[countCp]["TypeOfExchange"] = snapshot.val()[x].TypeOfExchange;
+      							}
+      						}
+      						countCp++
+      					}
+                for (a in Cupons){
+                  var EndDateC = new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY'));
+                  var fechaFinal =  new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY HH:mm:ss'));
+                  fechaFinal = moment(fechaFinal).format('x')
+                  var End_Date_Coupons = moment.tz(EndDateC,'America/Guatemala').format('DD/MM/YYYY');
+                  var End_Date_Milisec = fechaFinal
+                  var Guatemala_Date= moment.tz("America/Guatemala").format('x');
+                  var DaysToFinalize = Math.round(((End_Date_Milisec - Guatemala_Date)/(24*60*60*1000)))
+
+                  Cupons[a]["EndDate"] = End_Date_Coupons
+                  Cupons[a]["DaysToFinalize"] = DaysToFinalize;
+                }
+
+      					countCp = 0
+      		});
+      	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }).then(function() {
+
+    });
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic'])
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicPopover) {
@@ -22,240 +322,345 @@ angular.module('starter.controllers', ['ionic'])
 	};
 })
 // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
-// ******************* REGISTER FACEBOOK *******************
+// ************************* LOGIN WITH FACEBOOK *************************
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
-    $scope.user = {};
-    $scope.error = {};
-    // Object styles for Option Gender Button to Register Account
-    $scope.genderMaleBStyle = {};
-    $scope.genderFemaleleBStyle = {};
-    // Gender variable for to save in Parse
-    $scope.optionGender = '';
 
-		$scope.genderMaleStyle= function(){
-		       $scope.genderMaleBStyle = {'background-color':'#263147 ','color':'white'};
-		       $scope.genderFemaleleBStyle = {'color':'#263147 '};
-		       $scope.optionGender = 'male';
-		   }
+  $scope.user = {};
+  $scope.error = {};
+  // Object styles for Option Gender Button to Register Account
+  $scope.genderMaleBStyle = {};
+  $scope.genderFemaleleBStyle = {};
+  // Gender variable for to save in Parse
+  $scope.optionGender = '';
+  // Color Button Selected in Register Form if the user is Male or Female
+  $scope.genderMaleStyle= function(){
+    $scope.genderMaleBStyle = {'background-color':'#263147 ','color':'white'};
+    $scope.genderFemaleleBStyle = {'color':'#263147  '};
+    $scope.optionGender = 'male';
+  }
+  $scope.genderFemaleleStyle= function(){
+    $scope.genderFemaleleBStyle = {'background-color':'#263147 ','color':'white'};
+    $scope.genderMaleBStyle = {'color':'#263147  '};
+    $scope.optionGender = 'female';
+  }
+  // This Function works for to send email to the new User Firebase before of the register
+  $scope.SendEmail = function() {
+    // This Function works for to send email verification
+    mainApp.auth().currentUser.sendEmailVerification().then(function() {
+      /* Alert for validate email */
+      swal({
+        title: "Bien Hecho!",
+        text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
+        imageUrl: "img/sobre.png",
+        timer: 3000,
+        /* Button ok disable */
+        showConfirmButton: false
+      },
+      function() {
+        setTimeout(function() {
+          // Logout User Firebase
+          mainApp.auth().signOut(); //Else bug
+          swal.close(); //Close Alert
+          $state.go('login'); //Redirect to Login
+        },2000);
+      });
+    })
+  }
+  // This Function works for to Validate fields of the form
+  $scope.Alert = function () {
+    if ($scope.user.email == undefined ) {
+      sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
+    }else if($scope.user.password == undefined) {
+      sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
+    }else {
+      $scope.ValidarEmail = "none"
+      $scope.Validarpassword = "none"
+      // Redirect to Register Function for to create a new user in Firebase
+      $scope.register()
+    }
+  }
+  // Register Function for to create a new User in Firebase
+  $scope.register = function() {
 
-		    $scope.genderFemaleleStyle= function(){
-		       $scope.genderFemaleleBStyle = {'background-color':'#263147 ','color':'white'};
-		       $scope.genderMaleBStyle = {'color':'#263147 '};
-		       $scope.optionGender = 'female';
-		   }
-	$scope.Alert = function () {
-			if ($scope.user.email == undefined ) {
-					sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
-			}else if($scope.user.password == undefined) {
-					sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
-			}else {
-				$scope.ValidarEmail = "none"
-				$scope.Validarpassword = "none"
-				$scope.register()
-			}
-	}
-    $scope.register = function() {
-			var dateBirthday = $scope.user.birthday;
-			if (dateBirthday) {
-	//			alert("tiene algo ")
-					dateBirthday = dateBirthday.toLocaleDateString()
-			}
-        // TODO: add age verification step
-        $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
+    $ionicLoading.show({
+  		noBackdrop: true,
+  		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+  	});
+
+    mainApp.auth().signOut();
+    // Global Variables
+    var name = $scope.user.NameRegister;
+    var email = $scope.user.email;
+    var password = $scope.user.password;
+    var gender = $scope.optionGender;
+    var dateBirthday = $scope.user.birthday;
+    // To convert a date the birthday field
+    if (dateBirthday) {
+      dateBirthday = dateBirthday.toLocaleDateString()
+    }
+    // Save Users in Firebase Auth
+    mainApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      var ErrorCodeFirebase = error.code;
+      if(ErrorCodeFirebase == 'auth/email-already-in-use'){
+        $ionicLoading.hide();
+        // Alert and Functionality when the user is registered in Firebase
+        swal({
+          title: 'Lo sentimos',
+          text: 'El usuario ya está registrado, por favor inicia sesión.',
+          type: 'error',
+          showCancelButton: false,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+        },
+        // On click Event Alert
+        function() {
+          setTimeout(function() {
+            // Clean Register Form
+            $('.createUserName').val('');
+            $('.createUserEmail').val('');
+            $('.createUserPassword').val('');
+            $('.createUserBirthday').val('');
+            $scope.genderMaleBStyle = {};
+            $scope.genderFemaleleBStyle = {};
+            // Close the SweetAlert
+            swal.close();
+            // Redirect to Login Form
+            $state.go('login');
+          },2000)
         });
+      }
+    }).then(function() {
+      // Clean Register Form
+      $('.createUserName').val('');
+      $('.createUserEmail').val('');
+      $('.createUserPassword').val('');
+      $('.createUserBirthday').val('');
+      $scope.genderMaleBStyle = {};
+      $scope.genderFemaleleBStyle = {};
 
-        var user = new Parse.User();
-        user.set("username", $scope.user.email);
-        user.set("password", $scope.user.password);
-        user.set("email", $scope.user.email);
-        user.set("birthday", dateBirthday);
-        user.set("gender",$scope.optionGender);
+      // Connect to User Entity on Firebase
+      var user = mainApp.auth().currentUser;
+      // Call to Users Entity Firebase Data
+      mainApp.database().ref('Users').once('value', function(snapshot) {
+        // If doesn't exist anything data then to save the new data
+        mixpanel.identify(email);
+          mixpanel.people.set({
+            "$email": email,
+            "$gender": gender,
+            "$birthday":dateBirthday,
+            "$name": name,
+            "$typeLogin": "Email"
 
-
-        user.signUp(null, {
-            success: function(user) {
-							console.log(user);
-								 mixpanel.identify(user.id);
-								 mixpanel.people.set({
-									 "$email": user.attributes.email,
-									 "$gender": user.attributes.gender,
-									 "$created":user.attributes.createdAt,
-									 "$birthday":user.attributes.birthday,
-									 "$name": user.attributes.email,
-									 "$typeLogin": "Email"
-
-								 });
-                $ionicLoading.hide();
-                $rootScope.user = user;
-                $rootScope.isLoggedIn = true;
-                $state.go('login', {
-
-                    clear: true
-                });
-								Parse.User.logOut();
-								/* Alert for validate email */
-								swal({
-										title: "Bien Hecho!",
-										text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
-										type: 'success',
-										timer: 3000,
-										/* Button ok disable */
-										showConfirmButton: false
-								});
-            },
-            error: function(user, error) {
-                $ionicLoading.hide();
-                if (error.code === 125) {
-                    $scope.error.message = 'Please specify a valid email ' + 'address';
-										sweetAlert('Atención','Por favor indique una dirección de correo electrónico válida.');
-                } else if (error.code === 202) {
-                    $scope.error.message = 'The email address is already ' + 'registered';
-										sweetAlert('Vaya! parece que hay un error...','La dirección de correo electrónico ya está registrado.','warning')
-                } else {
-                    $scope.error.message = error.message;
-										console.log(error.message)
-                }
-                $scope.$apply();
+          });
+        if(snapshot.val() == null) {
+          mainApp.database().ref('Users/' + user.uid).update({
+            Username: name,
+            Email: email,
+            Gender: gender,
+            Birthday: dateBirthday
+          });
+          $ionicLoading.hide();
+          $scope.SendEmail();
+        } else {
+          // Verify each UID user and if doesn't exist add the new register
+          for(x in snapshot.val()){
+            if(x != user.uid) {
+            mainApp.database().ref('Users/' + user.uid).update({
+              Username: name,
+              Email: email,
+              Gender: gender,
+              Birthday: dateBirthday
+            });
+            $ionicLoading.hide();
+            $scope.SendEmail();
             }
-        });
-    };
+          }
+        }
+      });
+    });
+  }
 })
 
-// ************************ LOGIN WITHOUT FACEBOOK **********************************
+// ************************* LOGIN WITH FRENZY *************************
 .controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading) {
-		Parse.Cloud.run('verifyFinalizedPromotions',{}, {
-			success: function(result) {
-				//result is 'Hello world!'
-				console.log(result)
-			},
-				error: function(error) {
-				console.log(error)
-			}
-		});
 
-		Parse.Cloud.run('verifyFinalizedCoupons',{}, {
-			success: function(result) {
-				//result is 'Hello world!'
-				console.log(result)
-			},
-				error: function(error) {
-				console.log(error)
-			}
-		});
+    // Verify Email with Firebase
+    $scope.VerifyEmail = function() {
+      mainApp.auth().onAuthStateChanged(function(user) {
+        // Email already verified
 
-		$scope.user = {
-        username: null,
-        password: null
-    };
-
-    $scope.error = {};
-		$scope.currentUser = Parse.User.current();
-		// ******* LOGIN VALIDATION *******
-
-		if ($scope.currentUser != null ){
-		     if ($scope.currentUser["attributes"].authData != undefined) {
-		            IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
-								console.log($scope.currentUser.attributes.gender);
-								IdGender = String($scope.currentUser.attributes.gender);
-		            viewPromotion();
-		            $state.go('app.playlists');
-		     } else {
-					 	console.log($scope.currentUser.attributes.gender);
-						IdGender = String($scope.currentUser.attributes.gender);
-		            IdUsuario = String($scope.currentUser.id);
-		            viewPromotion();
-		            $state.go('app.playlists');
-		     }
-
-		}
-		$scope.forgot = function() {
-			$scope.userChoice = prompt("Enter your email")
-			$scope.loading = $ionicLoading.show({
-					content: 'Sending',
-					animation: 'fade-in',
-					showBackdrop: true,
-					maxWidth: 200,
-					showDelay: 0
-			});
-
-			Parse.User.requestPasswordReset($scope.userChoice, {
-					success: function() {
-							// TODO: show success
-							$ionicLoading.hide();
-							$scope.$apply();
-					},
-					error: function(err) {
-							$ionicLoading.hide();
-							if (err.code === 125) {
-									$scope.error.message = 'La dirección de correo electrónico no existe';
-									sweetAlert('Ha ocurrido un Error', 'La direccón de correo electrónico no existe', 'error');
-							} else {
-									$scope.error.message = 'Ha ocurrido un Error, ' + 'Por favor intentelo nuevamente';
-											sweetAlert('Ha ocurrido un Error', 'Por favor intentelo nuevamente', 'error');
-							}
-							$scope.$apply();
-					}
-			});
-		};
-
-    $scope.login = function() {
-			mixpanel.track("LoginClick", { "loginButton" : "Email"});
-        $scope.loading = $ionicLoading.show({
-            content: 'Logging in',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-
-        var user = $scope.user;
-        Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
-					success: function(user) {
-						if (user.attributes.emailVerified == false) {
-							$ionicLoading.hide();
-							$rootScope.user = user;
-							$rootScope.isLoggedIn = true;
-							sweetAlert('Atención', 'Aún no se ha confirmado su correo', 'warning');
-						}else {
-							$ionicLoading.hide();
-							$rootScope.user = user;
-							$rootScope.isLoggedIn = true;
-							IdUsuario = String($rootScope.user.id);
-							IdGender = String($rootScope.user.attributes.gender);
-							//console.log($rootScope.user.attributes.gender);
-							viewPromotion();
-							$state.go('app.playlists', {
-							clear: true
-							});
-						}
-
-					},
-            error: function(user, err) {
-                $ionicLoading.hide();
-                // The login failed. Check error to see why.
-                if (err.code === 101) {
-                    sweetAlert('Lo sentimos', 'Verifica los datos ingresados', 'error');
-                } else {
-                    sweetAlert('Lo sentimos', 'Ha ocurrido un error. Intentalo nuevamente', 'error');
-                }
-                $scope.$apply();
+        if (user.emailVerified) {
+          $state.go('loadingLoginUser');
+          IdUsuario = user.uid
+          mainApp.database().ref('Users').on('value', function(snapshot) {
+            for (x in snapshot.val()) {
+              if (x == IdUsuario) {
+                IdGender =snapshot.val()[x].Gender
+              }
             }
-        });
-    };
+          });
+        } else {
+          sweetAlert('Oops', 'Por favor verifica tu correo electrónico e intenta nuevamente.', 'warning');
+        }
+      })
+    }
+    // This Function works for to do Login with Parse and to migrate the data to Firebase
+    $scope.loginWithParse = function(user) {
 
+      // New Users Variables
+      $scope.newUserFirebase = '';
+      $scope.newPasswordFirebase = user.password;
+      $scope.newEmailFirebase = '';
+      $scope.newGenderFirebase = '';
+      $scope.newBirthdayFirebase = '';
+
+      $scope.parseCurrentUser = Parse.User.current();
+
+      // Login ParseJS
+      Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
+        success: function(userSuccess) {
+
+            // $rootScope.userSuccess = userSuccess;
+            // $rootScope.isLoggedIn = true;
+            // IdUsuario = String($rootScope.userSuccess.id);
+
+            // Connect to User entity Parse
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("username", user.username);
+            // Retrieve Data User Parse
+            query.each(function(userParse) {
+              // Validate if the user in ParseJS have a name
+              if(userParse.attributes.name == undefined){
+                $scope.newUserFirebase = userParse.attributes.username;
+              } else {
+                $scope.newUserFirebase = userParse.attributes.name;
+              }
+              // Save Data User into Variable
+              $scope.newEmailFirebase = userParse.attributes.username;
+              $scope.newGenderFirebase = userParse.attributes.gender;
+              $scope.newBirthdayFirebase = userParse.attributes.birthday;
+            }).then(function() {
+              // Save Users in Firebase Auth
+              mainApp.auth().createUserWithEmailAndPassword($scope.newEmailFirebase, $scope.newPasswordFirebase).then(function() {
+
+                mixpanel.identify($scope.newEmailFirebase);
+                  mixpanel.people.set({
+                    "$email": $scope.newEmailFirebase,
+                    "$gender": $scope.newGenderFirebase,
+                    "$birthday":$scope.newBirthdayFirebase,
+                    "$name": $scope.newUserFirebase,
+                    "$typeLogin": "Email"
+
+                  });
+
+                // Call to Users Entity Firebase Data
+                mainApp.database().ref('Users').once('value', function(snapshot) {
+                  // If doesn't exist anything data then to save the new data
+                  if(snapshot.val() == null) {
+                    mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
+                      Username: $scope.newUserFirebase,
+                      Email: $scope.newEmailFirebase,
+                      Gender: $scope.newGenderFirebase,
+                      Birthday: $scope.newBirthdayFirebase,
+                      Parse: true
+                    })
+                  } else {
+                    mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
+                      Username: $scope.newUserFirebase,
+                      Email: $scope.newEmailFirebase,
+                      Gender: $scope.newGenderFirebase,
+                      Birthday: $scope.newBirthdayFirebase,
+                      Parse: true
+                    })
+                  }
+                })
+              }).then(function() {
+                // Login With Firebase
+                mainApp.auth().signInWithEmailAndPassword(user.username,user.password).then(function() {
+                  $scope.parseCurrentUser = Parse.User.current();
+                  // Delete User of ParseJS
+                  var query = new Parse.Query(Parse.User);
+                  query.get($scope.parseCurrentUser.id, {
+                    success: function(deleteUser) {
+                      deleteUser.destroy({});
+                    },
+                    error: function(object, error) {}
+                  });
+                })
+              }).then(function() {
+                $state.go('loadingLoginUser');
+              })
+            })
+        },
+        error: function(user, err) {
+          // $ionicLoading.hide();
+          // The login failed. Check error to see why.
+          if (err.code === 101) {
+            Parse.User.logOut();
+            mainApp.auth().signOut();
+            sweetAlert('Datos Inválidos', 'Por favor verifica tu correo y tu contraseña', 'error');
+          }
+        }
+      })
+    }
+
+    $scope.loginWithEmail = function(user) {
+      	mixpanel.track("LoginClick", { "loginButton" : "Email"});
+      if(typeof user==='undefined'){
+        sweetAlert('Datos Inválidos', 'Debes ingresar correo y contraseña', 'error');
+      } else if(user['username']===undefined || user['username']==='') {
+        sweetAlert('Datos Inválidos', 'Por favor Verifica los campos requeridos', 'error');
+        delete user;
+      } else if(user['password']===undefined || user['password']==='') {
+        sweetAlert('Datos Inválidos', 'Por favor Verifica los campos requeridos', 'error');
+        delete user
+      } else {
+        // If the User is Logged
+        if (mainApp.auth().currentUser) {
+          mainApp.auth().signOut(); //Loggout Sesion Firebase
+        }
+        var currentUser = Parse.User.current();
+        if (currentUser) {
+          Parse.User.logOut();
+        }
+
+        // Login With Firebase
+        mainApp.auth().signInWithEmailAndPassword(user.username,user.password).catch(function(error) {
+          // // Handle Errors here.
+          // var errorCode = error.code;
+          // var errorMessage = error.message;
+          // // If the User password is incorrect
+          // if (errorCode === 'auth/wrong-password') {
+          //   sweetAlert('Oops', 'Contraseña Incorrecta, Intenta nuevamente', 'error');
+          // }
+          //  else {
+          // $scope.loginWithParse()
+          // }
+        }).then(function() {
+          if(mainApp.auth().currentUser==null){
+            $scope.loginWithParse(user);
+          } else {
+            IdUsuario = mainApp.auth().currentUser.uid;
+            mainApp.database().ref('Users').once('value', function(snapshot) {
+              if(snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == true){
+                IdGender = snapshot.val()[mainApp.auth().currentUser.uid].Gender;
+                $state.go('loadingLoginUser');
+              } else if(snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == undefined){
+                $scope.VerifyEmail()
+              }
+            })
+          }
+        })
+      }
+    }
 })
-
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('CategoryCtrl', function($scope, $ionicLoading) {
+.controller('CategoryCtrl', function($scope, $ionicLoading,$timeout) {
 	var dimensions = {
 		name: 'categoriesMenu'
 	};
 	var NameUser = String(IdUsuario);
+	var countApp = 0;
 	Parse.Analytics.track("view", dimensions);
 	mixpanel.track("view", { "type" : "Categorys","Gender":IdGender,"User":NameUser});
 	// Loading scope
@@ -265,97 +670,102 @@ angular.module('starter.controllers', ['ionic'])
 	});
 	CategoryListName = [];
 	var query = new Parse.Query('AppCategory');
-	query.each(function(results) {
-				CategoryListName.push(results.attributes)
-	}).then(function() {
-		ReloadFavorite()
-	}).then(function() {
+  //
+	/////////////////////////////////////////////////////////////////////////////
+var UsuarioF = true;
+var UsuarioP = true;
+	mainApp.database().ref('AppCategory').once('value', function(snapshot) {
 
-		$ionicLoading.hide();
-		$('.pageStartBoxPurple').show();
-		$('.flechitas').show();
-	});
-	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+			 for (x in snapshot.val()) {
+				 CategoryListName[countApp] = snapshot.val()[x]
+				 countApp++
+			 }
+			// console.log("askjkdhakjshdkajsdh");
+			 countApp = 0
+
+ }).then(function() {
+   ///////////////////////////Favorite heart////////////////////////////////////
+
+   mainApp.database().ref('Favorite').on('value', function(snapshot) {
+     var CountFF = 0;
+     var countFavorite = 0;
+     for (x in snapshot.val()) {
+       if (snapshot.val()[x].UserID == IdUsuario) {
+         UsuarioF = false
+         for (i in snapshot.val()[x].CustomerID) {
+           for (c in CustomerList) {
+
+             if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
+               CustomerList[c].colorHeart = "red"
+             }
+           }
+         }
+         FirebaseFavorite[CountFF] = snapshot.val()[x]
+         FirebaseFavorite[CountFF]["FavoriteID"] = x
+         CountFF++
+       }
+
+     }
+     if (UsuarioF == true) {
+       mainApp.database().ref('Favorite/').push({
+         UserID: IdUsuario
+         });
+     }
+
+  });
+   //////////////////////////////////////////////////////////////////////////
+   ///////////////////////////SAVED PIN////////////////////////////////////
+
+   mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
+     var CountPS = 0;
+     var countPromo = 0;
+     for (x in snapshot.val()) {
+       if (snapshot.val()[x].UserID == IdUsuario) {
+         UsuarioP = false;
+         for (i in snapshot.val()[x].PromotionID) {
+           for (c in CurrentPromotion) {
+             if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
+               AllPromotionF[countPromo] = CurrentPromotion[c]
+               countPromo++
+               CurrentPromotion[c].ColorPin = "purple"
+
+             }else {
+               console.log("no encontro nada ");
+             }
+           }
+         }
+         FirebasePromotionSaved[CountPS] = snapshot.val()[x]
+         FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
+         CountPS++
+       }
+
+     }
+
+     if (UsuarioP == true) {
+       mainApp.database().ref('PromotionSaved/').push({
+         UserID: IdUsuario
+         });
+     }
+  });
+   //////////////////////////////////////////////////////////////////////////
+
+
+
+ }).then(function () {
+
+           $timeout(function () {
+             $ionicLoading.hide();
+           }, 2000);
+ });
+ ////////////////////////////////////////////////////////////////////////////////////
+	// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
   $scope.$on('$ionicView.enter', function() {
-  		setTimeout(function() {
-		$scope.$apply(function() {
+
 			$scope.categorys = CategoryListName
-		});
-	}, 0);
+
       colorIconsFoother = []
      colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC','','img/icn-35.png','','none','none']);
   });
-})
-// ******************** OUR FAVORITES CONTROLLER **************************
-.controller('OurfavoritesCtrl', function($scope, OurFavorites,$ionicLoading) {
-/*************************************************/
-var NameUser = String(IdUsuario);
-
-		$scope.reload = function () {
-		    var PromoSavess = new Parse.Query('PromotionSaved')
-		    PromoSavess.equalTo("UserID", IdUsuario);
-		    PromoSavess.find({
-
-				success: function(results) {
-						viewFavorite()
-					for (a in results[0].attributes.PromotionID){
-						for (b in CurrentPromotion){
-							if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
-								if (CurrentPromotion[b].ColorPin === "silver") {
-									CurrentPromotion[b].ColorPin  = "purple";
-								}
-							}else {
-								CurrentPromotion[b].ColorPin  = "silver";
-							}
-						}
-					}
-				},
-				error: function(myObject, error) {
-					// Error occureds
-					console.log( error );
-				}
-			});
-		}
-
-	$scope.SalvadosSaveAndDelete = function (id) {
-        var NamePromo = id
-        var NameUser = String(IdUsuario)
-				console.log(NameUser);
-        var Dimensions = {
-          name: 'FavoritePin_'+NamePromo,
-          user: NameUser
-        };
-        Parse.Analytics.track("pin", Dimensions);
-        var pin = document.getElementById(id).style.color;
-        if (pin == "silver") {
-						mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"Gender":IdGender,"User":NameUser,"Action":"Add","Gender":IdGender});
-            document.getElementById(id).style.color = "purple";
-            SavePromotion(IdUsuario, id)
-            // $scope.reload()
-        } else {
-					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"Gender":IdGender,"User":NameUser,"Action":"Delete","Gender":IdGender});
-            document.getElementById(id).style.color = "silver";
-            DeletePromotion(IdUsuario, id)
-          //  $scope.reload()
-        }
-      //  $scope.reload()
-    }
-	/**************************************************/
-
-	var dimensions = {
-		name: 'frenzyFavorites',
-	};
-$scope.display = OurFavorites.all();
-
-	Parse.Analytics.track("view", dimensions);
-			$scope.ourFavorites = OurFavorites.all();
-		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-				mixpanel.track("view", { "type" : "Ourfavorites","Gender":IdGender,"User":NameUser });
-			//	$ionicLoading.hide();
-        colorIconsFoother = []
-      colorIconsFoother.push(['#A7A9AC','#FF5252','#A7A9AC','#A7A9AC','','img/icn-35.png','','none']);
-    });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
@@ -394,20 +804,41 @@ $scope.display = OurFavorites.all();
           name: 'FavoritePin_'+NamePromo,
           user: NameUser
         };
-        Parse.Analytics.track("pin", Dimensions);
+        var ValSend = true
+        for (x in FirebasePromotionSaved[0].PromotionID) {
+          if (FirebasePromotionSaved[0].PromotionID[x] == id) {
+            ValSend = false
+          }
+        }
+
+//        Parse.Analytics.track("pin", Dimensions);
         var pin = document.getElementById(id).style.color;
         if (pin == "silver") {
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
             document.getElementById(id).style.color = "purple";
-            SavePromotion(IdUsuario, id)
-          //  $scope.reload()
+            if (ValSend == true) {
+              var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
+              var Cus = {}
+              Cus[newPostKey] = id
+              firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
+            }
         } else {
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
             document.getElementById(id).style.color = "silver";
-            DeletePromotion(IdUsuario, id)
-          //  $scope.reload()
+            for (i in FirebasePromotionSaved[0].PromotionID) {
+
+              if (FirebasePromotionSaved[0].PromotionID[i] == id) {
+                firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
+              }
+            }
+
+            for (a in CurrentPromotion) {
+                if (CurrentPromotion[a].IDpromotion == id) {
+                  CurrentPromotion[a].ColorPin = "silver"
+                }
+            }
+
         }
-      //  $scope.reload()
     }
 	/**************************************************/
 	var dimensions = {
@@ -449,20 +880,39 @@ $scope.display = OurFavorites.all();
 		  name: 'FavoritePin_'+NamePromo,
 		  user: NameUser
 		};
-		Parse.Analytics.track("pin", Dimensions);
+    var ValSend = true
+    for (x in FirebasePromotionSaved[0].PromotionID) {
+
+      if (FirebasePromotionSaved[0].PromotionID[x] == id) {
+        ValSend = false;
+      }
+    }
 		var pin = document.getElementById(id).style.color;
 		if (pin == "silver") {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id).style.color = "purple";
-			SavePromotion(IdUsuario, id)
-			// $scope.reload()
+      if (ValSend == true) {
+        var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
+        var Cus = {}
+        Cus[newPostKey] = id
+        firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
+      }
 		} else {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id).style.color = "silver";
-			DeletePromotion(IdUsuario, id)
-		//	$scope.reload()
+      for (i in FirebasePromotionSaved[0].PromotionID) {
+
+        if (FirebasePromotionSaved[0].PromotionID[i] == id) {
+          firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
+        }
+      }
+
+      for (a in CurrentPromotion) {
+          if (CurrentPromotion[a].IDpromotion == id) {
+            CurrentPromotion[a].ColorPin = "silver"
+          }
+      }
 		}
-	//	$scope.reload()
 	}
 
 	$scope.$on('$ionicView.enter', function() {
@@ -477,20 +927,24 @@ $scope.display = OurFavorites.all();
 //********************** Customer CONTROLLER *****************************
 .controller('changeColorHeartCtrl', function($scope, $ionicLoading,$stateParams,CustomerAll) {
 	$scope.UrlC = function (id) {
+    console.clear();
 		console.log(id);
 		var resultSetCs = $.grep(CustomerList, function (e) {
-			 return e.NameCategory.indexOf(id) == 0;
+			 return e.Name.indexOf(id) == 0;
 		});
 
 		var promotionPage = "#/app/ofertas/"
 		var couponPage="#/app/cupones/";
-
+    console.log(resultSetCs[0]);
 		// Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
-		if (resultSetCs[0].promo > 0  &&  resultSetCs[0].coupon > 0) {
+		if (resultSetCs[0].QuantityPromotion > 0  &&  resultSetCs[0].QuantityCoupon > 0) {
+
 				location.href=promotionPage+id
-		}else if (resultSetCs[0].promo > 0) {
+		}else if (resultSetCs[0].QuantityPromotion > 0) {
+
 				location.href=promotionPage+id
-		}else if( resultSetCs[0].coupon > 0){
+		}else if( resultSetCs[0].QuantityCoupon > 0){
+
 			location.href=couponPage+id
 		}else {
 				location.href=promotionPage+id
@@ -498,7 +952,14 @@ $scope.display = OurFavorites.all();
 	}
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.ChangeColorHeart = function (parametro, category) {
-		console.log(category);
+    var ValSend = true
+    for (x in FirebaseFavorite[0].CustomerID) {
+      console.log(FirebaseFavorite[0].CustomerID[x]);
+      if (FirebaseFavorite[0].CustomerID[x] == category) {
+        ValSend = false;
+      }
+    }
+
 		var NamePromo = category
 		var NameUser = String(IdUsuario)
 		var Dimensions = {
@@ -510,13 +971,27 @@ $scope.display = OurFavorites.all();
 		if (cssColor == "white") {
 			mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "red";
-			SaveFavorite(IdUsuario, category)
-				Parse.Analytics.track("AddHeart", Dimensions);
+      if (ValSend == true) {
+        var newPostKey = firebase.database().ref().child('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').push().key;
+        var Cus = {}
+        Cus[newPostKey] = category
+        firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').update(Cus);
+        }
 		} else {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(parametro+" "+category).style.color = "white";
-				Parse.Analytics.track("DelHeart", Dimensions);
-			DeleteFavorite(IdUsuario, category)
+
+      for (i in FirebaseFavorite[0].CustomerID) {
+
+        if (FirebaseFavorite[0].CustomerID[i] == category) {
+          firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID/'+i).remove();
+        }
+      }
+      for (a in CustomerList) {
+          if (CustomerList[a].Name == category) {
+            CustomerList[a].colorHeart = "white"
+          }
+      }
 		}
 	};
 
@@ -527,13 +1002,12 @@ $scope.display = OurFavorites.all();
 		 return e.name.indexOf($stateParams.IDcustomer) == 0;
 	});
 	var NameUser = String(IdUsuario)
-	console.log(DirecParse[0].name2);
+
 	var dimensions = {
 		name: DirecParse[0].name2
 	};
 mixpanel.track("view", { "type" : "Customers","Gender":IdGender,"User":NameUser});
 mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender":IdGender,"User":NameUser});
-		Parse.Analytics.track("view", dimensions);
 	// Loading scope
 	$scope.AppCategory = $stateParams.IDcustomer
 	$scope.loading = $ionicLoading.show({
@@ -543,6 +1017,9 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
 	/************ FUNCTION CHANGE COLOR HEART  **********/
 	$scope.changeColorHeart = function (parametro, category) {
+
+
+
 		var cssColor = document.getElementById(parametro+" "+category).style.color;
 		if (cssColor == "white") {
 			document.getElementById(parametro+" "+category).style.color = "red";
@@ -570,8 +1047,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 .controller('PromotionsDescription',function($scope, $stateParams, DescriptionOfferts ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
 	mixpanel.track("view", { "type" : "PromotionsDescription","Gender":IdGender,"User":IdUsuario});
 	$scope.chats = DescriptionOfferts.all($stateParams.superId);
-	console.log($scope.chats[0].Category);
-//	$scope.heartMenu = resultSetPopover[0].colorHeart;
+  console.log($scope.chats);
 	$scope.custumerName = $scope.chats[0].Category.replace(/-/g," ");
 			$scope.$on('$ionicView.enter', function() {
 				console.log();
@@ -580,7 +1056,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			});
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion ,$ionicPopover, $ionicPopup, $timeout, $ionicLoading,$cordovaSocialSharing) {
 	var dimensions = {
 		name: $stateParams.superId,
 	};
@@ -592,12 +1068,28 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		$scope.popover = popover;
 		$scope.message = 'hello';
 	});
+  $scope.share = function (images) {
+    console.log(images);
+window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas promocioines",null,images)
+
+  }
+  // // Share via native share sheet
+  // $cordovaSocialSharing.share("frenzyapplication", "hora de compartir","https://firebasestorage.googleapis.com/v0/b/frenzyapplication.appspot.com/o/imagePromotion%2F20160719_134442-1.jpg?alt=media&token=c5162cd3-f16c-4725-9549-bc77987580b3" ,null).then(function(result) {
+  //     // Success!
+  //   }, function(err) {
+  //     // An error occured. Show a message to the user
+  //   });
 	// Pixels quantity of Popover for height div
 	$scope.pix = currentPromotion.get($stateParams.superId);
 //	console.log($scope.pix);
 	$scope.pixels = $scope.pix[1][0].pixels;
 
-
+  $scope.sendSms = function(){
+   $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {
+   }, function(err) {
+   console.log('error mensaje');
+   });
+   }
 	$scope.reload = function () {
 	    var PromoSavess = new Parse.Query('PromotionSaved')
 	    PromoSavess.equalTo("UserID", IdUsuario);
@@ -631,23 +1123,43 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		  name: 'PromotionPin_'+NamePromo,
 		  user: NameUser
 		};
-		Parse.Analytics.track("pin", Dimensions);
+
+    var ValSend = true
+    for (x in FirebasePromotionSaved[0].PromotionID) {
+      console.log(FirebasePromotionSaved[0].PromotionID[x]);
+      if (FirebasePromotionSaved[0].PromotionID[x] == IDPromotion) {
+        ValSend = false;
+      }
+    }
 		var cssColorpinOfferts = document.getElementById(id+" "+IDPromotion).style.color;
 
 		if (cssColorpinOfferts == "silver") {
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
-			SavePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
-	    //viewPromotion()
+      if (ValSend == true) {
+        var newPostKey = firebase.database().ref().child('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').push().key;
+        var Cus = {}
+        Cus[newPostKey] = IDPromotion
+        firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID').update(Cus);
+      }
 		} else {
+      AllPromotionF = [];
 			mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
-			DeletePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
-	    //viewPromotion()
+      for (i in FirebasePromotionSaved[0].PromotionID) {
+
+        if (FirebasePromotionSaved[0].PromotionID[i] == IDPromotion) {
+          firebase.database().ref('PromotionSaved/'+FirebasePromotionSaved[0].PromotionSavedID+'/PromotionID/'+i).remove();
+        }
+      }
+
+      for (a in CurrentPromotion) {
+          if (CurrentPromotion[a].IDpromotion == IDPromotion) {
+            CurrentPromotion[a].ColorPin = "silver"
+          }
+
+      }
 		}
-	//$scope.reload()
 	};
 	// *********** FUNCTION CHANGE COLOR PIN OFFERTS WITHOUT IMAGE **********
 	$scope.changeColorPinOffertsWithoutImage = function (id, IDPromotion) {
@@ -655,12 +1167,10 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
 		if (cssColorpinOffertsWithoutImage == "silver") {
 			document.getElementById(id+" "+IDPromotion).style.color = "purple";
-			SavePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
+			SavePromotion(IdUsuario, IDPromotion);
 		} else {
 			document.getElementById(id+" "+IDPromotion).style.color = "silver";
-			DeletePromotion(IdUsuario, IDPromotion)
-		//	$scope.reload()
+			DeletePromotion(IdUsuario, IDPromotion);
 		}
 	};
 	// *************** CALL PHONE FUNCTION ***************
@@ -675,8 +1185,8 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		var a = cell.toString();
 		var b = 'tel:'
 		var callPhone = b + a;
-
-		window.open(callPhone)
+    //This action works for to do call
+	  document.location.href = callPhone
 
 	}
 	// *************** URL BROWSER SHOP FUNCTION ***************
@@ -691,12 +1201,10 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			mixpanel.track("ClickWeb", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
-			Parse.Analytics.track("WebShopPromotion", Dimensions);
 		}else {
 				mixpanel.track("ClickCartShop", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
-			Parse.Analytics.track("cartShopPromotion", Dimensions);
 		}
 
 	}
@@ -742,17 +1250,38 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		  user: NameUser
 		};
 		$scope.changeColorHeartFollow = function(id) {
+      var ValSend = true
+      for (x in FirebaseFavorite[0].CustomerID) {
+        console.log(FirebaseFavorite[0].CustomerID[x]);
+        if (FirebaseFavorite[0].CustomerID[x] == id) {
+          ValSend = false;
+        }
+      }
 
 			if ($scope.heartMenu == "silver") {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
-				Parse.Analytics.track("AddHeartPopover", Dimensions);
+      if (ValSend == true) {
+          var newPostKey = firebase.database().ref().child('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').push().key;
+          var Cus = {}
+          Cus[newPostKey] = id
+          firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID').update(Cus);
+        }
 				$scope.heartMenu = "red";
-				SaveFavorite(IdUsuario, id)
+
 			} else {
 				mixpanel.track("ClickHeart", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Delete","Gender":IdGender});
-				Parse.Analytics.track("DelHeartPopover", Dimensions);
+
+        for (i in FirebaseFavorite[0].CustomerID) {
+          if (FirebaseFavorite[0].CustomerID[i] == id) {
+            firebase.database().ref('Favorite/'+FirebaseFavorite[0].FavoriteID+'/CustomerID/'+i).remove();
+          }
+        }
 				$scope.heartMenu = "silver";
-				DeleteFavorite(IdUsuario, id)
+        for (a in CustomerList) {
+            if (CustomerList[a].Name == id) {
+              CustomerList[a].colorHeart = "white"
+            }
+        }
 			}
 		}
 		/* **************************************************** */
@@ -790,15 +1319,15 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		}
 		/* **************************************************** */
 		$scope.chats = currentPromotion.get($stateParams.superId);
-
+    console.log($scope.chats);
 		$scope.popover = currentPromotion.all($stateParams.superId);
 		$scope.heartMenu = "silver";
 		$scope.Cupcon = Cupcont.length
 		$scope.heartPopover = function(id){
 			var resultSetPopover = $.grep(CustomerList, function (e) {
-				 return e.NameCategory.indexOf(id) == 0;
+				 return e.Name.indexOf(id) == 0;
 			});
-			console.log(resultSetPopover);
+
 			if (resultSetPopover[0].colorHeart == "white") {
 					$scope.heartMenu = "silver";
 			}else {
@@ -817,7 +1346,7 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	});
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams ,Coupons, $ionicLoading) {
+.controller('CuponCtrl', function($scope, $stateParams ,Coupons, $ionicLoading,$cordovaSocialSharing) {
 	var NameUser = String(IdUsuario);
 	mixpanel.track("view", { "type" : "copuns","Gender":IdGender,"User":NameUser});
 		// For to update QuantityExchanged
@@ -833,6 +1362,13 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	/*****  fill displayNoneInline list to call after
 						in cupons_description for show barcode
 						or hide it  ****/
+
+    $scope.sendSms = function(){
+      $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {
+        }, function(err) {
+        console.log('error mensaje');
+      });
+    }
 	// *************** CALL PHONE FUNCTION ***************
 	$scope.call= function(cell){
 		a = cell.toString();
@@ -863,151 +1399,135 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 	}
 
     $scope.showCouponDescription = function(id){
+      var QuantityExchangedSuma =0;
+        mainApp.database().ref('Coupon').once('value', function(snapshot) {
+          console.clear();
+          console.log(id);
+          for (x in snapshot.val()) {
+            if (x == id) {
+              console.log(id);
+              console.log(x);
+              if(snapshot.val()[x].TypeCoupon === 'Fecha'){
+                          swal({
+                              title: "Estas Seguro?",
+                              text: "Quieres canjear este cupon?",
+                              type: "warning",
+                              showCancelButton: true,
+                              cancelButtonText: 'No',
+                              confirmButtonColor: '#00BAB9',
+                              confirmButtonText: "Canjear!",
+                              closeOnConfirm: false
+                          },
+                          function(isConfirm){
+                              if (isConfirm) {
+                                console.log("----------------------------------");
+                                console.log(id);
+                                console.log(x);
+                                  console.log("confirmo");
+                                  swal({
+                                      title: 'Perfecto!',
+                                      text: 'Has cambiado tu Cupón',
+              												type: "success",
+                                      timer: 2000,
+                                      showConfirmButton: false,
 
-        query.equalTo("objectId",id)
-        var couponCash =	query.find({
-            success: function(results){
+                                  })
+                                  console.log("----------------------------");
+                                  console.log(snapshot.val()[id].QuantityExchanged);
 
-                console.log('entro a la funcion');
-                if(results[0].attributes.TypeCoupon === 'Fecha'){
+              										mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":id});
+                                  QuantityExchangedSuma = snapshot.val()[id].QuantityExchanged + 1
+                                  mainApp.database().ref('Coupon/'+id
+                                ).update({
+                                        QuantityExchanged: QuantityExchangedSuma
+                                  });
 
-                    swal({
-                        title: "Estas Seguro?",
-                        text: "Quieres canjear este cupon?",
-                        type: "warning",
-                        showCancelButton: true,
-                        cancelButtonText: 'No',
-                        confirmButtonColor: '#00BAB9',
-                        confirmButtonText: "Canjear!",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm){
-                        if (isConfirm) {
-                            swal({
-                                title: 'Perfecto!',
-                                text: 'Has cambiado tu Cupón',
-																type: "success",
-                                timer: 2000,
-                                showConfirmButton: false,
+                                                                    var couponPages="#/app/descripcionCupones/";
+                                                                    location.href=couponPages+id;
+                              } else {
+                              swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
 
-                            });
-														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":id});
-                            cuponClassExchanged.id = id;
-                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-                            cuponClassExchanged.save();
-                            var couponPages="#/app/descripcionCupones/";
-                            location.href=couponPages+id;
-                        } else {
-                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
-                        }
-                    });
+                              }
+                          });
 
-                }else if(results[0].attributes.TypeCoupon === 'Cupon'){
-										if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
-											$scope.cupons[0][0].QuantityExchanged +=1;
-											swal({
-	                        title: "Estas Seguro?",
-	                        text: "Quieres canjear este cupon?",
-	                        type: "warning",
-	                        showCancelButton: true,
-	                        cancelButtonText: 'No',
-	                        confirmButtonColor: '#00BAB9',
-	                        confirmButtonText: "Canjear!",
-	                        closeOnConfirm: false
-	                    },
-	                    function(isConfirm){
-	                        if (isConfirm) {
-	                            swal({
-	                                title: 'Perfecto!',
-	                                text: 'Has cambiado tu Cupón',
-	                                timer: 2000,
-	                                showConfirmButton: false,
-	                                type: "success"
-	                            });
-															mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":id});
-	                            couponCash.then(function(){
-																	var element = document.getElementById("QuantityExchangedText");
-																	element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
-	                                var couponPages="#/app/descripcionCupones/";
-	                                // IdPromotion with redirection page
-	                                couponPages = couponPages+id;
-	                                location.href=couponPages;
-	                            });
+                      }else if(snapshot.val()[x].TypeCoupon === 'Cupon'){
+              					if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
+              											$scope.cupons[0][0].QuantityExchanged +=1;
+              											swal({
+              	                        title: "Estas Seguro?",
+              	                        text: "Quieres canjear este cupon?",
+              	                        type: "warning",
+              	                        showCancelButton: true,
+              	                        cancelButtonText: 'No',
+              	                        confirmButtonColor: '#00BAB9',
+              	                        confirmButtonText: "Canjear!",
+              	                        closeOnConfirm: false
+              	                    },
+              	                    function(isConfirm){
+              	                        if (isConfirm) {
+              	                            swal({
+              	                                title: 'Perfecto!',
+              	                                text: 'Has cambiado tu Cupón',
+              	                                timer: 2000,
+              	                                showConfirmButton: false,
+              	                                type: "success"
+              	                            });
+              															mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":id});
 
-	                            cuponClassExchanged.id = id;
-	                            cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-	                            cuponClassExchanged.save();
-                      	} else {
-														$scope.cupons[0][0].QuantityExchanged -=1;
-														var element = document.getElementById("QuantityExchangedText");
-														element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + results[0].attributes.QuantityCoupons;
-	                      }
-	                    });
-										} else {
-												$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
-												cuponClassExchanged.id = id;
-												cuponClassExchanged.set("Status", false);
-												cuponClassExchanged.save();
+              																	var element = document.getElementById("QuantityExchangedText");
+              																	element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
+              	                                var couponPages="#/app/descripcionCupones/";
+              	                                // IdPromotion with redirection page
+              	                                couponPages = couponPages+id;
+              	                                location.href=couponPages;
 
-												swal({
-													title: 'Lo sentimos!',
-													text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-													type: 'warning'
-												},
-												function(isConfirm) {
-														if(isConfirm){
-															$scope.loading = $ionicLoading.show({
-																	showBackdrop: true,
-																	template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-														});
+                                            QuantityExchangedSuma = snapshot.val()[x].QuantityExchanged + 1
+                                            mainApp.database().ref('Coupon/'+x).update({
+                                                  QuantityExchanged: QuantityExchangedSuma
+                                            });
+                                    	} else {
+              														$scope.cupons[0][0].QuantityExchanged -=1;
+              														var element = document.getElementById("QuantityExchangedText");
+              														element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
+              	                      }
+              	                    });
+              										} else {
+              												$scope.cupons[0].QuantityExchanged =  parseInt(snapshot.val()[x].QuantityCoupons);
 
-														Parse.Cloud.run('CountCouponCustomer', {}, {
-																success: function(resultCustomer) {
-																	console.log(resultCustomer);
-																		Parse.Cloud.run('CountCouponCategories', {}, {
-																				success:function(result) {
-																					CategoryListName = [];
-																					var query = new Parse.Query('AppCategory');
-																					query.each(function(results) {
-																							CategoryListName.push(results.attributes)
-																					}).then(function() {
-																							ReloadFavorite()
-																					}).then(function() {
-																							Parse.Cloud.run('GetCustomer', {},{
-																									success:function (results) {
-																										//	console.log(results);
-																										CustomerList = results
-																									},
-																									error:function (error) {
-																									 console.log(error);
-																									}
-																							}).then(function() {
-																								$ionicLoading.hide();
-																								var couponPages="#/app/playlists";
-																								location.href=couponPages;
-																							})
-																						});
+                                      mainApp.database().ref('Cupon/'+x).update({
+                                            Status: false
+                                      });
+              												swal({
+              													title: 'Lo sentimos!',
+              													text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+              													type: 'warning'
+              												},
+              												function(isConfirm) {
+              														if(isConfirm){
+              															$scope.loading = $ionicLoading.show({
+              																	showBackdrop: true,
+              																	template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+              														});
 
-																				},
-																				error: function(error) {
-																						/* Show error if call failed */
-																						console.log(error);
-																				}
-																		});
-																},
-																error: function(error) {
-																		/* Show error if call failed */
-																		console.log(error);
-																}
-											});
-											}
-										})
-									}
-								}
-            	}
-        	});
+
+                                    $ionicLoading.hide();
+                                  	var couponPages="#/app/playlists";
+                                  	location.href=couponPages;
+              											}
+              										})
+              									}
+              								}
+            }
+
+
+
+
+
+          }
+       });
 					displayNoneInline=[{none:"none",inline:"inline",position:"absolute",bottom:0}];
   		}
+
 
 	$scope.llenar1=function(id){
 		$scope.countCoupon(id);
@@ -1049,7 +1569,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 			var resultSetPopover = $.grep(CustomerList, function (e) {
 				 return e.NameCategory.indexOf(id) == 0;
 			});
-			console.log(resultSetPopover);
 			if (resultSetPopover[0].colorHeart == "white") {
 					$scope.heartMenu = "silver";
 			}else {
@@ -1072,17 +1591,23 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 
  $scope.$on('$ionicView.enter', function() {
 	  	$scope.categoryNameCoupon = Coupons.all($stateParams.CuponID);
-			console.log($scope.categoryNameCoupon);
+
 		 colorIconsFoother = []
 		 colorIconsFoother.push(['#00DDC1','#A7A9AC','#A7A9AC','#A7A9AC',$scope.categoryNameCoupon[0][0].Category,'','none']);
  });
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons, $ionicLoading) {
+
+  $scope.llenar2=function(){
+    displayNoneInline=[{none:"inline",inline:"none"}];
+  };
+
 	mixpanel.track("view", { "type" : "DescriptionCupon","Gender":IdGender,"User":IdUsuario});
 	$scope.reloadpage = function(){
 		$scope.cupons[0].QuantityExchanged +=1
 	}
+
 	// ***************  EXCHANGE BUTTON DISPLAY NONE********************
 	$scope.buttonCash = function(){
 		$('.botonCanjear').click(function(){
@@ -1114,103 +1639,73 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		$scope.HideStyleButtonExchangeBottom = "0";
 
 		$scope.countCoupon = function(){
-
+      var QuantityExchangedsu = 0;
 			$scope.HideStyleButtonExchangePosition = "none"
 			$scope.HideStyleButtonExchangeBottom = "none"
+      // mainApp.database().ref('Cupon/'+x).update({
+      //       Status: false
+      // });
 
-				var couponCash2 = query.find({
-					success: function(results){
-                        if(results[0].attributes.TypeCoupon === "Cupon"){
-                            // ------------------------------------------------------------------------------------------------------------------------------------------------
-                               if (parseInt(results[0].attributes.QuantityExchanged) < parseInt(results[0].attributes.QuantityCoupons)) {
-								    cuponClassExchanged.id = $stateParams.DescriptionID;
-									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-									cuponClassExchanged.save();
-									mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
-									swal({
-											title: "Perfecto!",
-											text: "Has cambiado tu cupón",
-											type: "success",
-											timer: 2000,
-											showConfirmButton: false
-									});
-                              } else {
 
-								$scope.cupons[0].QuantityExchanged =  parseInt(results[0].attributes.QuantityCoupons);
+        mainApp.database().ref('Coupon').once('value', function(snapshot) {
+            for (x in snapshot.val()) {
 
-								cuponClassExchanged.id = $stateParams.DescriptionID;
-								cuponClassExchanged.set("Status", false);
-								cuponClassExchanged.save();
+                    if(snapshot.val()[x].TypeCoupon === "Coupon"){
+                                              // ------------------------------------------------------------------------------------------------------------------------------------------------
+                        if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
 
-								swal({
-									title: 'Lo sentimos!',
-									text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-									type: 'warning'
-								},
-								function(isConfirm) {
-										if(isConfirm){
+                                  QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
+                                  mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
+                                        QuantityExchanged: QuantityExchangedsu
+                                  });
+                  									mixpanel.track("clickCanjear", { "type" : "Cupon","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
+                  									swal({
+                  											title: "Perfecto!",
+                  											text: "Has cambiado tu cupón",
+                  											type: "success",
+                  											timer: 2000,
+                  											showConfirmButton: false
+                  									});
+                                                } else {
 
-											$scope.loading = $ionicLoading.show({
-												showBackdrop: true,
-												template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-											});
+                  								$scope.cupons[0].QuantityExchanged =  parseInt(snapshot.val()[x].QuantityCoupons);
 
-											Parse.Cloud.run('CountCouponCustomer', {}, {
-													success: function(resultCustomer) {
-														console.log(resultCustomer);
-															Parse.Cloud.run('CountCouponCategories', {}, {
-																	success:function(result) {
+                                  mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
+                                        Status: false
+                                  });
 
-																		CategoryListName = [];
-																		var query = new Parse.Query('AppCategory');
-																		query.each(function(results) {
-																					CategoryListName.push(results.attributes)
-																		}).then(function() {
-																			ReloadFavorite()
-																		}).then(function() {
+                  								swal({
+                  									title: 'Lo sentimos!',
+                  									text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+                  									type: 'warning'
+                  								},
+                  								function(isConfirm) {
+                  										if(isConfirm){
 
-																			Parse.Cloud.run('GetCustomer', {},{
-																				success:function (results) {
-																				//	console.log(results);
-																					CustomerList = results
-																				},
-																				error:function (error) {
-																				 console.log(error);
-																				}
-																			}).then(function() {
-																				$ionicLoading.hide();
-																				var couponPages="#/app/playlists";
-																				location.href=couponPages;
-																			})
-																		});
+                  											$scope.loading = $ionicLoading.show({
+                  												showBackdrop: true,
+                  												template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+                  											});
 
-																	},
-																	error: function(error) {
-																			/* Show error if call failed */
-																			console.log(error);
-																	}
-															});
-													},
-													error: function(error) {
-													/* Show error if call failed */
-													console.log(error);
-													}
-											});
+                                        $ionicLoading.hide();
+                                      	var couponPages="#/app/playlists";
+                                        location.href=couponPages;
+                  										}
+                  								})
+                  						}
+                              // ------------------------------------------------------------------------------------------------------------------------------------------------
+                          } else if(snapshot.val()[x].TypeCoupon === "Fecha"){
 
-										}
-								})
-						}
-                        // ------------------------------------------------------------------------------------------------------------------------------------------------
-                    } else if(results[0].attributes.TypeCoupon === "Fecha"){
-                            console.log('tiene que sumar')
-														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":NameUser,"NameCoupon":$stateParams.DescriptionID});
-                                    cuponClassExchanged.id = $stateParams.DescriptionID;
-									cuponClassExchanged.set("QuantityExchanged", results[0].attributes.QuantityExchanged + 1);
-									cuponClassExchanged.save();
-                    }
+      														mixpanel.track("clickCanjear", { "type" : "fecha","Gender":IdGender,"User":IdUsuario,"NameCoupon":$stateParams.DescriptionID});
+                                          QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
+                                          mainApp.database().ref('Coupon/'+$stateParams.DescriptionID).update({
+                                                QuantityExchanged: QuantityExchangedsu
+                                          });
+                          }
 
-					}
-				})
+                  }
+
+        });
 
 		}
 		/*****  noneDisplay equalTo displayNoneInline for
@@ -1221,7 +1716,6 @@ mixpanel.track("ClickCategory", { "NameCategory" :  DirecParse[0].name2,"Gender"
 		// ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
 			$scope.noneDisplay=displayNoneInline;
-			// console.log($scope.noneDisplay[0].position);
 			if ($scope.noneDisplay[0].position == "absolute") {
 				$scope.HideStyleButtonExchangePosition = "none"
 				$scope.HideStyleButtonExchangeBottom = "none"
@@ -1332,7 +1826,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		templateUrl: "templates/menu/menu.html",
 		controller: 'menuCtrl'
 	})
-
+  // ******** loading *****
+  	.state('loading', {
+  		url: "/loading",
+  		templateUrl: "templates/loading/loading.html",
+  		controller:"loadingCtrl"
+  })
+  // ******** loading For Login User *****
+  	.state('loadingLoginUser', {
+  		url: "/loadingLoginUser",
+  		templateUrl: "templates/loading/loading.html",
+  		controller:"loadingCtrlLogin"
+  })
   // ******** TUTORIAL *****
 	.state('tutorial', {
 		url: "/tutorial",
@@ -1361,16 +1866,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/login2",
 		templateUrl: "templates/login2/login2.html",
     	controller: "RegisterController"
-	})
-	// ******* FAVORITE *******
-	.state('app.favoritos', {
-		url: "/favoritos",
-		views: {
-			'menuContent': {
-				templateUrl: "templates/favorite/favorites.html",
-				controller: 'OurfavoritesCtrl'
-			}
-		}
 	})
 	// ******* YOUR FAVORITE
 	.state('app.tusFavoritos', {
@@ -1427,7 +1922,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			views: {
 				'menuContent': {
 					templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
-					controller: 'currentPromotionCtrl'
+					controller: 'PromotionsDescription'
 				}
 			}
 		})
@@ -1481,7 +1976,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	});
 	// if none of the above states are matched, use this as the fallback
- $urlRouterProvider.otherwise('/tutorial');
+  $urlRouterProvider.otherwise('/loading');
 })
 // ############## //
 //  Controllers   //
@@ -1489,10 +1984,97 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 /*************************  BODY CONTROLLER  ******************************/
 
-.controller('bodyCtrl', ['$state', function($state) {
+.controller('loadingCtrlLogin', function($scope, $state,$ionicLoading,$timeout) {
+
+  // Loading Login User
+  $scope.$on('$ionicView.enter', function() {
+    $ionicLoading.show({
+      noBackdrop: true,
+      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+    });
+
+    $timeout(function () {
+      $ionicLoading.hide();
+      $state.go('app.playlists');
+    }, 2000);
+
+  });
+})
+
+.controller('loadingCtrl', function($scope, $state,$ionicLoading,$timeout) {
+  $ionicLoading.show({
+		noBackdrop: true,
+		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+	});
+  $timeout(function () {
+
+  var user = firebase.auth().currentUser;
+  var credential;
+
+
+
+
+
+    if (user) {
+
+      if(user.providerData[0].providerId == 'facebook.com'){
+
+          IdUsuario = user.providerData[0].uid;
+          mainApp.database().ref('Users').once('value', function(snapshot) {
+
+                  for (x in snapshot.val()) {
+                     if (x == IdUsuario) {
+                       IdGender =snapshot.val()[x].Gender
+                     }
+                  }
+
+        }).then(function() {
+          console.log();
+        });
+
+        $timeout(function () {
+          $ionicLoading.hide();
+          $state.go('app.playlists');
+
+        }, 2000);
+      }else{
+        IdUsuario = user.uid;
+
+          mainApp.database().ref('Users').once('value', function(snapshot) {
+                  for (x in snapshot.val()) {
+                     if (x == IdUsuario) {
+                       IdGender =snapshot.val()[x].Gender
+                     }
+                  }
+              });
+            }
+            $state.go('app.playlists');
+
+    } else {
+      $timeout(function () {
+        $ionicLoading.hide();
+        $state.go('tutorial');
+
+        }, 1000);
+
+    }
+
+
+        }, 1000);
+//});
+
+        // setTimeout(function() {
+        // 		navigator.splashscreen.hide();
+        // }, 4000);
+
+})
+
+.controller('bodyCtrl', ['$state', function($state,$ionicLoading) {
 	var userVerificate= Parse.User.current();
+
 	// *********** DEVICE READY SPLASHSCREEN  *******************
 	document.addEventListener("deviceready", function($scope) {
+
 		var notificationOpenedCallback = function(jsonData) {
 		console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
 	};
@@ -1504,26 +2086,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	// Show an alert box if a notification comes in when the user is in your app.
 	window.plugins.OneSignal.enableInAppAlertNotification(true);
 		///////////////////////////////////////
-		$scope.currentUser = Parse.User.current();
-			 if (userVerificate==null) {
-					 $state.go('tutorial');
-			}else {
-					if (userVerificate["attributes"].authData == undefined) {
-						console.log("---------------------------------******************************************************************************");
-							IdUsuario = String($scope.currentUser.id)
-							IdGender = String($scope.currentUser.attributes.gender);
-											viewPromotion()
-					}else {
-						console.log("---------------------------------******************************************************************************");
-							IdUsuario = String(userVerificate["attributes"].authData.facebook.id)
-							IdGender = String($scope.currentUser.attributes.gender);
-											viewPromotion()
-					}
-					$state.go('app.playlists');
-					// setTimeout(function() {
-					// 		navigator.splashscreen.hide();
-					// }, 6000);
-				}
+
 	}, false);
 }])
 
@@ -1537,32 +2100,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 }])
 /*************************  TUTORIAL  ******************************/
 .controller('tutorialController', ['$scope', '$state', function($scope, $state) {
-	// AWS.config.region = 'us-east-1';
-	// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-	//     IdentityPoolId: 'us-east-1:c1876a25-393e-46ae-bb48-244ff2f5aa76'
-	// });
-	//
-	//
-	// var options = {
-	//     appId : 'e375a354c38c4928b00222315df3d4b6',
-	//     platform: 'Android',
-	//     logger: console ,
-	// 		appTitle : 'Frenzy'//Remove this line to turn off log messages
-	// };
-	// mobileAnalyticsClient = new AMA.Manager(options);
-	// console.log('Analytics initialized');
-	//
-	// mobileAnalyticsClient.createEvent("example");
-	//
-	// mobileAnalyticsClient.renewSession();
-	// 	mobileAnalyticsClient.startSession()
-	// 	mobileAnalyticsClient.submitEvents();
-
-	var guate    = moment.tz("America/Guatemala");
-
-	// console.log("------" + guate.format('DD/MM/YYYY'));
-
-mixpanel.track("viewTurorial");
+  var guate    = moment.tz("America/Guatemala");
+  mixpanel.track("viewTurorial");
 	// IdUsuario of Facebook or Frenzy for Pines and hearts
 
 	$scope.slideChanged = function(index) {
@@ -1572,6 +2111,23 @@ mixpanel.track("viewTurorial");
           break;
       }
     }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		var FireCustomer;
+		var CustomerF = [];
+
+		var countC = 0;
+	 secondaryApp.database().ref('Customer').on('value', function(snapshot) {
+			 FireCustomer = snapshot.val();
+				for (x in snapshot.val()) {
+					CustomerF[countC] = snapshot.val()[x]
+					CustomerF[countC]["suma"] =snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
+					countC++
+				}
+				countC = 0
+	});
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$scope.TutorialPromotion = CustomerF;
 }])
 /*************************  TUTORIAL NO.2 ******************************/
 .controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
@@ -1582,6 +2138,23 @@ mixpanel.track("viewTurorial");
           break;
       }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    		var FireCustomer;
+    		var CustomerF = [];
+
+    		var countC = 0;
+    	 secondaryApp.database().ref('Customer').on('value', function(snapshot) {
+    			 FireCustomer = snapshot.val();
+    				for (x in snapshot.val()) {
+    					CustomerF[countC] = snapshot.val()[x]
+    					CustomerF[countC]["suma"] =snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
+    					countC++
+    				}
+    				countC = 0;
+    	});
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    		$scope.TutorialPromotion = CustomerF;
 }])
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
@@ -1602,7 +2175,11 @@ mixpanel.track("viewTurorial");
 		Parse.Analytics.track("Tools", dimensions);
 	}
 	$scope.logout = function() {
-		Parse.User.logOut();
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }, function(error) {
+      // An error happened.
+    });
 		$state.go('loginAndRegister');
 	};
 
@@ -1614,108 +2191,160 @@ mixpanel.track("viewTurorial");
 }])
 /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
-.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook) {
+.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook,UserService,$q,$ionicLoading,$timeout) {
 
- // $scope.currentUser = Parse.User.current();
- // console.log($scope.currentUser)
- // if ($scope.currentUser != null ){
- //  if ($scope.currentUser["attributes"].authData != undefined) {
- // 		IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id);
- // 		viewPromotion();
- // 		$state.go('app.playlists');
- //  } else {
- // 		IdUsuario = String($scope.currentUser.id);
- // 		viewPromotion();
- // 		$state.go('app.playlists');
- //  }
- //
- // }
+ // This method is to get the user profile info from the facebook api
+var getFacebookProfileInfo = function (authResponse) {
+  var info = $q.defer();
 
-			var fbLogged = new Parse.Promise();
+  facebookConnectPlugin.api('/me?fields=email,name&access_token=' + authResponse.accessToken, null,
+    function (response) {
+      console.log(response);
+      info.resolve(response);
+    },
+    function (response) {
+      console.log(response);
+      info.reject(response);
+    }
+  );
+  console.log(info.promise);
+  return info.promise;
+};
 
- var fbLoginSuccess = function(response) {
-		 if (!response.authResponse){
-				 fbLoginError("Cannot find the authResponse");
-				 return;
-		 }
-		 var expDate = new Date(
-				 new Date().getTime() + response.authResponse.expiresIn * 1000
-		 ).toISOString();
-
-		 var authData = {
-				 id: String(response.authResponse.userID),
-				 access_token: response.authResponse.accessToken,
-				 expiration_date: expDate
-		 }
-		 fbLogged.resolve(authData);
- };
-
- var fbLoginError = function(error){
-		 fbLogged.reject(error);
- };
+///////////////////
 
  //===============LOGIN WITH FB==========//
  $scope.loginfb = function(){
-	 	mixpanel.track("LoginClick", { "loginButton" : "Facebook"});
-			setTimeout(function(){
+    mixpanel.track("LoginClick", { "loginButton" : "Facebook"});
 
-				 if(!window.cordova){
-						 facebookConnectPlugin.browserInit('426922250825103');
-				 }
 
-				 facebookConnectPlugin.login(['email', 'public_profile', 'user_birthday', 'user_hometown'], fbLoginSuccess, fbLoginError);
+ $ionicLoading.show({
+  noBackdrop: true,
+  template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+ });
+ var UserUID;
+ $cordovaFacebook.login(["public_profile","user_birthday" ,"email","user_hometown"])
+  .then(function(success) {
 
-				 fbLogged.then(function(authData) {
+    var credential = firebase.auth.FacebookAuthProvider.credential(success.authResponse.accessToken);
+      mainApp.auth().signInWithCredential(credential).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
 
-						 $state.go('app.playlists');
-						 return Parse.FacebookUtils.logIn(authData);
-				 })
+  }, function (error) {
+    //alert(error)
+    // error
+  }).then(function() {
 
-				 .then(function(userObject) {
-							 var authData = userObject.get('authData');
-							 var consoles = Parse.User.current();
-							 facebookConnectPlugin.api('me?fields=id,name,birthday,hometown,gender,email', null,
-							 function(response) {
-								 mixpanel.identify(consoles.id);
-								 mixpanel.people.set({
-									 "$email": consoles.attributes.email,
-									 "$gender": consoles.attributes.gender,
-									 "$created":consoles.attributes.createdAt,
-									 "$birthday":consoles.attributes.birthday,
-									 "$name": consoles.attributes.name,
-									 "$typeLogin": "Facebook"
+    mainApp.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        UserUID = user.providerData[0].uid;
 
-								 });
-									 userObject.set('name', response.name);
-									 userObject.set('birthday', response.birthday);
-									 userObject.set('gender', response.gender);
-									 userObject.set('hometown', response.hometown);
-									 userObject.save();
-							 },
-							 function(error) {
-															 console.log(error);
-							 })
-				 })
-			 }, 1000);
+      } else {
+        // No user is signed in.
+      }
+    });
+  }).then(function() {
 
-	 };
+      $timeout(function () {
+        $cordovaFacebook.getLoginStatus()
+          .then(function(success) {
+            console.log(success);
+            $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
+                .then(function(success) {
+                  mixpanel.identify(success.id);
+                  mixpanel.people.set({
+                    "$email":success.email,
+                    "$gender": success.gender,
+                    "$birthday":success.birthday,
+                    "$name": success.name,
+                    "$typeLogin": "Facebook"
+
+                  });
+                  // success
+                    ///////////////////////////Favorite heart////////////////////////////////////
+                    mainApp.database().ref('Favorite').on('value', function(snapshot) {
+                      var CountFF = 0;
+                      for (x in snapshot.val()) {
+                        if (snapshot.val()[x].UserID == UserUID) {
+                          for (i in snapshot.val()[x].CustomerID) {
+                            for (c in CustomerList) {
+
+                              if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
+                                CustomerList[c].colorHeart = "red"
+                              }
+                            }
+                          }
+                          FirebaseFavorite[CountFF] = snapshot.val()[x]
+                          FirebaseFavorite[CountFF]["FavoriteID"] = x
+                          CountFF++
+                        }
+
+                      }
+                   });
+                    //////////////////////////////////////////////////////////////////////////
+                    ///////////////////////////SAVED PIN////////////////////////////////////
+
+                    mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
+                      var CountPS = 0;
+                      for (x in snapshot.val()) {
+                        if (snapshot.val()[x].UserID == UserUID) {
+
+                          for (i in snapshot.val()[x].PromotionID) {
+                            for (c in CurrentPromotion) {
+                              if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
+                                CurrentPromotion[c].ColorPin = "purple"
+                              }else {
+                                console.log("no encontro nada ");
+                              }
+                            }
+                          }
+                          FirebasePromotionSaved[CountPS] = snapshot.val()[x]
+                          FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
+                          CountPS++
+                        }
+
+                      }
+                   });
+                    //////////////////////////////////////////////////////////////////////////
+                    IdUsuario = UserUID;
+                    IdGender = success.gender;
+                  mainApp.database().ref('Users/' + UserUID).update({
+                              Username: success.name,
+                              Email: success.email,
+                              Gender: success.gender,
+                              Birthday: success.birthday,
+                              Hometown: success.hometown,
+                              IdFacebook: success.id
+                            })
+
+                    $state.go('app.playlists');
+                }, function (error) {
+                  // error
+                });
+          }, function (error) {
+            // error
+          });
+          $ionicLoading.hide();
+        }, 2000);
+
+
+
+  });
+
+
+   };
  // //===============/LOGIN WITH FB==========//
 })
 
 
 .controller('TutorialCostumer', function($scope, $ionicPopover) {
-	Parse.Cloud.run('GetCustomer', {},{
-		success:function (results) {
-			console.log(results);
-			var Result = results
-			for (g in Result) {
-				Result[g]["suma"] = Result[g]["promo"] +  Result[g]["coupon"]
-			}
-			$scope.TutorialPromotion = Result
-		},
-		error:function (error) {
-		 console.log(error);
-		}
-	})
-	//[{"Category":"Restaurantes","NameCategory":"Mr-Sushi","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-3a4902eb-7c6a-4419-84fe-93d852ffec9e-logo%20mr%20sushi.png","oferta":"existe","promedio":15,"promo":1,"suma":1},{"Category":"Restaurantes","NameCategory":"Dominos","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-5814f869-746e-4030-a5d7-17616c55870a-220x220.jpg","oferta":"existe","promedio":59,"promo":3,"suma":3},{"Category":"Restaurantes","NameCategory":"MARGHERITA","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-52085c6c-ffb3-4739-a50b-43f81e54173a-Logo_Margherita_converted.png","oferta":"existe","promedio":52,"promo":2,"suma":2},{"Category":"Restaurantes","NameCategory":"Astoria","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-35023ccc-d86e-43ec-929f-12999efb0480-LOGO.png","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Restaurantes","NameCategory":"ALTUNA","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-d3818ae3-0aae-403b-b84d-d59c60c98bfe-imagen%202%2072%20dpi-01.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Restaurantes","NameCategory":"Don-Carnitas","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-aafa6d05-f2d6-4227-b037-92be2848e58d-Nuestro%20Logo.jpg","oferta":"existe","promedio":24.67,"promo":3,"suma":3},{"Category":"Moda","NameCategory":"MNG","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-bdaee8f4-36f2-4cd5-ba9b-2a7909065e81-logoMNGBjpg_converted.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Moda","NameCategory":"Piel-De-Toro","colorHeart":"red","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-66f5b440-3f8b-4002-a89e-b587fb9a14d2-rsz_logo_piel.png","oferta":"existe","promedio":892.5,"promo":4,"suma":4},{"Category":"Moda","NameCategory":"Claire's","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-bddb919b-4a61-4fb7-bd36-bbcf1bf4debe-claire.jpg","oferta":"existe","promedio":0,"promo":0,"suma":0},{"Category":"Moda","NameCategory":"TIFFANY-HAIR-FASHION","colorHeart":"white","coupon":0,"lastText":"favorite","name":"http://files.parsetfss.com/7b5cc5e4-dfc9-487f-a0f2-a0984ed5cc24/tfss-d54c21…4299-9510-6f9cd80e8004-10991123_1074933285855798_5623932414552156501_n.png","oferta":"existe","promedio":0,"promo":0,"suma":0}]
 });

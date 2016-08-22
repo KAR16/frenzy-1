@@ -52,30 +52,30 @@
 					<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
 				<!-- Price Text Offers -->
 				<div class="row BoxPriceLabel">
-					<div class="col col-33 BoxLabel">
-						<p id="NothingSpace" class="AhorraTextLabel">
-							{{super.textDiscount}}
-						</p>
-						<p class="SavingPriceLabel {{super.TypePromotion}}">
-							{{super.ahorro}}
-						</p>
-					</div>
+								<div class="col col-33 BoxLabel">
+									<p id="NothingSpace" class="cuponsDescriptionsLabelExchance" style="display:{{super.display}};">
+										Ahorra
+									</p>
+									<p class="pageFavoritesSavingPrice">
+										{{super.ahorro}}
+									</p>
+								</div>
 				</div>
 				<!-- Redirect to Offer Description -->
 				<a href="#/app/descripcionOfertas/{{super.IDpromotion}}" style="text-decoration:none">
 					<!-- Width of the Offers Image -->
-					<img class="imageOffertsAndCoupons" ng-src="{{super.photo}}" alt="Promotions">
+					<img class="imageOffertsAndCoupons" V ng-src="{{super.Photo}}" alt="Promotions">
 				</a>
 				<!-- Promotion Description -->
 				<div class="row">
 					<p class="OfferDescriptionTitle open_sans">
-						{{super.name}}
+						{{super.Name}}
 					</p>
 				</div>
 				<!-- Promotion Description Text -->
 				<div class="row">
 					<p class="pageFavoritesDescription open_sans">
-						{{super.description}}
+						{{super.PromotionDescription}}
 					</p>
 				</div>
 				<!-- Footer Box -->
@@ -126,37 +126,17 @@
 			<div class="boxResponsiveWithoutImage">
 				<a href="#/app/descripcionOfertas/{{super.IDpromotion}}" style="text-decoration:none">
 					<div class="row">
-						<!-- Purple label and Saving Price -->
-						<div class="col col-33">
-							<!-- Purple Label -->
-							<div class="row pageOffertsWithoutImageLabel">
-								<div class="col labelPriceDescription">
-										<!-- Save Pricing Text -->
-										<spam class="pageOffertsTitleLabelWithoutImage">
-											{{super.textDiscount}}
-										</spam>
-										<!-- Price -->
-										<spam class="pageOffertsPriceLabelWithoutImage" style="margin-top:{{super.marginTop}}">
-											{{super.ahorro}}
-											<!-- <p class="home" style="font-size:45px;color:white;">
-												{{super.icon}}
-											</p> -->
-										</spam>
-								</div>
-							</div>
-							<!-- Purple Tag Image -->
-							<img clas="offersLogo" src="img/logoOfertas.png" alt="image" style="height:75px; width:75px;">
-						</div>
+
 						<!-- Offers Description without image -->
 							<div class="col">
 								<div class="row">
 									<spam class="open_sans pageOffertsTitleDescriptionWithoutImage">
-										{{super.name}}
+										{{super.Name}}
 									</spam>
 								</div>
 								<div class="row">
 									<p class="pageFavoritesDescriptionWithoutImage open_sans">
-										{{super.description}}
+										{{super.PromotionDescription}}
 									</p>
 								</div>
 							</div>
@@ -267,7 +247,9 @@
 							<img  class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
 						</div>
 						<div class="col verticalCenteredObjects friendsOfFacebook">
-							<a class="secondPopoverText" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open=cordova.InAppBrowser.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank', 'location=yes');" style="text-decoration:none;">Amigos de facebook</a>
+							<!-- {{super.Photo}} -->
+							<!-- href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open=cordova.InAppBrowser.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank', 'location=yes');" -->
+							<a class="secondPopoverText"  ng-click = 'share("{{super.Photo}}")'  style="text-decoration:none;">Amigos de facebook</a>
 						</div>
 					</div>
 					<div class="row PaddingShare">
@@ -276,14 +258,14 @@
 							<hr class="style-hr">
 						</div>
 					</div>
-					<div class="row facebookShareContainer PaddingShare">
-						<div class="col-20 verticalCenteredObjects iconCenterDiv" onclick="window.open('sms:?body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '_system');" ng-click= "Analytics('message','promotion')">
+					<div class="row facebookShareContainer PaddingShare" ng-click= "Analytics('message','promotion'); sendSms()">
+						<div class="col-20 verticalCenteredObjects iconCenterDiv" >
 							<p class="home secondPopoverMailIcon">
 								V
 							</p>
 						</div>
 						<div class="col verticalCenteredObjects friendsOfFacebook">
-							<a class="secondPopoverText" href="sms:&body=Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)" style="text-decoration:none;">
+							<a class="secondPopoverText">
 								Enviar mensajes de texto
 							</a>
 						</div>

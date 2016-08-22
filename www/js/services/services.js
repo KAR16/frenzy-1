@@ -31,9 +31,8 @@ var contt = 0;
 // ********* ALL FAVORITE, PROMOTION, INFOSHOP VARIABLE *********
 var AllFavorite = [];
 var AllPromotion = [];
-var InfoShop = [];
-// ********* CUPONS *********
-var Cupons = [];
+//var InfoShop = [];
+
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', [])
 
@@ -66,18 +65,13 @@ app.factory('CustomerAll', function() {
 				var AllCustomer = [];
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
+				if (IDCostumer == CustomerList[a].CategoryApp) {
 					AllCustomer.push(CustomerList[a])
 				}
 			}
 			if (AllCustomer.length == 0) {
 				AllCustomer.push({oferta:"noHay"});
 			}
-			for (g in AllCustomer) {
-				AllCustomer[g]["suma"] = AllCustomer[g]["promo"] +  AllCustomer[g]["coupon"]
-			}
-			console.log(AllCustomer);
 			return AllCustomer;
 		},
 		get: function(chatId) {
@@ -101,7 +95,6 @@ app.factory('Supermercados', function() {
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
 					supermercados.push(CustomerList[a])
 				}
 			}
@@ -129,7 +122,6 @@ app.factory('Entretenimiento', function() {
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
 					entretenimiento.push(CustomerList[a])
 				}
 			}
@@ -156,7 +148,6 @@ app.factory('Moda', function() {
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
 					moda.push(CustomerList[a])
 				}
 			}
@@ -184,7 +175,6 @@ app.factory('Electronicos', function() {
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
 					electronicos.push(CustomerList[a])
 				}
 			}
@@ -214,7 +204,6 @@ app.factory('Restaurante', function() {
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
 					restaurantes.push(CustomerList[a])
 				}
 			}
@@ -241,7 +230,6 @@ app.factory('Otros', function() {
 			for (a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].Category) {
-					console.log("encontro ");
 					Others.push(CustomerList[a])
 				}
 			}
@@ -279,32 +267,23 @@ app.factory('currentPromotion', function() {
 			var validar = "existe"
 
 			var resultSet = $.grep(CustomerList, function (e) {
-				 return e.NameCategory.indexOf(superId) == 0;
+				 return e.Name.indexOf(superId) == 0;
 			});
 
-			//console.log(JSON.stringify(resultSet[0]["promo"]))
-
-			for (a in Cupons) {
-				if (superId == Cupons[a].Category) {
-					Cupcont.push(Cupons[a])
-
-				}
-			}
 
 			for (c in CurrentPromotion) {
-			//	console.log(CurrentPromotion[c]);
 				if (superId === CurrentPromotion[c].Category) {
-					if (CurrentPromotion[c].ShopOnline == undefined) {
+					if (CurrentPromotion[c].ShopOnline == undefined || CurrentPromotion[c].ShopOnline == '') {
 							CurrentPromotion[c].Display = "none"
 							CurrentPromotion[c].colPrice = "33"
 							CurrentPromotion[c].colPricePromo = "33"
 					}else {
 						CurrentPromotion[c].Display = "";
 					}
-					if (CurrentPromotion[c].photo ==null || CurrentPromotion[c].photo ==undefined){
-						CurrentPromotion[c]["photo"] = "img/frenzy_back.png"
+					if (CurrentPromotion[c].Photo ==null || CurrentPromotion[c].Photo ==undefined || CurrentPromotion[c].Photo == ''){
+						CurrentPromotion[c]["Photo"] = "img/frenzy_back.png"
 					}
-					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined) {
+					if ( CurrentPromotion[c].TermsAndConditions == null  || CurrentPromotion[c].TermsAndConditions ==undefined || CurrentPromotion[c].TermsAndConditions =='') {
 								CurrentPromotion[c]["DisplayTerms"] = "none";
 					}
 					Category.push(CurrentPromotion[c]);
@@ -337,11 +316,11 @@ app.factory('currentPromotion', function() {
 			for (z in InfoShop) {
 
 				if (superId === InfoShop[z].name){
-					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					if (InfoShop[z].url == '' && InfoShop[z].cel == '') {
 					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
-				}else if (InfoShop[z].cel == undefined) {
+				}else if (InfoShop[z].cel == '') {
 					dato.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
-				}else if (InfoShop[z].url == undefined) {
+				}else if (InfoShop[z].url == '') {
 						dato.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
 				}else {
 						dato.push(InfoShop[z]);
@@ -350,17 +329,17 @@ app.factory('currentPromotion', function() {
 			}
 
 			if (CurrentPromotion) {
-				if (resultSet[0]["coupon"] == 0) {
+				if (resultSet[0]["QuantityCoupon"] == 0) {
 					validar = "no"
 				}
-				if(resultSet[0]['promo'] == 0){
+				if(resultSet[0]['QuantityPromotion'] == 0){
 					ALL.push(Category)
 					ALL.push(dato)
-					ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar,ocultar:'none'}])
+					ALL.push([{contCoupon:resultSet[0]["QuantityCoupon"],contPromotion:resultSet[0]["QuantityPromotion"],t:dato[0].name,Validar:validar,ocultar:'none'}])
 				}
 				ALL.push(Category)
 				ALL.push(dato)
-				ALL.push([{contCoupon:resultSet[0]["coupon"],contPromotion:resultSet[0]["promo"],t:dato[0].name,Validar:validar}])
+				ALL.push([{contCoupon:resultSet[0]["QuantityCoupon"],contPromotion:resultSet[0]["QuantityPromotion"],t:dato[0].name,Validar:validar}])
 				console.log(ALL);
 				return ALL;
 			}
@@ -387,11 +366,24 @@ app.factory('AllFavorite', function() {
 
 	return {
 		all: function() {
+			AllFavorite = [];
+			for (c in CustomerList) {
+
+				 if (CustomerList[c].colorHeart == 'red') {
+					 	for (x in CurrentPromotion) {
+							if (CustomerList[c].Name == CurrentPromotion[x].Category) {
+								AllFavorite.push(CurrentPromotion[x])
+							}
+
+	 					}
+				 }
+
+
+			}
 			if (AllFavorite.length == 0) {
 				AllFavorite.push({oferta:"noHay"});
 			}
 			favorites = AllFavorite;
-			console.log(favorites);
 			return favorites;
 		},
 		get: function() {
@@ -401,15 +393,20 @@ app.factory('AllFavorite', function() {
 });
 // ************* ALL PROMOTION APP FACTORY *************
 app.factory('AllPromotion', function() {
-	var promotio = AllPromotion;
+	var promotio = AllPromotionF;
 
 	return {
 		all: function(salvadosId) {
-			if (AllPromotion.length == 0) {
-				AllPromotion.push({oferta:"noHay"});
+			AllPromotionF = [];
+			for (x in CurrentPromotion) {
+					if (CurrentPromotion[x].ColorPin == 'purple') {
+						AllPromotionF.push(CurrentPromotion[x])
+					}
 			}
-			promotio = AllPromotion;
-		//	console.log(promotio);
+			if (AllPromotionF.length == 0) {
+				AllPromotionF.push({oferta:"noHay"});
+			}
+			promotio = AllPromotionF;
 			return promotio;
 		},
 		get: function() {
@@ -454,7 +451,6 @@ app.factory('OurFavorites', function() {
 								AllourFavorites[c]["colum"] = "67"
 								AllourFavorites[c]["columDisplay"] = "none"
 							}
-								console.log(AllourFavorites[c]);
 						}
             var OurFavorites = AllourFavorites
             if (OurFavorites.length == 0) {
@@ -469,35 +465,31 @@ app.factory('OurFavorites', function() {
 app.factory('Coupons', function() {
 	return {
 		all: function(salvadosId) {
-			console.log(Cupons);
 			var AllCupon = [];
 			var DatoCupon = [];
 			var CuponALL = [];
 			var ContCupon = []; //conteo de copunes
 			var validar = "existe";
 			var resultSetC = $.grep(CustomerList, function (e) {
-				 return e.NameCategory.indexOf(salvadosId) == 0;
+				 return e.Name.indexOf(salvadosId) == 0;
 			});
-
-			console.log(JSON.stringify(resultSetC[0]))
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].Category) {
-					if (Cupons[a].ShopOnline == undefined) {
+					if (Cupons[a].ShopOnline == undefined || Cupons[a].ShopOnline == '') {
 							Cupons[a].Display = "none"
 					}else {
 						Cupons[a].Display = ""
 					}
 					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
-						console.log("directe");
 						Cupons[a]["CanjeaQ"] = "Q."
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
 					}
-					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined){
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined || Cupons[a].PhotoCupon == ''){
 						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
 						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
 					}
-					if (Cupons[a].PhotoCupon !=null) {
+					if (Cupons[a].PhotoCupon !=null || Cupons[a].PhotoCupon != '') {
 								Cupons[a]["DisplayWithImageCoupons"] = "none";
 					}
 
@@ -513,18 +505,18 @@ app.factory('Coupons', function() {
 
 			for (z in InfoShop) {
 				if (salvadosId === InfoShop[z].name){
-					if (InfoShop[z].url == undefined && InfoShop[z].cel == undefined) {
+					if (InfoShop[z].url == '' && InfoShop[z].cel == '') {
 					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"60px",margin:"0px"});
-				}else if (InfoShop[z].cel == undefined) {
+				}else if (InfoShop[z].cel == '') {
 					DatoCupon.push({name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",url:InfoShop[z].url,webUrl:InfoShop[z].webUrl,webUrlIcon:InfoShop[z].webUrlIcon,margin:"-40px"})
-				}else if (InfoShop[z].url == undefined) {
+				}else if (InfoShop[z].url == '') {
 						DatoCupon.push({cel:InfoShop[z].cel,call:InfoShop[z].call,callIcon:InfoShop[z].callIcon,name:InfoShop[z].name,namecategory:InfoShop[z].namecategory,pixels:"110px",margin:"0"})
 				}else {
 						DatoCupon.push(InfoShop[z]);
 					}
 				}
 			}
-			if (resultSetC[0]["promo"] == 0) {
+			if (resultSetC[0]["QuantityPromotion"] == 0) {
 				validar = "no"
 			}
 
@@ -535,7 +527,7 @@ app.factory('Coupons', function() {
 				CuponALL.push(allCupon)
 				CuponALL.push(DatoCupon)
 				CuponALL.push(ContCupon)
-				CuponALL.push([{contCoupon:resultSetC[0]["coupon"],contPromotion:resultSetC[0]["promo"],Validar:validar}])
+				CuponALL.push([{contCoupon:resultSetC[0]["QuantityCoupon"],contPromotion:resultSetC[0]["QuantityPromotion"],Validar:validar}])
 				console.log(CuponALL);
 				return CuponALL;
 			}
@@ -549,13 +541,18 @@ app.factory('DescriptionCupons', function() {
 			var AllCuponDescription = [];
 			for (a in Cupons) {
 				if (salvadosId == Cupons[a].IDCupon) {
+					Cupons[a]["DisplayWithImageCoupons"] = 'none'
 					if (Cupons[a].TypeOfExchange == "DirectDiscount") {
-						console.log("directe");
+
 						Cupons[a]["CanjeaQ"] = "Q."
 					}else {
 							Cupons[a]["CanjeaP"] = "%"
 					}
-					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined) {
+					if (Cupons[a].PhotoCupon ==null || Cupons[a].PhotoCupon ==undefined || Cupons[a].PhotoCupon == ''){
+						Cupons[a]["PhotoCupons"] = "img/frenzy_back.png"
+						Cupons[a]["DisplayWithoutImageCoupons"] = "none"
+					}
+					if (Cupons[a].TermsAndConditions == null || Cupons[a].TermsAndConditions == undefined || Cupons[a].TermsAndConditions == '') {
 						Cupons[a]["DisplayTerms"] = "none";
 					}
 					AllCuponDescription.push(Cupons[a])
@@ -570,18 +567,20 @@ app.factory('DescriptionCupons', function() {
 app.factory('DescriptionOfferts', function() {
 	return {
 		all: function(superId) {
+			console.clear();
 			var AllOffertsDescription = [];
 			for (a in CurrentPromotion) {
 				if (superId == CurrentPromotion[a].IDpromotion) {
+
 					if (CurrentPromotion[a].TypeOfExchange == "DirectDiscount") {
-						console.log("directe");
 						CurrentPromotion[a]["CanjeaQ"] = "Q."
 					}else {
 							CurrentPromotion[a]["CanjeaP"] = "%"
 					}
-					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined) {
+					if (CurrentPromotion[a].TermsAndConditions == null || CurrentPromotion[a].TermsAndConditions == undefined || CurrentPromotion[a].TermsAndConditions == '') {
 						CurrentPromotion[a]["DisplayTerms"] = "none";
 					}
+
 					AllOffertsDescription.push(CurrentPromotion[a])
 				}
 			}
@@ -590,6 +589,24 @@ app.factory('DescriptionOfferts', function() {
 		},get: function(){}
 	};
 });
+
+// ************* login FB ****************************
+app.service('UserService', function() {
+  // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
+  var setUser = function(user_data) {
+    window.localStorage.starter_facebook_user = JSON.stringify(user_data);
+  };
+
+  var getUser = function(){
+    return JSON.parse(window.localStorage.starter_facebook_user || '{}');
+  };
+
+  return {
+    getUser: getUser,
+    setUser: setUser
+  };
+});
+//************************************************
 // ************* CALL PARSE PROMOTIONS *************
 var Promo = Parse.Object.extend('Promotion');
 var promotion = new Parse.Query(Promo);
@@ -649,187 +666,10 @@ function couponFunction() {
 				});
 }
 
-couponFunction();
-// function couponFunction() {
-// 	Cupons = [];
-// 	var Cupon = new Parse.Query('Cupon');
-// 	var cup = Cupon.find({
-// 		success: function(results) {
-// 			for (x in results) {
-// 				for (i in results[x].attributes.Customer){
-// 					if (true === results[x].attributes.Status){
-// 						if (results[x].attributes.PhotoCupon === null || results[x].attributes.PhotoCupon === undefined){
-// 							Cupons.push({nul:"sin",
-// 								name:results[x].attributes.Name,
-// 								description:results[x].attributes.PromotionDescription,
-// 								Canjea:results[x].attributes.CuponDiscount,
-// 								Category:results[x].attributes.Customer[i],
-// 								cupon:"existe",
-// 								ColorPinCupon: "silver",
-// 								BarCodePhoto:results[x].attributes.BarCodePhoto,
-// 								Presentation:results[x].attributes.Presentation,
-// 								description:results[x].attributes.PromotionDescription,
-// 								customer:results[x].attributes.Customer[i],
-// 								PhotoCupon:results[x].attributes.PhotoCupon,
-// 								Publication_Date:results[x].attributes.PublicationDate,
-// 								End_Date:results[x].attributes.EndDate,
-// 								IDCupon:results[x].id,
-// 								Categoryapp:results[x].attributes.CategoryApp,
-// 								TypeCoupon:results[x].attributes.TypeCoupon,
-// 								QuantityCoupons:results[x].attributes.QuantityCoupons,
-// 								QuantityExchanged:results[x].attributes.QuantityExchanged,
-// 								ShopOnline:results[x].attributes.ShopOnline,
-// 								Display:"",
-// 							});
-// 						}else{
-// 							Cupons.push({nul:"con",
-// 								name:results[x].attributes.Name,
-// 								description:results[x].attributes.PromotionDescription,
-// 								Canjea:results[x].attributes.CuponDiscount,
-// 								Category:results[x].attributes.Customer[i],
-// 								cupon:"existe",
-// 								ColorPinCupon: "silver",
-// 								BarCodePhoto:results[x].attributes.BarCodePhoto,
-// 								Presentation:results[x].attributes.Presentation,
-// 								description:results[x].attributes.PromotionDescription,
-// 								customer:results[x].attributes.Customer[i],
-// 								PhotoCupon:results[x].attributes.PhotoCupon,
-// 								Publication_Date:results[x].attributes.PublicationDate,
-// 								End_Date:results[x].attributes.EndDate,
-// 								IDCupon:results[x].id,
-// 								Categoryapp:results[x].attributes.CategoryApp,
-// 								TypeCoupon:results[x].attributes.TypeCoupon,
-// 								QuantityCoupons:results[x].attributes.QuantityCoupons,
-// 								QuantityExchanged:results[x].attributes.QuantityExchanged,
-// 								ShopOnline:results[x].attributes.ShopOnline,
-// 								Display:"",
-// 							});
-// 						}
-// 					}
-// 				}
-// 			}
-// 			console.log(Cupons)
-// 		},
-//
-// 		error: function(myObject, error) {
-// 			// Error occured
-// 			console.log( error );
-// 		}
-// 	});
-// 	// ************* WHEN THE PROMISE CATEGORIES IS READY *************
-// 	cup.then(function(){
-// 		var PromoSavess = new Parse.Query('PromotionSaved')
-//
-// 		PromoSavess.equalTo("UserID", IdUsuario);
-// 		PromoSavess.find({
-// 			success: function(results) {
-// 				for (a in results[0].attributes.CuponID){
-// 					for (b in Cupons){
-// 						if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
-// 							if (Cupons[b].ColorPinCupon === "silver") {
-// 								Cupons[b].ColorPinCupon  = "purple";
-// 							}
-// 						}
-// 					}
-// 				}
-//
-// 			},
-// 			error: function(myObject, error) {
-// 				// Error occureds
-// 				console.log( error );
-// 			}
-// 		});
-//
-// 	});
-// }
-//
-// couponFunction();
 // ************* THE QUERY CALL MORE ELEMENTS *************
 promotion = promotion.limit(100);
 customer = customer.limit(100);
 
-// var prom = promotion.find({
-// 	success: function(results) {
-// 		CurrentPromotion = [];
-//
-// 		for (x in results) {
-//
-// 			listPromoSuper.push(results[x].attributes.Customer)
-// 			for (i in results[x].attributes.Customer){
-// 				if (true === results[x].attributes.Status){
-// 						promociones.push(results[x])
-// 					if (results[x].attributes.Photo === null || results[x].attributes.Photo === undefined){
-// 						CurrentPromotion.push({nul:"sin",name:results[x].attributes.Name,
-// 							presentation:results[x].attributes.Presentation,
-// 							description:results[x].attributes.PromotionDescription,
-// 							basePrice:results[x].attributes.BasePrice,
-// 							promotionalPrice:results[x].attributes.PromotionalPrice,
-// 							ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
-// 							,Category:results[x].attributes.Customer[i],
-// 							ID:"pinOffertsWithoutImage"+x,IDpromotion: results[x].id,
-// 							conteo:0,
-// 							oferta:"existe",
-// 							Our_Favorites:results[x].attributes.OurFavorite,
-// 							PhotoFavorite: results[x].attributes.PhotoFavorite,
-// 							Logo:"",
-// 							ColorPin: "silver",
-// 							ShopOnline:results[x].attributes.ShopOnline,
-// 							IconShopOnline: "j",
-// 							Display: "",
-// 						});
-// 					}else{
-// 						CurrentPromotion.push({nul:"con",photo:results[x].attributes.Photo._url,
-// 							name:results[x].attributes.Name,
-// 							presentation:results[x].attributes.Presentation,
-// 							description:results[x].attributes.PromotionDescription,
-// 							basePrice:results[x].attributes.BasePrice,
-// 							promotionalPrice:results[x].attributes.PromotionalPrice,
-// 							ahorro:results[x].attributes.BasePrice - results[x].attributes.PromotionalPrice
-// 							, Category:results[x].attributes.Customer[i],
-// 							ID:"pinOfferts"+x,IDpromotion: results[x].id,
-// 							conteo:0,
-// 							oferta:"existe",
-// 							Our_Favorites:results[x].attributes.OurFavorite,
-// 							PhotoFavorite: results[x].attributes.PhotoFavorite,
-// 							Logo:"",
-// 							ColorPin: "silver",
-// 							ShopOnline:results[x].attributes.ShopOnline,
-// 							IconShopOnline: "j",
-// 							Display: "",
-// 						});
-// 					}
-// 				}
-// 			}
-// 		}
-// 		return CurrentPromotion;
-// 	},
-// 	error: function(myObject, error) {
-// 		// Error occureds
-// 		console.log( error );
-// 	}
-// });
-// // ************* WHEN THE PROMISE PROMOTIONS IS READY *************
-// prom.then(function(){
-// 	var PromoSavess = new Parse.Query('PromotionSaved')
-// 	PromoSavess.equalTo("UserID", IdUsuario);
-// 	PromoSavess.find({
-// 		success: function(results) {
-// 			for (a in results[0].attributes.PromotionID){
-// 				for (b in CurrentPromotion){
-// 					if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
-// 						if (CurrentPromotion[b].ColorPin === "silver") {
-// 							CurrentPromotion[b].ColorPin  = "purple";
-// 						}
-// 					}
-// 				}
-// 			}
-// 		},
-// 		error: function(myObject, error) {
-// 			// Error occureds
-// 			console.log( error );
-// 		}
-// 	});
-// });
 // ************* CATEGORY LIST NAME VARIABLE *************
 var CategoryListName = [];
 var CategoryListNameConteo = [];
@@ -874,10 +714,10 @@ function AddPromotions(Array) {
 		for (x in results) {
 			var CountPromotions = 0;
 			listaNameSuperConteo.push(results[x].attributes.Name)
-			InfoShop.push({
-				cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
-				namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
-			});
+			// InfoShop.push({
+			// 	cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
+			// 	namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
+			// });
 
 			if ("Supermercado" ==  results[x].attributes.CategoryApp){
 				name = results[x].attributes.Name;
@@ -1101,7 +941,7 @@ function SavePromotion(UserId, PromotionId) {
 	var Savepromotion = Parse.Cloud.run('SavePromotion', {"Array":result});
 
 	Savepromotion.then(function(){
-		viewPromotion()
+		//viewPromotion()
 	});
 };
 // *************** DELETE PROMOTION FUNCTION ***************
@@ -1115,7 +955,7 @@ function DeletePromotion(UserId, PromotionId) {
 	var Deletepromotion = Parse.Cloud.run('DeletePromotion', {"Array":result});
 
 	Deletepromotion.then(function(){
-		viewPromotion(PromotionId,"eliminar")
+		//viewPromotion(PromotionId,"eliminar")
 	});
 };
 // *************** SAVE FAVORITE CUPON FUNCTION ***************
@@ -1128,7 +968,7 @@ function saveCuponFavorite(UserId, CuponID) {
 	var saveCupon = Parse.Cloud.run('saveFavoriteCupon', {"Array":result});
 
 	saveCupon.then(function(){
-		viewPromotion()
+		//viewPromotion()
 	});
 };
 
@@ -1143,7 +983,7 @@ function deleteFavoriteCupon(UserId, CuponID) {
   };
   var deleteCupon = Parse.Cloud.run('deleteFavoriteCupon', {"Array":result});
   deleteCupon.then(function(){
-    viewPromotion()
+  //  viewPromotion()
   });
 
 };
