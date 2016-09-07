@@ -6,7 +6,7 @@
 ## Optimize
 
 - X Remove Parse and devDependencies
-- Remove AWS and dependencies
+- X Remove AWS and dependencies
 - Clean variables and improve scope variables
 - Minimize, uglify, optimize images
 - Improve code organization
