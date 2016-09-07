@@ -3,11 +3,9 @@
   <name>frenzy</name>
   <description>        App Promotion  </description>
   <author email="info@cognits.co" href="http://www.cognits.co">      cognits Developers  </author>
-  <access origin="*.amazonaws.com"/>
   <access origin="*"/>
   <access launch-external="yes" origin="tel:*"/>
   <content src="index.html"/>
-  <allow-intent href="*://*api.parse.com/*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

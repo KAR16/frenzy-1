@@ -504,105 +504,107 @@ angular.module('starter.controllers', ['ionic'])
         }
       })
     }
-    // This Function works for to do Login with Parse and to migrate the data to Firebase
-    $scope.loginWithParse = function(user) {
 
-      // New Users Variables
-      $scope.newUserFirebase = '';
-      $scope.newPasswordFirebase = user.password;
-      $scope.newEmailFirebase = '';
-      $scope.newGenderFirebase = '';
-      $scope.newBirthdayFirebase = '';
-
-      $scope.parseCurrentUser = Parse.User.current();
-
-      // Login ParseJS
-      Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
-        success: function(userSuccess) {
-
-            // $rootScope.userSuccess = userSuccess;
-            // $rootScope.isLoggedIn = true;
-            // IdUsuario = String($rootScope.userSuccess.id);
-
-            // Connect to User entity Parse
-            var query = new Parse.Query(Parse.User);
-            query.equalTo("username", user.username);
-            // Retrieve Data User Parse
-            query.each(function(userParse) {
-              // Validate if the user in ParseJS have a name
-              if(userParse.attributes.name == undefined){
-                $scope.newUserFirebase = userParse.attributes.username;
-              } else {
-                $scope.newUserFirebase = userParse.attributes.name;
-              }
-              // Save Data User into Variable
-              $scope.newEmailFirebase = userParse.attributes.username;
-              $scope.newGenderFirebase = userParse.attributes.gender;
-              $scope.newBirthdayFirebase = userParse.attributes.birthday;
-            }).then(function() {
-              // Save Users in Firebase Auth
-              mainApp.auth().createUserWithEmailAndPassword($scope.newEmailFirebase, $scope.newPasswordFirebase).then(function() {
-
-                mixpanel.identify($scope.newEmailFirebase);
-                  mixpanel.people.set({
-                    "$email": $scope.newEmailFirebase,
-                    "$gender": $scope.newGenderFirebase,
-                    "$birthday":$scope.newBirthdayFirebase,
-                    "$name": $scope.newUserFirebase,
-                    "$typeLogin": "Email"
-
-                  });
-
-                // Call to Users Entity Firebase Data
-                mainApp.database().ref('Users').once('value', function(snapshot) {
-                  // If doesn't exist anything data then to save the new data
-                  if(snapshot.val() == null) {
-                    mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
-                      Username: $scope.newUserFirebase,
-                      Email: $scope.newEmailFirebase,
-                      Gender: $scope.newGenderFirebase,
-                      Birthday: $scope.newBirthdayFirebase,
-                      Parse: true
-                    })
-                  } else {
-                    mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
-                      Username: $scope.newUserFirebase,
-                      Email: $scope.newEmailFirebase,
-                      Gender: $scope.newGenderFirebase,
-                      Birthday: $scope.newBirthdayFirebase,
-                      Parse: true
-                    })
-                  }
-                })
-              }).then(function() {
-                // Login With Firebase
-                mainApp.auth().signInWithEmailAndPassword(user.username,user.password).then(function() {
-                  $scope.parseCurrentUser = Parse.User.current();
-                  // Delete User of ParseJS
-                  var query = new Parse.Query(Parse.User);
-                  query.get($scope.parseCurrentUser.id, {
-                    success: function(deleteUser) {
-                      deleteUser.destroy({});
-                    },
-                    error: function(object, error) {}
-                  });
-                })
-              }).then(function() {
-                $state.go('loadingLoginUser');
-              })
-            })
-        },
-        error: function(user, err) {
-          // $ionicLoading.hide();
-          // The login failed. Check error to see why.
-          if (err.code === 101) {
-            Parse.User.logOut();
-            mainApp.auth().signOut();
-            sweetAlert('Datos Inválidos', 'Por favor verifica tu correo y tu contraseña', 'error');
-          }
-        }
-      })
-    }
+    // TODO. Delete
+    // // This Function works for to do Login with Parse and to migrate the data to Firebase
+    // $scope.loginWithParse = function(user) {
+    //
+    //   // New Users Variables
+    //   $scope.newUserFirebase = '';
+    //   $scope.newPasswordFirebase = user.password;
+    //   $scope.newEmailFirebase = '';
+    //   $scope.newGenderFirebase = '';
+    //   $scope.newBirthdayFirebase = '';
+    //
+    //   $scope.parseCurrentUser = Parse.User.current();
+    //
+    //   // Login ParseJS
+    //   Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
+    //     success: function(userSuccess) {
+    //
+    //         // $rootScope.userSuccess = userSuccess;
+    //         // $rootScope.isLoggedIn = true;
+    //         // IdUsuario = String($rootScope.userSuccess.id);
+    //
+    //         // Connect to User entity Parse
+    //         var query = new Parse.Query(Parse.User);
+    //         query.equalTo("username", user.username);
+    //         // Retrieve Data User Parse
+    //         query.each(function(userParse) {
+    //           // Validate if the user in ParseJS have a name
+    //           if(userParse.attributes.name == undefined){
+    //             $scope.newUserFirebase = userParse.attributes.username;
+    //           } else {
+    //             $scope.newUserFirebase = userParse.attributes.name;
+    //           }
+    //           // Save Data User into Variable
+    //           $scope.newEmailFirebase = userParse.attributes.username;
+    //           $scope.newGenderFirebase = userParse.attributes.gender;
+    //           $scope.newBirthdayFirebase = userParse.attributes.birthday;
+    //         }).then(function() {
+    //           // Save Users in Firebase Auth
+    //           mainApp.auth().createUserWithEmailAndPassword($scope.newEmailFirebase, $scope.newPasswordFirebase).then(function() {
+    //
+    //             mixpanel.identify($scope.newEmailFirebase);
+    //               mixpanel.people.set({
+    //                 "$email": $scope.newEmailFirebase,
+    //                 "$gender": $scope.newGenderFirebase,
+    //                 "$birthday":$scope.newBirthdayFirebase,
+    //                 "$name": $scope.newUserFirebase,
+    //                 "$typeLogin": "Email"
+    //
+    //               });
+    //
+    //             // Call to Users Entity Firebase Data
+    //             mainApp.database().ref('Users').once('value', function(snapshot) {
+    //               // If doesn't exist anything data then to save the new data
+    //               if(snapshot.val() == null) {
+    //                 mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
+    //                   Username: $scope.newUserFirebase,
+    //                   Email: $scope.newEmailFirebase,
+    //                   Gender: $scope.newGenderFirebase,
+    //                   Birthday: $scope.newBirthdayFirebase,
+    //                   Parse: true
+    //                 })
+    //               } else {
+    //                 mainApp.database().ref('Users/' + mainApp.auth().currentUser.uid).update({
+    //                   Username: $scope.newUserFirebase,
+    //                   Email: $scope.newEmailFirebase,
+    //                   Gender: $scope.newGenderFirebase,
+    //                   Birthday: $scope.newBirthdayFirebase,
+    //                   Parse: true
+    //                 })
+    //               }
+    //             })
+    //           }).then(function() {
+    //             // Login With Firebase
+    //             mainApp.auth().signInWithEmailAndPassword(user.username,user.password).then(function() {
+    //               $scope.parseCurrentUser = Parse.User.current();
+    //               // Delete User of ParseJS
+    //               var query = new Parse.Query(Parse.User);
+    //               query.get($scope.parseCurrentUser.id, {
+    //                 success: function(deleteUser) {
+    //                   deleteUser.destroy({});
+    //                 },
+    //                 error: function(object, error) {}
+    //               });
+    //             })
+    //           }).then(function() {
+    //             $state.go('loadingLoginUser');
+    //           })
+    //         })
+    //     },
+    //     error: function(user, err) {
+    //       // $ionicLoading.hide();
+    //       // The login failed. Check error to see why.
+    //       if (err.code === 101) {
+    //         Parse.User.logOut();
+    //         mainApp.auth().signOut();
+    //         sweetAlert('Datos Inválidos', 'Por favor verifica tu correo y tu contraseña', 'error');
+    //       }
+    //     }
+    //   })
+    // }
 
     $scope.loginWithEmail = function(user) {
       	mixpanel.track("LoginClick", { "loginButton" : "Email"});
@@ -619,10 +621,11 @@ angular.module('starter.controllers', ['ionic'])
         if (mainApp.auth().currentUser) {
           mainApp.auth().signOut(); //Loggout Sesion Firebase
         }
-        var currentUser = Parse.User.current();
-        if (currentUser) {
-          Parse.User.logOut();
-        }
+        //TODO
+        // var currentUser = Parse.User.current();
+        // if (currentUser) {
+        //   Parse.User.logOut();
+        // }
 
         // Login With Firebase
         mainApp.auth().signInWithEmailAndPassword(user.username,user.password).catch(function(error) {
@@ -661,7 +664,7 @@ angular.module('starter.controllers', ['ionic'])
 	};
 	var NameUser = String(IdUsuario);
 	var countApp = 0;
-	Parse.Analytics.track("view", dimensions);
+
 	mixpanel.track("view", { "type" : "Categorys","Gender":IdGender,"User":NameUser});
 	// Loading scope
 	$scope.loading = $ionicLoading.show({
@@ -669,7 +672,8 @@ angular.module('starter.controllers', ['ionic'])
 		template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
 	});
 	CategoryListName = [];
-	var query = new Parse.Query('AppCategory');
+
+
   //
 	/////////////////////////////////////////////////////////////////////////////
 var UsuarioF = true;
@@ -811,7 +815,6 @@ var UsuarioP = true;
           }
         }
 
-//        Parse.Analytics.track("pin", Dimensions);
         var pin = document.getElementById(id).style.color;
         if (pin == "silver") {
 					mixpanel.track("ClickPin", { "NameCategory" : NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
@@ -844,7 +847,6 @@ var UsuarioP = true;
 	var dimensions = {
 		name: 'userFavorites',
 	};
-	Parse.Analytics.track("view", dimensions);
 
 	$scope.$on('$ionicView.enter', function() {
 		$scope.chats = AllFavorite.all();
@@ -865,7 +867,6 @@ var UsuarioP = true;
 		name: 'Salvados',
 		user: NameUser
 	};
-	Parse.Analytics.track("view", dimensions);
 
 	$scope.reload = function () {
 
@@ -1181,7 +1182,6 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 			user: NameUser
 		};
 		mixpanel.track("ClickCall", {"Costumer" :name,"User":NameUser,"Gender":IdGender});
-		Parse.Analytics.track("CallsPromotion", Dimensions);
 		var a = cell.toString();
 		var b = 'tel:'
 		var callPhone = b + a;
@@ -1305,7 +1305,6 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 			function(isConfirm) {
 				if(isConfirm){
 					mixpanel.track("ClickRequestPromotion", { "NameCostumer" : NamePromo,"User":NameUser,"Gender":IdGender});
-					Parse.Analytics.track("petition", Dimensions);
 					SaveFavorite(IdUsuario, IDPromotion)
 					$scope.loading = $ionicLoading.show({
 						template: "<ion-spinner customer1lass='spinner' icon='lines' style='stroke: #00BAB9;fill: #00BAB9;'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px;font-weight:bold;'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas, espera un momento... </p>"
@@ -1388,12 +1387,10 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 			z = Url;
 			mixpanel.track("ClickWeb", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
-			Parse.Analytics.track("WebShopCoupon", Dimensions);
 		}else {
 			mixpanel.track("ClickCartShop", { "Costumer" :name,"User":NameUser,"Gender":IdGender});
 			z = Url;
 			window.open=cordova.InAppBrowser.open(z, '_blank', 'location=yes');
-			Parse.Analytics.track("cartShopCoupon", Dimensions);
 		}
 
 	}
@@ -1545,7 +1542,6 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 			name: 'CouponPin_'+NamePromo,
 			user: NameUser
 		};
-		Parse.Analytics.track("pin", Dimensions);
 		var cssColorCuponPin = document.getElementById(id).style.color;
 		if (cssColorCuponPin == "silver") {
 			mixpanel.track("ClickPin", { "NameCategory" :NamePromo,"User":NameUser,"Action":"Add","Gender":IdGender});
@@ -1760,10 +1756,8 @@ $scope.Analytics = function (id,nameShare) {
 	};
 	if (nameShare == "promotion") {
 		mixpanel.track("ClickShare", { "NameShareID" :id,"User":NameUser,"Gender":IdGender});
-		Parse.Analytics.track("SharePromotion", Dimensions);
 	}else {
 		mixpanel.track("ClickShare", { "NameShareID" :id,"User":NameUser,"Gender":IdGender});
-		Parse.Analytics.track("ShareCoupon", Dimensions);
 	}
 
 }
@@ -2164,7 +2158,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	  user: NameUser
 	};
 	mixpanel.track("view", { "type" : "Tools","Gender":IdGender,"User":NameUser});
-	Parse.Analytics.track("Tools", Dimensions);
 	$scope.AnalyticsTools= function (id) {
 		var NameUser = String(IdUsuario)
 		var dimensions = {
@@ -2172,7 +2165,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			user: NameUser
 		};
 		mixpanel.track("ClickOtros", { "type" : id,"Gender":IdGender,"User":NameUser});
-		Parse.Analytics.track("Tools", dimensions);
 	}
 	$scope.logout = function() {
     firebase.auth().signOut().then(function() {
