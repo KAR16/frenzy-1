@@ -643,7 +643,7 @@ angular.module('starter.controllers', ['ionic'])
           if(mainApp.auth().currentUser==null){
             // TODO sign in error.
 
-            
+
 
           } else {
             IdUsuario = mainApp.auth().currentUser.uid;
@@ -1159,36 +1159,11 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 		}
 
 	}
-	// *************** PROMOTIONS FUNCTION ***************
-	$scope.Promotions =function (id){
-		PromoSave.find({
-			success: function(results) {
-				for (x in results) {
-					if (results[x].attributes.UserID === IdUsuario){
-						for (a in results[x].attributes.PromotionID){
-							for (b in CurrentPromotion){
-								if (results[x].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion && id === CurrentPromotion[b].Category){
-									var cssColorpinOffer = document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color;
-									if (cssColorpinOffer=="silver"){
-										document.getElementById(CurrentPromotion[b].ID+" "+results[x].attributes.PromotionID[a]).style.color="purple";
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			error: function(myObject, error) {
-				// Error occureds
-				console.log( error );
-			}
-		});
-	}
+
 
 
 	$scope.$on('$ionicView.enter', function() {
 
-		$scope.Promotions($stateParams.superId);
 		// Redirection page variable to coupons
 		var couponPage="#/app/cupones/";
 		idRoute = currentPromotion.get($stateParams.superId);
