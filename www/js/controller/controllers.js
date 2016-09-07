@@ -641,7 +641,10 @@ angular.module('starter.controllers', ['ionic'])
           // }
         }).then(function() {
           if(mainApp.auth().currentUser==null){
-            $scope.loginWithParse(user);
+            // TODO sign in error.
+
+            
+
           } else {
             IdUsuario = mainApp.auth().currentUser.uid;
             mainApp.database().ref('Users').once('value', function(snapshot) {
@@ -776,30 +779,6 @@ var UsuarioP = true;
 	/*************************************************/
 	var NameUser = String(IdUsuario);
 		mixpanel.track("view", { "type" : "YourFavorites","Gender":IdGender,"User":NameUser});
-		$scope.reload = function () {
-		    var PromoSavess = new Parse.Query('PromotionSaved')
-		    PromoSavess.equalTo("UserID", IdUsuario);
-		    PromoSavess.find({
-				success: function(results) {
-					viewFavorite()
-					for (a in results[0].attributes.PromotionID){
-						for (b in CurrentPromotion){
-							if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
-								if (CurrentPromotion[b].ColorPin === "silver") {
-									CurrentPromotion[b].ColorPin  = "purple";
-								}
-							}else {
-								CurrentPromotion[b].ColorPin  = "silver";
-							}
-						}
-					}
-				},
-				error: function(myObject, error) {
-					// Error occureds
-					console.log( error );
-				}
-			});
-		}
 
 	$scope.SalvadosSaveAndDelete = function (id) {
         var NamePromo = id
@@ -868,9 +847,6 @@ var UsuarioP = true;
 		user: NameUser
 	};
 
-	$scope.reload = function () {
-
-	}
 
 
 	// ************ DELETE AND SAVE PIN ************
@@ -1091,31 +1067,6 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
    console.log('error mensaje');
    });
    }
-	$scope.reload = function () {
-	    var PromoSavess = new Parse.Query('PromotionSaved')
-	    PromoSavess.equalTo("UserID", IdUsuario);
-	    PromoSavess.find({
-			success: function(results) {
-				viewFavorite()
-				for (a in results[0].attributes.PromotionID){
-					for (b in CurrentPromotion){
-						if (results[0].attributes.PromotionID[a] === CurrentPromotion[b].IDpromotion){
-							if (CurrentPromotion[b].ColorPin === "silver") {
-								CurrentPromotion[b].ColorPin  = "purple";
-							}
-						}else {
-							CurrentPromotion[b].ColorPin  = "silver";
-						}
-					}
-				}
-			},
-			error: function(myObject, error) {
-				// Error occureds
-				console.log( error );
-			}
-		});
-	}
-
 	// ************ FUNCTION CHANGE COLOR PIN OFFERTS ************
 	$scope.changeColorPinOfferts = function (id, IDPromotion,Namepromotion) {
 		var NamePromo = Namepromotion
@@ -1349,11 +1300,6 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 	var NameUser = String(IdUsuario);
 	mixpanel.track("view", { "type" : "copuns","Gender":IdGender,"User":NameUser});
 		// For to update QuantityExchanged
-		var CuponClassExchanged = Parse.Object.extend("Cupon");
-		var cuponClassExchanged = new CuponClassExchanged();
-		var query = new Parse.Query("Cupon");
-
-        query.equalTo('Status', true);
 
 		$scope.pix = Coupons.all($stateParams.CuponID);
 		$scope.pixels = $scope.pix[1][0].pixels;
@@ -1624,12 +1570,6 @@ window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas p
 		}
 	};
 
-		// For to update QuantityExchanged
-		var CuponClassExchanged = Parse.Object.extend("Cupon");
-		var cuponClassExchanged = new CuponClassExchanged();
-		var query = new Parse.Query("Cupon");
-		query.equalTo("objectId",$stateParams.DescriptionID);
-		query.equalTo("Status",true);
 
 		$scope.HideStyleButtonExchangePosition = "absolute";
 		$scope.HideStyleButtonExchangeBottom = "0";
@@ -2064,7 +2004,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 })
 
 .controller('bodyCtrl', ['$state', function($state,$ionicLoading) {
-	var userVerificate= Parse.User.current();
 
 	// *********** DEVICE READY SPLASHSCREEN  *******************
 	document.addEventListener("deviceready", function($scope) {
