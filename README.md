@@ -7,6 +7,12 @@
 
 - X Remove Parse and devDependencies
 - X Remove AWS and dependencies
+
+----------------------------------------------------------------
+
+- Remove unused code
+  - Check templates
+  - Check direcivtes
 - Clean variables and improve scope variables
 - Minimize, uglify, optimize images
 - Improve code organization
