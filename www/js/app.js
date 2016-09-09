@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 								if (res) {
 										ionic.Platform.exitApp();
 								}
-						})
+						});
 				}
 		}, 100);
 
@@ -213,7 +213,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 var IdUsuario;
 var IdGender;
 // ***********  FUNCTION BACK ***************
-
+function goBack() {
+	window.history.back();
+}
 /********************************************/
 var CustomerList = [];
 
@@ -246,7 +248,7 @@ function onBackKeyDown() {
 				} else {
 						console.log("quedar");
 				}
-		})
+		});
 	} else if(document.URL == 'file:///android_asset/www/index.html#/loginAndRegister'){
 
 			swal({
@@ -265,7 +267,7 @@ function onBackKeyDown() {
 					} else {
 							console.log("quedar");
 					}
-			})
+			});
 		} else  {
 		window.history.back();
 	}

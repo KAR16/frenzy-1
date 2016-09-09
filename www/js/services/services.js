@@ -374,11 +374,8 @@ app.factory('AllFavorite', function() {
 							if (CustomerList[c].Name == CurrentPromotion[x].Category) {
 								AllFavorite.push(CurrentPromotion[x])
 							}
-
 	 					}
 				 }
-
-
 			}
 			if (AllFavorite.length == 0) {
 				AllFavorite.push({oferta:"noHay"});

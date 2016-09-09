@@ -1021,7 +1021,7 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // *************************  OFFERS CONTROLLER	***************************
-.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion, $ionicPopover, $ionicPopup, $timeout, $ionicLoading, $cordovaSocialSharing) {
+.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion, $ionicPopover, $ionicPopup, $timeout, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser) {
     var dimensions = {
         name: $stateParams.superId,
     };
@@ -1043,13 +1043,7 @@ angular.module('starter.controllers', ['ionic'])
             window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas promocioines", null, images)
 
         }
-        // // Share via native share sheet
-        // $cordovaSocialSharing.share("frenzyapplication", "hora de compartir","https://firebasestorage.googleapis.com/v0/b/frenzyapplication.appspot.com/o/imagePromotion%2F20160719_134442-1.jpg?alt=media&token=c5162cd3-f16c-4725-9549-bc77987580b3" ,null).then(function(result) {
-        //     // Success!
-        //   }, function(err) {
-        //     // An error occured. Show a message to the user
-        //   });
-        // Pixels quantity of Popover for height div
+
     $scope.pix = currentPromotion.get($stateParams.superId);
     //	console.log($scope.pix);
     $scope.pixels = $scope.pix[1][0].pixels;
@@ -1162,7 +1156,7 @@ angular.module('starter.controllers', ['ionic'])
                 "Gender": IdGender
             });
             z = Url;
-            window.open = cordova.InAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
         } else {
             mixpanel.track("ClickCartShop", {
                 "Costumer": name,
@@ -1170,12 +1164,9 @@ angular.module('starter.controllers', ['ionic'])
                 "Gender": IdGender
             });
             z = Url;
-            window.open = cordova.InAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
         }
-
     }
-
-
 
     $scope.$on('$ionicView.enter', function() {
 
@@ -1300,7 +1291,7 @@ angular.module('starter.controllers', ['ionic'])
     });
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing) {
+.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser) {
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "copuns",
@@ -1344,7 +1335,7 @@ angular.module('starter.controllers', ['ionic'])
                 "User": NameUser,
                 "Gender": IdGender
             });
-            window.open = cordova.InAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
         } else {
             mixpanel.track("ClickCartShop", {
                 "Costumer": name,
@@ -1352,7 +1343,7 @@ angular.module('starter.controllers', ['ionic'])
                 "Gender": IdGender
             });
             z = Url;
-            window.open = cordova.InAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
         }
 
     }
@@ -1720,6 +1711,7 @@ angular.module('starter.controllers', ['ionic'])
 })
 //*********************  MENU CONTROLLER  *******************************
 .controller('menuCtrl', function($scope, $stateParams) {
+
     $scope.$on('$ionicView.enter', function() {
         $scope.footerChangeColor = colorIconsFoother;
     });

@@ -20,3 +20,5 @@
   - Move Firebase to services
   - Move Mixpanel to service?
   - Separate controllers?
+- Correctly implement Firebase with AngularFire
+  -  
