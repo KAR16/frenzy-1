@@ -21,4 +21,5 @@
   - Move Mixpanel to service?
   - Separate controllers?
 - Correctly implement Firebase with AngularFire
-  -  
+- Correctly implement routing with route parameters
+  - 

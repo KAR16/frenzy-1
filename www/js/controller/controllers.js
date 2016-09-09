@@ -308,193 +308,175 @@ secondaryApp.database().ref('Customer').once('value', function(snapshot) {
 
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic'])
-    .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicPopover) {
-        // Form data for the login modal
-        $scope.loginData = {};
-        $scope.closeLogin = function() {
-            $scope.modal.hide();
-        };
-        // Open the login modal
-        $scope.login = function() {
-            $scope.modal.show();
-        };
-        // Perform the login action when the user submits the login form
-        $scope.doLogin = function() {
-            // Simulate a login delay. Removee this and replace with your login code if					 using a login system
-            $timeout(function() {
-                $scope.closeLogin();
-            }, 1000);
-        };
-    })
-    // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
-    // ************************* LOGIN WITH FACEBOOK *************************
-    .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
+// -------------------- LOGIN WITHOUT FACEBOOK ------------------------
+// ************************* LOGIN WITH FACEBOOK *************************
+.controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
 
-        $scope.user = {};
-        $scope.error = {};
-        // Object styles for Option Gender Button to Register Account
-        $scope.genderMaleBStyle = {};
-        $scope.genderFemaleleBStyle = {};
-        // Gender variable for to save in Parse
-        $scope.optionGender = '';
-        // Color Button Selected in Register Form if the user is Male or Female
-        $scope.genderMaleStyle = function() {
-            $scope.genderMaleBStyle = {
+    $scope.user = {};
+    $scope.error = {};
+    // Object styles for Option Gender Button to Register Account
+    $scope.genderMaleBStyle = {};
+    $scope.genderFemaleleBStyle = {};
+    // Gender variable for to save in Parse
+    $scope.optionGender = '';
+    // Color Button Selected in Register Form if the user is Male or Female
+    $scope.genderMaleStyle = function() {
+        $scope.genderMaleBStyle = {
+            'background-color': '#263147 ',
+            'color': 'white'
+        };
+        $scope.genderFemaleleBStyle = {
+            'color': '#263147  '
+        };
+        $scope.optionGender = 'male';
+    }
+    $scope.genderFemaleleStyle = function() {
+            $scope.genderFemaleleBStyle = {
                 'background-color': '#263147 ',
                 'color': 'white'
             };
-            $scope.genderFemaleleBStyle = {
+            $scope.genderMaleBStyle = {
                 'color': '#263147  '
             };
-            $scope.optionGender = 'male';
+            $scope.optionGender = 'female';
         }
-        $scope.genderFemaleleStyle = function() {
-                $scope.genderFemaleleBStyle = {
-                    'background-color': '#263147 ',
-                    'color': 'white'
-                };
-                $scope.genderMaleBStyle = {
-                    'color': '#263147  '
-                };
-                $scope.optionGender = 'female';
-            }
-            // This Function works for to send email to the new User Firebase before of the register
-        $scope.SendEmail = function() {
-                // This Function works for to send email verification
-                mainApp.auth().currentUser.sendEmailVerification().then(function() {
-                    /* Alert for validate email */
-                    swal({
-                            title: "Bien Hecho!",
-                            text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
-                            imageUrl: "img/sobre.png",
-                            timer: 3000,
-                            /* Button ok disable */
-                            showConfirmButton: false
-                        },
-                        function() {
-                            setTimeout(function() {
-                                // Logout User Firebase
-                                mainApp.auth().signOut(); //Else bug
-                                swal.close(); //Close Alert
-                                $state.go('login'); //Redirect to Login
-                            }, 2000);
-                        });
-                })
-            }
-            // This Function works for to Validate fields of the form
-        $scope.Alert = function() {
-                if ($scope.user.email == undefined) {
-                    sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
-                } else if ($scope.user.password == undefined) {
-                    sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
-                } else {
-                    $scope.ValidarEmail = "none"
-                    $scope.Validarpassword = "none"
-                        // Redirect to Register Function for to create a new user in Firebase
-                    $scope.register()
-                }
-            }
-            // Register Function for to create a new User in Firebase
-        $scope.register = function() {
-
-            $ionicLoading.show({
-                noBackdrop: true,
-                template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
-            });
-
-            mainApp.auth().signOut();
-            // Global Variables
-            var name = $scope.user.NameRegister;
-            var email = $scope.user.email;
-            var password = $scope.user.password;
-            var gender = $scope.optionGender;
-            var dateBirthday = $scope.user.birthday;
-            // To convert a date the birthday field
-            if (dateBirthday) {
-                dateBirthday = dateBirthday.toLocaleDateString()
-            }
-            // Save Users in Firebase Auth
-            mainApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-                var ErrorCodeFirebase = error.code;
-                if (ErrorCodeFirebase == 'auth/email-already-in-use') {
-                    $ionicLoading.hide();
-                    // Alert and Functionality when the user is registered in Firebase
-                    swal({
-                            title: 'Lo sentimos',
-                            text: 'El usuario ya está registrado, por favor inicia sesión.',
-                            type: 'error',
-                            showCancelButton: false,
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                        },
-                        // On click Event Alert
-                        function() {
-                            setTimeout(function() {
-                                // Clean Register Form
-                                $('.createUserName').val('');
-                                $('.createUserEmail').val('');
-                                $('.createUserPassword').val('');
-                                $('.createUserBirthday').val('');
-                                $scope.genderMaleBStyle = {};
-                                $scope.genderFemaleleBStyle = {};
-                                // Close the SweetAlert
-                                swal.close();
-                                // Redirect to Login Form
-                                $state.go('login');
-                            }, 2000)
-                        });
-                }
-            }).then(function() {
-                // Clean Register Form
-                $('.createUserName').val('');
-                $('.createUserEmail').val('');
-                $('.createUserPassword').val('');
-                $('.createUserBirthday').val('');
-                $scope.genderMaleBStyle = {};
-                $scope.genderFemaleleBStyle = {};
-
-                // Connect to User Entity on Firebase
-                var user = mainApp.auth().currentUser;
-                // Call to Users Entity Firebase Data
-                mainApp.database().ref('Users').once('value', function(snapshot) {
-                    // If doesn't exist anything data then to save the new data
-                    mixpanel.identify(email);
-                    mixpanel.people.set({
-                        "$email": email,
-                        "$gender": gender,
-                        "$birthday": dateBirthday,
-                        "$name": name,
-                        "$typeLogin": "Email"
-
+        // This Function works for to send email to the new User Firebase before of the register
+    $scope.SendEmail = function() {
+            // This Function works for to send email verification
+            mainApp.auth().currentUser.sendEmailVerification().then(function() {
+                /* Alert for validate email */
+                swal({
+                        title: "Bien Hecho!",
+                        text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
+                        imageUrl: "img/sobre.png",
+                        timer: 3000,
+                        /* Button ok disable */
+                        showConfirmButton: false
+                    },
+                    function() {
+                        setTimeout(function() {
+                            // Logout User Firebase
+                            mainApp.auth().signOut(); //Else bug
+                            swal.close(); //Close Alert
+                            $state.go('login'); //Redirect to Login
+                        }, 2000);
                     });
-                    if (snapshot.val() == null) {
-                        mainApp.database().ref('Users/' + user.uid).update({
-                            Username: name,
-                            Email: email,
-                            Gender: gender,
-                            Birthday: dateBirthday
-                        });
-                        $ionicLoading.hide();
-                        $scope.SendEmail();
-                    } else {
-                        // Verify each UID user and if doesn't exist add the new register
-                        for (x in snapshot.val()) {
-                            if (x != user.uid) {
-                                mainApp.database().ref('Users/' + user.uid).update({
-                                    Username: name,
-                                    Email: email,
-                                    Gender: gender,
-                                    Birthday: dateBirthday
-                                });
-                                $ionicLoading.hide();
-                                $scope.SendEmail();
-                            }
+            })
+        }
+        // This Function works for to Validate fields of the form
+    $scope.Alert = function() {
+            if ($scope.user.email == undefined) {
+                sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
+            } else if ($scope.user.password == undefined) {
+                sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
+            } else {
+                $scope.ValidarEmail = "none"
+                $scope.Validarpassword = "none"
+                    // Redirect to Register Function for to create a new user in Firebase
+                $scope.register()
+            }
+        }
+        // Register Function for to create a new User in Firebase
+    $scope.register = function() {
+
+        $ionicLoading.show({
+            noBackdrop: true,
+            template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+        });
+
+        mainApp.auth().signOut();
+        // Global Variables
+        var name = $scope.user.NameRegister;
+        var email = $scope.user.email;
+        var password = $scope.user.password;
+        var gender = $scope.optionGender;
+        var dateBirthday = $scope.user.birthday;
+        // To convert a date the birthday field
+        if (dateBirthday) {
+            dateBirthday = dateBirthday.toLocaleDateString()
+        }
+        // Save Users in Firebase Auth
+        mainApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+            var ErrorCodeFirebase = error.code;
+            if (ErrorCodeFirebase == 'auth/email-already-in-use') {
+                $ionicLoading.hide();
+                // Alert and Functionality when the user is registered in Firebase
+                swal({
+                        title: 'Lo sentimos',
+                        text: 'El usuario ya está registrado, por favor inicia sesión.',
+                        type: 'error',
+                        showCancelButton: false,
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true,
+                    },
+                    // On click Event Alert
+                    function() {
+                        setTimeout(function() {
+                            // Clean Register Form
+                            $('.createUserName').val('');
+                            $('.createUserEmail').val('');
+                            $('.createUserPassword').val('');
+                            $('.createUserBirthday').val('');
+                            $scope.genderMaleBStyle = {};
+                            $scope.genderFemaleleBStyle = {};
+                            // Close the SweetAlert
+                            swal.close();
+                            // Redirect to Login Form
+                            $state.go('login');
+                        }, 2000)
+                    });
+            }
+        }).then(function() {
+            // Clean Register Form
+            $('.createUserName').val('');
+            $('.createUserEmail').val('');
+            $('.createUserPassword').val('');
+            $('.createUserBirthday').val('');
+            $scope.genderMaleBStyle = {};
+            $scope.genderFemaleleBStyle = {};
+
+            // Connect to User Entity on Firebase
+            var user = mainApp.auth().currentUser;
+            // Call to Users Entity Firebase Data
+            mainApp.database().ref('Users').once('value', function(snapshot) {
+                // If doesn't exist anything data then to save the new data
+                mixpanel.identify(email);
+                mixpanel.people.set({
+                    "$email": email,
+                    "$gender": gender,
+                    "$birthday": dateBirthday,
+                    "$name": name,
+                    "$typeLogin": "Email"
+
+                });
+                if (snapshot.val() == null) {
+                    mainApp.database().ref('Users/' + user.uid).update({
+                        Username: name,
+                        Email: email,
+                        Gender: gender,
+                        Birthday: dateBirthday
+                    });
+                    $ionicLoading.hide();
+                    $scope.SendEmail();
+                } else {
+                    // Verify each UID user and if doesn't exist add the new register
+                    for (x in snapshot.val()) {
+                        if (x != user.uid) {
+                            mainApp.database().ref('Users/' + user.uid).update({
+                                Username: name,
+                                Email: email,
+                                Gender: gender,
+                                Birthday: dateBirthday
+                            });
+                            $ionicLoading.hide();
+                            $scope.SendEmail();
                         }
                     }
-                });
+                }
             });
-        }
-    })
+        });
+    }
+})
 
 // ************************* LOGIN WITH FRENZY *************************
 .controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading) {
@@ -1302,10 +1284,6 @@ angular.module('starter.controllers', ['ionic'])
 
     $scope.pix = Coupons.all($stateParams.CuponID);
     $scope.pixels = $scope.pix[1][0].pixels;
-
-    /*****  fill displayNoneInline list to call after
-    					in cupons_description for show barcode
-    					or hide it  ****/
 
     $scope.sendSms = function() {
         $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
