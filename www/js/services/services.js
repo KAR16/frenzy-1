@@ -13,7 +13,8 @@ var app = angular.module('starter.services', []);
 app.factory('CustomerAll', function() {
 	return {
 		all: function(IDCostumer) {
-				var AllCustomer = [];
+
+			var AllCustomer = [];
 			for (var a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].CategoryApp) {
@@ -36,171 +37,6 @@ app.factory('CustomerAll', function() {
 	};
 });
 
-
-// ************* SUPERMARKET APP FACTORY *************
-app.factory('Supermercados', function() {
-	// Might use a resource here that returns a JSON array Some fake testing data
-
-
-	return {
-		all: function(IDCostumer) {
-			var supermercados = [];
-			for (a in CustomerList) {
-			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					supermercados.push(CustomerList[a])
-				}
-			}
-			if (supermercados.length == 0) {
-				supermercados.push({oferta:"noHay"});
-			}
-			return supermercados;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < chsupermercadosats.length; i++) {
-				if (supermercados[i].id === parseInt(chatId)) {
-					return supermercados[i];
-				}
-			}
-			return null;
-		}
-	};
-});
-// ************* ENTERTAINMENT APP FACTORY *************
-app.factory('Entretenimiento', function() {
-	// Some fake testing data
-	return {
-		all: function(IDCostumer) {
-				var entretenimiento = [];
-			for (a in CustomerList) {
-			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					entretenimiento.push(CustomerList[a])
-				}
-			}
-			if (entretenimiento.length == 0) {
-				entretenimiento.push({oferta:"noHay"});
-			}
-			return entretenimiento;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < entretenimiento.length; i++) {
-				if (entretenimiento[i].id === parseInt(chatId)) {
-					return entretenimiento[i];
-				}
-			}
-			return null;
-		}
-	};
-});
-// ************* FASION APP FACTORY *************
-app.factory('Moda', function() {
-	return {
-		all: function(IDCostumer) {
-				var moda = [];
-			for (a in CustomerList) {
-			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					moda.push(CustomerList[a])
-				}
-			}
-			if (moda.length == 0) {
-				moda.push({oferta:"noHay"});
-			}
-			return moda;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < moda.length; i++) {
-				if (moda[i].id === parseInt(chatId)) {
-					return moda[i];
-				}
-			}
-			return null;
-		}
-	};
-});
-// ************* ELECTRONICS APP FACTORY *************
-app.factory('Electronicos', function() {
-
-	return {
-		all: function(IDCostumer) {
-			var electronicos = [];
-			for (a in CustomerList) {
-			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					electronicos.push(CustomerList[a])
-				}
-			}
-			if (electronicos.length == 0) {
-				electronicos.push({oferta:"noHay"});
-			}
-			return electronicos;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < electronicos.length; i++) {
-				if (electronicos[i].id === parseInt(chatId)) {
-					return electronicos[i];
-				}
-			}
-			return null;
-		}
-	};
-})
-// ************* RESTAURANTS APP FACTORY *************
-app.factory('Restaurante', function() {
-
-
-	return {
-		all: function(IDCostumer) {
-			var restaurantes = [];
-
-			for (a in CustomerList) {
-			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					restaurantes.push(CustomerList[a])
-				}
-			}
-			if (restaurantes.length == 0) {
-				restaurantes.push({oferta:"noHay"});
-			}
-			return restaurantes;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < restaurantes.length; i++) {
-				if (restaurantes[i].id === parseInt(chatId)) {
-					return restaurantes[i];
-				}
-			}
-			return null;
-		}
-	};
-});
-// ************* OTHERS APP FACTORY *************
-app.factory('Otros', function() {
-	return {
-		all: function(IDCostumer) {
-			var Others = [];
-			for (a in CustomerList) {
-			//	console.log(CustomerList[a].Category);
-				if (IDCostumer == CustomerList[a].Category) {
-					Others.push(CustomerList[a])
-				}
-			}
-			if (Others.length == 0) {
-				Others.push({oferta:"noHay"});
-			}
-			return Others;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < restaurantes.length; i++) {
-				if (restaurantes[i].id === parseInt(chatId)) {
-					return restaurantes[i];
-				}
-			}
-			return null;
-		}
-	};
-});
 // ************* DATA VARIABLE *************
 var dato = []; /* Push data popover */
 var ContPromo = []; /* Count of promotions */
@@ -211,16 +47,16 @@ app.factory('currentPromotion', function() {
 		all: function(superId) {},
 		get: function(superId) {
 			console.log("entro");
-			ALL = []
+			ALL = [];
 			Category = [];
 			dato = [];
 			ContPromo = [];
 			IdCategory = superId;
 			Cupcont=[];
-			var validar = "existe"
+			var validar = "existe";
 
 			var resultSet = $.grep(CustomerList, function (e) {
-				 return e.Name.indexOf(superId) == 0;
+				 return e.Name.indexOf(superId) === 0;
 			});
 
 
@@ -304,16 +140,12 @@ app.factory('currentPromotion', function() {
 app.filter("commaBreak",
 
     function () {
-
         return function ( value ) {
-
             if( !value.length ) return;
-
             return value.split('-').join(" ")
-
         }
-
 });
+
 app.factory('AllFavorite', function() {
 	var favorites = AllFavorite;
 
@@ -365,7 +197,6 @@ app.factory('AllPromotion', function() {
 	};
 });
 // ************* ALL OUR FAVORITES APP FACTORY *************
-var AllourFavorites = [];
 
 // ************* COUPONS APP FACTORY *************
 app.factory('Coupons', function() {

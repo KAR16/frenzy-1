@@ -56,10 +56,7 @@ secondaryApp.database().ref('Customer').once('value', function(snapshot) {
             margin: "0"
         });
     }
-    // InfoShop.push({
-    // 	cel:results[x].attributes.PhoneNumber,name:results[x].attributes.Name,url:results[x].attributes.URL,id:"favorite"+x,
-    // 	namecategory:results[x].attributes.CategoryApp,id:results[x].id,call:'Llamar',callIcon:'Q',webUrl:'Ir a pagina Web',webUrlIcon:'R',pixels:"170px",margin:"0"
-    // });
+
 }).then(function() {
 
     /////////////////////////////////////////////CALL PROMOTION//////////////////////////////////////////////////////////////////
@@ -300,8 +297,6 @@ secondaryApp.database().ref('Customer').once('value', function(snapshot) {
         countCp = 0
     });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}).then(function() {
-
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -660,7 +655,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$on('$ionicView.enter', function() {
         $scope.chats = AllFavorite.all();
     });
-    $scope.getAllFavorites = function() {};
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
