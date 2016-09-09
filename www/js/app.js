@@ -1,7 +1,7 @@
 
 
 // ************************ App Definition ************************
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova', 'firebase'])
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 	$ionicConfigProvider.tabs.position('bottom');

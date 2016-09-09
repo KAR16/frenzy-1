@@ -307,7 +307,7 @@ secondaryApp.database().ref('Customer').once('value', function(snapshot) {
 
 
 /*****  CONTROLLERS  *****/
-angular.module('starter.controllers', ['ionic'])
+angular.module('starter.controllers', ['ionic', 'firebase'])
 // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
 // ************************* LOGIN WITH FACEBOOK *************************
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
@@ -559,121 +559,39 @@ angular.module('starter.controllers', ['ionic'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('CategoryCtrl', function($scope, $ionicLoading, $timeout) {
+.controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $firebaseArray) {
     var dimensions = {
         name: 'categoriesMenu'
     };
     var NameUser = String(IdUsuario);
-    var countApp = 0;
 
     mixpanel.track("view", {
         "type": "Categorys",
         "Gender": IdGender,
         "User": NameUser
     });
-    // Loading scope
-    $scope.loading = $ionicLoading.show({
-        noBackdrop: true,
-        template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-    });
-    CategoryListName = [];
 
+    var ref = mainApp.database().ref().child('AppCategory');
+    $scope.categories = $firebaseArray(ref);
 
-    //
-    /////////////////////////////////////////////////////////////////////////////
-    var UsuarioF = true;
-    var UsuarioP = true;
-    mainApp.database().ref('AppCategory').once('value', function(snapshot) {
-
-        for (x in snapshot.val()) {
-            CategoryListName[countApp] = snapshot.val()[x]
-            countApp++
-        }
-        // console.log("askjkdhakjshdkajsdh");
-        countApp = 0
-
-    }).then(function() {
-        ///////////////////////////Favorite heart////////////////////////////////////
-
-        mainApp.database().ref('Favorite').on('value', function(snapshot) {
-            var CountFF = 0;
-            var countFavorite = 0;
-            for (x in snapshot.val()) {
-                if (snapshot.val()[x].UserID == IdUsuario) {
-                    UsuarioF = false
-                    for (i in snapshot.val()[x].CustomerID) {
-                        for (c in CustomerList) {
-
-                            if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-                                CustomerList[c].colorHeart = "red"
-                            }
-                        }
-                    }
-                    FirebaseFavorite[CountFF] = snapshot.val()[x]
-                    FirebaseFavorite[CountFF]["FavoriteID"] = x
-                    CountFF++
-                }
-
-            }
-            if (UsuarioF == true) {
-                mainApp.database().ref('Favorite/').push({
-                    UserID: IdUsuario
-                });
-            }
-
-        });
-        //////////////////////////////////////////////////////////////////////////
-        ///////////////////////////SAVED PIN////////////////////////////////////
-
-        mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-            var CountPS = 0;
-            var countPromo = 0;
-            for (x in snapshot.val()) {
-                if (snapshot.val()[x].UserID == IdUsuario) {
-                    UsuarioP = false;
-                    for (i in snapshot.val()[x].PromotionID) {
-                        for (c in CurrentPromotion) {
-                            if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-                                AllPromotionF[countPromo] = CurrentPromotion[c]
-                                countPromo++
-                                CurrentPromotion[c].ColorPin = "purple"
-
-                            } else {
-                                console.log("no encontro nada ");
-                            }
-                        }
-                    }
-                    FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-                    FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-                    CountPS++
-                }
-
-            }
-
-            if (UsuarioP == true) {
-                mainApp.database().ref('PromotionSaved/').push({
-                    UserID: IdUsuario
-                });
-            }
-        });
-        //////////////////////////////////////////////////////////////////////////
-
-
-
-    }).then(function() {
-
-        $timeout(function() {
-            $ionicLoading.hide();
-        }, 2000);
-    });
     ////////////////////////////////////////////////////////////////////////////////////
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
     $scope.$on('$ionicView.enter', function() {
 
-        $scope.categorys = CategoryListName
+      // Show Loading Icon
+      $scope.loading = $ionicLoading.show({
+          noBackdrop: true,
+          template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+      });
 
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none', 'none']);
+      $timeout(function() {
+          $ionicLoading.hide();
+      }, 2000);
+
+
+
+      colorIconsFoother = []
+      colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none', 'none']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
