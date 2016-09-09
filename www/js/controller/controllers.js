@@ -648,18 +648,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             }
         }
         /**************************************************/
-    var dimensions = {
-        name: 'userFavorites',
-    };
 
     $scope.$on('$ionicView.enter', function() {
         $scope.chats = AllFavorite.all();
-    });
-    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
+
         colorIconsFoother = []
         colorIconsFoother.push(['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
     });
+
 })
 // *************************** SAVED CONTROLLER ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
