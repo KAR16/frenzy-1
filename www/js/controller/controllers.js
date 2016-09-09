@@ -827,6 +827,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     };
 
 })
+
+//////////////////////
 .controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, CustomerAll) {
     var Direc = [{
         name: "Supermercado",
@@ -875,8 +877,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     /************ FUNCTION CHANGE COLOR HEART  **********/
     $scope.changeColorHeart = function(parametro, category) {
 
-
-
         var cssColor = document.getElementById(parametro + " " + category).style.color;
         if (cssColor == "white") {
             document.getElementById(parametro + " " + category).style.color = "red";
@@ -901,6 +901,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.AppCategory, '', 'none', ]);
     });
 })
+///////////
+
+
 .controller('PromotionsDescription', function($scope, $stateParams, DescriptionOfferts, $ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
     mixpanel.track("view", {
         "type": "PromotionsDescription",

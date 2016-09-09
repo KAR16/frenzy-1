@@ -34,30 +34,8 @@ var AllPromotion = [];
 //var InfoShop = [];
 
 // ********* MODULE STARTER *********
-var app = angular.module('starter.services', [])
+var app = angular.module('starter.services', []);
 
-// ************* CATEGORIES APP FACTORY *************
-app.factory('Categorys', function() {
-	// Might use a resource here that returns a JSON array
-	for (a in promociones) {
-		var C = promociones.length;
-	}
-
-	var categorys = CategoryListName
-	return {
-		all: function() {
-			return categorys;
-		},
-		get: function(chatId) {
-			for (var i = 0; i < categorys.length; i++) {
-				if (categorys[i].id === parseInt(chatId)) {
-					return categorys[i];
-				}
-			}
-			return null;
-		}
-	};
-})
 //*************** Customer APP FACTORY **************
 app.factory('CustomerAll', function() {
 	return {
