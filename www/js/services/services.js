@@ -10,24 +10,18 @@ var Super = [];
 var Restaurantes = [];
 var Modas = [];
 var Entretenimientos = [];
-var Electronico = [];
-var Otro = [];
 var listPromoSuper = [];
-var name = "";
 var nameRestaurantes = "";
 var listaNameSuperComparar = [];
 var listaNameSuperConteo = [];
 // ********* COUNT VARIABLE *********
 var conteoPromociones = [];
 var conteoPromo = {};
-var total = 0;
 // ********* PHOTO *********
 var CurrentPromotion = [];
 // ********* CATEGORIES VARIABLE *********
 var Category = [];
 var IdCategory;
-var Categorys= [];
-var contt = 0;
 // ********* ALL FAVORITE, PROMOTION, INFOSHOP VARIABLE *********
 var AllFavorite = [];
 var AllPromotion = [];
@@ -41,13 +35,13 @@ app.factory('CustomerAll', function() {
 	return {
 		all: function(IDCostumer) {
 				var AllCustomer = [];
-			for (a in CustomerList) {
+			for (var a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].CategoryApp) {
-					AllCustomer.push(CustomerList[a])
+					AllCustomer.push(CustomerList[a]);
 				}
 			}
-			if (AllCustomer.length == 0) {
+			if (AllCustomer.length === 0) {
 				AllCustomer.push({oferta:"noHay"});
 			}
 			return AllCustomer;
@@ -62,6 +56,8 @@ app.factory('CustomerAll', function() {
 		}
 	};
 });
+
+
 // ************* SUPERMARKET APP FACTORY *************
 app.factory('Supermercados', function() {
 	// Might use a resource here that returns a JSON array Some fake testing data
