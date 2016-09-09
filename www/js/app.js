@@ -150,8 +150,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/page_start/page_start.html",
-				controller: 'CategoryCtrl'
+				templateUrl: "templates/home/home.html",
+				controller: 'HomeCtrl'
 			}
 		}
 	})

@@ -559,7 +559,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('CategoryCtrl', function($scope, $ionicLoading, $timeout, $firebaseArray) {
+.controller('HomeCtrl', function($scope, $ionicLoading, $timeout, $firebaseArray) {
     var dimensions = {
         name: 'categoriesMenu'
     };
