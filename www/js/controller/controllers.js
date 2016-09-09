@@ -560,11 +560,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('HomeCtrl', function($scope, $ionicLoading, $timeout, $firebaseArray) {
-    var dimensions = {
-        name: 'categoriesMenu'
-    };
-    var NameUser = String(IdUsuario);
 
+    var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
         "Gender": IdGender,
@@ -588,8 +585,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           $ionicLoading.hide();
       }, 2000);
 
-
-
+      // Change footer colors
       colorIconsFoother = []
       colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none', 'none']);
     });
