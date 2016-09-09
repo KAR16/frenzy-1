@@ -1,31 +1,10 @@
-// ********* LIST NAME CATEGORY *********
-var List_name = [];
-var promociones = [];
-var listSupermercado = [];
-var listRestaurantes = [];
-var promedio = [];
-var listNameSupermercado = [];
-var listNameRestaurantes = [];
-var Super = [];
-var Restaurantes = [];
-var Modas = [];
-var Entretenimientos = [];
-var listPromoSuper = [];
-var nameRestaurantes = "";
-var listaNameSuperComparar = [];
-var listaNameSuperConteo = [];
-// ********* COUNT VARIABLE *********
-var conteoPromociones = [];
-var conteoPromo = {};
 // ********* PHOTO *********
 var CurrentPromotion = [];
 // ********* CATEGORIES VARIABLE *********
-var Category = [];
 var IdCategory;
 // ********* ALL FAVORITE, PROMOTION, INFOSHOP VARIABLE *********
 var AllFavorite = [];
 var AllPromotion = [];
-//var InfoShop = [];
 
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', []);
