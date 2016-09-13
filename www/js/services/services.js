@@ -18,6 +18,7 @@ app.factory('CustomerAll', function() {
 			for (var a in CustomerList) {
 			//	console.log(CustomerList[a].Category);
 				if (IDCostumer == CustomerList[a].CategoryApp) {
+					console.log(CustomerList[a]);
 					AllCustomer.push(CustomerList[a]);
 				}
 			}
@@ -173,6 +174,7 @@ app.factory('AllFavorite', function() {
 		}
 	};
 });
+
 // ************* ALL PROMOTION APP FACTORY *************
 app.factory('AllPromotion', function() {
 	var promotio = AllPromotionF;
@@ -326,3 +328,79 @@ app.factory('DescriptionOfferts', function() {
 		},get: function(){}
 	};
 });
+
+//******************************************************************************//
+//******************************************************************************//
+//******************************************************************************//
+
+app.factory('Customer', ['$firebaseArray', function($firebaseArray) {
+
+	var ref = secondaryApp.database().ref('Customer');
+	return $firebaseArray(ref);
+
+}]);
+
+app.factory('Promotion', ['$firebaseArray', function($firebaseArray) {
+
+	var ref = firebase.database().ref('Promotion');
+	return $firebaseArray(ref);;
+
+
+	// var promotions = $firebaseArray(ref);
+	//
+	// return {
+	// 	all: function() {
+	// 	  return promotions;
+	// 	},
+	// 	category: function(categoryName) {
+	// 		var results = [];
+	// 		for (var promo in promotions) {
+	// 			if (promo.CategoryApp == categoryName) {
+	// 				result.push(promo);
+	// 			}
+	// 		}
+	// 		return results;
+	// 	},
+	// 	client: function(clientId) {
+	// 		var results = [];
+	// 		for (var promo in promotions) {
+	// 			if (promo.Provider == clientId) {
+	// 				result.push(promo);
+	// 			}
+	// 		}
+	// 		return results;
+	// 	}
+	// };
+}]);
+
+app.factory('Coupon', ['$firebaseArray', function($firebaseArray) {
+
+	var ref = firebase.database().ref('Coupon');
+	return $firebaseArray(ref);
+
+	// var coupons = $firebaseArray(ref);
+	//
+	// return {
+	// 	all: function() {
+	// 	  return coupons;
+	// 	},
+	// 	category: function(categoryName) {
+	// 		var results = [];
+	// 		for (var coupon in coupons) {
+	// 			if (coupon.CategoryApp == categoryName) {
+	// 				result.push(coupon);
+	// 			}
+	// 		}
+	// 		return results;
+	// 	},
+	// 	client: function(clientId) {
+	// 		var results = [];
+	// 		for (var coupon in coupons) {
+	// 			if (coupon.Provider == clientId) {
+	// 				result.push(coupon);
+	// 			}
+	// 		}
+	// 		return results;
+	// 	}
+	// };
+}]);

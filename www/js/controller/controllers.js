@@ -586,7 +586,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
-.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
+.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite, $firebaseObject) {
+
+  var userId = firebase.auth().currentUser.uid;
+
+  var ref = firebase.database().ref().child("Favorite/" + userId);
+  $scope.favorites = $firebaseObject(ref);
+
     /*************************************************/
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
@@ -736,7 +742,28 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 //********************** Customer CONTROLLER *****************************
-.controller('changeColorHeartCtrl', function($scope, $ionicLoading, $stateParams, CustomerAll) {
+.controller('changeColorHeartCtrl', function($scope, $ionicLoading, $stateParams, $firebaseObject) {
+
+  var user = firebase.auth().currentUser;
+  var ref = firebase.database().ref('Users/' + user.uid);
+
+  $scope.favorites = $firebaseObject(ref.child('Favorites'));
+  $scope.favorites.$loaded().then(function(data){console.log(data)});
+
+  $scope.ChangeColorHeart = function(customerId) {
+
+    //Check if customerId is in Current Users Favorites
+    if(customerId in $scope.favorites) {
+      // Switch boolean value
+      $scope.favorites[customerId] = !$scope.favorites[customerId];
+    } else {
+      $scope.favorites[customerId] = true;
+    }
+
+  };
+
+
+
     $scope.UrlC = function(id) {
             console.clear();
             console.log(id);
@@ -762,7 +789,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             }
         }
         /************ FUNCTION CHANGE COLOR HEART  **********/
-    $scope.ChangeColorHeart = function(parametro, category) {
+    $scope._ChangeColorHeart = function(parametro, category) {
         var ValSend = true
         for (x in FirebaseFavorite[0].CustomerID) {
             console.log(FirebaseFavorite[0].CustomerID[x]);
@@ -819,7 +846,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 //////////////////////
-.controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, CustomerAll) {
+.controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, CustomerAll, Customer) {
+
+
+
+    $scope.customers = Customer;
+    $scope.category = $stateParams.IDcustomer;
+
+
+
     var Direc = [{
         name: "Supermercado",
         name2: "supermarketMenu"
@@ -858,35 +893,32 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         "User": NameUser
     });
     // Loading scope
-    $scope.AppCategory = $stateParams.IDcustomer
     $scope.loading = $ionicLoading.show({
         noBackdrop: true,
         template: '<ion-spinner customer1lass="spinner" icon="lines" class = "Loading' + $scope.AppCategory + '"></ion-spinner>'
     });
 
     /************ FUNCTION CHANGE COLOR HEART  **********/
-    $scope.changeColorHeart = function(parametro, category) {
-
-        var cssColor = document.getElementById(parametro + " " + category).style.color;
-        if (cssColor == "white") {
-            document.getElementById(parametro + " " + category).style.color = "red";
-            SaveFavorite(IdUsuario, category)
-        } else {
-            document.getElementById(parametro + " " + category).style.color = "white";
-            console.log(category);
-            DeleteFavorite(IdUsuario, category)
-        }
-    };
+    // $scope.changeColorHeart = function(parametro, category) {
+    //
+    //     var cssColor = document.getElementById(parametro + " " + category).style.color;
+    //     if (cssColor == "white") {
+    //         document.getElementById(parametro + " " + category).style.color = "red";
+    //         SaveFavorite(IdUsuario, category)
+    //     } else {
+    //         document.getElementById(parametro + " " + category).style.color = "white";
+    //         console.log(category);
+    //         DeleteFavorite(IdUsuario, category)
+    //     }
+    // };
 
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
         setTimeout(function() {
-            $scope.$apply(function() {
-                $scope.chats = CustomerAll.all($stateParams.IDcustomer);
-                console.log(JSON.stringify($scope.chats))
-                $ionicLoading.hide();
-            });
+            $ionicLoading.hide();
         }, 1000);
+
+
         colorIconsFoother = []
         colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.AppCategory, '', 'none', ]);
     });

@@ -6,5 +6,5 @@ app.directive('customerInfo', function() {
       info: '='
     },
     templateUrl: 'js/directives/Customer/CustomerTemplate.html'
-  }
-})
+  };
+});
