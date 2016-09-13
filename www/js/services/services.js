@@ -343,7 +343,7 @@ app.factory('Customer', ['$firebaseArray', function($firebaseArray) {
 app.factory('Promotion', ['$firebaseArray', function($firebaseArray) {
 
 	var ref = firebase.database().ref('Promotion');
-	return $firebaseArray(ref);;
+	return $firebaseArray(ref);
 
 
 	// var promotions = $firebaseArray(ref);

@@ -586,12 +586,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
-.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite, $firebaseObject) {
+.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite, $firebaseObject, Customer, Promotion) {
 
-  var userId = firebase.auth().currentUser.uid;
+  var user = firebase.auth().currentUser;
+  var ref = firebase.database().ref('Users/' + user.uid);
+  $scope.favorites = $firebaseObject(ref.child('Favorites'));
 
-  var ref = firebase.database().ref().child("Favorite/" + userId);
-  $scope.favorites = $firebaseObject(ref);
+  $scope.customers = Customer;
+  $scope.promotions = Promotion;
 
     /*************************************************/
     var NameUser = String(IdUsuario);
@@ -656,8 +658,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         /**************************************************/
 
     $scope.$on('$ionicView.enter', function() {
-        $scope.chats = AllFavorite.all();
-
         colorIconsFoother = []
         colorIconsFoother.push(['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
     });
@@ -790,61 +790,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                 location.href = promotionPage + id
             }
         }
-        /************ FUNCTION CHANGE COLOR HEART  **********/
-    // $scope._ChangeColorHeart = function(parametro, category) {
-    //     var ValSend = true
-    //     for (x in FirebaseFavorite[0].CustomerID) {
-    //         console.log(FirebaseFavorite[0].CustomerID[x]);
-    //         if (FirebaseFavorite[0].CustomerID[x] == category) {
-    //             ValSend = false;
-    //         }
-    //     }
-    //
-    //     var NamePromo = category
-    //     var NameUser = String(IdUsuario)
-    //     var Dimensions = {
-    //         name: 'Heart_' + NamePromo,
-    //         user: NameUser
-    //     };
-    //
-    //     var cssColor = document.getElementById(parametro + " " + category).style.color;
-    //     if (cssColor == "white") {
-    //         mixpanel.track("ClickHeart", {
-    //             "NameCategory": NamePromo,
-    //             "User": NameUser,
-    //             "Action": "Add",
-    //             "Gender": IdGender
-    //         });
-    //         document.getElementById(parametro + " " + category).style.color = "red";
-    //         if (ValSend == true) {
-    //             var newPostKey = firebase.database().ref().child('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').push().key;
-    //             var Cus = {}
-    //             Cus[newPostKey] = category
-    //             firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').update(Cus);
-    //         }
-    //     } else {
-    //         mixpanel.track("ClickHeart", {
-    //             "NameCategory": NamePromo,
-    //             "User": NameUser,
-    //             "Action": "Delete",
-    //             "Gender": IdGender
-    //         });
-    //         document.getElementById(parametro + " " + category).style.color = "white";
-    //
-    //         for (i in FirebaseFavorite[0].CustomerID) {
-    //
-    //             if (FirebaseFavorite[0].CustomerID[i] == category) {
-    //                 firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID/' + i).remove();
-    //             }
-    //         }
-    //         for (a in CustomerList) {
-    //             if (CustomerList[a].Name == category) {
-    //                 CustomerList[a].colorHeart = "white"
-    //             }
-    //         }
-    //     }
-    // };
-
 })
 
 //////////////////////
