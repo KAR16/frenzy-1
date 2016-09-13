@@ -10,7 +10,7 @@
     <div id="infoCol1" class="row">
       <div id="infoCol2" class="col col-80">
         <spam class="Price{{info.CategoryApp}}">
-          {{info.suma}}
+          {{info.QuantityCoupon + info.QuantityPromotion}}
         </spam>
         <spam class="Title{{info.CategoryApp}}">
           ofertas
@@ -23,8 +23,8 @@
           promedio
         </spam>
       </div>
-      <div id="infoCol3" class="col col-20 categoriesHeartIcon" ng-controller = "changeColorHeartCtrl">
-        <div class="home HeartCentered" id="{{info.lastText}} {{info.Name}}" name="{{info.Name}}" ng-click='ChangeColorHeart("{{info.lastText}}","{{info.Name}}")'style="color:{{info.colorHeart}}">B</div>
+      <div id="infoCol3" class="col col-20 categoriesHeartIcon" ng-controller="changeColorHeartCtrl">
+        <div class="home HeartCentered" id="{{info.lastText}} {{info.Name}}" name="{{info.Name}}" ng-click='ChangeColorHeart("{{info.$id}}")'style="color:{{ favorites[info.$id] ? 'red':'white'}}">B</div>
       </div>
     </div>
   </div>

@@ -79,7 +79,7 @@ secondaryApp.database().ref('Customer').once('value', function(snapshot) {
             ////////////////////////////////////////////////////////////////////////////////////////////
             if (snapshot.val()[x].Status === true) {
 
-                console.log(snapshot.val()[x]);
+                // console.log(snapshot.val()[x]);
 
                 for (i in snapshot.val()[x].Customer) {
                     if (snapshot.val()[x].Photo === null || snapshot.val()[x].Photo === undefined || snapshot.val()[x].Photo === '') {
@@ -734,12 +734,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     $scope.$on('$ionicView.enter', function() {
         $scope.chats = AllPromotion.all($stateParams.salvadosId);
-    });
-    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = []
         colorIconsFoother.push(['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
     });
+
 })
 //********************** Customer CONTROLLER *****************************
 .controller('changeColorHeartCtrl', function($scope, $ionicLoading, $stateParams, $firebaseObject) {
@@ -751,6 +749,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.favorites.$loaded().then(function(data){console.log(data)});
 
   $scope.ChangeColorHeart = function(customerId) {
+    console.log(customerId);
 
     //Check if customerId is in Current Users Favorites
     if(customerId in $scope.favorites) {
@@ -760,9 +759,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.favorites[customerId] = true;
     }
 
+    // Save to DB
+    $scope.favorites.$save().then(function(ref){
+      console.log('Favorite. Added - ', customerId);
+    });
+
   };
-
-
 
     $scope.UrlC = function(id) {
             console.clear();
@@ -789,59 +791,59 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             }
         }
         /************ FUNCTION CHANGE COLOR HEART  **********/
-    $scope._ChangeColorHeart = function(parametro, category) {
-        var ValSend = true
-        for (x in FirebaseFavorite[0].CustomerID) {
-            console.log(FirebaseFavorite[0].CustomerID[x]);
-            if (FirebaseFavorite[0].CustomerID[x] == category) {
-                ValSend = false;
-            }
-        }
-
-        var NamePromo = category
-        var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'Heart_' + NamePromo,
-            user: NameUser
-        };
-
-        var cssColor = document.getElementById(parametro + " " + category).style.color;
-        if (cssColor == "white") {
-            mixpanel.track("ClickHeart", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Add",
-                "Gender": IdGender
-            });
-            document.getElementById(parametro + " " + category).style.color = "red";
-            if (ValSend == true) {
-                var newPostKey = firebase.database().ref().child('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').push().key;
-                var Cus = {}
-                Cus[newPostKey] = category
-                firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').update(Cus);
-            }
-        } else {
-            mixpanel.track("ClickHeart", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Delete",
-                "Gender": IdGender
-            });
-            document.getElementById(parametro + " " + category).style.color = "white";
-
-            for (i in FirebaseFavorite[0].CustomerID) {
-
-                if (FirebaseFavorite[0].CustomerID[i] == category) {
-                    firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID/' + i).remove();
-                }
-            }
-            for (a in CustomerList) {
-                if (CustomerList[a].Name == category) {
-                    CustomerList[a].colorHeart = "white"
-                }
-            }
-        }
-    };
+    // $scope._ChangeColorHeart = function(parametro, category) {
+    //     var ValSend = true
+    //     for (x in FirebaseFavorite[0].CustomerID) {
+    //         console.log(FirebaseFavorite[0].CustomerID[x]);
+    //         if (FirebaseFavorite[0].CustomerID[x] == category) {
+    //             ValSend = false;
+    //         }
+    //     }
+    //
+    //     var NamePromo = category
+    //     var NameUser = String(IdUsuario)
+    //     var Dimensions = {
+    //         name: 'Heart_' + NamePromo,
+    //         user: NameUser
+    //     };
+    //
+    //     var cssColor = document.getElementById(parametro + " " + category).style.color;
+    //     if (cssColor == "white") {
+    //         mixpanel.track("ClickHeart", {
+    //             "NameCategory": NamePromo,
+    //             "User": NameUser,
+    //             "Action": "Add",
+    //             "Gender": IdGender
+    //         });
+    //         document.getElementById(parametro + " " + category).style.color = "red";
+    //         if (ValSend == true) {
+    //             var newPostKey = firebase.database().ref().child('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').push().key;
+    //             var Cus = {}
+    //             Cus[newPostKey] = category
+    //             firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').update(Cus);
+    //         }
+    //     } else {
+    //         mixpanel.track("ClickHeart", {
+    //             "NameCategory": NamePromo,
+    //             "User": NameUser,
+    //             "Action": "Delete",
+    //             "Gender": IdGender
+    //         });
+    //         document.getElementById(parametro + " " + category).style.color = "white";
+    //
+    //         for (i in FirebaseFavorite[0].CustomerID) {
+    //
+    //             if (FirebaseFavorite[0].CustomerID[i] == category) {
+    //                 firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID/' + i).remove();
+    //             }
+    //         }
+    //         for (a in CustomerList) {
+    //             if (CustomerList[a].Name == category) {
+    //                 CustomerList[a].colorHeart = "white"
+    //             }
+    //         }
+    //     }
+    // };
 
 })
 
