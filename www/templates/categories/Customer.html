@@ -5,7 +5,7 @@
     <div id="PaddingBoxBefore" class="col"><!-- If this app is for IOS platform then modify to (margin-top:8px) -->
       <!-- Category Boxes -->
       <div id="PaddingBox" class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in customers | filter: {CategoryApp: category} | orderBy:'-(QuantityCoupon + QuantityPromotion)'">
-        <customer-info info ="customer"></customer-info>
+        <customer-info customer="customer"></customer-info>
       </div>
       <!-- Doesn't exist Coupons or Promotions -->
       <div ng-repeat="customer in customers  | filter: {oferta : 'noHay'}">
