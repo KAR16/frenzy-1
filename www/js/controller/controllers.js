@@ -1165,7 +1165,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 .controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion) {
 
 
-  $scope.customer = $stateParams.CuponID;
+  $scope.customerId = $stateParams.CuponID;
 
   var coupons = Coupon;
   var promotions = Promotion;
@@ -1174,7 +1174,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   coupons.$loaded(function(){
     for (var i in coupons) {
-      if(coupons[i].Provider == $scope.customer) {
+      if(coupons[i].Provider == $scope.customerId) {
         $scope.customerCoupons.push(coupons[i]);
 
       }
@@ -1184,7 +1184,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   promotions.$loaded(function(){
     for (var promotion in promotions) {
-      if(promotion.Provider == $scope.customer) {
+      if(promotion.Provider == $scope.customerId) {
         $scope.customerPromotions.push(promotion);
       }
     }

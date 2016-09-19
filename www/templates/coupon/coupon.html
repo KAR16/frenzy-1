@@ -8,10 +8,10 @@
 		<!-- Tabs -->
 		<!-- Offers Tab  -->
 		<div class="row">
-			<div id="GeneralPaddingCols" class="col col-33" ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'existe'}">
+			<div id="GeneralPaddingCols" class="col col-33">
 				<a class="pageOffertsOffertsTitle" href="#/app/ofertas/{{cupons[0][0].Category}}" nav-transition="none">
 					<div class="OffersAndCouponsTabText" id="offertsFunction" onclick="offerts()" style="display:{{s.ocultar}}">
-						Ofertas ({{ofert.contPromotion}})
+						Ofertas ({{customerPromotions.length}})
 						<hr class="pageFavoritesLineDecorationOffers" id="lineOffertsFunction" style="display:{{s.ocultar}}">
 					</div>
 				</a>
@@ -52,8 +52,11 @@
 						<p id="NothingSpace" class="AhorraTextLabel">
 							Canjea
 						</p>
-						<p class="SavingPriceLabel">
-							{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
+						<p class="SavingPriceLabel" ng-if="cupon.TypeOfExchange == 'DirectDiscount'">
+							Q. {{cupon.CouponDiscount}}
+						</p>
+						<p class="SavingPriceLabel" ng-if="cupon.TypeOfExchange != 'DirectDiscount'">
+							{{cupon.CouponDiscount}}%
 						</p>
 					</div>
 				</div>
