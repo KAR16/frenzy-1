@@ -746,7 +746,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   var ref = firebase.database().ref('Users/' + user.uid);
 
   $scope.favorites = $firebaseObject(ref.child('Favorites'));
-  $scope.favorites.$loaded().then(function(data){console.log(data)});
+
+  // $scope.favorites.$loaded().then(function(data){console.log(data)});
+
+
 
   $scope.ChangeColorHeart = function(customerId) {
     console.log(customerId);
@@ -1159,7 +1162,40 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser) {
+.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion) {
+
+
+  $scope.customer = $stateParams.CuponID;
+
+  var coupons = Coupon;
+  var promotions = Promotion;
+  $scope.customerCoupons = [];
+  $scope.customerPromotions = [];
+
+  coupons.$loaded(function(){
+    for (var i in coupons) {
+      if(coupons[i].Provider == $scope.customer) {
+        $scope.customerCoupons.push(coupons[i]);
+
+      }
+    }
+    console.log('Customer Coupons' ,$scope.customerCoupons);
+  });
+
+  promotions.$loaded(function(){
+    for (var promotion in promotions) {
+      if(promotion.Provider == $scope.customer) {
+        $scope.customerPromotions.push(promotion);
+      }
+    }
+    console.log('Customer Promotions' ,$scope.customerPromotions);
+  });
+
+  $scope.changeColorPinCupon = function(id) {
+
+  };
+
+
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "copuns",
@@ -1366,40 +1402,40 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }];
     };
     // ************ FUNCTION CHANGE COLOR PIN CUPON *************
-    $scope.changeColorPinCupon = function(id, NameCoupon) {
-        var NamePromo = NameCoupon
-        var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'CouponPin_' + NamePromo,
-            user: NameUser
-        };
-        var cssColorCuponPin = document.getElementById(id).style.color;
-        if (cssColorCuponPin == "silver") {
-            mixpanel.track("ClickPin", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Add",
-                "Gender": IdGender
-            });
-            document.getElementById(id).style.color = "purple";
-            saveCuponFavorite(IdUsuario, id)
-        } else {
-            mixpanel.track("ClickPin", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Delete",
-                "Gender": IdGender
-            });
-            deleteFavoriteCupon(IdUsuario, id)
-            document.getElementById(id).style.color = "silver";
-        }
-    };
+    // $scope._changeColorPinCupon = function(id, NameCoupon) {
+    //     var NamePromo = NameCoupon
+    //     var NameUser = String(IdUsuario)
+    //     var Dimensions = {
+    //         name: 'CouponPin_' + NamePromo,
+    //         user: NameUser
+    //     };
+    //     var cssColorCuponPin = document.getElementById(id).style.color;
+    //     if (cssColorCuponPin == "silver") {
+    //         mixpanel.track("ClickPin", {
+    //             "NameCategory": NamePromo,
+    //             "User": NameUser,
+    //             "Action": "Add",
+    //             "Gender": IdGender
+    //         });
+    //         document.getElementById(id).style.color = "purple";
+    //         saveCuponFavorite(IdUsuario, id)
+    //     } else {
+    //         mixpanel.track("ClickPin", {
+    //             "NameCategory": NamePromo,
+    //             "User": NameUser,
+    //             "Action": "Delete",
+    //             "Gender": IdGender
+    //         });
+    //         deleteFavoriteCupon(IdUsuario, id)
+    //         document.getElementById(id).style.color = "silver";
+    //     }
+    // };
     /*****  functions *****/
     $scope.$on('$ionicView.enter', function() {
-
-        $scope.cupons = Coupons.all($stateParams.CuponID);
-        $scope.heartMenu = "silver";
-        $scope.ConteoPro = ContPromo
+        //
+        // $scope.cupons = Coupons.all($stateParams.CuponID);
+        // $scope.heartMenu = "silver";
+        // $scope.ConteoPro = ContPromo
 
         $scope.heartPopover = function(id) {
             var resultSetPopover = $.grep(CustomerList, function(e) {

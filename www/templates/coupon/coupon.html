@@ -5,7 +5,8 @@
 </style>
 <ion-view>
 	<ion-header-bar id="positive" class="bar bar-subheader bar-positive positive">
-		<!-- Offers and Coupons Tab with Popover -->
+		<!-- Tabs -->
+		<!-- Offers Tab  -->
 		<div class="row">
 			<div id="GeneralPaddingCols" class="col col-33" ng-repeat="ofert in categoryNameCoupon[3] | filter: {Validar : 'existe'}">
 				<a class="pageOffertsOffertsTitle" href="#/app/ofertas/{{cupons[0][0].Category}}" nav-transition="none">
@@ -15,11 +16,11 @@
 					</div>
 				</a>
 			</div>
-			<!--  ng-repeat="s in chats[2] | filter: {Validar : 'existe'}" -->
+			<!--  Coupon Tab -->
 			<div id="GeneralPaddingCols" class="col col-33 CouponsTabOption">
 				<a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/cupones/{{s.t}}" >
-					<div class="OffersAndCouponsTabText" ng-repeat="cupon in categoryNameCoupon[3]" style="color:white;font-weight:bold">
-						Cupones ({{cupon.contCoupon}})
+					<div class="OffersAndCouponsTabText" ng-if="customerCoupons.length > 0" style="color:white;font-weight:bold">
+						Cupones ({{ customerCoupons.length }})
 						<hr class="pageFavoritesLineDecorationOffers" style="color:white;background-color:white">
 					</div>
 				</a>
@@ -41,17 +42,17 @@
 	</ion-header-bar>
 	<ion-content class="generalBackgroundFavorite" nav-transition="none">
 		<!-- Coupons With Image -->
-		<div ng-repeat = "cupon in cupons[0] | filter: {nul : 'con'}" >
+		<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!!'}" >
 			<div class="OffersContainer">
 				<!-- Label Price -->
-				<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
+				<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" >
 				<!-- Price Text Offers -->
 				<div class="row BoxPriceLabel">
 					<div class="col col-33 BoxLabel">
 						<p id="NothingSpace" class="AhorraTextLabel">
 							Canjea
 						</p>
-						<p class="SavingPriceLabel {{super.TypePromotion}}">
+						<p class="SavingPriceLabel">
 							{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
 						</p>
 					</div>
@@ -59,7 +60,7 @@
 				<!-- Redirect to Offer Description -->
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
 					<!-- Width of the Offers Image -->
-					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCupon}}" alt="Promotions">
+					<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCoupon}}" alt="Promotions">
 				</a>
 				<!-- Promotion Description -->
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
@@ -107,7 +108,7 @@
 			</div>
 		</div>
 		<!-- Coupons without image -->
-		<div ng-repeat = "cupon in cupons[0] | filter: {nul : 'sin'}">
+		<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!'}">
 			<!-- Offer Container without image -->
 			<div class="boxResponsiveWithoutImage">
 				<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()" style="text-decoration:none">
@@ -177,7 +178,7 @@
 			</div>
 		</div>
 		<!-- If doesn't exist offers -->
-		<div ng-repeat="super in cupons[0]  | filter: {oferta : 'noHay'}" class="noExiste">
+		<div ng-if="customerCoupons.length < 1" class="noExiste">
 			<div class="open_sans">
 				<!-- Uh-uh Icon -->
 				<p class="home savedPageNoItemsIcon">
