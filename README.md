@@ -10,9 +10,12 @@
 
 ----------------------------------------------------------------
 
-- Remove unused code
-  - Check templates
-  - Check direcivtes
+- Check if removing oferts.html breaks anything.
+  - Remove oferts.html and relevant code.
+- Move Firebse Auth to Service.
+- Firebase Auth check session
+
+-----------------------------------------------------------------  
 - Clean variables and improve scope variables
 - Minimize, uglify, optimize images
 - Improve code organization

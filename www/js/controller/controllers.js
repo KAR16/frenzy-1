@@ -586,11 +586,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
-.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite, $firebaseObject, Customer, Promotion) {
+.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite, $firebaseObject, Customer, Promotion, Favorite) {
 
-  var user = firebase.auth().currentUser;
-  var ref = firebase.database().ref('Users/' + user.uid);
-  $scope.favorites = $firebaseObject(ref.child('Favorites'));
+  $scope.favorites = Favorite;
 
   $scope.customers = Customer;
   $scope.promotions = Promotion;
@@ -740,20 +738,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 //********************** Customer CONTROLLER *****************************
-.controller('changeColorHeartCtrl', function($scope, $ionicLoading, $stateParams, $firebaseObject) {
+.controller('changeColorHeartCtrl', function($scope, $ionicLoading, $stateParams, Favorite) {
 
-  var user = firebase.auth().currentUser;
-  var ref = firebase.database().ref('Users/' + user.uid);
-
-  $scope.favorites = $firebaseObject(ref.child('Favorites'));
-
-  // $scope.favorites.$loaded().then(function(data){console.log(data)});
-
-
+  $scope.favorites = Favorite;
 
   $scope.ChangeColorHeart = function(customerId) {
-    console.log(customerId);
-
+    console.log('calling changecolorheart', customerId);
     //Check if customerId is in Current Users Favorites
     if(customerId in $scope.favorites) {
       // Switch boolean value
@@ -761,50 +751,46 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     } else {
       $scope.favorites[customerId] = true;
     }
-
     // Save to DB
     $scope.favorites.$save().then(function(ref){
       console.log('Favorite. Added - ', customerId);
-    });
-
+    }, function(error){console.log("Error:", error)});
   };
 
-    $scope.UrlC = function(id) {
-            console.clear();
-            console.log(id);
-            var resultSetCs = $.grep(CustomerList, function(e) {
-                return e.Name.indexOf(id) == 0;
-            });
-
-            var promotionPage = "#/app/ofertas/"
-            var couponPage = "#/app/cupones/";
-            console.log(resultSetCs[0]);
-            // Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
-            if (resultSetCs[0].QuantityPromotion > 0 && resultSetCs[0].QuantityCoupon > 0) {
-
-                location.href = promotionPage + id
-            } else if (resultSetCs[0].QuantityPromotion > 0) {
-
-                location.href = promotionPage + id
-            } else if (resultSetCs[0].QuantityCoupon > 0) {
-
-                location.href = couponPage + id
-            } else {
-                location.href = promotionPage + id
-            }
-        }
+    //TODO check if this does not break anything. Else delete.
+    // $scope.UrlC = function(id) {
+    //         console.clear();
+    //         console.log(id);
+    //         var resultSetCs = $.grep(CustomerList, function(e) {
+    //             return e.Name.indexOf(id) == 0;
+    //         });
+    //
+    //         var promotionPage = "#/app/ofertas/"
+    //         var couponPage = "#/app/cupones/";
+    //         console.log(resultSetCs[0]);
+    //         // Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
+    //         if (resultSetCs[0].QuantityPromotion > 0 && resultSetCs[0].QuantityCoupon > 0) {
+    //
+    //             location.href = promotionPage + id
+    //         } else if (resultSetCs[0].QuantityPromotion > 0) {
+    //
+    //             location.href = promotionPage + id
+    //         } else if (resultSetCs[0].QuantityCoupon > 0) {
+    //
+    //             location.href = couponPage + id
+    //         } else {
+    //             location.href = promotionPage + id
+    //         }
+    //     }
 })
 
 //////////////////////
 .controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, CustomerAll, Customer) {
 
-
-
     $scope.customers = Customer;
     $scope.category = $stateParams.IDcustomer;
 
-
-
+    //
     var Direc = [{
         name: "Supermercado",
         name2: "supermarketMenu"
@@ -996,10 +982,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     // *************** CALL PHONE FUNCTION ***************
     $scope.call = function(cell, name) {
             var NameUser = String(IdUsuario);
-            var Dimensions = {
-                name: 'Promotion_call' + name,
-                user: NameUser
-            };
             mixpanel.track("ClickCall", {
                 "Costumer": name,
                 "User": NameUser,
@@ -1013,29 +995,24 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
         }
         // *************** URL BROWSER SHOP FUNCTION ***************
-    $scope.shopUrl = function(Url, id, name) {
+    $scope.shopUrl = function(url, id, name) {
         var NamePromo = name.split(" ").join("_")
         var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'Promotion_' + NamePromo + "_" + id,
-            user: NameUser
-        };
+
         if (id == "web") {
             mixpanel.track("ClickWeb", {
                 "Costumer": name,
                 "User": NameUser,
                 "Gender": IdGender
             });
-            z = Url;
-            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(url, '_blank', 'location=yes');
         } else {
             mixpanel.track("ClickCartShop", {
                 "Costumer": name,
                 "User": NameUser,
                 "Gender": IdGender
             });
-            z = Url;
-            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(url, '_blank', 'location=yes');
         }
     }
 
@@ -1162,39 +1139,86 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion) {
+.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
 
+
+  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+      scope: $scope,
+  }).then(function(popover) {
+      $scope.popover = popover;
+  });
+
+  $scope.viewCoupons = true;
+  $scope.setViewCoupons = function(bool) {
+    $scope.viewCoupons = bool;
+  };
 
   $scope.customerId = $stateParams.CuponID;
+  console.log('Customer ID', $stateParams.CuponID);
 
   var coupons = Coupon;
   var promotions = Promotion;
+  var customers = Customer;
+
   $scope.customerCoupons = [];
   $scope.customerPromotions = [];
+  $scope.favorites = Favorite;
 
+  //When all coupons are loaded, filter only coupons of current customer
   coupons.$loaded(function(){
     for (var i in coupons) {
       if(coupons[i].Provider == $scope.customerId) {
         $scope.customerCoupons.push(coupons[i]);
-
       }
+    }
+    if ($scope.customerCoupons.length < 1) {
+      $scope.viewCoupons = false;
     }
     console.log('Customer Coupons' ,$scope.customerCoupons);
   });
 
+  //When all promotions are loaded, filter only promotions of current customer
   promotions.$loaded(function(){
-    for (var promotion in promotions) {
-      if(promotion.Provider == $scope.customerId) {
-        $scope.customerPromotions.push(promotion);
+    for (var i in promotions) {
+      if(promotions[i].Provider == $scope.customerId) {
+        $scope.customerPromotions.push(promotions[i]);
       }
     }
     console.log('Customer Promotions' ,$scope.customerPromotions);
   });
 
+  // Select current customer
+  customers.$loaded(function(){
+    for (var i in customers) {
+      if(customers[i].Name == $scope.customerId) {
+        $scope.customer = customers[i];
+        break;
+      }
+    }
+
+    colorIconsFoother = []
+    colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.customer.CategoryApp, '', 'none']);
+    console.log('Customer is' ,$scope.customer);
+  });
+
+  $scope.ChangeColorHeart = function(customerId) {
+    console.log('calling changecolorheart', customerId);
+    //Check if customerId is in Current Users Favorites
+    if(customerId in $scope.favorites) {
+      // Switch boolean value
+      $scope.favorites[customerId] = !$scope.favorites[customerId];
+    } else {
+      $scope.favorites[customerId] = true;
+    }
+    // Save to DB
+    $scope.favorites.$save().then(function(ref){
+      console.log('Favorite. Added - ', customerId);
+    }, function(error){console.log("Error:", error)});
+  };
+
   $scope.changeColorPinCupon = function(id) {
 
   };
-
 
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
@@ -1430,43 +1454,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     //         document.getElementById(id).style.color = "silver";
     //     }
     // };
-    /*****  functions *****/
-    $scope.$on('$ionicView.enter', function() {
-        //
-        // $scope.cupons = Coupons.all($stateParams.CuponID);
-        // $scope.heartMenu = "silver";
-        // $scope.ConteoPro = ContPromo
 
-        $scope.heartPopover = function(id) {
-            var resultSetPopover = $.grep(CustomerList, function(e) {
-                return e.NameCategory.indexOf(id) == 0;
-            });
-            if (resultSetPopover[0].colorHeart == "white") {
-                $scope.heartMenu = "silver";
-            } else {
-                $scope.heartMenu = resultSetPopover[0].colorHeart;
-            }
-
-        }
-        $scope.changeColorHeartFollow = function(id) {
-            if ($scope.heartMenu == "silver") {
-                $scope.heartMenu = "red";
-                SaveFavorite(IdUsuario, id)
-            } else {
-                $scope.heartMenu = "silver";
-                DeleteFavorite(IdUsuario, id)
-            }
-        }
-    });
-    //***** FUNCTION FOOTER CHANCE COLOR  *****
-    //***** SCOPE $ON TO REFRESH MENU CONTROLLER
-
-    $scope.$on('$ionicView.enter', function() {
-        $scope.categoryNameCoupon = Coupons.all($stateParams.CuponID);
-
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.categoryNameCoupon[0][0].Category, '', 'none']);
-    });
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams, DescriptionCupons, $ionicLoading) {
@@ -1626,14 +1614,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 //*****************	POPOVER CONTROLLER FOR COUPONS	*******************************
-.controller('PopoverCtrl2', function($scope, $ionicPopover) {
-    $ionicPopover.fromTemplateUrl('templates/popover2.html', {
-        scope: $scope,
-    }).then(function(popover) {
-        $scope.popover = popover;
-        $scope.message = 'hello';
-    });
-})
+// .controller('PopoverCtrl2', function($scope, $ionicPopover) {
+//     $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+//         scope: $scope,
+//     }).then(function(popover) {
+//         $scope.popover = popover;
+//     });
+//
+//
+// })
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
     $scope.Analytics = function(id, nameShare) {

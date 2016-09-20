@@ -2,9 +2,11 @@
 <!-- Boxes Design -->
 <div class="categoriesBoxes col col-100">
   <!-- Customer Image with Conexion -->
-  <div class="CenteredCustomerImage" ng-controller="changeColorHeartCtrl" id="{{customer.Name}}">
-    <img class="imageCategoryBoxes" ng-src="{{customer.Logo}}" alt="image" ng-click='UrlC("{{customer.Name}}")'>
-  </div>
+  <a href="#/app/cupones/{{customer.Name}}">
+    <div class="CenteredCustomerImage" id="{{customer.Name}}" >
+      <img class="imageCategoryBoxes" ng-src="{{customer.Logo}}" alt="image" >
+    </div>
+  </a>
   <div id="colRestaurantes" class="col {{customer.CategoryApp}}">
     <!-- Customer Description -->
     <div id="infoCol1" class="row">
