@@ -341,7 +341,26 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     $scope.pins = Pin;
     $scope.promotions = Promotion;
-    $scope.coupon = Coupon;
+    $scope.coupons = Coupon;
+
+    $scope.pinsCount = 0;
+
+    $scope.pins.$watch(function(event) {
+      $scope.pinsCount = 0;
+      for(var i in $scope.promotions) {
+        var promotion = $scope.promotions[i];
+        if ($scope.pins[promotion.$id] === true) {
+          $scope.pinsCount += 1;
+        }
+      }
+      for(var j in $scope.coupons) {
+        var cupon = $scope.coupons[j];
+        if ($scope.pins[cupon.$id] === true) {
+          $scope.pinsCount += 1;
+        }
+      }
+    });
+
 
     $scope.$on('$ionicView.enter', function() {
         colorIconsFoother = [];
@@ -365,7 +384,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
     // Save to DB
     $scope.favorites.$save().then(function(ref){
-      console.log('Favorite. Added - ', customerId);
+      console.log('Favorite. Changed - ', customerId);
     }, function(error){
       console.log("Error:", error);
     });
