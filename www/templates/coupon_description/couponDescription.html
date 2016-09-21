@@ -4,10 +4,10 @@ box-shadow: 0 0 0px white;
 }
 </style>
 <!-- Type Date -->
-<ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Fecha'}">
+<ion-view >
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
-		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" >
 		<!-- Price Text Offers -->
 		<div class="row BoxPriceLabel">
 			<div id="GeneralPaddingCols0" class="col col-33 BoxLabel">
@@ -20,17 +20,14 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="frenzy" style="display:{{cupon.DisplayWithoutImageCoupons}}">
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupons}}" alt="frenzy" style="display:{{cupon.DisplayWithImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="frenzy" >
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
 				<div class="col cuponsDescriptionTitle open_sans">
 					{{cupon.Name}}
 				</div>
-				<!-- <div class="col col-20">
-					<div class="cuponsDescriptionPinCircle home" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}}">W</div>
-				</div> -->
+
 			</div>
 		</div>
 		<!-- Semi-Circle Container -->
@@ -67,10 +64,10 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Exchanged -->
-		<div class="availableCupones open_sans">Del {{cupon.Publication_Date}} Al {{cupon.EndDate}}</div>
+		<div class="availableCupones open_sans">Del {{cupon.PublicationDate}} Al {{cupon.EndDate}}</div>
 		<!-- Button Coupon Exchanged -->
 		<a style="text-decoration:none;"  class="botonCanjear">
-			<div style="display:{{noneDisplay[0].none}};">
+			<div >
 				<div ng-click="reloadpage(); buttonCash()">
 					<div>
 						<div id="popup">
@@ -84,7 +81,7 @@ box-shadow: 0 0 0px white;
 		<div>
 			<div class="row">
 				<div class="col col-20"></div>
-				<div class="col col-60 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}};text-align:center">
+				<div class="col col-60 exchangeBoxBarCode" style="text-align:center">
 					<!-- <img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto.url}}" alt="BarCodeFrenzy" > -->
 						<h1 class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects">{{cupon.CodeCoupon}}</h1>
 				</div>

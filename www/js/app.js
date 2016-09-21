@@ -129,7 +129,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	// })
 	// // ****************  OFFERTS DESCRIPTION  *************
 	.state('app.descripcionOfertas', {
-		url: "/descripcionOfertas/:superId",
+		url: "/descripcionOfertas/:promotionId",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/offer_description/offerDescription.html",
@@ -178,7 +178,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	//****************  CUPONS DESCRIPTION  *************
 	.state('app.descripcionCupones', {
-		url: "/descripcionCupones/:DescriptionID",
+		url: "/descripcionCupones/:couponId",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/coupon_description/couponDescription.html",

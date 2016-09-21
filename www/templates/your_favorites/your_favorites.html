@@ -43,24 +43,24 @@
         </div>
       </a>
       <!-- Your Favorite Saved Container -->
-      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promo in promotions | filter:{'Provider': customer.Name}">
+      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promotion in promotions | filter:{'Provider': customer.Name}">
         <div id="GeneralPaddingCols0" class="col col-80">
           <!-- Your Favorite Customer Title -->
           <p class="overFlowText pageYourFavoritesOffert">
-            {{promo.Name}} - {{promo.Presentation}}
+            {{promotion.Name}} - {{promotion.Presentation}}
           </p>
           <!-- Promotional Price for Your Favorite -->
           <p class="pageYourFavoritesPriceOffert">
-            Oferta - {{promo.promotionalPrice | currency: 'Q'}}
+            Oferta - {{promotion.promotionalPrice | currency: 'Q'}}
           </p>
           <!-- Favorite Description for Your Favorite -->
           <p class="overFlowText pageYourFavoritesOffertDescription">
-            {{promo.PromotionDescription}}
+            {{promotion.PromotionDescription}}
           </p>
         </div>
         <!-- Pin Icon -->
-        <div id="GeneralPaddingCols0" class="col pinIconContainer">
-          <p class="home pageYourFavoritesIconPin" id="{{favorite.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{promo.IDpromotion}}')"  style="color:{{promo.ColorPin}}">
+        <div id="GeneralPaddingCols0" class="col pinIconContainer" ng-controller="pinCtrl">
+          <p class="home pageYourFavoritesIconPin" id="{{promotion.$id}}" ng-click="changeColorPinCupon(promotion.$id)" style="color:{{pins[promotion.$id] ? 'purple':''}}">
             W
           </p>
         </div>

@@ -601,58 +601,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         "User": NameUser
     });
 
-    $scope.SalvadosSaveAndDelete = function(id) {
-            var NamePromo = id
-            var NameUser = String(IdUsuario)
-            var Dimensions = {
-                name: 'FavoritePin_' + NamePromo,
-                user: NameUser
-            };
-            var ValSend = true
-            for (x in FirebasePromotionSaved[0].PromotionID) {
-                if (FirebasePromotionSaved[0].PromotionID[x] == id) {
-                    ValSend = false
-                }
-            }
-
-            var pin = document.getElementById(id).style.color;
-            if (pin == "silver") {
-                mixpanel.track("ClickPin", {
-                    "NameCategory": NamePromo,
-                    "User": NameUser,
-                    "Action": "Add",
-                    "Gender": IdGender
-                });
-                document.getElementById(id).style.color = "purple";
-                if (ValSend == true) {
-                    var newPostKey = firebase.database().ref().child('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID').push().key;
-                    var Cus = {}
-                    Cus[newPostKey] = id
-                    firebase.database().ref('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID').update(Cus);
-                }
-            } else {
-                mixpanel.track("ClickPin", {
-                    "NameCategory": NamePromo,
-                    "User": NameUser,
-                    "Action": "Delete",
-                    "Gender": IdGender
-                });
-                document.getElementById(id).style.color = "silver";
-                for (i in FirebasePromotionSaved[0].PromotionID) {
-
-                    if (FirebasePromotionSaved[0].PromotionID[i] == id) {
-                        firebase.database().ref('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID/' + i).remove();
-                    }
-                }
-
-                for (a in CurrentPromotion) {
-                    if (CurrentPromotion[a].IDpromotion == id) {
-                        CurrentPromotion[a].ColorPin = "silver"
-                    }
-                }
-
-            }
-        }
         /**************************************************/
 
     $scope.$on('$ionicView.enter', function() {
@@ -662,76 +610,19 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 // *************************** SAVED CONTROLLER ***************************
-.controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
+.controller('AllPromotionCtrl', function($scope, $stateParams, Promotion, Coupon, Pin) {
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "PinSaved",
         "Gender": IdGender,
         "User": NameUser
     });
-    var NameUser = String(IdUsuario)
-    var dimensions = {
-        name: 'Salvados',
-        user: NameUser
-    };
 
-
-
-    // ************ DELETE AND SAVE PIN ************
-    $scope.SalvadosSaveAndDelete = function(id) {
-        var NamePromo = id
-        var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'FavoritePin_' + NamePromo,
-            user: NameUser
-        };
-        var ValSend = true
-        for (x in FirebasePromotionSaved[0].PromotionID) {
-
-            if (FirebasePromotionSaved[0].PromotionID[x] == id) {
-                ValSend = false;
-            }
-        }
-        var pin = document.getElementById(id).style.color;
-        if (pin == "silver") {
-            mixpanel.track("ClickPin", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Add",
-                "Gender": IdGender
-            });
-            document.getElementById(id).style.color = "purple";
-            if (ValSend == true) {
-                var newPostKey = firebase.database().ref().child('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID').push().key;
-                var Cus = {}
-                Cus[newPostKey] = id
-                firebase.database().ref('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID').update(Cus);
-            }
-        } else {
-            mixpanel.track("ClickPin", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Delete",
-                "Gender": IdGender
-            });
-            document.getElementById(id).style.color = "silver";
-            for (i in FirebasePromotionSaved[0].PromotionID) {
-
-                if (FirebasePromotionSaved[0].PromotionID[i] == id) {
-                    firebase.database().ref('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID/' + i).remove();
-                }
-            }
-
-            for (a in CurrentPromotion) {
-                if (CurrentPromotion[a].IDpromotion == id) {
-                    CurrentPromotion[a].ColorPin = "silver"
-                }
-            }
-        }
-    }
+    $scope.pins = Pin;
+    $scope.promotions = Promotion;
+    $scope.coupon = Coupon;
 
     $scope.$on('$ionicView.enter', function() {
-        $scope.chats = AllPromotion.all($stateParams.salvadosId);
         colorIconsFoother = []
         colorIconsFoother.push(['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
     });
@@ -862,282 +753,24 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 ///////////
 
 
-.controller('PromotionsDescription', function($scope, $stateParams, DescriptionOfferts, $ionicPopover, $ionicPopup, $timeout, $ionicLoading) {
+.controller('PromotionsDescription', function($scope, $stateParams, Promotion) {
     mixpanel.track("view", {
         "type": "PromotionsDescription",
         "Gender": IdGender,
         "User": IdUsuario
     });
-    $scope.chats = DescriptionOfferts.all($stateParams.superId);
-    console.log($scope.chats);
-    $scope.custumerName = $scope.chats[0].Category.replace(/-/g, " ");
-    $scope.$on('$ionicView.enter', function() {
-        console.log();
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.custumerName, '', 'none']);
+
+    $scope.promotions = Promotion;
+    $scope.promotions.$loaded(function(data){
+      for (var i in $scope.promotions) {
+        if ($scope.promotions[i].$id == $stateParams.promotionId) {
+          $scope.promotion = $scope.promotions[i];
+        }
+      }
     });
+
 })
-// *************************  OFFERS CONTROLLER	***************************
-.controller('currentPromotionCtrl', function($scope, $stateParams, currentPromotion, $ionicPopover, $ionicPopup, $timeout, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser) {
-    var dimensions = {
-        name: $stateParams.superId,
-    };
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "Promotions",
-        "Gender": IdGender,
-        "User": NameUser,
-        "Namepromotion": $stateParams.superId
-    });
-    $ionicPopover.fromTemplateUrl('templates/popover.html', {
-        scope: $scope,
-    }).then(function(popover) {
-        $scope.popover = popover;
-        $scope.message = 'hello';
-    });
-    $scope.share = function(images) {
-            console.log(images);
-            window.plugins.socialsharing.share("frenzy", "Entra a nuestra app para ver mas promocioines", null, images)
 
-        }
-
-    $scope.pix = currentPromotion.get($stateParams.superId);
-    //	console.log($scope.pix);
-    $scope.pixels = $scope.pix[1][0].pixels;
-
-    $scope.sendSms = function() {
-        $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
-            console.log('error mensaje');
-        });
-    }
-
-    // ************ FUNCTION CHANGE COLOR PIN OFFERTS ************
-    $scope.changeColorPinOfferts = function(id, IDPromotion, Namepromotion) {
-        var NamePromo = Namepromotion
-        var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'PromotionPin_' + NamePromo,
-            user: NameUser
-        };
-
-        var ValSend = true
-        for (x in FirebasePromotionSaved[0].PromotionID) {
-            console.log(FirebasePromotionSaved[0].PromotionID[x]);
-            if (FirebasePromotionSaved[0].PromotionID[x] == IDPromotion) {
-                ValSend = false;
-            }
-        }
-        var cssColorpinOfferts = document.getElementById(id + " " + IDPromotion).style.color;
-
-        if (cssColorpinOfferts == "silver") {
-            mixpanel.track("ClickPin", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Add",
-                "Gender": IdGender
-            });
-            document.getElementById(id + " " + IDPromotion).style.color = "purple";
-            if (ValSend == true) {
-                var newPostKey = firebase.database().ref().child('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID').push().key;
-                var Cus = {}
-                Cus[newPostKey] = IDPromotion
-                firebase.database().ref('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID').update(Cus);
-            }
-        } else {
-            AllPromotionF = [];
-            mixpanel.track("ClickPin", {
-                "NameCategory": NamePromo,
-                "User": NameUser,
-                "Action": "Delete",
-                "Gender": IdGender
-            });
-            document.getElementById(id + " " + IDPromotion).style.color = "silver";
-            for (i in FirebasePromotionSaved[0].PromotionID) {
-
-                if (FirebasePromotionSaved[0].PromotionID[i] == IDPromotion) {
-                    firebase.database().ref('PromotionSaved/' + FirebasePromotionSaved[0].PromotionSavedID + '/PromotionID/' + i).remove();
-                }
-            }
-
-            for (a in CurrentPromotion) {
-                if (CurrentPromotion[a].IDpromotion == IDPromotion) {
-                    CurrentPromotion[a].ColorPin = "silver"
-                }
-
-            }
-        }
-    };
-    // *********** FUNCTION CHANGE COLOR PIN OFFERTS WITHOUT IMAGE **********
-    $scope.changeColorPinOffertsWithoutImage = function(id, IDPromotion) {
-        var cssColorpinOffertsWithoutImage = document.getElementById(id + " " + IDPromotion).style.color;
-
-        if (cssColorpinOffertsWithoutImage == "silver") {
-            document.getElementById(id + " " + IDPromotion).style.color = "purple";
-            SavePromotion(IdUsuario, IDPromotion);
-        } else {
-            document.getElementById(id + " " + IDPromotion).style.color = "silver";
-            DeletePromotion(IdUsuario, IDPromotion);
-        }
-    };
-    // *************** CALL PHONE FUNCTION ***************
-    $scope.call = function(cell, name) {
-            var NameUser = String(IdUsuario);
-            mixpanel.track("ClickCall", {
-                "Costumer": name,
-                "User": NameUser,
-                "Gender": IdGender
-            });
-            var a = cell.toString();
-            var b = 'tel:'
-            var callPhone = b + a;
-            //This action works for to do call
-            document.location.href = callPhone
-
-        }
-        // *************** URL BROWSER SHOP FUNCTION ***************
-    $scope.shopUrl = function(url, id, name) {
-        var NamePromo = name.split(" ").join("_")
-        var NameUser = String(IdUsuario)
-
-        if (id == "web") {
-            mixpanel.track("ClickWeb", {
-                "Costumer": name,
-                "User": NameUser,
-                "Gender": IdGender
-            });
-            window.open = $cordovaInAppBrowser.open(url, '_blank', 'location=yes');
-        } else {
-            mixpanel.track("ClickCartShop", {
-                "Costumer": name,
-                "User": NameUser,
-                "Gender": IdGender
-            });
-            window.open = $cordovaInAppBrowser.open(url, '_blank', 'location=yes');
-        }
-    }
-
-    $scope.$on('$ionicView.enter', function() {
-
-        // Redirection page variable to coupons
-        var couponPage = "#/app/cupones/";
-        idRoute = currentPromotion.get($stateParams.superId);
-        // IdPromotion with redirection page
-        couponPage = couponPage + $stateParams.superId
-        var NamePromo = $stateParams.superId
-        var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'HeartPopover_' + NamePromo,
-            user: NameUser
-        };
-        $scope.changeColorHeartFollow = function(id) {
-                var ValSend = true
-                for (x in FirebaseFavorite[0].CustomerID) {
-                    console.log(FirebaseFavorite[0].CustomerID[x]);
-                    if (FirebaseFavorite[0].CustomerID[x] == id) {
-                        ValSend = false;
-                    }
-                }
-
-                if ($scope.heartMenu == "silver") {
-                    mixpanel.track("ClickHeart", {
-                        "NameCategory": NamePromo,
-                        "User": NameUser,
-                        "Action": "Add",
-                        "Gender": IdGender
-                    });
-                    if (ValSend == true) {
-                        var newPostKey = firebase.database().ref().child('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').push().key;
-                        var Cus = {}
-                        Cus[newPostKey] = id
-                        firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID').update(Cus);
-                    }
-                    $scope.heartMenu = "red";
-
-                } else {
-                    mixpanel.track("ClickHeart", {
-                        "NameCategory": NamePromo,
-                        "User": NameUser,
-                        "Action": "Delete",
-                        "Gender": IdGender
-                    });
-
-                    for (i in FirebaseFavorite[0].CustomerID) {
-                        if (FirebaseFavorite[0].CustomerID[i] == id) {
-                            firebase.database().ref('Favorite/' + FirebaseFavorite[0].FavoriteID + '/CustomerID/' + i).remove();
-                        }
-                    }
-                    $scope.heartMenu = "silver";
-                    for (a in CustomerList) {
-                        if (CustomerList[a].Name == id) {
-                            CustomerList[a].colorHeart = "white"
-                        }
-                    }
-                }
-            }
-            /* **************************************************** */
-        $scope.askPromotion = function(IDPromotion) {
-                var NamePromo = $stateParams.superId
-                var NameUser = String(IdUsuario)
-                var Dimensions = {
-                    name: 'peticionPromo_' + NamePromo,
-                    user: NameUser
-                };
-
-                swal({
-                        title: "<p class='home' style='font-size:70px;color:blue'>b</p> <p style='font-weight:bold;color:#343434;font-size:20px'>Tu petición por más <br>Ofertas ha sido envida</p>",
-                        text: "<div class='row'> <div class = 'col'></div>  <p class = 'padin open_sans col col-75'>  ¿Te gustaria agregar a <spam class='colorShopName'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas?</p>  <div class = 'col'></div>  </div>",
-                        html: true,
-                        confirmButtonColor: "#00BAB9",
-                        confirmButtonText: "Agregar",
-                        // Si se quiere cancelar pulsando otra parte de la aplicacion
-                        allowOutsideClick: true
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            mixpanel.track("ClickRequestPromotion", {
-                                "NameCostumer": NamePromo,
-                                "User": NameUser,
-                                "Gender": IdGender
-                            });
-                            SaveFavorite(IdUsuario, IDPromotion)
-                            $scope.loading = $ionicLoading.show({
-                                template: "<ion-spinner customer1lass='spinner' icon='lines' style='stroke: #00BAB9;fill: #00BAB9;'></ion-spinner><br><p style='font-size:18px'>Agregando a <spam style='font-size:24px;font-weight:bold;'>" + $stateParams.superId + "</spam> como una de tus tiendas favoritas, espera un momento... </p>"
-                            });
-
-                            $timeout(function() {
-                                $ionicLoading.hide();
-                            }, 2000);
-                        }
-                    });
-            }
-            /* **************************************************** */
-        $scope.chats = currentPromotion.get($stateParams.superId);
-        console.log($scope.chats);
-        $scope.popover = currentPromotion.all($stateParams.superId);
-        $scope.heartMenu = "silver";
-        $scope.Cupcon = Cupcont.length
-        $scope.heartPopover = function(id) {
-            var resultSetPopover = $.grep(CustomerList, function(e) {
-                return e.Name.indexOf(id) == 0;
-            });
-
-            if (resultSetPopover[0].colorHeart == "white") {
-                $scope.heartMenu = "silver";
-            } else {
-                $scope.heartMenu = resultSetPopover[0].colorHeart;
-            }
-
-        }
-    });
-    //***** FUNCTION FOOTER CHANCE COLOR  *****
-    //***** SCOPE $ON TO REFRESH MENU CONTROLLER
-    $scope.custumerName = $stateParams.superId.replace(/-/g, " ");
-    $scope.$on('$ionicView.enter', function() {
-        console.log();
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.custumerName, '', 'none']);
-    });
-})
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
 
