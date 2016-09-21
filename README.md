@@ -14,6 +14,8 @@
   - Remove oferts.html and relevant code.
 - Move Firebse Auth to Service.
 - Firebase Auth check session
+- Use currency
+- Remove all unused dependencies in controllers
 
 -----------------------------------------------------------------  
 - Clean variables and improve scope variables

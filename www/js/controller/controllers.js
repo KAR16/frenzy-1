@@ -1,11 +1,8 @@
 var displayNoneInline = [];
 var colorIconsFoother = [];
-var pix = "170px";
 var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
-var AllFavoriteF = [];
-var AllPromotionF = [];
-var Cupons = [];
+
 /****FIREBASE***/
 var config = {
     apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
@@ -26,280 +23,6 @@ var secondaryApp = firebase.initializeApp(config2, "Secondary");
 ///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
 var countC2 = 0;
 var info = 0;
-secondaryApp.database().ref('Customer').once('value', function(snapshot) {
-
-    for (var x in snapshot.val()) {
-        CustomerList[countC2] = snapshot.val()[x];
-        CustomerList[countC2]["suma"] = snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"];
-        CustomerList[countC2]["oferta"] = 'existe';
-        CustomerList[countC2]["colorHeart"] = 'white';
-        CustomerList[countC2]["lastText"] = 'favorite';
-
-        countC2++;
-    }
-    countC2 = 0;
-
-}).then(function() {
-    for (var x in CustomerList) {
-        InfoShop.push({
-            cel: CustomerList[x].PhoneNumber,
-            name: CustomerList[x].Name,
-            url: CustomerList[x].URL,
-            id: "favorite" + x,
-            namecategory: CustomerList[x].CategoryApp,
-            id: CustomerList[x].id,
-            call: 'Llamar',
-            callIcon: 'Q',
-            webUrl: 'Ir a pagina Web',
-            webUrlIcon: 'R',
-            pixels: "170px",
-            margin: "0"
-        });
-    }
-
-}).then(function() {
-
-    /////////////////////////////////////////////CALL PROMOTION//////////////////////////////////////////////////////////////////
-    var countP = 0;
-    mainApp.database().ref('Promotion').on('value', function(snapshot) {
-        var GuatemalaDay = moment.tz("America/Guatemala").format('DD/MM/YYYY');
-        var GuatemalaMonth = moment.tz("America/Guatemala").format('MM');
-        var GuatemalaYear = moment.tz("America/Guatemala").format('YYYY');
-        console.log(GuatemalaDay);
-        console.log(GuatemalaMonth);
-        console.log(GuatemalaYear);
-        //console.log(JSON.stringify(snapshot.val()));
-        for (x in snapshot.val()) {
-            var DatePromoDay = moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY')
-            var DatePromoMonth = moment(snapshot.val()[x]["EndDate"].iso).format('MM')
-            var DatePromoYear = moment(snapshot.val()[x]["EndDate"].iso).format('YYYY')
-            var fre = moment(snapshot.val()[x]["EndDate"].iso).format('DD/MM/YYYY')
-
-
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            if (snapshot.val()[x].Status === true) {
-
-                // console.log(snapshot.val()[x]);
-
-                for (i in snapshot.val()[x].Customer) {
-                    if (snapshot.val()[x].Photo === null || snapshot.val()[x].Photo === undefined || snapshot.val()[x].Photo === '') {
-                        if (snapshot.val()[x].TypePromotion === 'DirectDiscount') {
-                            var ahorroString = snapshot.val()[x].BasePrice - snapshot.val()[x].PromotionalPrice;
-                            var basePriceString = snapshot.val()[x].BasePrice;
-                            var PromotionalPriceString = snapshot.val()[x].PromotionalPrice;
-                            ahorroString = ahorroString.toString();
-                            basePriceString = basePriceString.toString();
-                            PromotionalPriceString = PromotionalPriceString.toString();
-                            CurrentPromotion[countP] = snapshot.val()[x];
-                            CurrentPromotion[countP]["nul"] = "sin";
-                            CurrentPromotion[countP]["basePrice"] = 'Q' + basePriceString;
-                            CurrentPromotion[countP]["promotionalPrice"] = 'Q' + PromotionalPriceString;
-                            CurrentPromotion[countP]["texDiscount"] = "Ahorra";
-                            CurrentPromotion[countP]["ahorro"] = 'Q' + ahorroString;
-                            CurrentPromotion[countP]["before"] = "Antes";
-                            CurrentPromotion[countP]["ID"] = "pinOfferts";
-                            CurrentPromotion[countP]["IDpromotion"] = x;
-                            CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
-                            CurrentPromotion[countP]["conteo"] = 0;
-                            CurrentPromotion[countP]["oferta"] = 'existe';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["IconShopOnline"] = 'j';
-                            CurrentPromotion[countP]["Display"] = '';
-                            CurrentPromotion[countP]["Logo"] = '';
-
-
-
-                        } else if (snapshot.val()[x].TypePromotion === 'Percentage') {
-                            CurrentPromotion[countP] = snapshot.val()[x];
-                            CurrentPromotion[countP]["nul"] = "sin";
-                            CurrentPromotion[countP]["promotionalPrice"] = 'Descuento ' + snapshot.val()[x].Percentage + '%';
-                            CurrentPromotion[countP]["ID"] = "pinOfferts";
-                            CurrentPromotion[countP]["IDpromotion"] = x;
-                            CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
-                            CurrentPromotion[countP]["conteo"] = 0;
-                            CurrentPromotion[countP]["oferta"] = 'existe';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["display"] = 'none';
-                            CurrentPromotion[countP]["logo"] = '';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["IconShopOnline"] = 'j';
-                            CurrentPromotion[countP]["Display"] = '';
-
-                        } else if (snapshot.val()[x].TypePromotion === 'SpecialPromotion') {
-                            CurrentPromotion[countP] = snapshot.val()[x];
-                            CurrentPromotion[countP]["nul"] = "sin";
-                            CurrentPromotion[countP]["promotionalPrice"] = 'Promoción Especial';
-                            CurrentPromotion[countP]["ID"] = "pinOfferts";
-                            CurrentPromotion[countP]["IDpromotion"] = x;
-                            CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
-                            CurrentPromotion[countP]["conteo"] = 0;
-                            CurrentPromotion[countP]["oferta"] = 'existe';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["display"] = 'none';
-                            CurrentPromotion[countP]["logo"] = '';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["IconShopOnline"] = 'j';
-                            CurrentPromotion[countP]["Display"] = '';
-                            CurrentPromotion[countP]["icon"] = 'c';
-                        }
-                    } else {
-                        if (snapshot.val()[x].TypePromotion === 'DirectDiscount') {
-                            var ahorroString = snapshot.val()[x].BasePrice - snapshot.val()[x].PromotionalPrice;
-                            var basePriceString = snapshot.val()[x].BasePrice;
-                            var PromotionalPriceString = snapshot.val()[x].PromotionalPrice;
-                            ahorroString = ahorroString.toString();
-                            basePriceString = basePriceString.toString();
-                            PromotionalPriceString = PromotionalPriceString.toString();
-                            CurrentPromotion[countP] = snapshot.val()[x];
-                            CurrentPromotion[countP]["nul"] = "con";
-                            CurrentPromotion[countP]["basePrice"] = 'Q' + basePriceString;
-                            CurrentPromotion[countP]["promotionalPrice"] = 'Q' + PromotionalPriceString;
-                            CurrentPromotion[countP]["texDiscount"] = "Ahorra";
-                            CurrentPromotion[countP]["ahorro"] = 'Q' + ahorroString;
-                            CurrentPromotion[countP]["before"] = "Antes";
-                            CurrentPromotion[countP]["ID"] = "pinOfferts";
-                            CurrentPromotion[countP]["IDpromotion"] = x;
-                            CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
-                            CurrentPromotion[countP]["conteo"] = 0;
-                            CurrentPromotion[countP]["oferta"] = 'existe';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["IconShopOnline"] = 'j';
-                            CurrentPromotion[countP]["Display"] = '';
-                            CurrentPromotion[countP]["Logo"] = '';
-
-
-                        } else if (snapshot.val()[x].TypePromotion === 'Percentage') {
-                            CurrentPromotion[countP] = snapshot.val()[x];
-                            CurrentPromotion[countP]["nul"] = "con";
-                            CurrentPromotion[countP]["promotionalPrice"] = 'Descuento ' + snapshot.val()[x].Percentage + '%';
-                            CurrentPromotion[countP]["ID"] = "pinOfferts";
-                            CurrentPromotion[countP]["IDpromotion"] = x;
-                            CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
-                            CurrentPromotion[countP]["conteo"] = 0;
-                            CurrentPromotion[countP]["oferta"] = 'existe';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["display"] = 'none';
-                            CurrentPromotion[countP]["logo"] = '';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["IconShopOnline"] = 'j';
-                            CurrentPromotion[countP]["Display"] = '';
-
-                        } else if (snapshot.val()[x].TypePromotion === 'SpecialPromotion') {
-                            CurrentPromotion[countP] = snapshot.val()[x];
-                            CurrentPromotion[countP]["nul"] = "con";
-                            CurrentPromotion[countP]["promotionalPrice"] = 'Promoción Especial';
-                            CurrentPromotion[countP]["ID"] = "pinOfferts";
-                            CurrentPromotion[countP]["IDpromotion"] = x;
-                            CurrentPromotion[countP]["Category"] = snapshot.val()[x].Customer[i];
-                            CurrentPromotion[countP]["conteo"] = 0;
-                            CurrentPromotion[countP]["oferta"] = 'existe';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["display"] = 'none';
-                            CurrentPromotion[countP]["logo"] = '';
-                            CurrentPromotion[countP]["ColorPin"] = 'silver';
-                            CurrentPromotion[countP]["IconShopOnline"] = 'j';
-                            CurrentPromotion[countP]["Display"] = '';
-                            CurrentPromotion[countP]["icon"] = 'c';
-                        }
-                    }
-                }
-                countP++
-
-
-            } else {
-                //console.log("no lo son");
-            }
-            /////////////////////////////////////////////////////////////////////////////////////////////////
-
-        }
-        countP = 0;
-        //  console.log(CurrentPromotion);
-    });
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
-    var countCp = 0;
-    // ********* CUPONS *********
-    //xvar Cupons = [];
-    mainApp.database().ref('Coupon').on('value', function(snapshot) {
-        //console.log('-------------------');
-        // console.log(snapshot);
-        for (x in snapshot.val()) {
-            for (i in snapshot.val()[x].Customer) {
-                if (snapshot.val()[x].PhotoCoupon === null || snapshot.val()[x].PhotoCoupon === undefined) {
-                    CurrentPromotion[countP] = snapshot.val()[x];
-                    Cupons[countCp]["nul"] = 'sin';
-                    Cupons[countCp]["name"] = snapshot.val()[x].Name;
-                    Cupons[countCp]["description"] = snapshot.val()[x].CouponDescription;
-                    Cupons[countCp]["Canjea"] = snapshot.val()[x].CouponDiscount;
-                    Cupons[countCp]["Category"] = snapshot.val()[x].Customer[i];
-                    Cupons[countCp]["cupon"] = "existe";
-                    Cupons[countCp]["ColorPinCupon"] = "silver";
-                    Cupons[countCp]["BarCodePhoto"] = snapshot.val()[x].BarCodePhoto;
-                    Cupons[countCp]["Presentation"] = snapshot.val()[x].Presentation;
-                    Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
-                    Cupons[countCp]["customer"] = snapshot.val()[x].Customer[i];
-                    Cupons[countCp]["PhotoCupon"] = snapshot.val()[x].PhotoCoupon;
-                    Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.substring(0, 10);
-                    Cupons[countCp]["End_Date"] = snapshot.val()[x].EndDate;
-                    Cupons[countCp]["IDCupon"] = x;
-                    Cupons[countCp]["TermsAndConditions"] = snapshot.val()[x].TermsAndConditions;
-                    Cupons[countCp]["Categoryapp"] = snapshot.val()[x].CategoryApp;
-                    Cupons[countCp]["TypeCoupon"] = snapshot.val()[x].TypeCoupon;
-                    Cupons[countCp]["QuantityCoupons"] = snapshot.val()[x].QuantityCoupons;
-                    Cupons[countCp]["QuantityExchanged"] = snapshot.val()[x].QuantityExchanged;
-                    Cupons[countCp]["ShopOnline"] = snapshot.val()[x].ShopOnline;
-                    Cupons[countCp]["Display"] = '';
-                    Cupons[countCp]["TypeOfExchange"] = snapshot.val()[x].TypeOfExchange;
-                } else {
-                    Cupons[countCp] = snapshot.val()[x];
-                    Cupons[countCp]["nul"] = "con";
-                    Cupons[countCp]["name"] = snapshot.val()[x].Name;
-
-                    Cupons[countCp]["description"] = snapshot.val()[x].CouponDescription;
-                    Cupons[countCp]["Canjea"] = snapshot.val()[x].CouponDiscount;
-                    Cupons[countCp]["Category"] = snapshot.val()[x].Customer[i];
-                    Cupons[countCp]["cupon"] = "existe";
-                    Cupons[countCp]["ColorPinCupon"] = "silver";
-                    Cupons[countCp]["BarCodePhoto"] = snapshot.val()[x].BarCodePhoto;
-                    Cupons[countCp]["Presentation"] = snapshot.val()[x].Presentation;
-                    Cupons[countCp]["description"] = snapshot.val()[x].PromotionDescription;
-                    Cupons[countCp]["customer"] = snapshot.val()[x].Customer[i];
-                    Cupons[countCp]["PhotoCupon"] = snapshot.val()[x].PhotoCoupon;
-                    Cupons[countCp]["Publication_Date"] = snapshot.val()[x].PublicationDate.substring(0, 10);
-                    Cupons[countCp]["End_Date"] = moment(snapshot.val()[x].EndDate.iso).format('DD/MM/YYYY');
-                    Cupons[countCp]["IDCupon"] = x;
-                    Cupons[countCp]["TermsAndConditions"] = snapshot.val()[x].TermsAndConditions;
-                    Cupons[countCp]["Categoryapp"] = snapshot.val()[x].CategoryApp;
-                    Cupons[countCp]["TypeCoupon"] = snapshot.val()[x].TypeCoupon;
-                    Cupons[countCp]["QuantityCoupons"] = snapshot.val()[x].QuantityCoupons;
-                    Cupons[countCp]["QuantityExchanged"] = snapshot.val()[x].QuantityExchanged;
-                    Cupons[countCp]["ShopOnline"] = snapshot.val()[x].ShopOnline;
-                    Cupons[countCp]["Display"] = '';
-                    Cupons[countCp]["TypeOfExchange"] = snapshot.val()[x].TypeOfExchange;
-                }
-            }
-            countCp++
-        }
-        for (a in Cupons) {
-            var EndDateC = new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY'));
-            var fechaFinal = new Date(moment(Cupons[a]["EndDate"], 'DD/MM/YYYY HH:mm:ss'));
-            fechaFinal = moment(fechaFinal).format('x')
-            var End_Date_Coupons = moment.tz(EndDateC, 'America/Guatemala').format('DD/MM/YYYY');
-            var End_Date_Milisec = fechaFinal
-            var Guatemala_Date = moment.tz("America/Guatemala").format('x');
-            var DaysToFinalize = Math.round(((End_Date_Milisec - Guatemala_Date) / (24 * 60 * 60 * 1000)))
-
-            Cupons[a]["EndDate"] = End_Date_Coupons
-            Cupons[a]["DaysToFinalize"] = DaysToFinalize;
-        }
-
-        countCp = 0
-    });
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic', 'firebase'])
@@ -324,7 +47,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             'color': '#263147  '
         };
         $scope.optionGender = 'male';
-    }
+    };
+
     $scope.genderFemaleleStyle = function() {
             $scope.genderFemaleleBStyle = {
                 'background-color': '#263147 ',
@@ -334,43 +58,44 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                 'color': '#263147  '
             };
             $scope.optionGender = 'female';
-        }
-        // This Function works for to send email to the new User Firebase before of the register
+    };
+
+    // This Function works for to send email to the new User Firebase before of the register
     $scope.SendEmail = function() {
-            // This Function works for to send email verification
-            mainApp.auth().currentUser.sendEmailVerification().then(function() {
-                /* Alert for validate email */
-                swal({
-                        title: "Bien Hecho!",
-                        text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
-                        imageUrl: "img/sobre.png",
-                        timer: 3000,
-                        /* Button ok disable */
-                        showConfirmButton: false
-                    },
-                    function() {
-                        setTimeout(function() {
-                            // Logout User Firebase
-                            mainApp.auth().signOut(); //Else bug
-                            swal.close(); //Close Alert
-                            $state.go('login'); //Redirect to Login
-                        }, 2000);
-                    });
-            })
-        }
+          // This Function works for to send email verification
+          mainApp.auth().currentUser.sendEmailVerification().then(function() {
+              /* Alert for validate email */
+              swal({
+                      title: "Bien Hecho!",
+                      text: "Se envió una confirmación a tu correo electrónico, asegúrate de verificar en la Bandeja de Correo no Deseado si no lo encuentras...",
+                      imageUrl: "img/sobre.png",
+                      timer: 3000,
+                      /* Button ok disable */
+                      showConfirmButton: false
+                  },
+                  function() {
+                      setTimeout(function() {
+                          // Logout User Firebase
+                          mainApp.auth().signOut(); //Else bug
+                          swal.close(); //Close Alert
+                          $state.go('login'); //Redirect to Login
+                      }, 2000);
+                  });
+          });
+      };
         // This Function works for to Validate fields of the form
     $scope.Alert = function() {
-            if ($scope.user.email == undefined) {
-                sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
-            } else if ($scope.user.password == undefined) {
-                sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
-            } else {
-                $scope.ValidarEmail = "none"
-                $scope.Validarpassword = "none"
-                    // Redirect to Register Function for to create a new user in Firebase
-                $scope.register()
-            }
+        if ($scope.user.email === undefined) {
+            sweetAlert('Lo sentimos', 'El campo de correo electrónico no puede estar vacío. Intentelo nuevamente', 'error');
+        } else if ($scope.user.password === undefined) {
+            sweetAlert('Lo sentimos', 'Debe ingresar una contraseña para poder continuar. Intentelo nuevamente', 'error');
+        } else {
+            $scope.ValidarEmail = "none";
+            $scope.Validarpassword = "none";
+                // Redirect to Register Function for to create a new user in Firebase
+            $scope.register();
         }
+    };
         // Register Function for to create a new User in Firebase
     $scope.register = function() {
 
@@ -388,7 +113,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         var dateBirthday = $scope.user.birthday;
         // To convert a date the birthday field
         if (dateBirthday) {
-            dateBirthday = dateBirthday.toLocaleDateString()
+            dateBirthday = dateBirthday.toLocaleDateString();
         }
         // Save Users in Firebase Auth
         mainApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
@@ -418,7 +143,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             swal.close();
                             // Redirect to Login Form
                             $state.go('login');
-                        }, 2000)
+                        }, 2000);
                     });
             }
         }).then(function() {
@@ -444,7 +169,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     "$typeLogin": "Email"
 
                 });
-                if (snapshot.val() == null) {
+                if (snapshot.val() === null) {
                     mainApp.database().ref('Users/' + user.uid).update({
                         Username: name,
                         Email: email,
@@ -455,7 +180,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     $scope.SendEmail();
                 } else {
                     // Verify each UID user and if doesn't exist add the new register
-                    for (x in snapshot.val()) {
+                    for (var x in snapshot.val()) {
                         if (x != user.uid) {
                             mainApp.database().ref('Users/' + user.uid).update({
                                 Username: name,
@@ -470,7 +195,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                 }
             });
         });
-    }
+    };
 })
 
 // ************************* LOGIN WITH FRENZY *************************
@@ -483,19 +208,19 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
             if (user.emailVerified) {
                 $state.go('loadingLoginUser');
-                IdUsuario = user.uid
+                IdUsuario = user.uid;
                 mainApp.database().ref('Users').on('value', function(snapshot) {
-                    for (x in snapshot.val()) {
+                    for (var x in snapshot.val()) {
                         if (x == IdUsuario) {
-                            IdGender = snapshot.val()[x].Gender
+                            IdGender = snapshot.val()[x].Gender;
                         }
                     }
                 });
             } else {
                 sweetAlert('Oops', 'Por favor verifica tu correo electrónico e intenta nuevamente.', 'warning');
             }
-        })
-    }
+        });
+    };
 
     $scope.loginWithEmail = function(user) {
         mixpanel.track("LoginClick", {
@@ -581,15 +306,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }, 2000);
 
       // Change footer colors
-      colorIconsFoother = []
+      colorIconsFoother = [];
       colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none', 'none']);
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
-.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite, $firebaseObject, Customer, Promotion, Favorite) {
+.controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite) {
 
   $scope.favorites = Favorite;
-
   $scope.customers = Customer;
   $scope.promotions = Promotion;
 
@@ -600,11 +324,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         "Gender": IdGender,
         "User": NameUser
     });
-
         /**************************************************/
 
     $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = []
+        colorIconsFoother = [];
         colorIconsFoother.push(['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
     });
 
@@ -623,7 +346,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.coupon = Coupon;
 
     $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = []
+        colorIconsFoother = [];
         colorIconsFoother.push(['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
     });
 
@@ -647,97 +370,50 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       console.log('Favorite. Added - ', customerId);
     }, function(error){console.log("Error:", error)});
   };
+})
 
-    //TODO check if this does not break anything. Else delete.
-    // $scope.UrlC = function(id) {
-    //         console.clear();
-    //         console.log(id);
-    //         var resultSetCs = $.grep(CustomerList, function(e) {
-    //             return e.Name.indexOf(id) == 0;
-    //         });
-    //
-    //         var promotionPage = "#/app/ofertas/"
-    //         var couponPage = "#/app/cupones/";
-    //         console.log(resultSetCs[0]);
-    //         // Validate if doesn't existing a promotion then redirection to coupons page. 	location.href=couponPage
-    //         if (resultSetCs[0].QuantityPromotion > 0 && resultSetCs[0].QuantityCoupon > 0) {
-    //
-    //             location.href = promotionPage + id
-    //         } else if (resultSetCs[0].QuantityPromotion > 0) {
-    //
-    //             location.href = promotionPage + id
-    //         } else if (resultSetCs[0].QuantityCoupon > 0) {
-    //
-    //             location.href = couponPage + id
-    //         } else {
-    //             location.href = promotionPage + id
-    //         }
-    //     }
+.controller('pinCtrl', function($scope, Pin) {
+
+  $scope.pins = Pin;
+
+  $scope.changeColorPinCupon = function(id) {
+    //Check if customerId is in Current Users Favorites
+    if(id in $scope.pins) {
+      // Switch boolean value
+      $scope.pins[id] = !$scope.pins[id];
+    } else {
+      $scope.pins[id] = true;
+    }
+    // Save to DB
+    $scope.pins.$save().then(function(ref){
+      console.log('Pins. Changed - ', id);
+    }, function(error){console.log("Error:", error)});
+  };
+
 })
 
 //////////////////////
-.controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, CustomerAll, Customer) {
+.controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, Customer) {
 
     $scope.customers = Customer;
     $scope.category = $stateParams.IDcustomer;
 
-    //
-    var Direc = [{
-        name: "Supermercado",
-        name2: "supermarketMenu"
-    }, {
-        name: "Restaurantes",
-        name2: "restaurantMenu"
-    }, {
-        name: "Otros",
-        name2: "otherMenu"
-    }, {
-        name: "Electronicos",
-        name2: "entertainmentMenu"
-    }, {
-        name: "Moda",
-        name2: "fashionMenu"
-    }, {
-        name: "Entretenimiento",
-        name2: "entertainmentMenu"
-    }]
-    var DirecParse = $.grep(Direc, function(e) {
-        return e.name.indexOf($stateParams.IDcustomer) == 0;
-    });
-    var NameUser = String(IdUsuario)
-
-    var dimensions = {
-        name: DirecParse[0].name2
-    };
+    var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Customers",
         "Gender": IdGender,
         "User": NameUser
     });
     mixpanel.track("ClickCategory", {
-        "NameCategory": DirecParse[0].name2,
+        "NameCategory": $scope.category,
         "Gender": IdGender,
         "User": NameUser
     });
     // Loading scope
     $scope.loading = $ionicLoading.show({
         noBackdrop: true,
-        template: '<ion-spinner customer1lass="spinner" icon="lines" class = "Loading' + $scope.AppCategory + '"></ion-spinner>'
+        template: '<ion-spinner customer1lass="spinner" icon="lines" class = "Loading' + $scope.category + '"></ion-spinner>'
     });
-
-    /************ FUNCTION CHANGE COLOR HEART  **********/
-    // $scope.changeColorHeart = function(parametro, category) {
-    //
-    //     var cssColor = document.getElementById(parametro + " " + category).style.color;
-    //     if (cssColor == "white") {
-    //         document.getElementById(parametro + " " + category).style.color = "red";
-    //         SaveFavorite(IdUsuario, category)
-    //     } else {
-    //         document.getElementById(parametro + " " + category).style.color = "white";
-    //         console.log(category);
-    //         DeleteFavorite(IdUsuario, category)
-    //     }
-    // };
 
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
@@ -745,8 +421,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             $ionicLoading.hide();
         }, 1000);
 
-
-        colorIconsFoother = []
+        colorIconsFoother = [];
         colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.AppCategory, '', 'none', ]);
     });
 })
@@ -772,7 +447,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams, Coupons, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
+.controller('CuponCtrl', function($scope, $stateParams, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
 
 
   $ionicPopover.fromTemplateUrl('templates/popover2.html', {
@@ -829,7 +504,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }
     }
 
-    colorIconsFoother = []
+    colorIconsFoother = [];
     colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.customer.CategoryApp, '', 'none']);
     console.log('Customer is' ,$scope.customer);
   });
@@ -847,42 +522,35 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
             console.log('error mensaje');
         });
-    }
+    };
 
     // *************** CALL PHONE FUNCTION ***************
     $scope.call = function(cell) {
-            a = cell.toString();
-            b = 'tel:'
-            window.open(b + a);
-        }
+        a = cell.toString();
+        b = 'tel:';
+        window.open(b + a);
+    };
         // *************** URL BROWSER SHOP FUNCTION ***************
-    $scope.shopUrl = function(Url, id, name) {
-        var NamePromo = name.split(" ").join("_")
-        var NameUser = String(IdUsuario)
-        var Dimensions = {
-            name: 'Coupons_' + NamePromo + "_" + id,
-            user: NameUser
-        };
+    $scope.shopUrl = function(url, id, name) {
+        var NamePromo = name.split(" ").join("_");
+        var NameUser = String(IdUsuario);
 
         if (id == "web") {
-            z = Url;
             mixpanel.track("ClickWeb", {
                 "Costumer": name,
                 "User": NameUser,
                 "Gender": IdGender
             });
-            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(url, '_blank', 'location=yes');
         } else {
             mixpanel.track("ClickCartShop", {
                 "Costumer": name,
                 "User": NameUser,
                 "Gender": IdGender
             });
-            z = Url;
-            window.open = $cordovaInAppBrowser.open(z, '_blank', 'location=yes');
+            window.open = $cordovaInAppBrowser.open(url, '_blank', 'location=yes');
         }
-
-    }
+    };
 
     $scope.showCouponDescription = function(id) {
         var QuantityExchangedSuma = 0;
@@ -1040,30 +708,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-
-.controller('pinCtrl', function($scope, Pin) {
-
-  $scope.pins = Pin;
-
-  $scope.changeColorPinCupon = function(id) {
-    //Check if customerId is in Current Users Favorites
-    if(id in $scope.pins) {
-      // Switch boolean value
-      $scope.pins[id] = !$scope.pins[id];
-    } else {
-      $scope.pins[id] = true;
-    }
-    // Save to DB
-    $scope.pins.$save().then(function(ref){
-      console.log('Pins. Changed - ', id);
-    }, function(error){console.log("Error:", error)});
-  };
-
-})
-
-
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
-.controller('DescriptionCuponCtrl', function($scope, $stateParams, DescriptionCupons, $ionicLoading) {
+.controller('DescriptionCuponCtrl', function($scope, $stateParams, $ionicLoading, Coupon) {
+
+  $scope.coupons = Coupon;
+  $scope.coupons.$loaded(function(data){
+    for (var i in $scope.coupons) {
+      if ($scope.coupons[i].$id == $stateParams.couponId) {
+        $scope.cupon = $scope.coupons[i];
+      }
+    }
+  });
 
     $scope.llenar2 = function() {
         displayNoneInline = [{
@@ -1077,130 +732,119 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         "Gender": IdGender,
         "User": IdUsuario
     });
-    $scope.reloadpage = function() {
-        $scope.cupons[0].QuantityExchanged += 1
-    }
+    // $scope.reloadpage = function() {
+    //     $scope.cupons[0].QuantityExchanged += 1;
+    // };
+    //
+    // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
+    // $scope.buttonCash = function() {
+    //     $('.botonCanjear').click(function() {
+    //         $(this).hide();
+    //         $('.exchangeBoxBarCode').show();
+    //     });
+    // };
 
-    // ***************  EXCHANGE BUTTON DISPLAY NONE********************
-    $scope.buttonCash = function() {
-        $('.botonCanjear').click(function() {
-            $(this).hide();
-            $('.exchangeBoxBarCode').show();
-        })
-    }
+    // // ************ FUNCTION CHANGE COLOR PIN CUPON *************
+    // $scope.changeColorPinCupon = function(id) {
+    //     var cssColorCuponPin = document.getElementById(id).style.color;
+    //     if (cssColorCuponPin == "silver") {
+    //         document.getElementById(id).style.color = "purple";
+    //         saveCuponFavorite(IdUsuario, id);
+    //     } else {
+    //         deleteFavoriteCupon(IdUsuario, id);
+    //         document.getElementById(id).style.color = "silver";
+    //     }
+    // };
+    //
+    //
+    // $scope.HideStyleButtonExchangePosition = "absolute";
+    // $scope.HideStyleButtonExchangeBottom = "0";
 
-    // ************ FUNCTION CHANGE COLOR PIN CUPON *************
-    $scope.changeColorPinCupon = function(id) {
-        var cssColorCuponPin = document.getElementById(id).style.color;
-        if (cssColorCuponPin == "silver") {
-            document.getElementById(id).style.color = "purple";
-            saveCuponFavorite(IdUsuario, id)
-        } else {
-            deleteFavoriteCupon(IdUsuario, id)
-            document.getElementById(id).style.color = "silver";
-        }
-    };
+    // $scope.countCoupon = function() {
+    //         var QuantityExchangedsu = 0;
+    //         $scope.HideStyleButtonExchangePosition = "none"
+    //         $scope.HideStyleButtonExchangeBottom = "none"
+    //             // mainApp.database().ref('Cupon/'+x).update({
+    //             //       Status: false
+    //             // });
+    //
+    //
+    //         mainApp.database().ref('Coupon').once('value', function(snapshot) {
+    //             for (x in snapshot.val()) {
+    //
+    //                 if (snapshot.val()[x].TypeCoupon === "Coupon") {
+    //                     // ------------------------------------------------------------------------------------------------------------------------------------------------
+    //                     if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
+    //
+    //                         QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
+    //                         mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
+    //                             QuantityExchanged: QuantityExchangedsu
+    //                         });
+    //                         mixpanel.track("clickCanjear", {
+    //                             "type": "Cupon",
+    //                             "Gender": IdGender,
+    //                             "User": NameUser,
+    //                             "NameCoupon": $stateParams.DescriptionID
+    //                         });
+    //                         swal({
+    //                             title: "Perfecto!",
+    //                             text: "Has cambiado tu cupón",
+    //                             type: "success",
+    //                             timer: 2000,
+    //                             showConfirmButton: false
+    //                         });
+    //                     } else {
+    //
+    //                         $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
+    //
+    //                         mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
+    //                             Status: false
+    //                         });
+    //
+    //                         swal({
+    //                                 title: 'Lo sentimos!',
+    //                                 text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+    //                                 type: 'warning'
+    //                             },
+    //                             function(isConfirm) {
+    //                                 if (isConfirm) {
+    //
+    //                                     $scope.loading = $ionicLoading.show({
+    //                                         showBackdrop: true,
+    //                                         template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+    //                                     });
+    //
+    //                                     $ionicLoading.hide();
+    //                                     var couponPages = "#/app/playlists";
+    //                                     location.href = couponPages;
+    //                                 }
+    //                             })
+    //                     }
+    //                     // ------------------------------------------------------------------------------------------------------------------------------------------------
+    //                 } else if (snapshot.val()[x].TypeCoupon === "Fecha") {
+    //
+    //                     mixpanel.track("clickCanjear", {
+    //                         "type": "fecha",
+    //                         "Gender": IdGender,
+    //                         "User": IdUsuario,
+    //                         "NameCoupon": $stateParams.DescriptionID
+    //                     });
+    //                     QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1;
+    //                     mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
+    //                         QuantityExchanged: QuantityExchangedsu
+    //                     });
+    //                 }
+    //
+    //             }
+    //
+    //         });
+    //
+    //     };
 
-
-    $scope.HideStyleButtonExchangePosition = "absolute";
-    $scope.HideStyleButtonExchangeBottom = "0";
-
-    $scope.countCoupon = function() {
-            var QuantityExchangedsu = 0;
-            $scope.HideStyleButtonExchangePosition = "none"
-            $scope.HideStyleButtonExchangeBottom = "none"
-                // mainApp.database().ref('Cupon/'+x).update({
-                //       Status: false
-                // });
-
-
-            mainApp.database().ref('Coupon').once('value', function(snapshot) {
-                for (x in snapshot.val()) {
-
-                    if (snapshot.val()[x].TypeCoupon === "Coupon") {
-                        // ------------------------------------------------------------------------------------------------------------------------------------------------
-                        if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
-
-                            QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
-                            mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-                                QuantityExchanged: QuantityExchangedsu
-                            });
-                            mixpanel.track("clickCanjear", {
-                                "type": "Cupon",
-                                "Gender": IdGender,
-                                "User": NameUser,
-                                "NameCoupon": $stateParams.DescriptionID
-                            });
-                            swal({
-                                title: "Perfecto!",
-                                text: "Has cambiado tu cupón",
-                                type: "success",
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-                        } else {
-
-                            $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
-
-                            mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-                                Status: false
-                            });
-
-                            swal({
-                                    title: 'Lo sentimos!',
-                                    text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-                                    type: 'warning'
-                                },
-                                function(isConfirm) {
-                                    if (isConfirm) {
-
-                                        $scope.loading = $ionicLoading.show({
-                                            showBackdrop: true,
-                                            template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-                                        });
-
-                                        $ionicLoading.hide();
-                                        var couponPages = "#/app/playlists";
-                                        location.href = couponPages;
-                                    }
-                                })
-                        }
-                        // ------------------------------------------------------------------------------------------------------------------------------------------------
-                    } else if (snapshot.val()[x].TypeCoupon === "Fecha") {
-
-                        mixpanel.track("clickCanjear", {
-                            "type": "fecha",
-                            "Gender": IdGender,
-                            "User": IdUsuario,
-                            "NameCoupon": $stateParams.DescriptionID
-                        });
-                        QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
-                        mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-                            QuantityExchanged: QuantityExchangedsu
-                        });
-                    }
-
-                }
-
-            });
-
-        }
-        /*****  noneDisplay equalTo displayNoneInline for
-         				call the list and show or hide barcode image
-        				in DescriptionCupons  *****/
-        // colorIconsFoother=$scope.$on('$ionicView.enter', function() {});[];
-
-    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-        $scope.noneDisplay = displayNoneInline;
-        if ($scope.noneDisplay[0].position == "absolute") {
-            $scope.HideStyleButtonExchangePosition = "none"
-            $scope.HideStyleButtonExchangeBottom = "none"
-        }
 
-        $scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
-        colorIconsFoother = []
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.cupons[0].Category, '', 'none']);
+        colorIconsFoother = [];
+        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', '', 'none']);
     });
 })
 //*********************  MENU CONTROLLER  *******************************
@@ -1278,80 +922,81 @@ $scope.$on('$ionicView.enter', function() {
 })
 
 .controller('loadingCtrl', function($scope, $state, $ionicLoading, $timeout) {
-$ionicLoading.show({
-    noBackdrop: true,
-    template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
-});
-$timeout(function() {
+  $ionicLoading.show({
+      noBackdrop: true,
+      template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+  });
 
-    var user = firebase.auth().currentUser;
-    var credential;
+  $timeout(function() {
 
-    if (user) {
+      var user = firebase.auth().currentUser;
+      var credential;
 
-        if (user.providerData[0].providerId == 'facebook.com') {
+      if (user) {
 
-            IdUsuario = user.providerData[0].uid;
-            mainApp.database().ref('Users').once('value', function(snapshot) {
+          if (user.providerData[0].providerId == 'facebook.com') {
 
-                for (x in snapshot.val()) {
-                    if (x == IdUsuario) {
-                        IdGender = snapshot.val()[x].Gender
-                    }
-                }
+              IdUsuario = user.providerData[0].uid;
+              mainApp.database().ref('Users').once('value', function(snapshot) {
 
-            }).then(function() {
-                console.log();
-            });
+                  for (x in snapshot.val()) {
+                      if (x == IdUsuario) {
+                          IdGender = snapshot.val()[x].Gender
+                      }
+                  }
 
-            $timeout(function() {
-                $ionicLoading.hide();
-                $state.go('app.playlists');
+              }).then(function() {
+                  console.log();
+              });
 
-            }, 2000);
-        } else {
-            IdUsuario = user.uid;
+              $timeout(function() {
+                  $ionicLoading.hide();
+                  $state.go('app.playlists');
 
-            mainApp.database().ref('Users').once('value', function(snapshot) {
-                for (x in snapshot.val()) {
-                    if (x == IdUsuario) {
-                        IdGender = snapshot.val()[x].Gender
-                    }
-                }
-            });
-        }
-        $state.go('app.playlists');
+              }, 2000);
+          } else {
+              IdUsuario = user.uid;
 
-    } else {
-        $timeout(function() {
-            $ionicLoading.hide();
-            $state.go('tutorial');
+              mainApp.database().ref('Users').once('value', function(snapshot) {
+                  for (var x in snapshot.val()) {
+                      if (x == IdUsuario) {
+                          IdGender = snapshot.val()[x].Gender
+                      }
+                  }
+              });
+          }
+          $state.go('app.playlists');
 
-        }, 1000);
-    }
-}, 1000);
+      } else {
+          $timeout(function() {
+              $ionicLoading.hide();
+              $state.go('tutorial');
+
+          }, 1000);
+      }
+  }, 1000);
 
 })
 
 .controller('bodyCtrl', ['$state', function($state, $ionicLoading) {
 
-// *********** DEVICE READY SPLASHSCREEN  *******************
-document.addEventListener("deviceready", function($scope) {
+  // *********** DEVICE READY SPLASHSCREEN  *******************
+  document.addEventListener("deviceready", function($scope) {
 
-    var notificationOpenedCallback = function(jsonData) {
-        console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
-    };
+      var notificationOpenedCallback = function(jsonData) {
+          console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+      };
 
-    window.plugins.OneSignal.init("b95e0734-b67a-400e-bfd3-a494d841d736", {
-            googleProjectNumber: "621898809225"
-        },
-        notificationOpenedCallback);
+      window.plugins.OneSignal.init("b95e0734-b67a-400e-bfd3-a494d841d736", {
+              googleProjectNumber: "621898809225"
+          },
+          notificationOpenedCallback);
 
-    // Show an alert box if a notification comes in when the user is in your app.
-    window.plugins.OneSignal.enableInAppAlertNotification(true);
-    ///////////////////////////////////////
+      // Show an alert box if a notification comes in when the user is in your app.
+      window.plugins.OneSignal.enableInAppAlertNotification(true);
+      ///////////////////////////////////////
 
-}, false);
+  }, false);
 }])
 
 
@@ -1539,49 +1184,49 @@ document.addEventListener("deviceready", function($scope) {
                                     });
                                     // success
                                     ///////////////////////////Favorite heart////////////////////////////////////
-                                    mainApp.database().ref('Favorite').on('value', function(snapshot) {
-                                        var CountFF = 0;
-                                        for (x in snapshot.val()) {
-                                            if (snapshot.val()[x].UserID == UserUID) {
-                                                for (i in snapshot.val()[x].CustomerID) {
-                                                    for (c in CustomerList) {
-
-                                                        if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-                                                            CustomerList[c].colorHeart = "red"
-                                                        }
-                                                    }
-                                                }
-                                                FirebaseFavorite[CountFF] = snapshot.val()[x]
-                                                FirebaseFavorite[CountFF]["FavoriteID"] = x
-                                                CountFF++
-                                            }
-
-                                        }
-                                    });
-                                    //////////////////////////////////////////////////////////////////////////
-                                    ///////////////////////////SAVED PIN////////////////////////////////////
-
-                                    mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-                                        var CountPS = 0;
-                                        for (x in snapshot.val()) {
-                                            if (snapshot.val()[x].UserID == UserUID) {
-
-                                                for (i in snapshot.val()[x].PromotionID) {
-                                                    for (c in CurrentPromotion) {
-                                                        if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-                                                            CurrentPromotion[c].ColorPin = "purple"
-                                                        } else {
-                                                            console.log("no encontro nada ");
-                                                        }
-                                                    }
-                                                }
-                                                FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-                                                FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-                                                CountPS++
-                                            }
-
-                                        }
-                                    });
+                                    // mainApp.database().ref('Favorite').on('value', function(snapshot) {
+                                    //     var CountFF = 0;
+                                    //     for (x in snapshot.val()) {
+                                    //         if (snapshot.val()[x].UserID == UserUID) {
+                                    //             for (i in snapshot.val()[x].CustomerID) {
+                                    //                 for (c in CustomerList) {
+                                    //
+                                    //                     if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
+                                    //                         CustomerList[c].colorHeart = "red"
+                                    //                     }
+                                    //                 }
+                                    //             }
+                                    //             FirebaseFavorite[CountFF] = snapshot.val()[x]
+                                    //             FirebaseFavorite[CountFF]["FavoriteID"] = x
+                                    //             CountFF++
+                                    //         }
+                                    //
+                                    //     }
+                                    // });
+                                    // //////////////////////////////////////////////////////////////////////////
+                                    // ///////////////////////////SAVED PIN////////////////////////////////////
+                                    //
+                                    // mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
+                                    //     var CountPS = 0;
+                                    //     for (x in snapshot.val()) {
+                                    //         if (snapshot.val()[x].UserID == UserUID) {
+                                    //
+                                    //             for (i in snapshot.val()[x].PromotionID) {
+                                    //                 for (c in CurrentPromotion) {
+                                    //                     if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
+                                    //                         CurrentPromotion[c].ColorPin = "purple"
+                                    //                     } else {
+                                    //                         console.log("no encontro nada ");
+                                    //                     }
+                                    //                 }
+                                    //             }
+                                    //             FirebasePromotionSaved[CountPS] = snapshot.val()[x]
+                                    //             FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
+                                    //             CountPS++
+                                    //         }
+                                    //
+                                    //     }
+                                    // });
                                     //////////////////////////////////////////////////////////////////////////
                                     IdUsuario = UserUID;
                                     IdGender = success.gender;

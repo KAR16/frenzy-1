@@ -4,7 +4,7 @@ box-shadow: 0 0 0px white;
 }
 </style>
 <!-- Type Date -->
-<ion-view >
+<ion-view>
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
 		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" >
@@ -14,8 +14,11 @@ box-shadow: 0 0 0px white;
 				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance">
 					Canjea
 				</p>
-				<p class="pageFavoritesSavingPrice">
-					{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
+				<p class="pageFavoritesSavingPrice" ng-if="cupon.TypeOfExchange == 'DirectDiscount'">
+					Q. {{cupon.CouponDiscount}}
+				</p>
+				<p class="pageFavoritesSavingPrice" ng-if="cupon.TypeOfExchange != 'DirectDiscount'">
+					{{cupon.CouponDiscount}}%
 				</p>
 			</div>
 		</div>
@@ -82,14 +85,12 @@ box-shadow: 0 0 0px white;
 			<div class="row">
 				<div class="col col-20"></div>
 				<div class="col col-60 exchangeBoxBarCode" style="text-align:center">
-					<!-- <img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto.url}}" alt="BarCodeFrenzy" > -->
 						<h1 class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects">{{cupon.CodeCoupon}}</h1>
 				</div>
 				<div class="col col-20"></div>
 			</div>
-			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-			<a href="#/app/termsAndConditions/{{cupon.IDCupon}}"  style="display:{{cupon.DisplayTerms}}">
-				<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
+			<a href="#/app/termsAndConditions/{{cupon.$id}}" >
+				<div class="bar subFooter" >
 					<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
 					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 				</div>
@@ -97,8 +98,9 @@ box-shadow: 0 0 0px white;
 		</div>
 	</ion-content>
 </ion-view>
+<!-- TODO Delete -->
 <!-- Type Coupon -->
-<ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Cupon'}">
+<!-- <ion-view ng-repeat = "cupon in cupons | filter: {TypeCoupon:'Cupon'}"> -->
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
 		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{super.display}};">
@@ -108,14 +110,16 @@ box-shadow: 0 0 0px white;
 				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance">
 					Canjea
 				</p>
-				<p class="pageFavoritesSavingPrice">
-					{{cupon.CanjeaQ}}{{cupon.Canjea}}{{cupon.CanjeaP}}
+				<p class="pageFavoritesSavingPrice" ng-if="cupon.TypeOfExchange == 'DirectDiscount'">
+					Q. {{cupon.CouponDiscount}}
+				</p>
+				<p class="pageFavoritesSavingPrice" ng-if="cupon.TypeOfExchange != 'DirectDiscount'">
+					{{cupon.CouponDiscount}}%
 				</p>
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="nissan" style="display:{{cupon.DisplayWithoutImageCoupons}}">
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon}}" alt="nissan" style="display:{{cupon.DisplayWithImageCoupons}}">
+		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="nissan" >
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
@@ -178,20 +182,20 @@ box-shadow: 0 0 0px white;
 		<div>
 			<div class="row">
 				<div class="col col-10"></div>
-				<div class="col col-80 exchangeBoxBarCode" style="display:{{noneDisplay[0].inline}}">
-					<img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto.url}}" alt="BarCodeFrenzy" >
+				<div class="col col-80 exchangeBoxBarCode" >
+					<img class="exchangeBoxBarCodeImage verticalAndHorizontalCenteredObjects" src="{{cupon.BarCodePhoto}}" alt="BarCodeFrenzy" >
 				</div>
 				<div class="col col-10"></div>
 			</div>
 			<div class="row">
 				<div class="col availableCupones open_sans">
-					Válido hasta:&nbsp;{{cupon.End_Date}}
+					Válido hasta:&nbsp;{{cupon.EndDate}}
 				</div>
 			</div>
 			<br>
 			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-			<a href="#/app/termsAndConditions/{{cupon.IDCupon}}"  style="display:{{cupon.DisplayTerms}}">
-				<div class="bar subFooter" style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}">
+			<a href="#/app/termsAndConditions/{{cupon.$id}}" >
+				<div class="bar subFooter" style="position:none;bottom:none">
 					<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
 					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 				</div>
