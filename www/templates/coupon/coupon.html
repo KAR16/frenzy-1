@@ -308,14 +308,13 @@
 						</div>
 					</a>
 					<div class="row pageFavoritesDivIcons">
-						<!-- Price -->
-						<div class="col-25 colPrice">
+						<div class="col-25 colPrice" ng-if="promotion.TypePromotion == 'DirectDiscount'">
 							<spam class="pageFavoritesActualPrice">
 								Q. {{promotion.PromotionalPrice}}
 							</spam>
 						</div>
 						<!-- Before Price -->
-						<div class="col col-25" style="text-align:center">
+						<div class="col col-25" style="text-align:center;padding:0px !important" ng-if="promotion.TypePromotion == 'DirectDiscount'">
 							<table style="margin-top: 10px">
 								<tr>
 									<td>
@@ -326,6 +325,19 @@
 								</tr>
 							</table>
 						</div>
+
+					<!-- Price -->
+					<div class="col-100 colPrice" ng-if="promotion.TypePromotion != 'DirectDiscount'">
+						<spam ng-if="promotion.TypePromotion == 'Percentage'">
+							Descuento {{promotion.Percentage}}%
+						</spam>
+						<spam ng-if="promotion.TypePromotion == 'SpecialPromotion'">
+							Promoción Especial
+						</spam>
+					</div>
+					<div class="col"></div>
+
+
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
 							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl( promotion.ShopOnline, 'cart', promotion.Name)">

@@ -23,7 +23,7 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{cupon.PhotoCoupon}}" alt="frenzy" >
+		<img class="full-image" src="{{cupon.PhotoCoupon}}" alt="frenzy" >
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
@@ -194,7 +194,7 @@ box-shadow: 0 0 0px white;
 			</div>
 			<br>
 			<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-			<a href="#/app/termsAndConditions/{{cupon.$id}}" >
+			<a href="#/app/termsAndConditions/{{cupon.$id}}" ng-if="coupon.termsAndConditions">
 				<div class="bar subFooter" style="position:none;bottom:none">
 					<div class="LegalTerms verticalCenteredObjects col col-90">Términos Legales</div>
 					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>

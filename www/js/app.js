@@ -128,7 +128,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	})
 	.state('app.termsAndConditionsOffers', {
-			url: "/termsAndConditionsOffers/:superId",
+			url: "/termsAndConditionsOffers/:promotionId",
 			views: {
 				'menuContent': {
 					templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
@@ -177,7 +177,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		}
 	})
 	.state('app.termsAndConditions', {
-		url: "/termsAndConditions/:DescriptionID",
+		url: "/termsAndConditions/:couponId",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/term_and_conditions/termsAndConditionsForCoupons.html",

@@ -17,12 +17,10 @@ var config2 = {
     databaseURL: "https://frenzydashboard.firebaseio.com",
     storageBucket: "frenzydashboard.appspot.com",
 };
-var InfoShop = [];
+
 var mainApp = firebase.initializeApp(config);
 var secondaryApp = firebase.initializeApp(config2, "Secondary");
 ///////////////////////////////////////////////CALL CUSTOMER////////////////////////////////////////////////////////////////
-var countC2 = 0;
-var info = 0;
 
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic', 'firebase'])
@@ -368,7 +366,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     // Save to DB
     $scope.favorites.$save().then(function(ref){
       console.log('Favorite. Added - ', customerId);
-    }, function(error){console.log("Error:", error)});
+    }, function(error){
+      console.log("Error:", error);
+    });
   };
 })
 
@@ -387,7 +387,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     // Save to DB
     $scope.pins.$save().then(function(ref){
       console.log('Pins. Changed - ', id);
-    }, function(error){console.log("Error:", error)});
+    }, function(error){
+      console.log("Error:", error);
+    });
   };
 
 })
@@ -419,7 +421,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$on('$ionicView.enter', function() {
         setTimeout(function() {
             $ionicLoading.hide();
-        }, 1000);
+        }, 800);
 
         colorIconsFoother = [];
         colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.category, '', 'none', ]);

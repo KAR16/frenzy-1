@@ -1,15 +1,10 @@
-
 // ********* MODULE STARTER *********
 var app = angular.module('starter.services', []);
 
-// ************* ALL FAVORITE APP FACTORY *************
-app.filter("commaBreak",
-    function () {
-        return function ( value ) {
-            if( !value.length ) return;
-            return value.split('-').join(" ");
-        };
-});
+app.factory('Auth', ['$firebaseAuth',
+  function ($firebaseAuth) {
+     return $firebaseAuth();
+ }]);
 
 //******************************************************************************//
 app.factory('Customer', ['$firebaseArray', function($firebaseArray) {
