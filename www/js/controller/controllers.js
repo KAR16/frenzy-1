@@ -422,7 +422,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }, 1000);
 
         colorIconsFoother = [];
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.AppCategory, '', 'none', ]);
+        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.category, '', 'none', ]);
     });
 })
 ///////////
@@ -505,7 +505,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 
     colorIconsFoother = [];
-    colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.customer.CategoryApp, '', 'none']);
+    colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.customerId, '', 'none']);
     console.log('Customer is' ,$scope.customer);
   });
 
@@ -720,132 +720,125 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
   });
 
-    $scope.llenar2 = function() {
-        displayNoneInline = [{
-            none: "inline",
-            inline: "none"
-        }];
-    };
+  mixpanel.track("view", {
+      "type": "DescriptionCupon",
+      "Gender": IdGender,
+      "User": IdUsuario
+  });
+  // $scope.reloadpage = function() {
+  //     $scope.cupons[0].QuantityExchanged += 1;
+  // };
+  //
+  // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
+  // $scope.buttonCash = function() {
+  //     $('.botonCanjear').click(function() {
+  //         $(this).hide();
+  //         $('.exchangeBoxBarCode').show();
+  //     });
+  // };
 
-    mixpanel.track("view", {
-        "type": "DescriptionCupon",
-        "Gender": IdGender,
-        "User": IdUsuario
-    });
-    // $scope.reloadpage = function() {
-    //     $scope.cupons[0].QuantityExchanged += 1;
-    // };
-    //
-    // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
-    // $scope.buttonCash = function() {
-    //     $('.botonCanjear').click(function() {
-    //         $(this).hide();
-    //         $('.exchangeBoxBarCode').show();
-    //     });
-    // };
+  // // ************ FUNCTION CHANGE COLOR PIN CUPON *************
+  // $scope.changeColorPinCupon = function(id) {
+  //     var cssColorCuponPin = document.getElementById(id).style.color;
+  //     if (cssColorCuponPin == "silver") {
+  //         document.getElementById(id).style.color = "purple";
+  //         saveCuponFavorite(IdUsuario, id);
+  //     } else {
+  //         deleteFavoriteCupon(IdUsuario, id);
+  //         document.getElementById(id).style.color = "silver";
+  //     }
+  // };
+  //
+  //
+  // $scope.HideStyleButtonExchangePosition = "absolute";
+  // $scope.HideStyleButtonExchangeBottom = "0";
 
-    // // ************ FUNCTION CHANGE COLOR PIN CUPON *************
-    // $scope.changeColorPinCupon = function(id) {
-    //     var cssColorCuponPin = document.getElementById(id).style.color;
-    //     if (cssColorCuponPin == "silver") {
-    //         document.getElementById(id).style.color = "purple";
-    //         saveCuponFavorite(IdUsuario, id);
-    //     } else {
-    //         deleteFavoriteCupon(IdUsuario, id);
-    //         document.getElementById(id).style.color = "silver";
-    //     }
-    // };
-    //
-    //
-    // $scope.HideStyleButtonExchangePosition = "absolute";
-    // $scope.HideStyleButtonExchangeBottom = "0";
+  // $scope.countCoupon = function() {
+  //         var QuantityExchangedsu = 0;
+  //         $scope.HideStyleButtonExchangePosition = "none"
+  //         $scope.HideStyleButtonExchangeBottom = "none"
+  //             // mainApp.database().ref('Cupon/'+x).update({
+  //             //       Status: false
+  //             // });
+  //
+  //
+  //         mainApp.database().ref('Coupon').once('value', function(snapshot) {
+  //             for (x in snapshot.val()) {
+  //
+  //                 if (snapshot.val()[x].TypeCoupon === "Coupon") {
+  //                     // ------------------------------------------------------------------------------------------------------------------------------------------------
+  //                     if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
+  //
+  //                         QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
+  //                         mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
+  //                             QuantityExchanged: QuantityExchangedsu
+  //                         });
+  //                         mixpanel.track("clickCanjear", {
+  //                             "type": "Cupon",
+  //                             "Gender": IdGender,
+  //                             "User": NameUser,
+  //                             "NameCoupon": $stateParams.DescriptionID
+  //                         });
+  //                         swal({
+  //                             title: "Perfecto!",
+  //                             text: "Has cambiado tu cupón",
+  //                             type: "success",
+  //                             timer: 2000,
+  //                             showConfirmButton: false
+  //                         });
+  //                     } else {
+  //
+  //                         $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
+  //
+  //                         mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
+  //                             Status: false
+  //                         });
+  //
+  //                         swal({
+  //                                 title: 'Lo sentimos!',
+  //                                 text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
+  //                                 type: 'warning'
+  //                             },
+  //                             function(isConfirm) {
+  //                                 if (isConfirm) {
+  //
+  //                                     $scope.loading = $ionicLoading.show({
+  //                                         showBackdrop: true,
+  //                                         template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+  //                                     });
+  //
+  //                                     $ionicLoading.hide();
+  //                                     var couponPages = "#/app/playlists";
+  //                                     location.href = couponPages;
+  //                                 }
+  //                             })
+  //                     }
+  //                     // ------------------------------------------------------------------------------------------------------------------------------------------------
+  //                 } else if (snapshot.val()[x].TypeCoupon === "Fecha") {
+  //
+  //                     mixpanel.track("clickCanjear", {
+  //                         "type": "fecha",
+  //                         "Gender": IdGender,
+  //                         "User": IdUsuario,
+  //                         "NameCoupon": $stateParams.DescriptionID
+  //                     });
+  //                     QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1;
+  //                     mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
+  //                         QuantityExchanged: QuantityExchangedsu
+  //                     });
+  //                 }
+  //
+  //             }
+  //
+  //         });
+  //
+  //     };
 
-    // $scope.countCoupon = function() {
-    //         var QuantityExchangedsu = 0;
-    //         $scope.HideStyleButtonExchangePosition = "none"
-    //         $scope.HideStyleButtonExchangeBottom = "none"
-    //             // mainApp.database().ref('Cupon/'+x).update({
-    //             //       Status: false
-    //             // });
-    //
-    //
-    //         mainApp.database().ref('Coupon').once('value', function(snapshot) {
-    //             for (x in snapshot.val()) {
-    //
-    //                 if (snapshot.val()[x].TypeCoupon === "Coupon") {
-    //                     // ------------------------------------------------------------------------------------------------------------------------------------------------
-    //                     if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
-    //
-    //                         QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1
-    //                         mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-    //                             QuantityExchanged: QuantityExchangedsu
-    //                         });
-    //                         mixpanel.track("clickCanjear", {
-    //                             "type": "Cupon",
-    //                             "Gender": IdGender,
-    //                             "User": NameUser,
-    //                             "NameCoupon": $stateParams.DescriptionID
-    //                         });
-    //                         swal({
-    //                             title: "Perfecto!",
-    //                             text: "Has cambiado tu cupón",
-    //                             type: "success",
-    //                             timer: 2000,
-    //                             showConfirmButton: false
-    //                         });
-    //                     } else {
-    //
-    //                         $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
-    //
-    //                         mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-    //                             Status: false
-    //                         });
-    //
-    //                         swal({
-    //                                 title: 'Lo sentimos!',
-    //                                 text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-    //                                 type: 'warning'
-    //                             },
-    //                             function(isConfirm) {
-    //                                 if (isConfirm) {
-    //
-    //                                     $scope.loading = $ionicLoading.show({
-    //                                         showBackdrop: true,
-    //                                         template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-    //                                     });
-    //
-    //                                     $ionicLoading.hide();
-    //                                     var couponPages = "#/app/playlists";
-    //                                     location.href = couponPages;
-    //                                 }
-    //                             })
-    //                     }
-    //                     // ------------------------------------------------------------------------------------------------------------------------------------------------
-    //                 } else if (snapshot.val()[x].TypeCoupon === "Fecha") {
-    //
-    //                     mixpanel.track("clickCanjear", {
-    //                         "type": "fecha",
-    //                         "Gender": IdGender,
-    //                         "User": IdUsuario,
-    //                         "NameCoupon": $stateParams.DescriptionID
-    //                     });
-    //                     QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1;
-    //                     mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-    //                         QuantityExchanged: QuantityExchangedsu
-    //                     });
-    //                 }
-    //
-    //             }
-    //
-    //         });
-    //
-    //     };
+  $scope.$on('$ionicView.enter', function() {
 
-    $scope.$on('$ionicView.enter', function() {
-
-        colorIconsFoother = [];
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', '', 'none']);
-    });
+      colorIconsFoother = [];
+      colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', '', 'none']);
+  });
 })
 //*********************  MENU CONTROLLER  *******************************
 .controller('menuCtrl', function($scope, $stateParams) {

@@ -16,6 +16,9 @@
 - Firebase Auth check session
 - Use currency
 - Remove all unused dependencies in controllers
+- Add link to pined promotions and coupons
+- Fix tutorial views
+- Check RADISSON OFFERS.
 
 -----------------------------------------------------------------  
 - Clean variables and improve scope variables
