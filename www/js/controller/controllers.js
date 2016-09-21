@@ -738,7 +738,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 //********************** Customer CONTROLLER *****************************
-.controller('changeColorHeartCtrl', function($scope, $ionicLoading, $stateParams, Favorite) {
+.controller('changeColorHeartCtrl', function($scope, Favorite) {
 
   $scope.favorites = Favorite;
 
@@ -1201,25 +1201,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     console.log('Customer is' ,$scope.customer);
   });
 
-  $scope.ChangeColorHeart = function(customerId) {
-    console.log('calling changecolorheart', customerId);
-    //Check if customerId is in Current Users Favorites
-    if(customerId in $scope.favorites) {
-      // Switch boolean value
-      $scope.favorites[customerId] = !$scope.favorites[customerId];
-    } else {
-      $scope.favorites[customerId] = true;
-    }
-    // Save to DB
-    $scope.favorites.$save().then(function(ref){
-      console.log('Favorite. Added - ', customerId);
-    }, function(error){console.log("Error:", error)});
-  };
-
-  $scope.changeColorPinCupon = function(id) {
-
-  };
-
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "copuns",
@@ -1228,8 +1209,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
     // For to update QuantityExchanged
 
-    $scope.pix = Coupons.all($stateParams.CuponID);
-    $scope.pixels = $scope.pix[1][0].pixels;
 
     $scope.sendSms = function() {
         $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
@@ -1425,37 +1404,31 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             inline: "none"
         }];
     };
-    // ************ FUNCTION CHANGE COLOR PIN CUPON *************
-    // $scope._changeColorPinCupon = function(id, NameCoupon) {
-    //     var NamePromo = NameCoupon
-    //     var NameUser = String(IdUsuario)
-    //     var Dimensions = {
-    //         name: 'CouponPin_' + NamePromo,
-    //         user: NameUser
-    //     };
-    //     var cssColorCuponPin = document.getElementById(id).style.color;
-    //     if (cssColorCuponPin == "silver") {
-    //         mixpanel.track("ClickPin", {
-    //             "NameCategory": NamePromo,
-    //             "User": NameUser,
-    //             "Action": "Add",
-    //             "Gender": IdGender
-    //         });
-    //         document.getElementById(id).style.color = "purple";
-    //         saveCuponFavorite(IdUsuario, id)
-    //     } else {
-    //         mixpanel.track("ClickPin", {
-    //             "NameCategory": NamePromo,
-    //             "User": NameUser,
-    //             "Action": "Delete",
-    //             "Gender": IdGender
-    //         });
-    //         deleteFavoriteCupon(IdUsuario, id)
-    //         document.getElementById(id).style.color = "silver";
-    //     }
-    // };
 
 })
+
+
+.controller('pinCtrl', function($scope, Pin) {
+
+  $scope.pins = Pin;
+
+  $scope.changeColorPinCupon = function(id) {
+    //Check if customerId is in Current Users Favorites
+    if(id in $scope.pins) {
+      // Switch boolean value
+      $scope.pins[id] = !$scope.pins[id];
+    } else {
+      $scope.pins[id] = true;
+    }
+    // Save to DB
+    $scope.pins.$save().then(function(ref){
+      console.log('Pins. Changed - ', id);
+    }, function(error){console.log("Error:", error)});
+  };
+
+})
+
+
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams, DescriptionCupons, $ionicLoading) {
 

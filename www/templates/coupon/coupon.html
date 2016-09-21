@@ -63,12 +63,12 @@
 						</div>
 					</div>
 					<!-- Redirect to Offer Description -->
-					<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()">
+					<a href="#/app/descripcionCupones/{{cupon.$id}}" ng-click="llenar2()">
 						<!-- Width of the Offers Image -->
 						<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCoupon}}" alt="Promotions">
 					</a>
 					<!-- Promotion Description -->
-					<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" style="text-decoration:none" ng-click="llenar2()">
+					<a href="#/app/descripcionCupones/{{cupon.$id}}" style="text-decoration:none" ng-click="llenar2()">
 						<div class="row">
 							<p class="OfferDescriptionTitle open_sans">
 								{{cupon.Name}}
@@ -85,7 +85,7 @@
 					<div class="row pageFavoritesDivIcons">
 						<!-- Change Coupon -->
 						<div class="col-25 colPrice">
-							<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')">
+							<a class="textDecorationNone" ng-click="showCouponDescription(cupon.$id)">
 								<spam class="pageOffertExchance">
 									CANJEAR
 								</spam>
@@ -99,13 +99,13 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}}">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(cupon.ShopOnline, 'cart', cupon.Presentation)" >
 								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
 								O
 							</spam>
-							<spam class="home pageOffertsShareIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}}">
+							<spam class="home pageOffertsShareIcon" id="{{cupon.$id}}" ng-controller="pinCtrl" ng-click="changeColorPinCupon(cupon.$id)" style="color:{{pins[cupon.$id] ? 'purple':''}}">
 								W
 							</spam>
 						</div>
@@ -116,7 +116,7 @@
 			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!'}">
 				<!-- Offer Container without image -->
 				<div class="boxResponsiveWithoutImage">
-					<a href="#/app/descripcionCupones/{{cupon.IDCupon}}" ng-click="llenar2()" style="text-decoration:none">
+					<a href="#/app/descripcionCupones/{{cupon.$id}}" ng-click="llenar2()" style="text-decoration:none">
 						<div class="row">
 							<!-- Purple label and Saving Price -->
 							<div class="col col-33">
@@ -155,7 +155,7 @@
 					<div class="row pageFavoritesDivIcons">
 						<!-- Change Coupon -->
 						<div class="col-25 colPrice">
-							<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.IDCupon}}')" href="#/app/descripcionCupones/{{cupon.IDCupon}}">
+							<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.$id}}')" href="#/app/descripcionCupones/{{cupon.$id}}">
 								<spam class="pageOffertExchance">
 									CANJEAR
 								</spam>
@@ -169,13 +169,13 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}}">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(cupon.ShopOnline,'cart',cupon.Presentation)" style="display:{{cupon.Display}}">
 								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
 								O
 							</spam>
-							<spam class="home pageOffertsShareIcon" id="{{cupon.IDCupon}}" ng-click="changeColorPinCupon('{{cupon.IDCupon}}')" style="color:{{cupon.ColorPinCupon}}">
+							<spam ng-controller="pinCtrl" class="home pageOffertsShareIcon" id="{{cupon.$id}}" ng-click="changeColorPinCupon(cupon.$id)" style="color:{{cupon.ColorPinCupon}}">
 								W
 							</spam>
 						</div>
@@ -239,25 +239,18 @@
 					<!-- Footer Box -->
 					<div class="row pageFavoritesDivIcons">
 						<!-- Price -->
-						<div class="col-{{promotion.colum}} colPrice">
+						<div class="col-25 colPrice">
 							<spam class="pageFavoritesActualPrice">
-								{{promotion.promotionalPrice}}
+								Q. {{promotion.PromotionalPrice}}
 							</spam>
 						</div>
 						<!-- Before Price -->
-						<div class="col col-25" style="display:{{promotion.columDisplay}};text-align:center;padding:0px !important">
-							<table style="margin: 0 auto">
+						<div class="col col-25" style="text-align:center;padding:0px !important">
+							<table style="margin-top: 10px">
 								<tr>
 									<td>
 										<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
-											{{promotion.before}}
-										</spam>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
-											{{promotion.basePrice}}
+											Antes {{promotion.BasePrice}}
 										</spam>
 									</td>
 								</tr>
@@ -265,13 +258,13 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{promotion.ShopOnline}}','cart','{{promotion.name}}')" style="display:{{promotion.Display}}">
-								{{promotion.IconShopOnline}}
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(promotion.ShopOnline, 'cart', promotion.Name)" >
+								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
 								O
 							</spam>
-							<spam class="home pageOffertsShareIcon" id="{{promotion.ID}} {{promotion.IDpromotion}}" ng-click="changeColorPinOfferts('{{promotion.ID}}','{{promotion.IDpromotion}}','{{promotion.name}}')" style="color:{{promotion.ColorPin}}">
+							<spam class="home pageOffertsShareIcon" id="{{promotion.$id}}" ng-controller="pinCtrl" ng-click="changeColorPinCupon(promotion.$id)" style="color:{{pins[promotion.$id] ? 'purple':''}}">
 								W
 							</spam>
 						</div>
@@ -302,25 +295,18 @@
 						</a>
 					<div class="row pageFavoritesDivIcons">
 						<!-- Price -->
-						<div class="col-{{super.colum}} colPrice">
+						<div class="col-25 colPrice">
 							<spam class="pageFavoritesActualPrice">
-								{{promotion.promotionalPrice}}
+								Q. {{promotion.PromotionalPrice}}
 							</spam>
 						</div>
 						<!-- Before Price -->
-						<div class="col col-25" style="display:{{super.columDisplay}};text-align:center">
-							<table style="margin: 0 auto">
+						<div class="col col-25" style="text-align:center">
+							<table style="margin-top: 10px">
 								<tr>
 									<td>
 										<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
-											{{promotion.before}}
-										</spam>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
-											{{promotion.basePrice}}
+											Antes {{promotion.BasePrice}}
 										</spam>
 									</td>
 								</tr>
@@ -328,14 +314,14 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{promotion.ShopOnline}}','cart','{{promotion.name}}')" style="display:{{promotion.Display}}">
-								{{promotion.IconShopOnline}}
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl( promotion.ShopOnline, 'cart', promotion.Name)" >
+								j
 							</spam>
 							<!-- ng-click="popover.show($event)" -->
 							<spam class="home pageOffertsShareIcon"  ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
 								O
 							</spam>
-							<spam class="home pageOffertsShareIcon" id="{{promotion.ID}} {{promotion.IDpromotion}}" ng-click="changeColorPinOfferts('{{promotion.ID}}','{{promotion.IDpromotion}}','{{promotion.name}}')" style="color:{{promotion.ColorPin}}">
+							<spam class="home pageOffertsShareIcon" id="{{promotion.$id}}" ng-controller="pinCtrl" ng-click="changeColorPinCupon(promotion.$id)" style="color:{{pins[promotion.$id] ? 'purple':''}}">
 								W
 							</spam>
 						</div>
@@ -361,7 +347,7 @@
 					<!-- Request more Offers -->
 					<br>
 					<center>
-						<div class="col col-50 requestOffers" ng-click='askPromotion("{{chats[1][0].name}}")'>
+						<div class="col col-50 requestOffers" ng-click='askPromotion(customer.Name)'>
 							<p class="requestTextColor">Pedir mas ofertas</p>
 						</div>
 					</center>
@@ -382,7 +368,7 @@
                             B
                         </spam>
                     </a>
-                    <a id="item" class="item" id = "{{ customer.PhoneNumber }}" ng-click='call("{{ customer.PhoneNumber }}","{{ customer.Name }}")' target="_blank">
+                    <a id="item" class="item" id = "{{ customer.PhoneNumber }}" ng-click='call(customer.PhoneNumber, customer.Name)' target="_blank">
                         Llamar
                         <spam class="home pageOffertsPopoverIconsDescrpition">
                             Q

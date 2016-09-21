@@ -361,3 +361,11 @@ app.factory('Favorite', ['$firebaseObject', function($firebaseObject) {
   return $firebaseObject(ref.child('Favorites'));
 
 }]);
+
+app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
+
+	var user = firebase.auth().currentUser;
+  var ref = firebase.database().ref('Users/' + user.uid);
+  return $firebaseObject(ref.child('Pins'));
+
+}]);
