@@ -4,7 +4,7 @@
     <div class="row savedPageBoxStyle" ng-repeat="promotion in promotions" ng-if="pins[promotion.$id]">
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
-        <img class="savedPageImage" alt="PhotoSavedPromotions" src="{{promotion.Photo}}">
+        <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{promotion.Photo}}">
       </div>
       <!-- Saved Title Description -->
       <div class="col col-80 SavedDescriptionPosition">
@@ -34,7 +34,7 @@
     <div class="row savedPageBoxStyle" ng-repeat="cupon in coupons" ng-if="pins[coupon.$id]">
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
-        <img class="savedPageImage" alt="PhotoSavedPromotions" src="{{cupon.PhotoCupon._url}}">
+        <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{cupon.PhotoCupon._url}}">
       </div>
       <!-- Saved Title Description -->
       <div class="col col-80 SavedDescriptionPosition">
