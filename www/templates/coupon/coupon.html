@@ -11,7 +11,7 @@
 			<div id="GeneralPaddingCols" class="col col-33">
 				<a class="pageOffertsOffertsTitle" nav-transition="none">
 					<div class="OffersAndCouponsTabText" id="offertsFunction" ng-click="setViewCoupons(false)" style="{{!viewCoupons ? 'color:white;font-weight:bold' : ''}}">
-						Ofertas ({{customerPromotions.length}})
+						Ofertas ({{customer.QuantityPromotion}})
 						<hr class="pageFavoritesLineDecorationOffers" id="lineOffertsFunction" style="{{!viewCoupons ? 'color:white;background-color:white': ''}}">
 					</div>
 				</a>
@@ -20,7 +20,7 @@
 			<div id="GeneralPaddingCols" class="col col-33 CouponsTabOption">
 				<a class="pageOffertsOffertsTitle" nav-transition="none">
 					<div class="OffersAndCouponsTabText" ng-click="setViewCoupons(true)" style="{{viewCoupons ? 'color:white;font-weight:bold' : ''}}">
-						Cupones ({{ customerCoupons.length }})
+						Cupones ({{ customer.QuantityCoupon }})
 						<hr class="pageFavoritesLineDecorationOffers" style="{{viewCoupons ? 'color:white;background-color:white': ''}}">
 					</div>
 				</a>
@@ -43,7 +43,7 @@
 	<ion-content class="generalBackgroundFavorite" nav-transition="none">
 
 		<div ng-if="viewCoupons"> <!-- Coupons With Image -->
-			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!!'}">
+			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!!'}" ng-if="cupon.Status">
 				<div class="OffersContainer">
 					<!-- Label Price -->
 					<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
@@ -62,12 +62,12 @@
 						</div>
 					</div>
 					<!-- Redirect to Offer Description -->
-					<a href="#/app/descripcionCupones/{{cupon.$id}}" ng-click="llenar2()">
+					<a href="#/app/descripcionCupones/{{cupon.$id}}" >
 						<!-- Width of the Offers Image -->
 						<img class="imageOffertsAndCoupons" src="{{cupon.PhotoCoupon}}" alt="Promotions">
 					</a>
 					<!-- Promotion Description -->
-					<a href="#/app/descripcionCupones/{{cupon.$id}}" style="text-decoration:none" ng-click="llenar2()">
+					<a href="#/app/descripcionCupones/{{cupon.$id}}" style="text-decoration:none" >
 						<div class="row">
 							<p class="OfferDescriptionTitle open_sans">
 								{{cupon.Name}}
@@ -112,7 +112,7 @@
 				</div>
 			</div>
 			<!-- Coupons without image -->
-			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!'}">
+			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!'}" ng-if="cupon.Status">
 				<!-- Offer Container without image -->
 				<div class="boxResponsiveWithoutImage">
 					<a href="#/app/descripcionCupones/{{cupon.$id}}" ng-click="llenar2()" style="text-decoration:none">
@@ -204,25 +204,27 @@
 
 		<div ng-if="!viewCoupons">
 			<!-- Offers With Image -->
-			<div ng-repeat="promotion in customerPromotions | filter: {Photo:'!!'}">
-				<div class="OffersContainer">
-					<!-- Label Price -->
-					<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{promotion.display}};">
-					<!-- Price Text Offers -->
-					<div class="row BoxPriceLabel">
-						<div class="col col-33 BoxLabel">
-							<p id="NothingSpace" class="cuponsDescriptionsLabelExchance" style="display:{{promotion.display}};">
-								Ahorra
-							</p>
-							<p class="pageFavoritesSavingPrice">
-								Q. {{promotion.BasePrice - promotion.PromotionalPrice}}
-							</p>
+			<div ng-repeat="promotion in customerPromotions | filter: {Photo:'!!'}" ng-if="promotion.Status">
+				<div class="OffersContainer" >
+					<div ng-if="promotion.TypePromotion == 'DirectDiscount'">
+						<!-- Label Price -->
+						<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" >
+						<!-- Price Text Offers -->
+						<div class="row BoxPriceLabel">
+							<div class="col col-33 BoxLabel">
+								<p id="NothingSpace" class="cuponsDescriptionsLabelExchance" >
+									Ahorra
+								</p>
+								<p class="pageFavoritesSavingPrice">
+									Q. {{promotion.BasePrice - promotion.PromotionalPrice}}
+								</p>
+							</div>
 						</div>
 					</div>
 					<!-- Redirect to Offer Description -->
 					<a href="#/app/descripcionOfertas/{{promotion.$id}}" style="text-decoration:none">
 						<!-- Width of the Offers Image -->
-						<img class="imageOffertsAndCoupons" V ng-src="{{promotion.Photo}}" alt="Promotions">
+						<img class="imageOffertsAndCoupons" ng-src="{{promotion.Photo}}" ng-if="promotion.Photo" alt="Promotions">
 					</a>
 					<!-- Promotion Description -->
 					<div class="row">
@@ -238,27 +240,38 @@
 					</div>
 					<!-- Footer Box -->
 					<div class="row pageFavoritesDivIcons">
+							<!-- Price -->
+							<div class="col-25 colPrice" ng-if="promotion.TypePromotion == 'DirectDiscount'">
+								<spam class="pageFavoritesActualPrice">
+									Q. {{promotion.PromotionalPrice}}
+								</spam>
+							</div>
+							<!-- Before Price -->
+							<div class="col col-25" style="text-align:center;padding:0px !important" ng-if="promotion.TypePromotion == 'DirectDiscount'">
+								<table style="margin-top: 10px">
+									<tr>
+										<td>
+											<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
+												Antes {{promotion.BasePrice}}
+											</spam>
+										</td>
+									</tr>
+								</table>
+							</div>
+
 						<!-- Price -->
-						<div class="col-25 colPrice">
-							<spam class="pageFavoritesActualPrice">
-								Q. {{promotion.PromotionalPrice}}
+						<div class="col-100 colPrice" ng-if="promotion.TypePromotion != 'DirectDiscount'">
+							<spam ng-if="promotion.TypePromotion == 'Percentage'">
+								Descuento {{promotion.Percentage}}%
+							</spam>
+							<spam ng-if="promotion.TypePromotion == 'SpecialPromotion'">
+								Promoción Especial
 							</spam>
 						</div>
-						<!-- Before Price -->
-						<div class="col col-25" style="text-align:center;padding:0px !important">
-							<table style="margin-top: 10px">
-								<tr>
-									<td>
-										<spam class="pageFavoritesBeforePrice" style="color:silver;font-size:12px;">
-											Antes {{promotion.BasePrice}}
-										</spam>
-									</td>
-								</tr>
-							</table>
-						</div>
+						<div class="col"></div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(promotion.ShopOnline, 'cart', promotion.Name)">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(promotion.ShopOnline, 'cart', promotion.Name)" ng-if="promotion.ShopOnline">
 								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
@@ -269,10 +282,11 @@
 							</spam>
 						</div>
 					</div>
+					<!-- END Footer Box -->
 				</div>
 			</div>
 			<!-- Offers without image -->
-			<div ng-repeat="promotion in customerPromotions | filter: {Photo:'!'}">
+			<div ng-repeat="promotion in customerPromotions | filter: {Photo:'!'}" ng-if="promotion.Status">
 				<!-- Offer Container without image -->
 				<div class="boxResponsiveWithoutImage">
 					<a href="#/app/descripcionOfertas/{{promotion.$id}}" style="text-decoration:none">

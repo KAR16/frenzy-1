@@ -116,17 +116,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-	//TODO check this does not break anythin
-	// ******* OFFERS *******
-	// .state('app.browse', {
-	// 	url: "/ofertas/:superId",
-	// 	views: {
-	// 		'menuContent': {
-	// 			templateUrl: "templates/offers/offers.html",
-	// 			controller: 'currentPromotionCtrl'
-	// 		}
-	// 	}
-	// })
+
 	// // ****************  OFFERTS DESCRIPTION  *************
 	.state('app.descripcionOfertas', {
 		url: "/descripcionOfertas/:promotionId",

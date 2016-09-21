@@ -31,3 +31,281 @@
   position: relative;
   top: 3px;
 }
+
+/* promotional Price Style*/
+.colPrice {
+  margin-left:5px;
+  display: flex;
+  /* Alineacion vertical */
+  align-items: center;
+   /* Alineacion horizontal */
+  justify-content: center;
+  font-size:18px;
+}
+
+/*Centered Tab Options*/
+#positive.positive {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+/*Offers Tab*/
+.pageOffertsOffertsTitle {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+.pageFavoritesLineDecorationOffers {
+  color:#D8D8D8;
+  background-color:#D8D8D8;
+  border-style:solid;
+  font-weight:lighter;
+	height: 3px;
+}
+/*To Move Bottom Offers Tab*/
+.OffersAndCouponsTabText {
+  padding: 0 !important;
+  /*margin-top: 5px;*/
+}
+/*Space between Offers and Coupons Tab*/
+.CouponsTabOption {
+  margin-left:5%;
+}
+/*Circle Popover Style*/
+.popoverButton {
+  color: white;
+  background-color: #3F51B5;
+  border-radius: 22px;
+  height: 50px;
+  width: 50px;
+  float: right;
+  margin-right: 10%;
+  border-style: none;
+  box-shadow: 0px 2px 10px 1px #585858;
+}
+/*Popover Icon with Centered Style*/
+.PopoverIcon {
+  width: 20px;
+  display: flex;
+  margin: 0 auto;
+}
+/*Offers Container Style*/
+.OffersContainer {
+  margin-top: 7%;
+  margin-bottom: 7%;
+  margin-left: 5%;
+  background-color: white;
+  width: 90%;
+  height: 80%;
+  box-shadow: 3px 3px 2px #BDBDBD;
+}
+/*Label Price Offers Style*/
+.labelOfferts {
+  height: 85px;
+  width: 130px;
+  position: absolute;
+}
+/*Text Label Vertical Centered*/
+.BoxPriceLabel {
+	position:absolute;
+}
+/*Ahorra Text Style*/
+.AhorraTextLabel {
+	font-size:16px;
+	color:#E6E2E2;
+}
+/*Offer Price Text Style*/
+.SavingPriceLabel {
+	font-size:18px;
+	color:white;
+	font-weight:bold;
+}
+/*Total Width for the Offers And Coupon Images*/
+.imageOffertsAndCoupons {
+    width: 100%;
+}
+/*Offers Description Title*/
+.OfferDescriptionTitle {
+	font-size:20px;
+	color:black;
+	/*margin-left:10px;*/
+  margin: -5px 0 5px 10px;
+}
+/*Offers Description*/
+.pageFavoritesDescription {
+  width: 94%;/*Width of the Description Container*/
+  font-size:13px;
+  text-align: justify;
+	color:#BDBDBD;
+  /*-3px top, 5px bottom And 10px Left*/
+  margin: -3px 0 5px 10px;
+}
+/*Footer Box for Each Promotion and Coupon*/
+.pageFavoritesDivIcons {
+	background-color:white;
+	border-style: solid;
+	border-top:1px solid #F1F2F2;
+  padding: 0px;
+  height: 45px;
+}
+/* promotional Price Style*/
+.colPrice {
+  margin-left:5px;
+  display: flex;
+  /* Alineacion vertical */
+  align-items: center;
+   /* Alineacion horizontal */
+  justify-content: center;
+  font-size:18px;
+}
+/*Base Price Promotion Style*/
+.pageFavoritesBeforePrice {
+	font-size:13px;
+	color:#A7A9AC;
+}
+/*Style for to Center all icons Footer Box*/
+.iconsFooterBox {
+  text-align: center;
+  display: flex;
+  /* Alineacion vertical */
+  align-items: center;
+   /* Alineacion horizontal */
+  justify-content: center;
+}
+/*Style for All icons of the Footer Box*/
+.pageOffertsShareIcon {
+  color: silver;
+  padding: 0px 5px 0px 5px;
+  font-size: 30px;
+  margin-top: -5px;
+}
+/*Offer Container without image style*/
+[class*='relacion'] {} .boxResponsiveWithoutImage {
+  background-color: white;
+  width: 90%;
+  height: 80%;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  margin-left: 5%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #E6E6E6;
+  border-style: none;
+  box-shadow: 3px 3px 2px #BDBDBD;
+}
+/*Width and Height Label Price*/
+.pageOffertsWithoutImageLabel {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    display: table;
+}
+/*Ahorra Title Without image*/
+.pageOffertsTitleLabelWithoutImage {
+  font-size: 16px;
+  color: #D5D7DD;
+}
+/*Price without image Text*/
+.pageOffertsPriceLabelWithoutImage {
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+}
+/*Center Price Description*/
+.labelPriceDescription {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+/*Title Description for Offers without image*/
+.pageOffertsTitleDescriptionWithoutImage {
+  font-size: 20px;
+  color: black;
+}
+/*Text Description for Offers without image*/
+.pageFavoritesDescriptionWithoutImage {
+  width: 95%;/*Width of the Description Container*/
+  font-size:13px;
+  text-align: justify;
+  color:#BDBDBD;
+  margin-top: 5px;
+}
+/*Request Button Style*/
+.requestOffers{
+  background-color: #00DDC1;
+  height: 35px;
+  border-radius: 12px;
+  border:none;
+  border-bottom: thick solid #00C6AD;
+  display: table;
+}
+.requestOffers:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+/*Text Centered Reques Button Style*/
+.requestTextColor {
+  color: white;
+  display: table-cell;
+  vertical-align: middle;
+}
+/*Blue Popover Position and General Styles*/
+#bluePopover.bluePopover {
+  width:180px;
+  margin-top:15px !important;
+  margin-left: -12px !important;
+  top: 89px !important;
+}
+#list.list {
+  line-height: 15px;
+}
+#item.item {
+  text-align:right;
+  color:silver;
+}
+/*Icon Size inside Blue Popover*/
+.pageOffertsPopoverIconsDescrpition {
+  font-size: 30px;
+}
+/*Offer Share Title*/
+.secondPopoverTitle {
+  font-size: 17px;
+  font-weight: 900;
+  color: #263147;
+}
+.PaddingShare {
+  text-align:center;
+  padding:5px
+}
+/*Offer Share Text Styles*/
+.secondPopoverText {
+  font-size: 14px;
+  color: #A7A9AC;
+}
+/*Size and Position of the Share Popover*/
+.SharePopover {
+  margin-left: -12px !important;
+  padding: 5px;
+  height:auto;
+  width:250px;
+}
+
+.BoxLabel {
+  position: absolute;
+  height: 65px;
+  width: 120px;
+  text-align: center;
+  left: 0;
+  padding-left: 0;
+  padding-top: 5px !important;
+}
+
+.noExiste {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}

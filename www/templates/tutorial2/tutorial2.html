@@ -3,20 +3,20 @@
   height: 100%;
 }
 </style>
-<ion-slide-box class="backgroundTutorial" does-continue="true" on-slide-changed="slideChanged(index)" show-pager="false">
+<ion-slides class="backgroundTutorial" options="options" slider="slider">
   <!-- Secuencial Slide -->
-  <ion-slide>
+  <ion-slide-page>
     <div class="backgroundTutorialSecuencial open_sans verticalAndHorizontalCenteredObjects" >
       <img class="frenzyImage" src="img/frenzy.png" alt="nissan">
-    </div
+    </div>
     <!-- Triangles Div -->
     <div class="containerZigzag zigzag slide-image-center">
       <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
-  </ion-slide>
+  </ion-slide-page>
   <!-- First Slide -->
-  <ion-slide>
-    <div class="backgroundTutorial1 open_sans" >
+  <ion-slide-page >
+    <div class="backgroundTutorial open_sans" >
       <!-- House Icon -->
       <img class="iconTutorial" src="img/house.png" alt="HouseIconFrenzy">
       <!-- Titles -->
@@ -28,9 +28,9 @@
     <div class="containerZigzag zigzag slide-image-center">
       <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
-  </ion-slide>
+  </ion-slide-page>
   <!-- Second Slide -->
-  <ion-slide on-slide-changed="slideChanged(index)">
+  <ion-slide-page >
     <div class="backgroundTutorial2 open_sans" >
       <!-- Pig Icon -->
       <img class="iconTutorial" src="img/cerdo.png" alt="PigIconFrenzy">
@@ -41,10 +41,10 @@
         <!-- General Promotions for Average -->
         <div class="row">
           <!-- Offers and Promotions for Average -->
-          <div class="row tutorialCustomerColumns" ng-controller='TutorialCostumer'>
+          <div class="row tutorialCustomerColumns">
             <!-- If find offers or promotions -->
-            <div id="GeneralPaddingCols" class="col col-50" ng-repeat="customer in TutorialPromotion | orderBy:'-suma' | limitTo:6">
-              <tutorial-info info="customer"></tutorial-info>
+            <div id="GeneralPaddingCols" class="col col-50" ng-repeat="customer in customers | orderBy:'-(customer.QuantityCoupon + customer.QuantityPromotion)' | limitTo:6">
+              <tutorial-info customer="customer"></tutorial-info>
             </div>
           </div>
         </div>
@@ -54,9 +54,9 @@
     <div class="containerZigzag zigzag slide-image-center">
       <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
-  </ion-slide>
+  </ion-slide-page>
   <!-- Third Slide -->
-  <ion-slide  on-slide-changed="slideChanged(index)">
+  <ion-slide-page >
     <div class="backgroundTutorial3 open_sans" >
       <!-- Frenzy Phone Icon -->
       <img class="iconTutorial" src="img/telefono.png" alt="FrenzyPhone">
@@ -69,5 +69,5 @@
     <div class="containerZigzag zigzag slide-image-center">
       <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
     </div>
-  </ion-slide>
-</ion-slide-box>
+  </ion-slide-page>
+</ion-slides>

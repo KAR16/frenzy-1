@@ -1008,7 +1008,7 @@ $scope.$on('$ionicView.enter', function() {
                 $state.go('loginAndRegister');
                 break;
         }
-    }
+    };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     var FireCustomer;
@@ -1017,57 +1017,50 @@ $scope.$on('$ionicView.enter', function() {
     var countC = 0;
     secondaryApp.database().ref('Customer').on('value', function(snapshot) {
         FireCustomer = snapshot.val();
-        for (x in snapshot.val()) {
-            CustomerF[countC] = snapshot.val()[x]
-            CustomerF[countC]["suma"] = snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
-            countC++
-        }
-        countC = 0
-    });
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $scope.TutorialPromotion = CustomerF;
-}])
-/*************************  TUTORIAL NO.2 ******************************/
-.controller('tutorial2Controller', ['$scope', '$state', function($scope, $state) {
-    $scope.slideChanged = function(index) {
-        switch (index) {
-            case 0:
-                $state.go('app.herramientas');
-                break;
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var FireCustomer;
-    var CustomerF = [];
-
-    var countC = 0;
-    secondaryApp.database().ref('Customer').on('value', function(snapshot) {
-        FireCustomer = snapshot.val();
-        for (x in snapshot.val()) {
-            CustomerF[countC] = snapshot.val()[x]
-            CustomerF[countC]["suma"] = snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"]
-            countC++
+        for (var x in snapshot.val()) {
+            CustomerF[countC] = snapshot.val()[x];
+            CustomerF[countC]["suma"] = snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"];
+            countC++;
         }
         countC = 0;
     });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $scope.TutorialPromotion = CustomerF;
 }])
+/*************************  TUTORIAL NO.2 ******************************/
+.controller('tutorial2Controller', ['$scope', '$state', 'Customer', function($scope, $state, Customer) {
+
+    $scope.customers = Customer;
+
+    $scope.options = {
+      loop: true,
+      effect: 'fade',
+      speed: 500
+    };
+
+    $scope.slider = null;
+    $scope.$watch('slider', function(newVal, oldVal) {
+      console.log(newVal, oldVal);
+      if (newVal !== null) {
+        $scope.slider.on('slideChangeEnd', function() {
+          $scope.slider.currentPage = $scope.slider.activeIndex;
+          //use $scope.$apply() to refresh any content external to the slider
+          $scope.$apply();
+        });
+      }
+    });
+
+}])
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
-    var NameUser = String(IdUsuario)
-    var Dimensions = {
-        name: 'tools',
-        user: NameUser
-    };
+    var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Tools",
         "Gender": IdGender,
         "User": NameUser
     });
     $scope.AnalyticsTools = function(id) {
-        var NameUser = String(IdUsuario)
+        var NameUser = String(IdUsuario);
         var dimensions = {
             name: 'tools_' + id,
             user: NameUser
