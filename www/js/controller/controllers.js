@@ -1034,23 +1034,27 @@ $scope.$on('$ionicView.enter', function() {
 
     $scope.customers = Customer;
 
-    $scope.options = {
-      loop: true,
-      effect: 'fade',
-      speed: 500
-    };
+  $scope.data = {};
 
-    $scope.slider = null;
-    $scope.$watch('slider', function(newVal, oldVal) {
-      console.log(newVal, oldVal);
-      if (newVal !== null) {
-        $scope.slider.on('slideChangeEnd', function() {
-          $scope.slider.currentPage = $scope.slider.activeIndex;
-          //use $scope.$apply() to refresh any content external to the slider
-          $scope.$apply();
-        });
-      }
-    });
+  $scope.data.sliderOptions = {
+    initialSlide: 0,
+    direction: 'horizontal', //or vertical
+    speed: 300 //0.3s transition
+  };
+
+  //create delegate reference to link with slider
+  $scope.data.sliderDelegate = null;
+
+  //watch our sliderDelegate reference, and use it when it becomes available
+  $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
+    if (newVal !== null) {
+      $scope.data.sliderDelegate.on('slideChangeEnd', function() {
+        $scope.data.currentPage = $scope.data.sliderDelegate.activeIndex;
+        //use $scope.$apply() to refresh any content external to the slider
+        $scope.$apply();
+      });
+    }
+  });
 
 }])
 /******************************************************/
@@ -1225,7 +1229,7 @@ $scope.$on('$ionicView.enter', function() {
                                         Birthday: success.birthday,
                                         Hometown: success.hometown,
                                         IdFacebook: success.id
-                                    })
+                                    });
 
                                     $state.go('app.playlists');
                                 }, function(error) {
@@ -1241,4 +1245,4 @@ $scope.$on('$ionicView.enter', function() {
 
     };
     // //===============/LOGIN WITH FB==========//
-})
+});
