@@ -7,7 +7,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	$ionicConfigProvider.tabs.position('bottom');
 })
 // ************************ CORDOVA PLUGINS START LOAD ************************
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
 
 		$ionicPlatform.ready(function() {
 
@@ -32,7 +32,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 						});
 				}
 		}, 100);
-
 })
 
 // ************************ ROUTER PROVIDER CONFIGURATION ************************

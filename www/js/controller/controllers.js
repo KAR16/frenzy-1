@@ -276,8 +276,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }
     }
 })
+
+//*********************  MENU CONTROLLER  *******************************
+.controller('menuCtrl', function($scope, $state) {
+
+
+})
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('HomeCtrl', function($scope, $ionicLoading, $timeout, $firebaseArray) {
+.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray) {
 
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
@@ -303,9 +309,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           $ionicLoading.hide();
       }, 2000);
 
-      // Change footer colors
-      colorIconsFoother = [];
-      colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none', 'none']);
+      $scope.$parent.data = {
+    			heading: '',
+    			image: 'img/icn-35.png',
+    			footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
+    			backButton: false
+      };
+
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
@@ -314,6 +324,22 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.favorites = Favorite;
   $scope.customers = Customer;
   $scope.promotions = Promotion;
+
+
+  $scope.favoritesCount = 0;
+
+  $scope.favorites.$watch(function(event) {
+    $scope.favoritesCount = 0;
+    for(var i in $scope.customers) {
+      var customer = $scope.customers[i];
+      console.log(customer);
+      if ($scope.favorites[customer.$id] === true) {
+        $scope.favoritesCount += 1;
+      }
+    }
+    console.log($scope.favoritesCount);
+  });
+
 
     /*************************************************/
     var NameUser = String(IdUsuario);
@@ -325,8 +351,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         /**************************************************/
 
     $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = [];
-        colorIconsFoother.push(['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
+      $scope.$parent.data = {
+          heading: '',
+          image: 'img/icn-35.png',
+          footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
+          backButton: false
+      };
     });
 
 })
@@ -359,12 +389,16 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           $scope.pinsCount += 1;
         }
       }
+      console.log($scope.pinsCount);
     });
 
-
     $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = [];
-        colorIconsFoother.push(['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC', '', 'img/icn-35.png', '', 'none']);
+      $scope.$parent.data = {
+          heading: '',
+          image: 'img/icn-35.png',
+          footerIconColors: ['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC'],
+          backButton: false
+      };
     });
 
 })
@@ -414,7 +448,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 //////////////////////
-.controller('CustomerCtrl', function($scope, $ionicLoading, $stateParams, Customer) {
+.controller('CustomerCtrl', function($scope, $rootScope, $ionicLoading, $stateParams, Customer) {
 
     $scope.customers = Customer;
     $scope.category = $stateParams.IDcustomer;
@@ -442,8 +476,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             $ionicLoading.hide();
         }, 800);
 
-        colorIconsFoother = [];
-        colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.category, '', 'none', ]);
+        $scope.$parent.data = {
+            heading: $scope.category,
+            image: '',
+            footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
+            backButton: true
+        };
+
     });
 })
 ///////////
@@ -524,10 +563,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         break;
       }
     }
-
-    colorIconsFoother = [];
-    colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', $scope.customerId, '', 'none']);
-    console.log('Customer is' ,$scope.customer);
   });
 
     var NameUser = String(IdUsuario);
@@ -727,6 +762,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }];
     };
 
+    $scope.$on('$ionicView.enter', function() {
+      $scope.$parent.data = {
+          heading: $scope.customerId,
+          image: '',
+          footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
+          backButton: true
+      };
+    });
+
 })
 
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
@@ -857,36 +901,25 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   $scope.$on('$ionicView.enter', function() {
 
-      colorIconsFoother = [];
-      colorIconsFoother.push(['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC', '', '', 'none']);
+    $scope.$parent.data = {
+        heading: '',
+        image: '',
+        footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
+        backButton: false
+    };
+
   });
 })
-//*********************  MENU CONTROLLER  *******************************
-.controller('menuCtrl', function($scope, $stateParams) {
 
-    $scope.$on('$ionicView.enter', function() {
-        $scope.footerChangeColor = colorIconsFoother;
-    });
-})
 //*****************	POPOVER CONTROLLER FOR OFFERS	*******************************
 .controller('PopoverCtrl', function($scope, $ionicPopover) {
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
         scope: $scope,
     }).then(function(popover) {
         $scope.popover = popover;
-        $scope.message = 'hello';
     });
 })
-//*****************	POPOVER CONTROLLER FOR COUPONS	*******************************
-// .controller('PopoverCtrl2', function($scope, $ionicPopover) {
-//     $ionicPopover.fromTemplateUrl('templates/popover2.html', {
-//         scope: $scope,
-//     }).then(function(popover) {
-//         $scope.popover = popover;
-//     });
-//
-//
-// })
+
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
     $scope.Analytics = function(id, nameShare) {
@@ -914,7 +947,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         scope: $scope,
     }).then(function(popover) {
         $scope.popover = popover;
-        $scope.message = 'cheers';
     });
 })
 
@@ -1086,16 +1118,12 @@ $scope.$on('$ionicView.enter', function() {
     });
     $scope.AnalyticsTools = function(id) {
         var NameUser = String(IdUsuario);
-        var dimensions = {
-            name: 'tools_' + id,
-            user: NameUser
-        };
         mixpanel.track("ClickOtros", {
             "type": id,
             "Gender": IdGender,
             "User": NameUser
         });
-    }
+    };
     $scope.logout = function() {
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
@@ -1107,8 +1135,12 @@ $scope.$on('$ionicView.enter', function() {
 
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-        colorIconsFoother = []
-        colorIconsFoother.push(['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5', '', 'img/icn-35.png', '', 'none']);
+      $scope.$parent.data = {
+          heading: '',
+          image: 'img/icn-35.png',
+          footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5'],
+          backButton: false
+      };
     });
 }])
     /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
