@@ -1,5 +1,4 @@
 var displayNoneInline = [];
-var colorIconsFoother = [];
 var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
 
@@ -325,10 +324,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.customers = Customer;
   $scope.promotions = Promotion;
 
+  var customersLoaded = false;
 
-  $scope.favoritesCount = 0;
+  $scope.customers.$loaded(function(){
+    getFavoriteCount();
+    customersLoaded = true;
+  });
 
-  $scope.favorites.$watch(function(event) {
+  var getFavoriteCount = function() {
     $scope.favoritesCount = 0;
     for(var i in $scope.customers) {
       var customer = $scope.customers[i];
@@ -337,9 +340,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.favoritesCount += 1;
       }
     }
-    console.log($scope.favoritesCount);
-  });
+  };
 
+  $scope.favoritesCount = 0;
+  $scope.favorites.$watch(function(event) {
+    if (customersLoaded === true) {
+      getFavoriteCount();
+    }
+  });
 
     /*************************************************/
     var NameUser = String(IdUsuario);
@@ -373,9 +381,37 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.promotions = Promotion;
     $scope.coupons = Coupon;
 
-    $scope.pinsCount = 0;
+    var promotionsLoaded = false;
+    var couponsLoaded = false;
+    $scope.contentLoaded = false;
 
+    $scope.promotions.$loaded(function(){
+      promotionsLoaded = true;
+      if (couponsLoaded) {
+        getPinCount();
+        $scope.contentLoaded = true;
+      }
+    });
+    $scope.coupons.$loaded(function(){
+      couponsLoaded = true;
+      if (promotionsLoaded) {
+        getPinCount();
+        $scope.contentLoaded = true;
+      }
+    });
+
+    $scope.pinsCount = 0;
+    console.log($scope.pinsCount);
     $scope.pins.$watch(function(event) {
+
+      if ($scope.contentLoaded) {
+        getPinCount();
+      }
+
+    });
+
+
+    var getPinCount = function() {
       $scope.pinsCount = 0;
       for(var i in $scope.promotions) {
         var promotion = $scope.promotions[i];
@@ -390,7 +426,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }
       }
       console.log($scope.pinsCount);
-    });
+    };
+
 
     $scope.$on('$ionicView.enter', function() {
       $scope.$parent.data = {
