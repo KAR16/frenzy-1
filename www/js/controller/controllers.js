@@ -1087,7 +1087,10 @@ $scope.$on('$ionicView.enter', function() {
     $state.go('app.playlists');
 }])
 /*************************  TUTORIAL  ******************************/
-.controller('tutorialController', ['$scope', '$state', function($scope, $state) {
+.controller('tutorialController', ['$scope', '$state', function($scope, $state, Customer) {
+
+  $scope.customers = Customer;
+
     var guate = moment.tz("America/Guatemala");
     mixpanel.track("viewTurorial");
     // IdUsuario of Facebook or Frenzy for Pines and hearts
@@ -1100,27 +1103,11 @@ $scope.$on('$ionicView.enter', function() {
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var FireCustomer;
-    var CustomerF = [];
-
-    var countC = 0;
-    secondaryApp.database().ref('Customer').on('value', function(snapshot) {
-        FireCustomer = snapshot.val();
-        for (var x in snapshot.val()) {
-            CustomerF[countC] = snapshot.val()[x];
-            CustomerF[countC]["suma"] = snapshot.val()[x]["QuantityCoupon"] + snapshot.val()[x]["QuantityPromotion"];
-            countC++;
-        }
-        countC = 0;
-    });
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $scope.TutorialPromotion = CustomerF;
 }])
 /*************************  TUTORIAL NO.2 ******************************/
 .controller('tutorial2Controller', ['$scope', '$state', 'Customer', function($scope, $state, Customer) {
 
-    $scope.customers = Customer;
+  $scope.customers = Customer;
 
   $scope.data = {};
 
