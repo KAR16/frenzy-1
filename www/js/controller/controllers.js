@@ -365,6 +365,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
           backButton: false
       };
+      $scope.$apply();
     });
 
 })
@@ -436,6 +437,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC'],
           backButton: false
       };
+      $scope.$apply();
     });
 
 })

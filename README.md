@@ -19,6 +19,9 @@
   - Move configs to top of app.js
   - Move Firebase to services
 
+- Improved title and icons info from view to view
+- Fixed issue with Pins and Favorites message when none exist
+
 ----------------------------------------------------------------
 
 
