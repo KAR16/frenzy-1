@@ -8,8 +8,8 @@
 		<!-- Tabs -->
 		<!-- Offers Tab  -->
 		<div class="row">
-			<div id="GeneralPaddingCols" class="col col-33">
-				<a class="pageOffertsOffertsTitle" nav-transition="none">
+			<div id="GeneralPaddingCols" class="col col-33" ng-if="customerPromotions.length > 0">
+				<a class="pageOffertsOffertsTitle" nav-transition="none" >
 					<div class="OffersAndCouponsTabText" id="offertsFunction" ng-click="setViewCoupons(false)" style="{{!viewCoupons ? 'color:white;font-weight:bold' : ''}}">
 						Ofertas ({{customer.QuantityPromotion}})
 						<hr class="pageFavoritesLineDecorationOffers" id="lineOffertsFunction" style="{{!viewCoupons ? 'color:white;background-color:white': ''}}">
@@ -17,8 +17,8 @@
 				</a>
 			</div>
 			<!--  Coupon Tab -->
-			<div id="GeneralPaddingCols" class="col col-33 CouponsTabOption">
-				<a class="pageOffertsOffertsTitle" nav-transition="none">
+			<div id="GeneralPaddingCols" class="col col-33 CouponsTabOption" ng-if="customerCoupons.length > 0">
+				<a class="pageOffertsOffertsTitle" nav-transition="none" >
 					<div class="OffersAndCouponsTabText" ng-click="setViewCoupons(true)" style="{{viewCoupons ? 'color:white;font-weight:bold' : ''}}">
 						Cupones ({{ customer.QuantityCoupon }})
 						<hr class="pageFavoritesLineDecorationOffers" style="{{viewCoupons ? 'color:white;background-color:white': ''}}">
@@ -182,22 +182,6 @@
 							</spam>
 						</div>
 					</div>
-				</div>
-			</div>
-			<!-- If doesn't exist offers -->
-			<div ng-if="customerCoupons.length < 1" class="noExiste">
-				<div class="open_sans">
-					<!-- Uh-uh Icon -->
-					<p class="home savedPageNoItemsIcon">
-						f
-					</p>
-					<!-- Description -->
-					<p class="savedPageNoItemsTitle">
-						Uh-uH
-					</p>
-					<p class="savedPageNoItemsDescription">
-						Aun no tenemos ofertas disponibles para ti,<br> Espera porque pronto tendremos las mejores ofertas<br> para que puedas disfrutarlas.
-					</p>
 				</div>
 			</div>
 		</div>
@@ -392,7 +376,7 @@
                     B
                 </spam>
             </a>
-						<a id="item" class="item" id="{{ customer.PhoneNumber }}" ng-click='call(customer.PhoneNumber, customer.Name)' target="_blank">
+						<a id="item" class="item" id="{{ customer.PhoneNumber }}" href="tel:{{ customer.PhoneNumber }}" target="_blank">
                 Llamar
                 <spam class="home pageOffertsPopoverIconsDescrpition">
                     Q

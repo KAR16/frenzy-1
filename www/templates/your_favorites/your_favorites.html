@@ -25,7 +25,7 @@
   <!-- Your Favorites Container -->
   <ion-content class="backgroundCategories" ng-controller="AllFavoriteCtrl" >
     <!-- Customer Info Container -->
-    <div id="GeneralPaddingCols0" class="col" ng-repeat="customer in customers | orderBy:'-(QuantityCoupon + QuantityPromotion)'" ng-if="favorites[customer.$id]">
+    <div id="GeneralPaddingCols0" class="col" ng-repeat="customer in customers | filter:filterFavorite |orderBy:'-(QuantityCoupon + QuantityPromotion)'" >
       <a style="text-decoration:none;" nav-transition="none" >
         <div class="row pageYourFavoritesGreyLine">
           <!-- Heart Icon -->
@@ -43,7 +43,7 @@
         </div>
       </a>
       <!-- Your Favorite Saved Container -->
-      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promotion in promotions | filter:{'Provider': customer.Name}">
+      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promotion in promotions | filter:{'Provider': customer.Name} | limitTo:2">
         <div id="GeneralPaddingCols0" class="col col-80">
           <!-- Your Favorite Customer Title -->
           <p class="overFlowText pageYourFavoritesOffert">

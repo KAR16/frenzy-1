@@ -1,7 +1,7 @@
 <ion-view>
   <ion-content>
     <!-- Promotion Saved -->
-    <div class="row savedPageBoxStyle" ng-repeat="promotion in promotions" ng-if="pins[promotion.$id]">
+    <div class="row savedPageBoxStyle" ng-repeat="promotion in promotions | filter:filterPinned" >
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
         <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{promotion.Photo}}">
