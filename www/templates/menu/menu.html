@@ -17,7 +17,7 @@
           <!-- Back Button -->
           <button id="styleBackButton" class="ion-chevron-left button-clear styleBackButton" ng-if="data.backButton" onclick="goBack()" nav-transition="none"></button>
           <!-- Header Text -->
-          <span class="categoriesHeaderText">{{data.heading}}<img class="frenzyTitlePageStart" ng-src="{{data.image}}" ng-if="data.image"></span>
+          <span class="categoriesHeaderText">{{data.heading | removeDashes}}<img class="frenzyTitlePageStart" ng-src="{{data.image}}" ng-if="data.image"></span>
         </div>
       </ion-header-bar>
       <!-- Principal Footer for Home, Heart, Pin and Tools views -->

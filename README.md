@@ -25,6 +25,16 @@
 ----------------------------------------------------------------
 
 
+- Totorial2 salir con otra vista
+- Ense;ar mensaje de no hay en Categoria
+- Ordenar los clientes por cantidad de cupones en ambos tutoriales
+- Mensaje en Customer que no hay. Si da click enviar a analytics y agregar como favorito.
+- Customer title change - to " "
+- Favorites don't display Status false
+- Loading stops before categories show
+
+
+
 - Move Firebse Auth to Service.
 - Firebase Auth check session
 - Use currency

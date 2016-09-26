@@ -43,3 +43,11 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
   return $firebaseObject(ref.child('Pins'));
 
 }]);
+
+app.filter('removeDashes', function() {
+  return function(input) {
+    input = input || '';
+    out = input.replace(new RegExp(/-/, 'g'), ' ');
+    return out;
+  };
+});
