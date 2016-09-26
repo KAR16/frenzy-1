@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- Coupon Saved -->
-    <div class="row savedPageBoxStyle" ng-repeat="cupon in coupons" ng-if="pins[coupon.$id]">
+    <div class="row savedPageBoxStyle" ng-repeat="cupon in coupons | filter:filterPinned" >
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
         <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{cupon.PhotoCupon._url}}">

@@ -22,6 +22,8 @@
 - Improved title and icons info from view to view
 - Fixed issue with Pins and Favorites message when none exist
 
+- Remove dashes
+- Favorites don't display Status false
 ----------------------------------------------------------------
 
 
@@ -29,8 +31,8 @@
 - Ense;ar mensaje de no hay en Categoria
 - Ordenar los clientes por cantidad de cupones en ambos tutoriales
 - Mensaje en Customer que no hay. Si da click enviar a analytics y agregar como favorito.
-- Customer title change - to " "
-- Favorites don't display Status false
+
+
 - Loading stops before categories show
 
 

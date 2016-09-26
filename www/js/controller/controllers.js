@@ -335,7 +335,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.favoritesCount = 0;
     for(var i in $scope.customers) {
       var customer = $scope.customers[i];
-      console.log(customer);
       if ($scope.favorites[customer.$id] === true) {
         $scope.favoritesCount += 1;
       }
@@ -433,7 +432,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     };
 
     $scope.filterPinned = function(item) {
-      return $scope.pins[item.$id];
+      console.log(item);
+      return ($scope.pins[item.$id] && item.Status);
     };
 
 

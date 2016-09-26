@@ -43,7 +43,7 @@
         </div>
       </a>
       <!-- Your Favorite Saved Container -->
-      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promotion in promotions | filter:{'Provider': customer.Name} | limitTo:2">
+      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promotion in promotions | filter:{'Provider': customer.Name, 'Status': true} | limitTo:2">
         <div id="GeneralPaddingCols0" class="col col-80">
           <!-- Your Favorite Customer Title -->
           <p class="overFlowText pageYourFavoritesOffert">
