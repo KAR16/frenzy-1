@@ -1,15 +1,15 @@
 <link rel="stylesheet" type="text/css" href="templates/categories/categories_style.css">
 <!-- Customer Boxes -->
-<div id="boxColorCustomer" class="col boxColorCustomer" class="{{customer.Category[$index]}}" >
+<div id="boxColorCustomer" class="col boxColorCustomer" class="{{customer.Category}}" >
   <!-- Customer Image -->
-  <div class="BoxSpace" ng-controller = "changeColorHeartCtrl" id="{{customer.Name}}">
+  <div class="BoxSpace" id="{{customer.Name}}">
     <img class="imageCategoryBoxes" ng-src="{{customer.Logo}}" alt="imageCategoryBox">
   </div>
   <!-- Customer Description -->
   <div class="col boxColorDescription">
     <!-- Offers Count -->
     <spam id="CountColor" class="Price{{customer.CategoryApp}} CountColor">
-      {{customer.suma}}
+      {{customer.QuantityCoupon + customer.QuantityPromotion}}
     </spam>
     <!-- Offers Name Text -->
     <spam id="OfferText" class="Title{{customer.CategoryApp}} OfferText">

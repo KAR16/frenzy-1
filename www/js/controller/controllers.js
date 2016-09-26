@@ -1086,9 +1086,14 @@ $scope.$on('$ionicView.enter', function() {
     $state.go('app.playlists');
 }])
 /*************************  TUTORIAL  ******************************/
-.controller('tutorialController', ['$scope', '$state', function($scope, $state, Customer) {
+.controller('tutorialController', ['$scope', '$state', 'Customer', function($scope, $state, Customer) {
 
   $scope.customers = Customer;
+
+  $scope.customers.$loaded(function(){
+    console.log('TUTORIAL CUSTOMERS LOADED');
+    console.log($scope.customers);
+  });
 
     var guate = moment.tz("America/Guatemala");
     mixpanel.track("viewTurorial");
