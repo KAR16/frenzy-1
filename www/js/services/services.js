@@ -51,3 +51,16 @@ app.filter('removeDashes', function() {
     return out;
   };
 });
+
+app.filter('timeDifference', function() {
+  return function(dateString) {
+
+    var date = moment(dateString, 'DD/MM/YYYY');
+    var d = new Date(date);
+    var today = new Date();
+
+    var diff = Math.abs(d.getTime() - today.getTime());
+    var out =  Math.ceil(diff / (1000 * 3600 * 24));
+    return out;
+  };
+});

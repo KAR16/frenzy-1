@@ -506,6 +506,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           $scope.customerCount += 1;
         }
       }
+      $ionicLoading.hide();
     });
 
     var NameUser = String(IdUsuario);
@@ -527,9 +528,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-        setTimeout(function() {
-            $ionicLoading.hide();
-        }, 800);
 
         $scope.$parent.data = {
             heading: $scope.category,

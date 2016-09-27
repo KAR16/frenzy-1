@@ -26,6 +26,7 @@
 - Favorites don't display Status false
 - Ense;ar mensaje de no hay en Categoria
 - Ordenar los clientes por cantidad de cupones en ambos tutoriales
+- Loading stops before categories show
 ----------------------------------------------------------------
 
 
@@ -34,8 +35,6 @@
 
 - Customers. Si da click enviar a analytics y agregar como favorito.
 
-
-- Loading stops before categories show
 
 
 
