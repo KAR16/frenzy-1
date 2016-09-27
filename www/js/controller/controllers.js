@@ -1004,10 +1004,10 @@ $scope.$on('$ionicView.enter', function() {
         template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
     });
 
-    $timeout(function() {
-        $ionicLoading.hide();
-        $state.go('app.playlists');
-    }, 2000);
+    // $timeout(function() {
+    //     $ionicLoading.hide();
+    //     $state.go('app.playlists');
+    // }, 2000);
 
 });
 })
