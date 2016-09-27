@@ -8,7 +8,7 @@
         <customer-info customer="customer"></customer-info>
       </div>
       <!-- Doesn't exist Coupons or Promotions -->
-      <div ng-repeat="customer in customers  | filter: {oferta : 'noHay'}">
+      <div ng-if="customerCount == 0">
         <div class="open_sans">
           <!-- Donkey Icon -->
           <p class="home savedPageNoItemsIcon">

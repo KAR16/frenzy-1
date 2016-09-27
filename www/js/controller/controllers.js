@@ -499,6 +499,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.customers = Customer;
     $scope.category = $stateParams.IDcustomer;
 
+    $scope.customerCount = 0;
+    $scope.customers.$loaded(function(){
+      for (var i in $scope.customers) {
+        if ($scope.customers[i].CategoryApp == $scope.category) {
+          $scope.customerCount += 1;
+        }
+      }
+    });
+
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Customers",
