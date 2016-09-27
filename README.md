@@ -31,8 +31,6 @@
 
 
 - Totorial2 salir con otra vista
-
-
 - Customers. Si da click enviar a analytics y agregar como favorito.
 
 

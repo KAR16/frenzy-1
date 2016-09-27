@@ -245,12 +245,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             // Login With Firebase
             mainApp.auth().signInWithEmailAndPassword(user.username, user.password).catch(function(error) {
                 // // Handle Errors here.
+                console.log(error);
                 // var errorCode = error.code;
                 // var errorMessage = error.message;
                 // // If the User password is incorrect
-                // if (errorCode === 'auth/wrong-password') {
-                //   sweetAlert('Oops', 'Contraseña Incorrecta, Intenta nuevamente', 'error');
-                // }
+                if (error.code === 'auth/wrong-password') {
+                  sweetAlert('Oops', 'Contraseña Incorrecta, Intenta nuevamente', 'error');
+                }
                 //  else {
                 // $scope.loginWithParse()
                 // }
@@ -269,7 +270,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                         } else if (snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == undefined) {
                             $scope.VerifyEmail()
                         }
-                    })
+                    });
                 }
             })
         }
@@ -1002,10 +1003,10 @@ $scope.$on('$ionicView.enter', function() {
         template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #FFFFFF; fill: #FFFFFF;"></ion-spinner> <p style = "color:white">Cargando...</p>'
     });
 
-    // $timeout(function() {
-    //     $ionicLoading.hide();
-    //     $state.go('app.playlists');
-    // }, 2000);
+    $timeout(function() {
+        $ionicLoading.hide();
+        $state.go('app.playlists');
+    }, 2000);
 
 });
 })
