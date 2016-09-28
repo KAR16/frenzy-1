@@ -319,11 +319,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
-.controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite) {
+.controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite, Coupon) {
 
   $scope.favorites = Favorite;
   $scope.customers = Customer;
   $scope.promotions = Promotion;
+  $scope.coupons = Coupon;
 
   var customersLoaded = false;
 
@@ -879,7 +880,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.countCoupon = function() {
           var QuantityExchangedsu = 0;
 
-          mainApp.database().ref('Cupon/'+$scope.cupon.$id).update({
+          mainApp.database().ref('Coupon/'+$scope.cupon.$id).update({
                 Status: false
           });
 
