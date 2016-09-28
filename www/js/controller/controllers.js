@@ -561,9 +561,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
-
         $scope.$parent.data = {
-            heading: $scope.promotion.Name,
+            heading: $scope.promotion.Provider,
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
             backButton: true
@@ -920,7 +919,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           });
     }
 
-    if ($scope.cupon.QuantityExchanged >= $scope.cupon.QuantityCoupons) {
+    if ($scope.cupon.QuantityExchanged >= $scope.cupon.QuantityCoupons && $scope.cupon.TypeCoupon == "Coupon") {
       $scope.cupon.Status = false;
       $scope.cupon.$save(function(data){
         console.log(data);

@@ -64,3 +64,10 @@ app.filter('timeDifference', function() {
     return out;
   };
 });
+
+app.filter('getDate', function() {
+  return function(dateString) {
+    var date = moment(dateString, 'DD/MM/YYYY');
+    return date.format('DD/MM/YYYY');
+  };
+});

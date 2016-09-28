@@ -80,4 +80,5 @@
         <variable name="APP_ID" value="426922250825103" />
         <variable name="APP_NAME" value="frenzy" />
     </plugin>
+    <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
 </widget>

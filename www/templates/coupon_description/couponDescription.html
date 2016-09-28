@@ -68,10 +68,10 @@ box-shadow: 0 0 0px white;
 		</div>
 		<!-- Coupon Exchanged -->
 		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Fecha'">
-			Del {{cupon.PublicationDate}} Al {{cupon.EndDate}}
+			Del {{cupon.PublicationDate | getDate}} Al {{cupon.EndDate | getDate}}
 		</div>
 		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Coupon'">
-			{{cupon.QuantityExchanged}} cupones canjeados de {{cupon.QuantityCoupons}} 
+			{{cupon.QuantityExchanged}} cupones canjeados de {{cupon.QuantityCoupons}}
 		</div>
 		<!-- Button Coupon Exchanged -->
 		<a style="text-decoration:none;"  class="botonCanjear">
@@ -100,6 +100,7 @@ box-shadow: 0 0 0px white;
 					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 				</div>
 			</a>
+			<br/><br/>
 		</div>
 	</ion-content>
 </ion-view>
@@ -205,6 +206,7 @@ box-shadow: 0 0 0px white;
 					<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 				</div>
 			</a>
+			<br/><br/>
 		</div>
 	</ion-content>
 </ion-view>
