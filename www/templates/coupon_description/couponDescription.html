@@ -67,11 +67,16 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Exchanged -->
-		<div class="availableCupones open_sans">Del {{cupon.PublicationDate}} Al {{cupon.EndDate}}</div>
+		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Fecha'">
+			Del {{cupon.PublicationDate}} Al {{cupon.EndDate}}
+		</div>
+		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Coupon'">
+			{{cupon.QuantityExchanged}} cupones canjeados de {{cupon.QuantityCoupons}} 
+		</div>
 		<!-- Button Coupon Exchanged -->
 		<a style="text-decoration:none;"  class="botonCanjear">
 			<div >
-				<div ng-click="reloadpage(); buttonCash()">
+				<div ng-click="buttonCash()">
 					<div>
 						<div id="popup">
 							<p class="exchangeButonStyle" ng-click="countCoupon()">Canjear</p>
