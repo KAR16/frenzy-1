@@ -46,8 +46,7 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 
 app.filter('removeDashes', function() {
   return function(input) {
-    input = input || '';
-    out = input.replace(new RegExp(/-/, 'g'), ' ');
+    out = input.replace(/-/g,' ');
     return out;
   };
 });
