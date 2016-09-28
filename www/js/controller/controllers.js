@@ -558,6 +558,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }
     });
 
+    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+    $scope.$on('$ionicView.enter', function() {
+
+        $scope.$parent.data = {
+            heading: $scope.promotion.Name,
+            image: '',
+            footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
+            backButton: true
+        };
+
+    });
 })
 
 // ********************* CUPON CONTROLLER *********************************
