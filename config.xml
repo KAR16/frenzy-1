@@ -4,7 +4,11 @@
     <description>        App Promotion  </description>
     <author email="info@cognits.co" href="http://www.cognits.co">      cognits Developers  </author>
     <access origin="*" />
-    <access launch-external="yes" origin="tel:*" />
+
+    <access origin="tel:*" launch-external="yes"/>
+    <access origin="sms:*" launch-external="yes"/>
+    <allow-intent href="tel:*" />
+
     <content src="index.html" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
