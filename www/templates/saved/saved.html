@@ -34,26 +34,26 @@
     <div class="row savedPageBoxStyle" ng-repeat="cupon in coupons | filter:filterPinned" >
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
-        <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{cupon.PhotoCupon._url}}">
+        <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{cupon.PhotoCoupon}}">
       </div>
       <!-- Saved Title Description -->
       <div class="col col-80 SavedDescriptionPosition">
         <p id="NothingSpace" class="savedPageTitleDescription">
-          {{cupon.Presentation}}
+          {{cupon.Name}}
         </p>
         <div class="row">
           <div id="no-PaddingLeft" class="col col-80">
             <!-- Saved Text Description -->
             <spam class="savedPageOffert">
-              Cupon {{cupon.Canjea | currency: 'Q'}}
+              Cupón {{cupon.CouponDiscount | currency: 'Q'}}
             </spam>
             <p id="NothingSpace" class="savedPageDescription">
-              {{cupon.Description}}
+              {{cupon.CouponDescription}}
             </p>
           </div>
           <!-- Pin Icon -->
           <div class="col home pinIconContainer" ng-controller="pinCtrl">
-            <p class="savedPageIcon pageYourFavoritesIconPin" id="{{cupon.PromotionId}}" ng-click="changeColorPinCupon(promotion.$id)" style="color:{{pins[promotion.$id] ? 'purple':''}}">
+            <p class="savedPageIcon pageYourFavoritesIconPin"  ng-click="changeColorPinCupon(cupon.$id)" style="color:{{pins[cupon.$id] ? 'purple':''}}">
               W
             </p>
           </div>
