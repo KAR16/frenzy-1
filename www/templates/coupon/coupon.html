@@ -42,7 +42,7 @@
 	</ion-header-bar>
 	<ion-content class="generalBackgroundFavorite" nav-transition="none">
 
-		<div ng-if="viewCoupons"> <!-- Coupons With Image -->
+		<div ng-if="viewCoupons" style="padding-bottom:5%"> <!-- Coupons With Image -->
 			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!!'}" ng-if="cupon.Status">
 				<div class="OffersContainer">
 					<!-- Label Price -->
@@ -85,7 +85,7 @@
 						<!-- Change Coupon -->
 						<div class="col-25 colPrice">
 							<a class="textDecorationNone" ng-click="showCouponDescription(cupon.$id)">
-								<spam class="pageOffertExchance">
+								<spam class="pageOffertExchance" style="font-size:16px">
 									CANJEAR
 								</spam>
 							</a>
@@ -158,7 +158,7 @@
 						<!-- Change Coupon -->
 						<div class="col-25 colPrice">
 							<a class="textDecorationNone" ng-click="showCouponDescription('{{cupon.$id}}')" href="#/app/descripcionCupones/{{cupon.$id}}">
-								<spam class="pageOffertExchance">
+								<spam class="pageOffertExchance" style="font-size:16px">
 									CANJEAR
 								</spam>
 							</a>
@@ -186,7 +186,7 @@
 			</div>
 		</div>
 
-		<div ng-if="!viewCoupons">
+		<div ng-if="!viewCoupons" style="padding-bottom:5%">
 			<!-- Offers With Image -->
 			<div ng-repeat="promotion in customerPromotions | filter: {Photo:'!!'}" ng-if="promotion.Status">
 				<div class="OffersContainer" >

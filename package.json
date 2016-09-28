@@ -25,12 +25,14 @@
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.device-orientation",
     "cordova-plugin-contacts",
-    "cordova-plugin-inappbrowser",
     "cordova-plugin-whitelist@~1.0.0",
     "cordova-sms-plugin",
     "onesignal-cordova-plugin",
     "cordova-plugin-statusbar",
-    "cordova-plugin-facebook4"
+    "cordova-plugin-facebook4",
+    "cordova-plugin-device-orientation",
+    "cordova-plugin-compat",
+    "cordova-plugin-inappbrowser"
   ],
   "cordovaPlatforms": []
 }

@@ -713,6 +713,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
                                     var couponPages = "#/app/descripcionCupones/";
                                     location.href = couponPages + id;
+                                    $(".botonCanjear").hide();
+                                    $(".exchangeBoxBarCode").show();
                                 } else {
                                     swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
 
