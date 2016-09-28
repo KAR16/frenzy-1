@@ -663,14 +663,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                 "User": NameUser,
                 "Gender": IdGender
             });
-          $cordovaInAppBrowser.open(url, '_blank', options)
+            window.open = cordova.InAppBrowser.open(url, '_blank', options);
         } else {
             mixpanel.track("ClickCartShop", {
                 "Costumer": name,
                 "User": NameUser,
                 "Gender": IdGender
             });
-            $cordovaInAppBrowser.open(url, '_blank', options);
+            window.open = cordova.InAppBrowser.open(url, '_blank', options);
         }
     };
 
