@@ -41,8 +41,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	.state('app', {
 		url: "/app",
 		abstract: true,
-		templateUrl: "templates/menu/menu.html",
-		controller: 'menuCtrl'
+		templateUrl: "templates/menu/menu.html"
 	})
   // ******** loading *****
   	.state('loading', {

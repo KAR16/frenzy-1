@@ -236,32 +236,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             if (mainApp.auth().currentUser) {
                 mainApp.auth().signOut(); //Loggout Sesion Firebase
             }
-            //TODO
-            // var currentUser = Parse.User.current();
-            // if (currentUser) {
-            //   Parse.User.logOut();
-            // }
-
             // Login With Firebase
             mainApp.auth().signInWithEmailAndPassword(user.username, user.password).catch(function(error) {
-                // // Handle Errors here.
-                console.log(error);
-                // var errorCode = error.code;
-                // var errorMessage = error.message;
-                // // If the User password is incorrect
-                if (error.code === 'auth/wrong-password') {
-                  sweetAlert('Oops', 'Contraseña Incorrecta, Intenta nuevamente', 'error');
-                }
-                //  else {
-                // $scope.loginWithParse()
-                // }
+                  sweetAlert('Oops', 'Por favor revisa que tu correo y contraseña sea correcta  ', 'error');
             }).then(function() {
-                if (mainApp.auth().currentUser == null) {
+                if (mainApp.auth().currentUser != null) {
                     // TODO sign in error.
-
-
-
-                } else {
                     IdUsuario = mainApp.auth().currentUser.uid;
                     mainApp.database().ref('Users').once('value', function(snapshot) {
                         if (snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == true) {
@@ -275,12 +255,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             })
         }
     }
-})
-
-//*********************  MENU CONTROLLER  *******************************
-.controller('menuCtrl', function($scope, $state) {
-
-
 })
 // ********************* PAGE_START CONTROLLER ****************************
 .controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray) {
@@ -407,7 +381,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 
     $scope.pinsCount = 0;
-    console.log($scope.pinsCount);
     $scope.pins.$watch(function(event) {
 
       if ($scope.contentLoaded) {
@@ -430,11 +403,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           $scope.pinsCount += 1;
         }
       }
-      console.log($scope.pinsCount);
     };
 
     $scope.filterPinned = function(item) {
-      console.log(item);
       return ($scope.pins[item.$id] && item.Status);
     };
 
@@ -456,7 +427,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.favorites = Favorite;
 
   $scope.ChangeColorHeart = function(customerId) {
-    console.log('calling changecolorheart', customerId);
     //Check if customerId is in Current Users Favorites
     if(customerId in $scope.favorites) {
       // Switch boolean value
@@ -541,8 +511,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 })
 ///////////
-
-
 .controller('PromotionsDescription', function($scope, $stateParams, Promotion) {
     mixpanel.track("view", {
         "type": "PromotionsDescription",
@@ -585,10 +553,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.setViewCoupons = function(bool) {
     $scope.viewCoupons = bool;
   };
-
   $scope.customerId = $stateParams.CuponID;
-  console.log('Customer ID', $stateParams.CuponID);
-
   var coupons = Coupon;
   var promotions = Promotion;
   var customers = Customer;
@@ -607,7 +572,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     if ($scope.customerCoupons.length < 1) {
       $scope.viewCoupons = false;
     }
-    console.log('Customer Coupons' ,$scope.customerCoupons);
   });
 
   //When all promotions are loaded, filter only promotions of current customer
@@ -617,7 +581,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.customerPromotions.push(promotions[i]);
       }
     }
-    console.log('Customer Promotions' ,$scope.customerPromotions);
   });
 
   // Select current customer
@@ -648,9 +611,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
         // *************** URL BROWSER SHOP FUNCTION ***************
     $scope.shopUrl = function(url, id, name) {
-        var NamePromo = name.split(" ").join("_");
         var NameUser = String(IdUsuario);
-
         var options = {
           location: 'yes',
           clearcache:'yes',
@@ -677,12 +638,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.showCouponDescription = function(id) {
         var QuantityExchangedSuma = 0;
         mainApp.database().ref('Coupon').once('value', function(snapshot) {
-            console.clear();
-            console.log(id);
             for (x in snapshot.val()) {
                 if (x == id) {
-                    console.log(id);
-                    console.log(x);
                     if (snapshot.val()[x].TypeCoupon === 'Fecha') {
                         swal({
                                 title: "Estas Seguro?",
@@ -696,10 +653,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             },
                             function(isConfirm) {
                                 if (isConfirm) {
-                                    console.log("----------------------------------");
-                                    console.log(id);
-                                    console.log(x);
-                                    console.log("confirmo");
                                     swal({
                                         title: 'Perfecto!',
                                         text: 'Has cambiado tu Cupón',
@@ -708,9 +661,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                         showConfirmButton: false,
 
                                     })
-                                    console.log("----------------------------");
-                                    console.log(snapshot.val()[id].QuantityExchanged);
-
                                     mixpanel.track("clickCanjear", {
                                         "type": "fecha",
                                         "Gender": IdGender,
@@ -846,8 +796,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   var ref = mainApp.database().ref('Coupon').child($stateParams.couponId);
   $scope.cupon = $firebaseObject(ref);
-
-
   mixpanel.track("view", {
       "type": "DescriptionCupon",
       "Gender": IdGender,
@@ -926,73 +874,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       });
     }
   };
-
-
-
-          //
-          // var QuantityExchangedsu = 0;
-          //
-          // mainApp.database().ref('Coupon').once('value', function(snapshot) {
-          //     for (var x in snapshot.val()) {
-          //
-          //         if (snapshot.val()[x].TypeCoupon === "Coupon") {
-          //             // ------------------------------------------------------------------------------------------------------------------------------------------------
-          //             if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
-          //
-          //                 QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1;
-          //                 mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-          //                     QuantityExchanged: QuantityExchangedsu
-          //                 });
-          //
-          //
-          //             } else {
-          //
-          //                 $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
-          //
-          //                 mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-          //                     Status: false
-          //                 });
-          //
-          //                 swal({
-          //                         title: 'Lo sentimos!',
-          //                         text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
-          //                         type: 'warning'
-          //                     },
-          //                     function(isConfirm) {
-          //                         if (isConfirm) {
-          //
-          //                             $scope.loading = $ionicLoading.show({
-          //                                 showBackdrop: true,
-          //                                 template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-          //                             });
-          //
-          //                             $ionicLoading.hide();
-          //                             var couponPages = "#/app/playlists";
-          //                             location.href = couponPages;
-          //                         }
-          //                     });
-          //             }
-          //             // ------------------------------------------------------------------------------------------------------------------------------------------------
-          //         } else if (snapshot.val()[x].TypeCoupon === "Fecha") {
-          //
-          //             mixpanel.track("clickCanjear", {
-          //                 "type": "fecha",
-          //                 "Gender": IdGender,
-          //                 "User": IdUsuario,
-          //                 "NameCoupon": $stateParams.DescriptionID
-          //             });
-          //             QuantityExchangedsu = snapshot.val()[x].QuantityExchanged + 1;
-          //             mainApp.database().ref('Coupon/' + $stateParams.DescriptionID).update({
-          //                 QuantityExchanged: QuantityExchangedsu
-          //             });
-          //         }
-          //
-          //     }
-          //
-          // });
-
-
-
   $scope.$on('$ionicView.enter', function() {
 
     $scope.$parent.data = {
@@ -1017,7 +898,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
     $scope.Analytics = function(id, nameShare) {
-        var NameUser = String(IdUsuario)
+        var NameUser = String(IdUsuario);
         var Dimensions = {
             name: 'share_' + id,
             user: NameUser
@@ -1036,7 +917,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             });
         }
 
-    }
+    };
     $ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
         scope: $scope,
     }).then(function(popover) {
@@ -1071,24 +952,18 @@ $scope.$on('$ionicView.enter', function() {
 
       var user = firebase.auth().currentUser;
       var credential;
-
       if (user) {
 
           if (user.providerData[0].providerId == 'facebook.com') {
 
               IdUsuario = user.providerData[0].uid;
               mainApp.database().ref('Users').once('value', function(snapshot) {
-
                   for (x in snapshot.val()) {
                       if (x == IdUsuario) {
                           IdGender = snapshot.val()[x].Gender
                       }
                   }
-
-              }).then(function() {
-                  console.log();
               });
-
               $timeout(function() {
                   $ionicLoading.hide();
                   $state.go('app.playlists');
@@ -1147,13 +1022,6 @@ $scope.$on('$ionicView.enter', function() {
 .controller('tutorialController', ['$scope', '$state', 'Customer', function($scope, $state, Customer) {
 
   $scope.customers = Customer;
-
-  $scope.customers.$loaded(function(){
-    console.log('TUTORIAL CUSTOMERS LOADED');
-    console.log($scope.customers);
-  });
-
-    var guate = moment.tz("America/Guatemala");
     mixpanel.track("viewTurorial");
     // IdUsuario of Facebook or Frenzy for Pines and hearts
 
@@ -1177,9 +1045,6 @@ $scope.$on('$ionicView.enter', function() {
       $state.go('app.herramientas');
     }
   };
-
-
-
 }])
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
@@ -1226,15 +1091,12 @@ $scope.$on('$ionicView.enter', function() {
 
         facebookConnectPlugin.api('/me?fields=email,name&access_token=' + authResponse.accessToken, null,
             function(response) {
-                console.log(response);
                 info.resolve(response);
             },
             function(response) {
-                console.log(response);
                 info.reject(response);
             }
         );
-        console.log(info.promise);
         return info.promise;
     };
 
@@ -1245,8 +1107,6 @@ $scope.$on('$ionicView.enter', function() {
         mixpanel.track("LoginClick", {
             "loginButton": "Facebook"
         });
-
-
         $ionicLoading.show({
             noBackdrop: true,
             template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
@@ -1277,16 +1137,12 @@ $scope.$on('$ionicView.enter', function() {
                         // User is signed in.
                         UserUID = user.providerData[0].uid;
 
-                    } else {
-                        // No user is signed in.
                     }
                 });
             }).then(function() {
-
                 $timeout(function() {
                     $cordovaFacebook.getLoginStatus()
                         .then(function(success) {
-                            console.log(success);
                             $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
                                 .then(function(success) {
                                     mixpanel.identify(success.id);
@@ -1298,52 +1154,6 @@ $scope.$on('$ionicView.enter', function() {
                                         "$typeLogin": "Facebook"
 
                                     });
-                                    // success
-                                    ///////////////////////////Favorite heart////////////////////////////////////
-                                    // mainApp.database().ref('Favorite').on('value', function(snapshot) {
-                                    //     var CountFF = 0;
-                                    //     for (x in snapshot.val()) {
-                                    //         if (snapshot.val()[x].UserID == UserUID) {
-                                    //             for (i in snapshot.val()[x].CustomerID) {
-                                    //                 for (c in CustomerList) {
-                                    //
-                                    //                     if (snapshot.val()[x].CustomerID[i] == CustomerList[c].Name) {
-                                    //                         CustomerList[c].colorHeart = "red"
-                                    //                     }
-                                    //                 }
-                                    //             }
-                                    //             FirebaseFavorite[CountFF] = snapshot.val()[x]
-                                    //             FirebaseFavorite[CountFF]["FavoriteID"] = x
-                                    //             CountFF++
-                                    //         }
-                                    //
-                                    //     }
-                                    // });
-                                    // //////////////////////////////////////////////////////////////////////////
-                                    // ///////////////////////////SAVED PIN////////////////////////////////////
-                                    //
-                                    // mainApp.database().ref('PromotionSaved').on('value', function(snapshot) {
-                                    //     var CountPS = 0;
-                                    //     for (x in snapshot.val()) {
-                                    //         if (snapshot.val()[x].UserID == UserUID) {
-                                    //
-                                    //             for (i in snapshot.val()[x].PromotionID) {
-                                    //                 for (c in CurrentPromotion) {
-                                    //                     if (snapshot.val()[x].PromotionID[i] == CurrentPromotion[c].IDpromotion) {
-                                    //                         CurrentPromotion[c].ColorPin = "purple"
-                                    //                     } else {
-                                    //                         console.log("no encontro nada ");
-                                    //                     }
-                                    //                 }
-                                    //             }
-                                    //             FirebasePromotionSaved[CountPS] = snapshot.val()[x]
-                                    //             FirebasePromotionSaved[CountPS]["PromotionSavedID"] = x
-                                    //             CountPS++
-                                    //         }
-                                    //
-                                    //     }
-                                    // });
-                                    //////////////////////////////////////////////////////////////////////////
                                     IdUsuario = UserUID;
                                     IdGender = success.gender;
                                     mainApp.database().ref('Users/' + UserUID).update({
@@ -1368,5 +1178,4 @@ $scope.$on('$ionicView.enter', function() {
             });
 
     };
-    // //===============/LOGIN WITH FB==========//
 });
