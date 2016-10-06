@@ -48,3 +48,10 @@
 -----------------------------------------------------------------  
 - Clean variables and improve scope variables
 - Minimize, uglify, optimize images
+
+## deploy-android
+
+- Install gulp-run: npm install gulp-run  and fs : npm install fs 
+- On the gulp file modify the task create-signing-propieties and  add storePassword and keyPassword
+- On the gulp file modify task zipalign and add the path were is located the file zipalign and the path where is located the signed apk.
+- For deploy run the command gulp deploy-android
