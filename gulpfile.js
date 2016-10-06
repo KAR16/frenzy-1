@@ -61,7 +61,9 @@ gulp.task('ionic-resources' , ['ionic-android'],function () {
   return run ('ionic resources').exec()
 });
 gulp.task('create-signing-propieties',['ionic-resources'], function(cb){
+  //  Enter passphrase for keystore:
   var storePassword ='';
+  //  Enter key password for mykey
   var keyPassword = ''; 
   var config = 'storeFile=build/outputs/apk/my.keystore\nkeyAlias=mykey\nstorePassword=' + storePassword + '\nkeyPassword='+keyPassword ;
   fs.writeFile('platforms/android/release-signing.properties', config, cb);
