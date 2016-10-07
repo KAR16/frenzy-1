@@ -308,6 +308,30 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     });
 })
+
+//********************** POINTS CONTROLLER *****************************
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal) {
+
+  // First Mini Tutorial html file. Ionic Modal
+  $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
+    $scope.FirstModal = modal;
+  }, {
+    animation: 'slide-in-up',
+    focusFirstInput: false
+  });
+
+  $scope.$on('$ionicView.enter', function() {
+    $scope.$parent.data = {
+        heading: '',
+        image: 'img/icn-35.png',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
+        backButton: false
+    };
+    $scope.$apply();
+  });
+
+})
+
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite, Coupon) {
 
