@@ -8,12 +8,6 @@
   width: 100%;
   height: 100%;
 }
-/*First Tutorial (Search and Share Promotions)*/
-.backgroundTutorial1 {
-  width: 100%;
-  height: 100%;
-  padding-top: 10%;
-}
 /*Icon Tutorial for size and position centered*/
 .iconTutorial {
   width: 20%;
@@ -35,17 +29,6 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-/*The Zigzag Style is general. You can find it in PageStart.css*/
-.containerZigzag {
-  background: #F1F2F2;
-  opacity: 0.9;
-  margin-top:-70px;
-}
-.containerZigzag:before {
-  background:linear-gradient(45deg, transparent 33.333%,#F1F2F2 33.333%, #F1F2F2 66.667%,transparent 66.667%),
-  linear-gradient(-45deg, transparent 33.333%,#F1F2F2 33.333%, #F1F2F2 66.667%,transparent 66.667%);
-  background-size: 20px 40px;
 }
 /*Style for to center hand slider image*/
 .slide-image-center {
@@ -84,7 +67,7 @@
   100% { opacity: 1.0; }
 }
 /*Style for Second Tutorial Slide*/
-.backgroundTutorial2 {
+.backgroundTutorial1 {
   background-color:#00BAB9;
   width: 100%;
   height: 100%;
@@ -147,4 +130,127 @@
 #AverageText.AverageText {
   color:#A7A9AC;
   font-size: 13px;
+}
+
+
+
+
+.buttons {
+  background-color: #FFFFF;
+}
+
+/*Style for the Tutorial button*/
+.nextAndBackButtonTutorial {
+  background-color: #F1F2F2;
+  color: #3F51B5;
+  font-family: Roboto, Helvetica, San Fransisco;
+}
+/*Hover effect for the next and previous button Tutorial*/
+.nextAndBackButtonTutorial:hover {
+  background-color: #F1F2F2;
+  color: #3F51B5;
+  font-family: Roboto, Helvetica, San Fransisco;
+}
+/* Styel for the arrows into tutorial */
+.ion-chevron-right {
+  background-color: #F1F2F2;
+  color: #3F51B5;
+  font-weight: bolder;
+}
+
+.ion-chevron-left {
+  background-color: #F1F2F2;
+  color: #3F51B5;
+  font-weight: bolder;
+}
+/* Size for the tutorial text */
+.sizeTextTutorialButton {
+  font-size: 14px !important;
+}
+/* Style for the arrow in Tutorial */
+.button .icon .ion-ios-arrow-forward {
+  font-size: 80px !important;
+}
+/* Back Button for the Tutorials */
+#backTutorial {
+  display: none;
+}
+/* style for to assign vertical scroll automatically */
+.scrollPromotion {
+  overflow-y: auto;
+  padding-bottom: 25% !important;
+}
+/* Style for Second Tutorial Slide */
+.backgroundTutorial2 {
+  background-color:#9C28B0;
+  width: 100%;
+  height: 100%;
+  padding-top: 10%;
+  overflow-y: auto;
+  padding-bottom: 20%;
+}
+/* This style works for to center the gif image container */
+.generalContainerGifts {
+  text-align:center;
+  width:100%;
+}
+/* Total width for gif Image Container into tutorial */
+.totalWidthTutorialContainer {
+  display:inline-block;
+  width:90%;
+}
+/* Style for the first box Description into tutorial */
+.firstBoxGiftTutorial {
+  height:90px;
+  background:#FFFFFF;
+  text-align:left;
+  padding-left:5%;
+}
+/* Style text for step Descriptions into tutorial */
+.giftDescription {
+  font-size:12px;
+  line-height:70%;
+  font-family:Roboto, Helvetica, San Fransisco;
+}
+/*Background Green for the first gif Image*/
+.firstGifImageBackground {
+  height:220px;
+  background-color:#00DDC1;
+}
+/*Background Orange for the first gif Image*/
+.secondGifImageBackground {
+  height:220px;
+  background-color:#FBA340;
+}
+/*Background Red for the first gif Image*/
+.thirdGifImageBackground {
+  height:220px;
+  background-color:#FF5252;
+}
+/*Size Gif Image into Tutorial*/
+.styleGif {
+  width:100%;
+  height:220px;
+}
+/*Style for the final content into Tutorial*/
+.finalContentTutorial {
+  background:#FFFFFF;
+  text-align:center;
+  padding-bottom:5%;
+  padding-top:5%;
+}
+/*Size Purple Award Image*/
+.purpleAwardImage {
+  width:40px;
+  padding-bottom:5%;
+}
+/*Instant Awards Style Text*/
+.IAStyleText {
+  color:#263147;
+  font-size:25px;
+}
+/*Style footerBar into Tutorial*/
+.footerBarStyle {
+  background:#F1F2F2;
+  height:51px;
 }

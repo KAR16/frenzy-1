@@ -3,8 +3,8 @@ app.directive('customerInfo', function() {
   return {
     restrict: 'E',
     scope: {
-      info: '='
+      customer: '='
     },
     templateUrl: 'js/directives/Customer/CustomerTemplate.html'
-  }
-})
+  };
+});

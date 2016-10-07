@@ -2,29 +2,28 @@
 	<!-- Offers Description With and Without Image -->
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
-		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" style="display:{{chats[0].display}};">
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" ng-if="cupon.TypeOfExchange == 'DirectDiscount'">
 		<!-- Price Text Offers -->
-		<div class="row BoxPriceLabel">
+		<div class="row BoxPriceLabel" ng-if="cupon.TypeOfExchange == 'DirectDiscount'">
 			<div class="col col-33 BoxLabel">
-				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance" style="display:{{chats[0].display}};">
+				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance" >
 					Ahorra
 				</p>
 				<p class="pageFavoritesSavingPrice">
-					{{chats[0].ahorro}}
+					<!-- TODO use currency Q -->
+					Q. {{promotion.BasePrice - promotion.PromotionalPrice}}
 				</p>
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="cuponsDescriptionImage" src="{{chats[0].Photo}}" alt="PhotoOffersFrenzy">
+		<img class="full-image" src="{{promotion.Photo}}" alt="PhotoOffersFrenzy">
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
 				<div class="col col cuponsDescriptionTitle open_sans">
-					{{chats[0].Name}}
+					{{promotion.Name}}
 				</div>
-				<!-- <div class="col col-20">
-					<div class="cuponsDescriptionPinCircle home" id="{{chats[0][0].ID}} {{chats[0][0].IDpromotion}}" ng-click="changeColorPinOfferts('{{chats[0][0].ID}}','{{chats[0][0].IDpromotion}}','{{chats[0][0].name}}')" style="color:{{chats[0][0].ColorPin}}">W</div>
-				</div> -->
+
 			</div>
 		</div>
 		<!-- Semi-Circle Container -->
@@ -43,17 +42,18 @@
 		<!-- Coupon Description -->
 		<div>
 			<p class="couponsDescriptionMainDescription">
-				{{chats[0].PromotionDescription}}
+				{{promotion.PromotionDescription}}
 			</p>
 		</div>
 		<br>
-		<!-- style="position:{{HideStyleButtonExchangePosition}};bottom:{{HideStyleButtonExchangeBottom}}" -->
-		<a href="#/app/termsAndConditionsOffers/{{chats[0].IDpromotion}}" style="display:{{chats[0].DisplayTerms}}">
+
+		<a href="#/app/termsAndConditionsOffers/{{promotion.$id}}" ng-if="promotion.TermsAndConditions">
 			<div class="bar subFooter" style="position:absolute;bottom:0">
 				<div class="LegalTerms verticalCenteredObjects col col-90">Términos y Condiciones</div>
 				<div id="Terms" class="TermButton button icon icon-right ion-chevron-right col"></div>
 			</div>
 		</a>
+		<br/><br/>
 		</div>
 	</ion-content>
 </ion-view>

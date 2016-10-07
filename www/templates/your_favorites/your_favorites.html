@@ -23,10 +23,10 @@
 	</ion-header-bar>
 
   <!-- Your Favorites Container -->
-  <ion-content class="backgroundCategories" ng-controller="AllFavoriteCtrl" ng-init="chats[$index -1].Category != chats[$index - 1].Category">
+  <ion-content class="backgroundCategories" ng-controller="AllFavoriteCtrl" >
     <!-- Customer Info Container -->
-    <div id="GeneralPaddingCols0" class="col" ng-repeat="favorite in chats">
-      <a style="text-decoration:none;" nav-transition="none" ng-if="chats[$index].Category != chats[$index - 1].Category">
+    <div id="GeneralPaddingCols0" class="col" ng-repeat="customer in customers | filter:filterFavorite |orderBy:'-(QuantityCoupon + QuantityPromotion)'" >
+      <a style="text-decoration:none;" nav-transition="none" >
         <div class="row pageYourFavoritesGreyLine">
           <!-- Heart Icon -->
           <div id="GeneralPaddingCols0" class="col col-10 pageYourFavoritesIconHeart verticalAndHorizontalCenteredObjects">
@@ -34,7 +34,7 @@
           </div>
           <!-- Customer Name -->
           <div id="GeneralPaddingCols0" class="col col-75">
-            <spam class="open_sans pageYourFavoritesStablishmentName verticalCenteredObjects">{{favorite.Category | commaBreak}}</spam>
+            <spam class="open_sans pageYourFavoritesStablishmentName verticalCenteredObjects">{{customer.Name}}</spam>
           </div>
           <!-- Bigger Than Symbol -->
           <div id="GeneralPaddingCols0" class="col col-10 BiggerThanColorAndPosition verticalAndHorizontalCenteredObjects">
@@ -43,31 +43,53 @@
         </div>
       </a>
       <!-- Your Favorite Saved Container -->
-      <div class="row row-border pageYourFavoritesWhiteBox" ng-if="chats[$index].Category != chats[$index - 2].Category">
+      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="promotion in promotions | filter:{'Provider': customer.Name, 'Status': true} | limitTo:2">
         <div id="GeneralPaddingCols0" class="col col-80">
           <!-- Your Favorite Customer Title -->
           <p class="overFlowText pageYourFavoritesOffert">
-            {{favorite.Name}} - {{favorite.Presentation}}
+            {{promotion.Name}} - {{promotion.Presentation}}
           </p>
           <!-- Promotional Price for Your Favorite -->
           <p class="pageYourFavoritesPriceOffert">
-            Oferta - {{favorite.promotionalPrice | currency: 'Q'}}
+            Oferta - {{promotion.PromotionalPrice | currency: 'Q'}}
           </p>
           <!-- Favorite Description for Your Favorite -->
           <p class="overFlowText pageYourFavoritesOffertDescription">
-            {{favorite.PromotionDescription}}
+            {{promotion.PromotionDescription}}
           </p>
         </div>
         <!-- Pin Icon -->
-        <div id="GeneralPaddingCols0" class="col pinIconContainer">
-          <p class="home pageYourFavoritesIconPin" id="{{favorite.IDpromotion}}" ng-click="SalvadosSaveAndDelete('{{favorite.IDpromotion}}')"  style="color:{{favorite.ColorPin}}">
+        <div id="GeneralPaddingCols0" class="col pinIconContainer" ng-controller="pinCtrl">
+          <p class="home pageYourFavoritesIconPin" id="{{promotion.$id}}" ng-click="changeColorPinCupon(promotion.$id)" style="color:{{pins[promotion.$id] ? 'purple':''}}">
+            W
+          </p>
+        </div>
+      </div>
+      <div class="row row-border pageYourFavoritesWhiteBox" ng-repeat="cupon in coupons | filter:{'Provider': customer.Name, 'Status': true} | limitTo:1">
+        <div id="GeneralPaddingCols0" class="col col-80">
+          <!-- Your Favorite Customer Title -->
+          <p class="overFlowText pageYourFavoritesOffert">
+            {{cupon.Name}} - {{cupon.Presentation}}
+          </p>
+          <!-- Promotional Price for Your Favorite -->
+          <p class="pageYourFavoritesPriceOffert">
+            Cupón - {{cupon.CouponDiscount | currency: 'Q'}}
+          </p>
+          <!-- Favorite Description for Your Favorite -->
+          <p class="overFlowText pageYourFavoritesOffertDescription">
+            {{cupon.CouponDescription}}
+          </p>
+        </div>
+        <!-- Pin Icon -->
+        <div id="GeneralPaddingCols0" class="col pinIconContainer" ng-controller="pinCtrl">
+          <p class="home pageYourFavoritesIconPin" id="{{cupon.$id}}" ng-click="changeColorPinCupon(cupon.$id)" style="color:{{pins[cupon.$id] ? 'purple':''}}">
             W
           </p>
         </div>
       </div>
     </div>
     <!-- Doesn't exist Your Favorites -->
-    <div ng-repeat="favorite in chats  | filter: {oferta : 'noHay'}" class="noExiste">
+    <div ng-if="favoritesCount == 0" class="noExiste">
       <div class="open_sans">
         <!-- Donkey Icon -->
         <p class="home savedPageNoItemsIcon">

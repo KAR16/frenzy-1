@@ -1,14 +1,14 @@
 <!-- The classes that are not can be found in style.css  -->
-<ion-view  view-title="{{AppCategory}}">
+<ion-view view-title="{{ category }}">
   <!-- Customers -->
   <ion-content class="backgroundCategories"  nav-transition="none"><!-- backgroundCategories class is found in categories_style.css -->
     <div id="PaddingBoxBefore" class="col"><!-- If this app is for IOS platform then modify to (margin-top:8px) -->
       <!-- Category Boxes -->
-      <div id="PaddingBox" class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in chats | filter: {oferta : 'existe'} | orderBy:'-suma'">
-        <customer-info info ="customer"></customer-info>
+      <div id="PaddingBox" class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in customers | filter: {CategoryApp: category} | orderBy:'-(QuantityCoupon + QuantityPromotion)'">
+        <customer-info customer="customer"></customer-info>
       </div>
       <!-- Doesn't exist Coupons or Promotions -->
-      <div ng-repeat="customer in chats  | filter: {oferta : 'noHay'}">
+      <div ng-if="customerCount == 0">
         <div class="open_sans">
           <!-- Donkey Icon -->
           <p class="home savedPageNoItemsIcon">

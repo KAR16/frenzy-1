@@ -1,0 +1,73 @@
+/*View for categories items*/
+.item-complex .item-content, .item-radio .item-content {
+  position: relative;
+  z-index: 2;
+  padding: 8px 49px 8px 16px !important;
+  border: none;
+  background-color: #fff;
+}
+/*Zigzag Style for PageStart and Tutorial Templet*/
+.zigzag {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  display: table;
+}
+.zigzag:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  width: 100%;
+  height: 10px;
+}
+.CenterClock {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+/*Background color container zigzag*/
+.container2 {
+  background: #9C28B0;
+}
+/*Zigzag Top*/
+.container2:before {
+  background:linear-gradient(45deg, transparent 33.333%,#9C28B0 33.333%, #9C28B0 66.667%,transparent 66.667%),
+  linear-gradient(-45deg, transparent 33.333%,#9C28B0 33.333%, #9C28B0 66.667%,transparent 66.667%);
+  background-size: 20px 40px;
+}
+/*Div Container under div zigzag*/
+.container4 {
+  background-color: transparent;
+  height: 20px;
+}
+/*Zigzag Bottom*/
+.container4:before {
+  background:linear-gradient(45deg, transparent 33.333%,white 33.333%, white 66.667%,transparent 66.667%),
+  linear-gradient(-45deg, transparent 33.333%,white 33.333%, white 66.667%,transparent 66.667%);
+  background-size: 20px 40px;
+}
+/*Size for icon category Image*/
+.pageStartIconsStyleGeneraly {
+  height: 50px;
+  width: 50px;
+}
+/*Font bold for Category Name Text*/
+#CategoryNameText.CategoryNameText {
+  color:black;
+  font-size:16px;
+  font-weight:bolder;
+}
+/*Display for show two columns in Promotion of tutorial*/
+.tutorialCustomerColumns {
+  flex-wrap:wrap;
+}
+/*Clock Promotion Icon*/
+.pageStartBoxPurpleIconTime {
+  color: #00BAB9;
+  font-size: 40px;
+}
+/*Wait for more promotions text*/
+.pageStartBoxPurpleTitlePromotions {
+  color: #FFFFFF;
+}

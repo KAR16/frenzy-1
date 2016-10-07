@@ -1,0 +1,11 @@
+<ion-view >
+  <!-- BODY OF PAGE START -->
+  <ion-content  nav-transition="none" locking="false">
+    <!-- Category List -->
+    <ion-list>
+      <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categories | orderBy:'IconCategory'">
+        <category-info info ="category"></category-info>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

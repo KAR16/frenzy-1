@@ -1,66 +1,166 @@
 <ion-slide-box class="backgroundTutorial" on-slide-changed="slideChanged(index)" show-pager="false" >
   <!-- First Slide -->
-  <ion-slide>
-    <div class="backgroundTutorial1 open_sans" >
-      <!-- House Icon -->
-      <img class="iconTutorial" src="img/house.png" alt="HouseIconFrenzy">
-      <!-- Titles -->
-      <p class="titlesOfTheTutorial">Busca y comparte promos y<br>cupones en toda Guate</p>
-      <!-- Frenzy Phone for Tutorial Number 1 -->
-      <img class="PhoneFrenzyImage" src="img/1.png" alt="SearchAndSharePromotions">
-    </div>
-    <!-- Triangles Div -->
-    <div class="containerZigzag zigzag slide-image-center">
-      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
-    </div>
-  </ion-slide>
-  <!-- Second Slide -->
   <ion-slide on-slide-changed="slideChanged(index)">
-    <div class="backgroundTutorial2 open_sans" >
+    <div class="backgroundTutorial1 scrollPromotion open_sans">
       <!-- Pig Icon -->
       <img class="iconTutorial" src="img/cerdo.png" alt="PigIconFrenzy">
       <!-- Titles -->
       <p class="titlesOfTheTutorial"><br>Ahorra en tus marcas favoritas</p>
-      <!-- Scroll for the Six First Customer with more Promotions -->
-      <ion-scroll id="hideSecondScroll"direction="y" class="HeightScroll">
-        <!-- General Promotions for Average -->
-        <div class="row">
-          <!-- Offers and Promotions for Average -->
-          <div class="row tutorialCustomerColumns"  style="padding-top:0 !important;">
-            <!-- If find offers or promotions -->
-            <div class="col col-50" ng-repeat="customer in TutorialPromotion | orderBy:'-suma' | limitTo:6">
-              <tutorial-info info="customer"></tutorial-info>
+      <!-- General Promotions for Average -->
+      <div class="row">
+        <!-- Offers and Promotions for Average -->
+        <div class="row tutorialCustomerColumns"  style="padding-top:0 !important;">
+          <!-- If find offers or promotions -->
+          <div id="GeneralPaddingCols" class="col col-50" ng-repeat="customer in customers | orderBy:'-(QuantityCoupon + QuantityPromotion)' | limitTo:6">
+            <tutorial-info customer="customer"></tutorial-info>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-slide>
+  <!-- Second Slide -->
+  <ion-slide  on-slide-changed="slideChanged(index)">
+    <div class="backgroundTutorial2 open_sans" >
+      <!-- Frenzy Phone Icon -->
+      <img class="iconTutorial" src="img/gift.png" alt="frenzyGift">
+      <!-- Title -->
+      <p class="titlesOfTheTutorial">También puedes acumular Puntos<br>y ganar muchos Premios</p>
+      <!-- Gif container tutorial -->
+      <br>
+      <div class="generalContainerGifts">
+        <div class="totalWidthTutorialContainer">
+          <!-- Text Content Gif -->
+          <div class="verticalCenteredObjects firstBoxGiftTutorial">
+            <span style="font-size:16px;"><span style="font-family:BariolBold"></span>Paso 1 - Ingresa Códigos<br>
+              <span class="giftDescription"><strong>Consigue los Códigos</strong> al consumir en las marcas <br> registradas e ingrésalos en Frenzy App.</span>
+            </span>
+          </div>
+          <!-- Gif -->
+          <div class="firstGifImageBackground">
+            <img class="styleGif" src="img/insertCode.gif" alt="insertCodeFrenzy" />
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="generalContainerGifts">
+        <div class="totalWidthTutorialContainer">
+          <!-- Text Content Gif -->
+          <div class="verticalCenteredObjects firstBoxGiftTutorial">
+            <span style="font-size:16px;"><span style="font-family:BariolBold"></span>Paso 2 - Gana y Acumula Puntos<br>
+              <span class="giftDescription"><strong>Cambia los puntos acumulados</strong> por el premio que elijas en Frenzy App.</span>
+            </span>
+          </div>
+          <!-- Gif -->
+          <div class="secondGifImageBackground">
+            <img class="styleGif" src="img/puntos.gif" alt="PointsFrenzy" />
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="generalContainerGifts">
+        <div class="totalWidthTutorialContainer">
+          <!-- Text Content Gif -->
+          <div class="verticalCenteredObjects firstBoxGiftTutorial">
+            <span style="font-size:16px;"><span style="font-family:BariolBold"></span>Paso 3 - Canjea tus premios<br>
+              <span class="giftDescription"><strong>Pide el Código de Verificación</strong> en cualquier tienda registrada en Frenzy App para recibir tu premio.</span>
+            </span>
+          </div>
+          <!-- Gif -->
+          <div class="thirdGifImageBackground">
+            <img class="styleGif" src="img/canjea.gif" alt="changeGif" />
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="generalContainerGifts">
+        <div class="totalWidthTutorialContainer">
+          <!-- Text Content Gif -->
+          <div class="finalContentTutorial">
+            <div>
+              <img class="purpleAwardImage" src="img/purpleGift.png" alt="purpleAwardImage" />
+            </div>
+            <div class="IAStyleText">
+              <span>¡Algunos códigos podrían <br> tener premios al instante!</span>
             </div>
           </div>
         </div>
-      </ion-scroll>
-    </div>
-    <!-- Triangles Div -->
-    <div class="containerZigzag zigzag slide-image-center">
-      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
+      </div>
     </div>
   </ion-slide>
-  <!-- Third Slide -->
-  <ion-slide  on-slide-changed="slideChanged(index)">
-    <div class="backgroundTutorial3 open_sans" >
-      <!-- Frenzy Phone Icon -->
-      <img class="iconTutorial" src="img/telefono.png" alt="FrenzyPhone">
-      <!-- Title -->
-      <p class="titlesOfTheTutorial">El directorio telefónico y web de <br>tus marcas favoritas</p>
-      <!-- Frenzy Phone for Tutorial Number 3 -->
-      <img class="PhoneFrenzyImage" src="img/phone3.png" alt="CallFrenzyImage">
-    </div>
-    <!-- Triangles Div -->
-    <div class="containerZigzag zigzag slide-image-center">
-      <img class="slide-image-size parpadea" src="img/slide-img.png" alt="slide-image">
-    </div>
-  </ion-slide>
-  <!-- Final Tutorial -->
+  <!-- Final Tutorial (Login with Email and Facebook Login) -->
   <ion-slide>
-    <div class="finalDivTutorialPage">
-      <div class="verticalCentered"> <!--The VerticalCentered Style is found in style.css-->
-        <img class="frenzyImage" src="img/frenzy.png" alt="FrenzyImage" />
+    <div class="BackgroundColorLoginAndRegister open_sans verticalAndHorizontalCenteredObjects" style="height:92% !important">
+      <div class="container" >
+        <!-- Penguin Icon and Login Sesion Text -->
+        <div class="row" style="text-align:center !important">
+          <div class="col">
+            <!-- Penguin Icon -->
+            <img class="PenguinWidth" src="img/pinguino2.png" alt="Penguin2">
+            <!-- Login Sesion Text -->
+            <div>
+              <h4 class="SesionTitle">Inicia Sesión</h4>
+            </div>
+          </div>
+        </div>
+        <br>
+        <!-- Facebook Login Button -->
+        <div class="row" ng-controller='loginCtrlFacebook'>
+          <div class="col">
+            <div class="FacebookButtonLogin inlineBlockDisplay" ng-click="loginfb()">
+              <div class="FacebookButtonStyle">
+                <p class="FacebookTextLogin">Facebook</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <!-- Diving Line -->
+        <div class="row">
+          <div class="col col-10"></div>
+          <div class="col col-33">
+            <hr>
+          </div>
+          <div class="col orTextLogin">
+            O
+          </div>
+          <div class="col col-33">
+            <hr>
+          </div>
+          <div class="col col-10"></div>
+        </div>
+        <br>
+        <!-- Frenzy Login Button -->
+        <div class="row" ng-controller='LoginCtrlEmail'>
+          <div class="col">
+            <div class="EmailLogin inlineBlockDisplay">
+              <div class="loginButtonStyle">
+                <a  class="redirectionStyleNone" nav-transition="none" href="#/login">
+                  <!-- signupTitle Style is found in login2.css -->
+                  <p class="singupTitle open_sans emailCenteredLoginAndRegister">Correo Electrónico</p><!--signUp class is found in login2.css-->
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </ion-slide>
 </ion-slide-box>
+<!-- Footer Tabbar Tutorial -->
+<ion-footer-bar align-title="left" class="footerBarStyle">
+  <!-- Back button -->
+  <button class="button button-positive button-clear no-animation" ng-click="previous()"  id='backTutorial'>
+    <span class="button icon ion-chevron-left"></span><!-- Icon Back Button Tutorial -->
+    <span style="footerButtonTutorial">Anterior</span><!-- Text Back Button Tutorial -->
+  </button>
+  <h1 class="title"></h1>
+  <div class="buttons" ng-click="next()">
+    <button class="button button-positive button-clear no-animation" id="nextButtonTutorial">
+      <span style="footerButtonTutorial">Siguiente</span><!-- Text Next Button Tutorial -->
+      <span class="button icon ion-chevron-right"></span><!-- Icon Next Button Tutorial -->
+    </button>
+  </div>
+</ion-footer-bar>

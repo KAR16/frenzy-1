@@ -6,5 +6,5 @@ app.directive('categoryInfo', function() {
       info: '='
     },
     templateUrl: 'js/directives/categoryApp/categoryApp.html'
-  }
-})
+  };
+});
