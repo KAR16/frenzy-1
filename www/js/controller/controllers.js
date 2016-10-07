@@ -257,13 +257,29 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray) {
+.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal) {
 
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
         "Gender": IdGender,
         "User": NameUser
+    });
+
+    // First Mini Tutorial html file. Ionic Modal
+    $ionicModal.fromTemplateUrl('templates/mini_tutorials/getUpCodePromotion.html', function(modal) {
+      $scope.FirstModal = modal;
+    }, {
+      animation: 'slide-in-up',
+      focusFirstInput: false
+    });
+
+    // First Mini Tutorial html file. Ionic Modal
+    $ionicModal.fromTemplateUrl('templates/mini_tutorials/youWinWithACode.html', function(modal2) {
+      $scope.SecondModal = modal2;
+    }, {
+      animation: 'slide-in-up',
+      focusFirstInput: false
     });
 
     var ref = mainApp.database().ref().child('AppCategory');

@@ -21,17 +21,13 @@
   width: 100%;
   height: 10px;
 }
-.CenterClock {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
 /*Background color container zigzag*/
-.container2 {
-  background: #9C28B0;
+.firstContainerZigzag {
+  background: #00DDC1;
+  height: 180px;
 }
 /*Zigzag Top*/
-.container2:before {
+.firstContainerZigzag:before {
   background:linear-gradient(45deg, transparent 33.333%,#9C28B0 33.333%, #9C28B0 66.667%,transparent 66.667%),
   linear-gradient(-45deg, transparent 33.333%,#9C28B0 33.333%, #9C28B0 66.667%,transparent 66.667%);
   background-size: 20px 40px;
@@ -71,3 +67,105 @@
 .pageStartBoxPurpleTitlePromotions {
   color: #FFFFFF;
 }
+/*First Text in Categories*/
+.FindCouponsAndOffersText {
+  font-size: 22px;
+  font-family: letra;
+  color: #A7A9AC;
+}
+/*Zigzag Style for PageStart and Tutorial Template*/
+.zigzag {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  display: table;
+}
+.zigzag:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  width: 100%;
+  height: 10px;
+}
+/*Background color container zigzag*/
+.container2 {
+  background: #00DDC1;
+}
+/*Zigzag Top*/
+.container2:before {
+  background:linear-gradient(45deg, transparent 33.333%,#9C28B0 33.333%, #9C28B0 66.667%,transparent 66.667%),
+  linear-gradient(-45deg, transparent 33.333%,#9C28B0 33.333%, #9C28B0 66.667%,transparent 66.667%);
+  background-size: 20px 40px;
+}
+/*Div Container under div zigzag*/
+.container4 {
+  background-color: transparent;
+  height: 0;
+}
+/*Zigzag Bottom*/
+.container4:before {
+  background:linear-gradient(45deg, transparent 33.333%,white 33.333%, white 66.667%,transparent 66.667%),
+  linear-gradient(-45deg, transparent 33.333%,white 33.333%, white 66.667%,transparent 66.667%);
+  background-size: 20px 40px;
+}
+
+.goButtonCodePromotion {
+  float:right;
+  height:41px;
+  width:18%;
+  background:#FF5252;
+  border:none;
+  border-radius:10px;
+  /*font-weight: bolder;*/
+  position:absolute;
+  z-index:1;
+  left:79%;
+  margin-top:-1%;
+  font-size: 16px;
+  color:white;
+  font-family:Roboto, Helvetica, San Fransisco;
+  box-shadow: 0px 3px 0px #D24646;
+}
+
+.goButtonCodePromotion:active{
+  /* Disminiumos la cantidad de sombras */
+  font-weight: bolder;
+  -webkit-box-shadow: 0 2px 0 #C74545, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #C74545, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #C74545, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  margin-top: 0.10px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  padding-left:5%;
+  font-size: 18px;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  padding-left:5%;
+  font-size: 18x;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  padding-left:5%;
+  font-size: 18px;
+}
+:-moz-placeholder { /* Firefox 18- */
+  padding-left:5%;
+  font-size: 18px;
+}
+/*Font size and color for title Win Points*/
+.winPointsText {
+  color:#263147;
+  font-size:19px;
+}
+
+/*.inputCodePromotionStyle {
+  width:90%;
+  display:inline-block;
+  border-radius:10px 0px 0px 10px;
+  font-family:Roboto;
+  font-size:24px;
+  color:#A7A9AC;
+  height:41px;
+}*/

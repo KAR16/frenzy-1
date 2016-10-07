@@ -1,6 +1,77 @@
 <ion-view >
+
+  <style>
+  .codePromotionButton {
+    background-color: #9C28B0;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 3px 0px #6F197F;
+    height:40px;
+    display:table;
+  }
+  .codePromotionButtonText{
+    color: white;
+    font-size: 16px;
+  }
+  .codePromotionButton:active{
+    /* Disminiumos la cantidad de sombras */
+    -webkit-box-shadow: 0 2px 0 #6F197F, 0 5px 10px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 2px 0 #6F197F, 0 5px 10px rgba(0, 0, 0, .4);
+    box-shadow: 0 2px 0 #6F197F, 0 5px 10px rgba(0, 0, 0, .4);
+    /* Movemos ligeramente el botón hacia abajo */
+    position: relative;
+    top: 3px;
+  }
+
+  .modal-backdrop, .modal-backdrop-bg {
+    width: 100%;
+    height: 100%;
+  }
+
+  </style>
   <!-- BODY OF PAGE START -->
   <ion-content  nav-transition="none" locking="false">
+    <div class="firstContainerZigzag">
+      <div class="row" style="padding-top:3%">
+        <div class="col center">
+          <!-- Code Promotion Tutorial Button -->
+          <!-- href="#/app/getUpCodePromotionTutorial" -->
+          <!-- ng-click="triggerModal()" -->
+          <a  style="text-decoration:none;width:100%" nav-transition="android" ng-click="FirstModal.show()">
+            <div class="codePromotionButton center">
+              <div class="codePromotionButtonText open_sans verticalCentered">
+                ¿Dónde consigo el Código de Promoción?
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- Win Points and Gifts Text -->
+      <div class="row" style="padding-top:2%">
+        <div class="col center">
+          <span class="open_sans winPointsText">¡Gana Puntos y Premios a lo loco!</span>
+        </div>
+      </div>
+      <!-- Input Change -->
+      <div class="row" style="padding-top:2%">
+        <div class="col">
+          <!-- Input Code Promotion -->
+          <!-- The direct styles doesn't work good in css file -->
+          <input class="inputCodePromotionStyle" type="text" placeholder="Ingresa el Código de Promoción" name="name" style="width:90%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;font-size:24px;color:#A7A9AC;height:41px">
+          <!-- Go Button for the Code Promotion exchanged -->
+          <button ng-click="SecondModal.show()" type="button" name="button" class="goButtonCodePromotion">Go!</button>
+        </div>
+      </div>
+    </div>
+    <!-- Triangle Secuence -->
+    <div class="container4 zigzag"></div>
+
+    <!-- Find Coupons and Offers Container -->
+    <div class="row">
+      <div class="col" style="text-align:center;">
+        <span class="FindCouponsAndOffersText">Encuentra Cupones y Ofertas</span>
+      </div>
+    </div>
     <!-- Category List -->
     <ion-list>
       <ion-item href="#/app/playlists/{{category.CategoryName}}" ng-repeat="category in categories | orderBy:'IconCategory'">

@@ -1,0 +1,15 @@
+.getUpBackground {
+  background-color:#00DDC1;
+  padding:10px 0px 10px 0px
+}
+
+.sombra {
+  box-shadow: 0px 3px 6px -2px #333;
+  -moz-box-shadow: 0px 3px 6px -2px #333;
+  -webkit-box-shadow:0px 3px 6px -2px #333;
+}
+
+.miniTutorialDescription {
+  position: relative;
+  z-index: -1
+}
