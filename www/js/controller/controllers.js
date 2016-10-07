@@ -1084,17 +1084,23 @@ $scope.$on('$ionicView.enter', function() {
   $scope.slideChanged = function(index) {
 
     if(index === 0){
+      $('.footerBarStyle').show();
       $('#backTutorial').hide();
       $('#nextButtonTutorial').show();
     }
-    if(index === 1){
+    if(index > 0){
       $('#backTutorial').show();
     }
-    if(index === 2){
+    if(index === 1){
       // $('#thirdSlideTutorial').hide();
       $('#nextButtonTutorial').show();
     }
+    if(index === 2){
+      $('#nextButtonTutorial').show();
+    }
+
     if(index === 3){
+      $('.footerBarStyle').hide();
       $('#backTutorial').hide();
       $('#nextButtonTutorial').hide();
       setTimeout(function(){
