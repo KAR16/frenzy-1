@@ -1,0 +1,15 @@
+.winPointsBackground {
+  background-color:#FBA340;
+  padding:10px 0px 10px 0px
+}
+/*Style text description into tutorial*/
+.pointTextDescription {
+  padding-left:5%;
+  font-size:14px;
+  font-family:Roboto, Helvetica, San Fransisco;
+}
+/*Background for image type gif into Tutorial*/
+.backgroundGifPoints {
+  height:60%;
+  background:#FBA340;
+}

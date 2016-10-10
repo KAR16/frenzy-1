@@ -257,13 +257,29 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray) {
+.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal) {
 
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
         "Gender": IdGender,
         "User": NameUser
+    });
+
+    // First Mini Tutorial html file. Ionic Modal
+    $ionicModal.fromTemplateUrl('templates/mini_tutorials/getUpCodePromotion.html', function(modal) {
+      $scope.FirstModal = modal;
+    }, {
+      animation: 'slide-in-up',
+      focusFirstInput: false
+    });
+
+    // First Mini Tutorial html file. Ionic Modal
+    $ionicModal.fromTemplateUrl('templates/mini_tutorials/youWinWithACode.html', function(modal2) {
+      $scope.SecondModal = modal2;
+    }, {
+      animation: 'slide-in-up',
+      focusFirstInput: false
     });
 
     var ref = mainApp.database().ref().child('AppCategory');
@@ -287,11 +303,64 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     			heading: '',
     			image: 'img/icn-35.png',
     			footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-    			backButton: false
+    			backButton: false,
+          toolsIcon: true
       };
 
     });
 })
+
+//********************** POINTS CONTROLLER *****************************
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal) {
+
+  // First Mini Tutorial html file. Ionic Modal
+  $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
+    $scope.FirstModal = modal;
+  }, {
+    animation: 'slide-in-up',
+    focusFirstInput: false
+  });
+
+  $scope.$on('$ionicView.enter', function() {
+    $scope.$parent.data = {
+        heading: '',
+        image: 'img/icn-35.png',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
+        backButton: false,
+        toolsIcon: false
+    };
+    $scope.$apply();
+  });
+
+})
+
+// Point Description Controller
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal) {
+
+  $ionicModal.fromTemplateUrl('templates/modal.html', {
+     scope: $scope
+   }).then(function(modal) {
+     $scope.modal = modal;
+   });
+
+   $ionicModal.fromTemplateUrl('templates/modal2.html', {
+      scope: $scope
+    }).then(function(modal2) {
+      $scope.modal2 = modal2;
+    });
+
+    $scope.$on('$ionicView.enter', function() {
+      $scope.$parent.data = {
+          heading: '',
+          footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
+          backButton: true,
+          toolsIcon: false,
+      };
+      $scope.$apply();
+    });
+
+})
+
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite, Coupon) {
 
@@ -342,7 +411,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           heading: '',
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
-          backButton: false
+          backButton: false,
+          toolsIcon: false
       };
       $scope.$apply();
     });
@@ -415,7 +485,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           heading: '',
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC'],
-          backButton: false
+          backButton: false,
+          toolsIcon: false
       };
       $scope.$apply();
     });
@@ -505,7 +576,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             heading: $scope.category,
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-            backButton: true
+            backButton: true,
+            toolsIcon: false
         };
 
     });
@@ -533,7 +605,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             heading: $scope.promotion.Provider,
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-            backButton: true
+            backButton: true,
+            toolsIcon: false
         };
 
     });
@@ -785,7 +858,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           heading: $scope.customerId,
           image: '',
           footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-          backButton: true
+          backButton: true,
+          toolsIcon: false
       };
     });
 
@@ -880,7 +954,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         heading: $scope.cupon.Provider,
         image: '',
         footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-        backButton: true
+        backButton: true,
+        toolsIcon: false
     };
 
   });
@@ -1019,32 +1094,97 @@ $scope.$on('$ionicView.enter', function() {
     $state.go('app.playlists');
 }])
 /*************************  TUTORIAL  ******************************/
-.controller('tutorialController', ['$scope', '$state', 'Customer', function($scope, $state, Customer) {
-
+.controller('tutorialController', ['$scope', '$state', 'Customer', '$ionicSlideBoxDelegate', '$timeout', function($scope, $state, Customer, $ionicSlideBoxDelegate, $timeout) {
+  // IdUsuario of Facebook or Frenzy for Pines and hearts
   $scope.customers = Customer;
-    mixpanel.track("viewTurorial");
-    // IdUsuario of Facebook or Frenzy for Pines and hearts
+  mixpanel.track("viewTurorial");
+  // Disable slide Box into Tutorial
+  $timeout(function(){
+    $ionicSlideBoxDelegate.enableSlide(false);
+  });
+  // Next Button Tutorial
+  $scope.next = function() {
+    $ionicSlideBoxDelegate.enableSlide(true);
+    $ionicSlideBoxDelegate.next();
+    $ionicSlideBoxDelegate.enableSlide(false);
+  };
+  // Back Button Tutorial
+  $scope.previous = function() {
+    $ionicSlideBoxDelegate.enableSlide(true);
+    $ionicSlideBoxDelegate.previous();
+    $ionicSlideBoxDelegate.enableSlide(false);
+  };
 
-    $scope.slideChanged = function(index) {
-        switch (index) {
-            case 3:
-                $state.go('loginAndRegister');
-                break;
-        }
-    };
+  // Called each time the slide changes
+  $scope.slideChanged = function(index) {
+    if(index === 0){
+      $('#backTutorial').hide();
+      $('#nextButtonTutorial').show();
+    }
+    if(index > 0){
+      $('#backTutorial').show();
+    }
+    if(index === 1){
+      $('#nextButtonTutorial').show();
+    }
+    if(index === 2){
+      $('#nextButtonTutorial').hide();
+    }
+  }
+
 
 }])
 /*************************  TUTORIAL NO.2 ******************************/
-.controller('tutorial2Controller', ['$scope', '$state', 'Customer', function($scope, $state, Customer) {
+.controller('tutorial2Controller', ['$scope', '$state', 'Customer', '$timeout', '$ionicSlideBoxDelegate', function($scope, $state, Customer, $timeout, $ionicSlideBoxDelegate) {
 
   $scope.customers = Customer;
 
-  $scope.slideChanged = function(index) {
-  // data.slider is the instance of Swipe
-    if (index == 3) {
-      $state.go('app.herramientas');
-    }
+  $timeout(function(){
+    $ionicSlideBoxDelegate.enableSlide(false);
+  });
+  // Next Button Tutorial
+  $scope.next = function() {
+    $ionicSlideBoxDelegate.enableSlide(true);
+    $ionicSlideBoxDelegate.next();
+    $ionicSlideBoxDelegate.enableSlide(false);
   };
+  // Back Button Tutorial
+  $scope.previous = function() {
+    $ionicSlideBoxDelegate.enableSlide(true);
+    $ionicSlideBoxDelegate.previous();
+    $ionicSlideBoxDelegate.enableSlide(false);
+  };
+
+  // Called each time the slide changes
+  $scope.slideChanged = function(index) {
+
+    if(index === 0){
+      $('.footerBarStyle').show();
+      $('#backTutorial').hide();
+      $('#nextButtonTutorial').show();
+    }
+    if(index > 0){
+      $('#backTutorial').show();
+    }
+    if(index === 1){
+      // $('#thirdSlideTutorial').hide();
+      $('#nextButtonTutorial').show();
+    }
+    if(index === 2){
+      $('#nextButtonTutorial').show();
+    }
+
+    if(index === 3){
+      $('.footerBarStyle').hide();
+      $('#backTutorial').hide();
+      $('#nextButtonTutorial').hide();
+      setTimeout(function(){
+        $ionicSlideBoxDelegate.slide(0);
+        $state.go('app.playlists');
+      }, 1000);
+    }
+  }
+
 }])
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
@@ -1077,7 +1217,8 @@ $scope.$on('$ionicView.enter', function() {
           heading: '',
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5'],
-          backButton: false
+          backButton: false,
+          toolsIcon: false
       };
     });
 }])

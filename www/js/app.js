@@ -114,8 +114,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-
-	// // ****************  OFFERTS DESCRIPTION  *************
+	// ****************  OFFERTS DESCRIPTION  *************
 	.state('app.descripcionOfertas', {
 		url: "/descripcionOfertas/:promotionId",
 		views: {
@@ -182,7 +181,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 				controller: 'DescriptionCuponCtrl'
 			}
 		}
-	});
+	})
+	// ******* YOUR POINTS
+	.state('app.points', {
+		url: "/points",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/points/points.html",
+				controller: 'yourPointsCtrl'
+			}
+		}
+	})
+	// ****************  Points DESCRIPTION  *************
+	.state('app.pointsDescription', {
+		url: "/pointsDescription",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/pointsDescription/pointsDescription.html",
+				controller: 'pointsDescriptionCtrl'
+			}
+		}
+	})
+
 	// if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/loading');
 });
