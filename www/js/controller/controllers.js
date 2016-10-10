@@ -303,7 +303,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     			heading: '',
     			image: 'img/icn-35.png',
     			footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-    			backButton: false
+    			backButton: false,
+          toolsIcon: true
       };
 
     });
@@ -325,10 +326,38 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         heading: '',
         image: 'img/icn-35.png',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
-        backButton: false
+        backButton: false,
+        toolsIcon: false
     };
     $scope.$apply();
   });
+
+})
+
+// Point Description Controller
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal) {
+
+  $ionicModal.fromTemplateUrl('templates/modal.html', {
+     scope: $scope
+   }).then(function(modal) {
+     $scope.modal = modal;
+   });
+
+   $ionicModal.fromTemplateUrl('templates/modal2.html', {
+      scope: $scope
+    }).then(function(modal2) {
+      $scope.modal2 = modal2;
+    });
+
+    $scope.$on('$ionicView.enter', function() {
+      $scope.$parent.data = {
+          heading: '',
+          footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
+          backButton: true,
+          toolsIcon: false,
+      };
+      $scope.$apply();
+    });
 
 })
 
@@ -382,7 +411,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           heading: '',
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
-          backButton: false
+          backButton: false,
+          toolsIcon: false
       };
       $scope.$apply();
     });
@@ -455,7 +485,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           heading: '',
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC'],
-          backButton: false
+          backButton: false,
+          toolsIcon: false
       };
       $scope.$apply();
     });
@@ -545,7 +576,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             heading: $scope.category,
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-            backButton: true
+            backButton: true,
+            toolsIcon: false
         };
 
     });
@@ -573,7 +605,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             heading: $scope.promotion.Provider,
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-            backButton: true
+            backButton: true,
+            toolsIcon: false
         };
 
     });
@@ -825,7 +858,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           heading: $scope.customerId,
           image: '',
           footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-          backButton: true
+          backButton: true,
+          toolsIcon: false
       };
     });
 
@@ -920,7 +954,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         heading: $scope.cupon.Provider,
         image: '',
         footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
-        backButton: true
+        backButton: true,
+        toolsIcon: false
     };
 
   });
@@ -1182,7 +1217,8 @@ $scope.$on('$ionicView.enter', function() {
           heading: '',
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5'],
-          backButton: false
+          backButton: false,
+          toolsIcon: false
       };
     });
 }])

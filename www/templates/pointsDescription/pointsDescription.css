@@ -1,0 +1,181 @@
+/*Spacing 5px Top*/
+.spacingTop5 {
+  margin-top:5px;
+}
+.pointsDescriptionForCustomer {
+  background: #263147;
+  height: 145px;
+}
+/*ZigZag Gifts for Points*/
+.containerTrianglePoints {
+background: #F1F2F2;
+padding:0 !important;
+height: 5px;
+}
+.containerTrianglePoints:before {
+background:
+  linear-gradient(
+    45deg, transparent 33.333%,
+    #F1F2F2 33.333%, #F1F2F2 66.667%,
+    transparent 66.667%
+  ),
+  linear-gradient(
+    -45deg, transparent 33.333%,
+    #F1F2F2 33.333%, #F1F2F2 66.667%,
+    transparent 66.667%
+  );
+background-size: 20px 40px;
+}
+
+#modales.modal{
+  border-radius: 2px;
+  top: 30% !important;
+  right: 10% !important;
+  bottom: 40% !important;
+  left: 10% !important;
+  overflow: visible !important;
+  min-height: 250px !important;
+  width: 80% !important;
+}
+#modales2.modal{
+  border-radius: 2px;
+  top: 30% !important;
+  right: 10% !important;
+  bottom: 40% !important;
+  left: 10% !important;
+  overflow: visible !important;
+  min-height: 260px !important;
+  width: 80% !important;
+}
+/*Background color for subHeader into point Description*/
+.subHeaderPointDescription {
+  background:#3F51B5;
+}
+/*Style text into subHeader*/
+.winPointsText {
+  color:white;
+  font-family:Roboto, Helvetica, San Fransisco;
+}
+/*style text for the points into point Description*/
+.countPoints {
+  color:white;
+  font-size:18px;
+}
+/*spacing and style for text description AP*/
+.descriptionAP {
+  color:#A7A9AC;
+  font-size:12px;
+  line-height:1;
+}
+/*Points Bar Container*/
+.generalContainerForPointBar {
+  padding-left:3% !important;
+  padding-right:3% !important;
+  padding-top:5% !important;
+}
+/*Total bar for the user points*/
+.pointBarWhite {
+  height:20px;
+  background-color:#F1F2F2;
+  border-radius:132px;
+  margin-right:-2px;
+  padding:0;
+}
+/*Count of the customer points*/
+.yourPointsBar {
+  height:20px;
+  width:50%;
+  z-index:1;
+  background:#FFD922;
+  border-radius:132px;
+}
+/*Style Icon Star into points view*/
+.iconStar {
+  float:right;
+  font-size:45px;
+  color:#FFD922;
+  margin-top:-4px;
+}
+/*Color and Size for the subtitles*/
+.subTitles {
+  color:#A7A9AC;
+  font-size:20px;
+}
+/*Width and Position for the Award Container*/
+.awardContainer {
+  padding-left:3%;
+  padding-right:3%;
+  padding-bottom:1% !important;
+  padding-top:3% !important; /*Spacing between containers*/
+}
+/*White Color Container and Blue Border*/
+.awardWhiteContainer {
+  background:white;
+  border-radius:3px;
+  box-shadow:1px 2px 5px #A7A9AC;
+  padding-bottom:4%;
+  padding:0 !important;
+}
+/*Color and Size for the Award Title*/
+.awardTitle {
+  font-size:20px;
+  color:#263147;
+  margin-top: 1px;
+}
+/*Award Description style Container*/
+.awardDescriptionContainer {
+  padding-top:1%;
+  height:auto;
+  font-size:12px;
+  color:#A7A9AC;
+  font-family:Roboto, Helvetica;
+  word-wrap:break-word; /*Justify Text*/
+}
+/*Award Description style Text*/
+.awardDescriptionText {
+  font-size:12px;
+  color:#A7A9AC;
+  font-family:Roboto, Helvetica;
+}
+/*Separate line before Award description Text*/
+.secondAwardBar {
+  margin-top:1%;
+  border-top:1px solid #E6E7E8;
+  padding-left:3% !important;
+  padding-right:3% !important;
+  padding-bottom:0;
+}
+/*Points for Exchange Award Text*/
+.cantPointForExchangeText {
+  font-weight:bolder;
+  font-size:16px;
+}
+/*Style for the share Icon*/
+.shareAwardIcon {
+  font-size:30px;
+  color:#A7A9AC;
+}
+/*Autosize Award image into Container*/
+.awardImage {
+  width:100%;
+  height:250px;
+}
+/*Terms And Conditions Content Style text*/
+.termsAndConditionsText {
+  color:#263147;
+  font-family:Roboto, Helvetica, San Fransisco;
+}
+
+.justifyContent {
+  text-align:justify;
+}
+/*Sub Footer Line*/
+.legalTermsLine {
+  border-top:1px solid #E6E7E8;
+  padding:0 !important;
+}
+
+.TermButton {
+  padding:0 !important;
+  color: #A7A9AC !important;
+}

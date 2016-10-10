@@ -1,0 +1,289 @@
+<ion-view>
+	<ion-content class="generalBackgroundPoints">
+
+    <div class="row subHeaderPointDescription">
+      <div class="col">
+        <span class="winPointsText">Gana Puntos en cada compra.</span>
+      </div>
+    </div>
+    <!-- Points Description For Each Customer -->
+    <div class="row pointsDescriptionForCustomer">
+      <!-- Count of Points -->
+      <div class="col">
+        <div class="row center">
+          <span class="open_sans countPoints">72 Puntos</span>
+        </div>
+        <div class="row center" style="padding-top:1%">
+          <span class="descriptionAP">Acumula puntos para cambiarlos por los <br> siguientes premios.</span>
+        </div>
+        <!-- Status Bar of the Points -->
+        <div class="row generalContainerForPointBar">
+          <div class="col col-90 pointBarWhite">
+						<!-- Your points (Yellow Bar) -->
+            <div class="yourPointsBar"></div>
+          </div>
+          <div class="col col-10">
+            <!-- Icon Star -->
+            <span class="home iconStar">C</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Triangle And Available Gifts -->
+    <div class="row containerTrianglePoints zigzagPoints"></div>
+    <!-- Available Gifts Text -->
+    <div class="row" style="padding-top:3%">
+      <div class="col center">
+        <span class="open_sans subTitles">Premios Disponibles</span>
+      </div>
+    </div>
+    <!-- Award Area -->
+    <div class="row awardContainer">
+      <div class="col awardWhiteContainer" style="border:1px solid #3F51B5;" ng-click="modal.show()">
+        <!-- Logo With Name and Count of Gift for Exchange -->
+        <div class="row">
+          <!-- Name Customer And Gifts-->
+          <div class="col">
+            <!-- Name -->
+            <div class="row">
+              <span class="open_sans awardTitle">Un Calzone Gratis</span>
+            </div>
+            <!-- Gift -->
+            <div class="row awardDescriptionContainer">
+              <span class="awardDescriptionText">Un calzone Di Carne gratis, no incluye bebida. Valido hasta agotar Existencias</span>
+            </div>
+          </div>
+        </div>
+        <!-- See More Container -->
+        <div class="row secondAwardBar">
+          <div class="col col-90 verticalCenteredObjects">
+            <span class="cantPointForExchangeText" style="color:#3F51B5;">X 50 PUNTOS</span>
+          </div>
+          <div class="col spacingTop5">
+						<!-- Share Icon -->
+            <span class="home shareAwardIcon">O</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ************************************************************************************ -->
+    <div class="row awardContainer">
+      <div class="col awardWhiteContainer" style="border:1px solid #3F51B5;">
+        <!-- Logo With Name and Count of Gift for Exchange -->
+        <div class="row">
+          <!-- Name Customer And Gifts-->
+          <div class="col">
+            <!-- Name -->
+            <div class="row">
+              <span class="open_sans awardTitle">GTQ 25.00 de Descuento</span>
+            </div>
+            <!-- Gift -->
+            <div class="row awardDescriptionContainer">
+              <span class="awardDescriptionText">GTQ 25.00 de descuento en cualquier consumo en tiendas Domino's.</span>
+            </div>
+          </div>
+        </div>
+        <!-- See More Container -->
+        <div class="row secondAwardBar">
+          <div class="col col-90 verticalCenteredObjects">
+            <span class="cantPointForExchangeText" style="color:#3F51B5;">X 20 PUNTOS</span>
+          </div>
+          <div class="col spacingTop5">
+            <span class="home shareAwardIcon">O</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Available Other Gifts Text -->
+    <div class="row">
+      <div class="col center">
+        <span class="open_sans subTitles spacingTop5">Otros Premios</span>
+      </div>
+    </div>
+		<!-- Award with Image -->
+    <div class="row awardContainer">
+      <div class="col awardWhiteContainer">
+        <!-- Image Gift -->
+        <div class="row" style="padding:0 !important">
+          <img class="awardImage" src="https://minisitios.s3.amazonaws.com/tarjetalibre/uploads/2015/04/PIZZA-2.jpg" alt="" />
+        </div>
+        <!-- Logo With Name and Count of Gift for Exchange -->
+        <div class="row">
+          <!-- Name Customer And Gifts-->
+          <div class="col">
+            <!-- Name -->
+            <div class="row">
+              <span class="open_sans awardTitle">Una Dominator Gratis!</span>
+            </div>
+            <!-- Gift -->
+            <div class="row awardDescriptionContainer">
+              <span class="awardDescriptionText">Una Dominator de cualquier especialidad, incluye 2.5L de Coca Cola</span>
+            </div>
+          </div>
+        </div>
+        <!-- See More Container -->
+        <div class="row secondAwardBar">
+          <div class="col col-90 verticalCenteredObjects">
+            <span class="cantPointForExchangeText" style="color:#A7A9AC;">X 200 PUNTOS</span>
+          </div>
+          <div class="col spacingTop5">
+            <span class="home shareAwardIcon">O</span>
+          </div>
+        </div>
+      </div>
+    </div>
+		<!-- *************************************************************** -->
+    <div class="row awardContainer">
+      <div class="col awardWhiteContainer">
+        <!-- Logo With Name and Count of Gift for Exchange -->
+        <div class="row">
+          <!-- Name Customer And Gifts-->
+          <div class="col">
+            <!-- Name -->
+            <div class="row">
+              <span class="open_sans awardTitle">2x1 Pizzas Grandes de 1 ingrediente</span>
+            </div>
+            <!-- Gift -->
+            <div class="row awardDescriptionContainer">
+              <span class="awardDescriptionText">15% de descuento en Pollos Piolindo de 2 lbs o menos, unicamente en dia jueves. Solo por hoy.</span>
+            </div>
+          </div>
+        </div>
+        <!-- See More Container -->
+        <div class="row secondAwardBar">
+          <div class="col col-90 verticalCenteredObjects">
+            <span class="cantPointForExchangeText" style="color:#A7A9AC;">X 200 PUNTOS</span>
+          </div>
+          <div class="col spacingTop5">
+            <span class="home shareAwardIcon">O</span>
+          </div>
+        </div>
+      </div>
+    </div>
+		<!-- DESCRIPTION AND TERMS CONTAINER -->
+		<!-- Description Container -->
+		<div class="row">
+			<div class="col">
+				<div class="row center">
+					<div class="col">
+						<span class="open_sans subTitles">Descripción de la Promoción</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col justifyContent">
+						<span class="termsAndConditionsText">
+							Acumula puntos en cada compra en cualquier restaurante o pedido a domicilio Domino's.
+							Pide el código de verificación en cualquier restaurante Domino's.
+							Únicamene canjeable en restaurantes Domino's. No aplica en entrega a domicilio.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Condition Container -->
+		<div class="row">
+			<div class="col">
+				<div class="row center">
+					<div class="col">
+						<span class="open_sans subTitles">Políticas de Canjeo</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col justifyContent">
+						<span class="termsAndConditionsText">Los siguientes términos y condiciones (los "Términos y Condiciones") rigen el uso que usted le dé a este sitio web y a cualquiera de los contenidos disponibles por o a través de este sitio web, incluyendo cualquier contenido derivado del mismo </span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<!-- Bar Sub-Footer for Terms And Conditions -->
+		<div class="row legalTermsLine">
+			<div class="LegalTerms verticalCenteredObjects col col-80" style="padding:0 !important">Términos Legales</div>
+			<div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
+		</div>
+
+
+
+		<script id="templates/modal.html" type="text/ng-template">
+		      <ion-modal-view id="modales">
+		        <ion-content style="padding:0">
+							<!--Close Button-->
+							<div class="row">
+								<div class="col" style="padding:0">
+									<div class="row" style="padding:0">
+										<div class="col">
+											<span ng-click="modal.hide()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col center">
+											<span class="home" style="color:#9C28B0;font-size:70px">K</span>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col center">
+											<span class="" style="font-size:18px;color:#263147;font-weight:bolder">¿Deseas cambiar 50 Puntos <br> por este premio?</span>
+										</div>
+									</div>
+									<div class="row" style="padding:top:3%;padding-bottom:3%">
+										<div class="col center">
+											<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Un Calzone Gratis</span>
+										</div>
+									</div>
+									<center>
+										<div class="enterButtonStyle" ng-click="modal2.show()">
+											<div class="enterButtonTitle open_sans">
+												¡DÉMOSLE!
+											</div>
+										</div>
+									</center>
+								</div>
+							</div>
+		        </ion-content>
+		      </ion-modal-view>
+		    </script>
+
+				<script id="templates/modal2.html" type="text/ng-template">
+				      <ion-modal-view id="modales2">
+				        <ion-content style="padding:0">
+									<!--Close Button-->
+									<div class="row">
+										<div class="col" style="padding:0">
+											<div class="row" style="padding:0">
+												<div class="col">
+													<span ng-click="modal2.hide()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col center">
+													<span class="home" style="color:#FFD922;font-size:70px">d</span>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col center">
+													<span class="" style="font-size:18px;color:#263147;font-weight:bolder">¿Tu premio fue agregado <br> a "Premios"?</span>
+												</div>
+											</div>
+											<div class="row" style="padding:top:3%;padding-bottom:3%">
+												<div class="col center">
+													<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Te restan 22 Puntos en la promoción de <br> Domino's Pizza</span>
+												</div>
+											</div>
+											<center>
+												<div class="enterButtonStyle">
+													<div class="enterButtonTitle open_sans">
+														IR A MIS PREMIOS
+													</div>
+												</div>
+											</center>
+										</div>
+									</div>
+				        </ion-content>
+				      </ion-modal-view>
+				    </script>
+
+
+  </ion-content>
+</ion-view>

@@ -192,6 +192,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
+	// ****************  Points DESCRIPTION  *************
+	.state('app.pointsDescription', {
+		url: "/pointsDescription",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/pointsDescription/pointsDescription.html",
+				controller: 'pointsDescriptionCtrl'
+			}
+		}
+	})
 
 	// if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/loading');

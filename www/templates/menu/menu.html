@@ -19,7 +19,7 @@
           <!-- Header Text -->
           <span class="categoriesHeaderText">{{data.heading | removeDashes}}<img class="frenzyTitlePageStart" ng-src="{{data.image}}" ng-if="data.image"></span>
           <!-- Tools Icon -->
-          <button class="button button-icon home toolsButton" style="color:white" menu-toggle="right">D</button>
+          <button class="button button-icon home toolsButton" style="color:white" menu-toggle="right" ng-if="data.toolsIcon">D</button>
         </div>
       </ion-header-bar>
       <!-- Principal Footer for Home, Heart, Pin and Tools views -->

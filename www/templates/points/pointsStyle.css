@@ -83,3 +83,79 @@ background-size: 20px 40px;
   /* Movemos ligeramente el botón hacia abajo */
   margin-top: 0.10px;
 }
+/*Total width for the redirection in mini tutorial button*/
+.styleRedirection {
+  text-decoration:none;
+  width:100%;
+}
+/*Container style for customer Award*/
+.rowForCustomerAward {
+  padding-left:3%;
+  padding-right:3%;
+  padding-bottom:5%;
+}
+/*White Container for each Award in Customers*/
+.whiteAwardContainer {
+  background:white;
+  border-radius:3px;
+  box-shadow:1px 2px 5px #A7A9AC;
+  padding-bottom:4%;
+  padding:0 !important;
+}
+/*contain the image, name and count aviable awards*/
+.customerAwardDescriptionContainer {
+  padding-left:2% !important;
+  padding-right:2% !important;
+}
+/*Style for the Customer Image Container*/
+.customerAwardImage {
+  width:60px;
+  height:60px;
+  border:1px solid #A7A9AC;
+  border-radius:4px;
+  margin:0 auto;
+}
+/*Customer Image Size Autosizable into Container*/
+.customerImageSize {
+  width:100%;
+  border-radius:4px;
+  padding:10%
+}
+/*Style Text*/
+.countAviableAwardText {
+  font-size:12px;
+  color:#3F51B5;
+  font-family:Roboto, Helvetica;
+}
+/*Count Available Points*/
+.PointsCountText {
+  color:#A7A9AC;
+  font-size:15px;
+}
+/*General Point Bar*/
+.pointBarGray {
+  height:20px;
+  background-color:#F1F2F2;
+  border-radius:132px;
+  margin-right:-2px;
+  padding:0;
+}
+
+.seeMoreBar {
+  margin-top:1% !important;
+  border-top:1px solid #E6E7E8;
+  padding-left:3% !important;
+  padding-right:3% !important;
+  padding-bottom:0 !important;
+}
+
+.seeMoreText {
+  color:#3F51B5;
+  font-weight:bolder;
+  font-size:16px;
+}
+/*Clown Icon Color*/
+.clownIcon {
+  color:#00DDC1;
+  font-size:80px;
+}
