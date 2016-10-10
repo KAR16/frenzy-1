@@ -44,6 +44,41 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 
 }]);
 
+app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
+  var user = firebase.auth().currentUser;
+  var ref = firebase.database().ref('Userss/'+ user.uid)
+   return $firebaseArray(ref.child('CrossPromotion'))
+}]);
+
+app.factory('CrossPromotion', ['$firebaseArray' , 'Customer' , 'User', function($firebaseArray,Customer,User) {
+  return {
+    get : function () {
+      var customer  = Customer;
+      var user = User;
+      var cross = firebase.database().ref("CrossPromotion");
+      var crossPromotion = $firebaseArray(cross);
+      var crossPromotionArray = []
+      user.$loaded().then(function () {
+        crossPromotion.$loaded().then(function() {
+          customer.$loaded().then(function () {
+            for (a in crossPromotion) {
+              if (typeof crossPromotion[a] == 'object') {
+                for (i in customer) {
+                  if (customer[i].$id == crossPromotion[a].customer && typeof customer[i] == 'object') {
+                    crossPromotion[a]["Logo"] = customer[i].Logo
+                    crossPromotion[a]["Nombre"] = customer[i].Name
+                  }
+                }
+              }
+            }
+          })  
+        })
+      })
+      return crossPromotion
+    }
+  }
+}]);
+
 app.filter('removeDashes', function() {
   return function(input) {
     input = input || "";

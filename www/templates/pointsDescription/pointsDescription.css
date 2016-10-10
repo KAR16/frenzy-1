@@ -84,7 +84,6 @@ background-size: 20px 40px;
 /*Count of the customer points*/
 .yourPointsBar {
   height:20px;
-  width:50%;
   z-index:1;
   background:#FFD922;
   border-radius:132px;

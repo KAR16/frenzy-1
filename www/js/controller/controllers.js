@@ -311,9 +311,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 //********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal) {
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotion,User) {
 
   // First Mini Tutorial html file. Ionic Modal
+  $scope.crossPromotion = CrossPromotion.get();
+  $scope.user = User;
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
     $scope.FirstModal = modal;
   }, {
