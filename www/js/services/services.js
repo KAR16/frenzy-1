@@ -50,7 +50,7 @@ app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
    return $firebaseArray(ref.child('CrossPromotion'))
 }]);
 
-app.factory('CrossPromotion', ['$firebaseArray' , 'Customer' , 'User', function($firebaseArray,Customer,User) {
+app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'User', function($firebaseArray,Customer,User) {
   return {
     get : function () {
       var customer  = Customer;
