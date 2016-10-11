@@ -61,16 +61,25 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
       user.$loaded().then(function () {
         crossPromotion.$loaded().then(function() {
           customer.$loaded().then(function () {
-            for (a in crossPromotion) {
-              if (typeof crossPromotion[a] == 'object') {
-                for (i in customer) {
-                  if (customer[i].$id == crossPromotion[a].customer && typeof customer[i] == 'object') {
-                    crossPromotion[a]["Logo"] = customer[i].Logo
-                    crossPromotion[a]["Nombre"] = customer[i].Name
-                  }
-                }
-              }
-            }
+            crossPromotion.map(function (promotion) {
+              customer.map(function (valCustomer) {
+                if (valCustomer.$id == promotion.customer) {
+                  promotion.Logo = valCustomer.Logo
+                  promotion.Nombre = valCustomer.Name
+                  user.map(function (valUser) {
+                    if (valUser.$id == promotion.$id) {
+                     promotion.countPromotion = Object.keys(promotion.Award).length
+                     promotion.points = valUser.Points
+                     promotion.percentagePoints = (100 * valUser.Points )/ promotion.MaxPoints
+                     if (isNaN(promotion.points)) {
+                          promotion.percentagePoints = 0 
+                          promotion.points = 0
+                      }
+                    }
+                  })
+                } 
+              })
+            })
           })  
         })
       })
@@ -78,7 +87,19 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
     }
   }
 }]);
-
+app.factory('pointsDescripcion',function () {
+  return {
+    get : function (id,crossPromotion) {
+      var arrayPromotion = ''
+      crossPromotion.map(function (value) {
+        if (value.$id == id) {
+          arrayPromotion = value
+        }  
+      })
+     return arrayPromotion         
+    }
+  }
+});
 app.filter('removeDashes', function() {
   return function(input) {
     input = input || "";
