@@ -7,6 +7,10 @@
   padding: 0px !important
 }
 
+#GeneralPaddingCols0.row {
+  padding: 0px !important
+}
+
 #no-scroll.overflow-scroll {
   overflow-y: hidden;
 }
