@@ -26,6 +26,15 @@ background:
   );
 background-size: 20px 40px;
 }
+.borderPromotion{
+  border:1px solid #3F51B5;
+}
+.textPointAvaible{
+ color:#3F51B5 
+}
+.textPointUnavaible{
+ color:#A7A9AC 
+}
 
 #modales.modal{
   border-radius: 2px;
