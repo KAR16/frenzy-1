@@ -361,6 +361,35 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 
 })
+// Award Controller View
+.controller('awardCtrl', ['$scope', '$state', '$ionicModal',function($scope, $state, $ionicModal) {
+
+  // First Mini Tutorial html file. Ionic Modal
+  $ionicModal.fromTemplateUrl('templates/mini_tutorials/ExchangeMyAwards.html', function(modal) {
+    $scope.FirstModal = modal;
+
+    setTimeout(
+      function(){
+        $scope.imageTypeGif = 'img/canjea.gif';
+      }, 2000);
+
+  }, {
+    animation: 'slide-in-up',
+    focusFirstInput: false
+  });
+
+  $scope.$on('$ionicView.enter', function() {
+    $scope.$parent.data = {
+        heading: '',
+        image: 'img/icn-35.png',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
+        backButton: false,
+        toolsIcon: false,
+    };
+    $scope.$apply();
+  });
+
+}])
 
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite, Coupon) {
