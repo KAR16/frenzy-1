@@ -311,9 +311,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 //********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal) {
-
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) { 
   // First Mini Tutorial html file. Ionic Modal
+  $scope.crossPromotion = CrossPromotionAcumulatePoints.get();
+  $scope.$parent.dataPromotion = $scope.crossPromotion;
+  $scope.user = User;
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
     $scope.FirstModal = modal;
   }, {
@@ -331,12 +333,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     };
     $scope.$apply();
   });
-
 })
 
 // Point Description Controller
-.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal) {
-
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion) {
+  $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
   $ionicModal.fromTemplateUrl('templates/modal.html', {
      scope: $scope
    }).then(function(modal) {

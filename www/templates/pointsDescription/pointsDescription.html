@@ -11,7 +11,7 @@
       <!-- Count of Points -->
       <div class="col">
         <div class="row center">
-          <span class="open_sans countPoints">72 Puntos</span>
+          <span class="open_sans countPoints">{{pointsDescripcion.points}} puntos</span>
         </div>
         <div class="row center" style="padding-top:1%">
           <span class="descriptionAP">Acumula puntos para cambiarlos por los <br> siguientes premios.</span>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <!-- Award Area -->
-    <div class="row awardContainer">
+    <div class="row awardContainer" ng-repeat = "award in pointsDescripcion.Award" >
       <div class="col awardWhiteContainer" style="border:1px solid #3F51B5;" ng-click="modal.show()">
         <!-- Logo With Name and Count of Gift for Exchange -->
         <div class="row">
@@ -46,49 +46,21 @@
           <div class="col">
             <!-- Name -->
             <div class="row">
-              <span class="open_sans awardTitle">Un Calzone Gratis</span>
+              <span class="open_sans awardTitle">{{award.Name}}</span>
             </div>
             <!-- Gift -->
             <div class="row awardDescriptionContainer">
-              <span class="awardDescriptionText">Un calzone Di Carne gratis, no incluye bebida. Valido hasta agotar Existencias</span>
+              <span class="awardDescriptionText">{{award.AwardDescription}}</span>
             </div>
           </div>
         </div>
         <!-- See More Container -->
         <div class="row secondAwardBar">
           <div class="col col-90 verticalCenteredObjects">
-            <span class="cantPointForExchangeText" style="color:#3F51B5;">X 50 PUNTOS</span>
+            <span class="cantPointForExchangeText" style="color:#3F51B5;">X {{award.Points}} PUNTOS</span>
           </div>
           <div class="col spacingTop5">
 						<!-- Share Icon -->
-            <span class="home shareAwardIcon">O</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ************************************************************************************ -->
-    <div class="row awardContainer">
-      <div class="col awardWhiteContainer" style="border:1px solid #3F51B5;">
-        <!-- Logo With Name and Count of Gift for Exchange -->
-        <div class="row">
-          <!-- Name Customer And Gifts-->
-          <div class="col">
-            <!-- Name -->
-            <div class="row">
-              <span class="open_sans awardTitle">GTQ 25.00 de Descuento</span>
-            </div>
-            <!-- Gift -->
-            <div class="row awardDescriptionContainer">
-              <span class="awardDescriptionText">GTQ 25.00 de descuento en cualquier consumo en tiendas Domino's.</span>
-            </div>
-          </div>
-        </div>
-        <!-- See More Container -->
-        <div class="row secondAwardBar">
-          <div class="col col-90 verticalCenteredObjects">
-            <span class="cantPointForExchangeText" style="color:#3F51B5;">X 20 PUNTOS</span>
-          </div>
-          <div class="col spacingTop5">
             <span class="home shareAwardIcon">O</span>
           </div>
         </div>
@@ -172,9 +144,7 @@
 				<div class="row">
 					<div class="col justifyContent">
 						<span class="termsAndConditionsText">
-							Acumula puntos en cada compra en cualquier restaurante o pedido a domicilio Domino's.
-							Pide el código de verificación en cualquier restaurante Domino's.
-							Únicamene canjeable en restaurantes Domino's. No aplica en entrega a domicilio.
+							{{pointsDescripcion.PromotionDescription}}
 						</span>
 					</div>
 				</div>
@@ -190,7 +160,7 @@
 				</div>
 				<div class="row">
 					<div class="col justifyContent">
-						<span class="termsAndConditionsText">Los siguientes términos y condiciones (los "Términos y Condiciones") rigen el uso que usted le dé a este sitio web y a cualquiera de los contenidos disponibles por o a través de este sitio web, incluyendo cualquier contenido derivado del mismo </span>
+						<span class="termsAndConditionsText"> {{pointsDescripcion.ExchangePolicy}}</span>
 					</div>
 				</div>
 			</div>

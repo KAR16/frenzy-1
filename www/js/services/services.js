@@ -44,6 +44,62 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 
 }]);
 
+app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
+  var user = firebase.auth().currentUser;
+  var ref = firebase.database().ref('Userss/'+ user.uid)
+   return $firebaseArray(ref.child('CrossPromotion'))
+}]);
+
+app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'User', function($firebaseArray,Customer,User) {
+  return {
+    get : function () {
+      var customer  = Customer;
+      var user = User;
+      var cross = firebase.database().ref("CrossPromotion");
+      var crossPromotion = $firebaseArray(cross);
+      var crossPromotionArray = []
+      user.$loaded().then(function () {
+        crossPromotion.$loaded().then(function() {
+          customer.$loaded().then(function () {
+            crossPromotion.map(function (promotion) {
+              customer.map(function (valCustomer) {
+                if (valCustomer.$id == promotion.customer) {
+                  promotion.Logo = valCustomer.Logo
+                  promotion.Nombre = valCustomer.Name
+                  user.map(function (valUser) {
+                    if (valUser.$id == promotion.$id) {
+                     promotion.countPromotion = Object.keys(promotion.Award).length
+                     promotion.points = valUser.Points
+                     promotion.percentagePoints = (100 * valUser.Points )/ promotion.MaxPoints
+                     if (isNaN(promotion.points)) {
+                          promotion.percentagePoints = 0 
+                          promotion.points = 0
+                      }
+                    }
+                  })
+                } 
+              })
+            })
+          })  
+        })
+      })
+      return crossPromotion
+    }
+  }
+}]);
+app.factory('pointsDescripcion',function () {
+  return {
+    get : function (id,crossPromotion) {
+      var arrayPromotion = ''
+      crossPromotion.map(function (value) {
+        if (value.$id == id) {
+          arrayPromotion = value
+        }  
+      })
+     return arrayPromotion         
+    }
+  }
+});
 app.filter('removeDashes', function() {
   return function(input) {
     input = input || "";

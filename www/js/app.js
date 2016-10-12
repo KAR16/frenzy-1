@@ -194,7 +194,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ****************  Points DESCRIPTION  *************
 	.state('app.pointsDescription', {
-		url: "/pointsDescription",
+		url: "/pointsDescription/:idPromotion",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/pointsDescription/pointsDescription.html",
