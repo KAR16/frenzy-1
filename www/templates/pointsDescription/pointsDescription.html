@@ -20,7 +20,7 @@
         <div class="row generalContainerForPointBar">
           <div class="col col-90 pointBarWhite">
 						<!-- Your points (Yellow Bar) -->
-            <div class="yourPointsBar"></div>
+            <div class="yourPointsBar" style="width:{{pointsDescripcion.percentagePoints}}%"></div>
           </div>
           <div class="col col-10">
             <!-- Icon Star -->
@@ -39,7 +39,10 @@
     </div>
     <!-- Award Area -->
     <div class="row awardContainer" ng-repeat = "award in pointsDescripcion.Award" >
-      <div class="col awardWhiteContainer" style="border:1px solid #3F51B5;" ng-click="modal.show()">
+      <div class="col awardWhiteContainer" ng-click="modal.show()" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
+        <div class="row" style="padding:0 !important">
+           <img class="awardImage" ng-src="{{award.Photo}}" ng-if ='award.Photo' alt="" />
+        </div>
         <!-- Logo With Name and Count of Gift for Exchange -->
         <div class="row">
           <!-- Name Customer And Gifts-->
@@ -57,76 +60,10 @@
         <!-- See More Container -->
         <div class="row secondAwardBar">
           <div class="col col-90 verticalCenteredObjects">
-            <span class="cantPointForExchangeText" style="color:#3F51B5;">X {{award.Points}} PUNTOS</span>
+            <span class="cantPointForExchangeText" ng-class = "pointsDescripcion.points >= award.Points ? 'textPointAvaible' : 'textPointUnavaible'" >X {{award.Points}} PUNTOS</span>
           </div>
           <div class="col spacingTop5">
 						<!-- Share Icon -->
-            <span class="home shareAwardIcon">O</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Available Other Gifts Text -->
-    <div class="row">
-      <div class="col center">
-        <span class="open_sans subTitles spacingTop5">Otros Premios</span>
-      </div>
-    </div>
-		<!-- Award with Image -->
-    <div class="row awardContainer">
-      <div class="col awardWhiteContainer">
-        <!-- Image Gift -->
-        <div class="row" style="padding:0 !important">
-          <img class="awardImage" src="https://minisitios.s3.amazonaws.com/tarjetalibre/uploads/2015/04/PIZZA-2.jpg" alt="" />
-        </div>
-        <!-- Logo With Name and Count of Gift for Exchange -->
-        <div class="row">
-          <!-- Name Customer And Gifts-->
-          <div class="col">
-            <!-- Name -->
-            <div class="row">
-              <span class="open_sans awardTitle">Una Dominator Gratis!</span>
-            </div>
-            <!-- Gift -->
-            <div class="row awardDescriptionContainer">
-              <span class="awardDescriptionText">Una Dominator de cualquier especialidad, incluye 2.5L de Coca Cola</span>
-            </div>
-          </div>
-        </div>
-        <!-- See More Container -->
-        <div class="row secondAwardBar">
-          <div class="col col-90 verticalCenteredObjects">
-            <span class="cantPointForExchangeText" style="color:#A7A9AC;">X 200 PUNTOS</span>
-          </div>
-          <div class="col spacingTop5">
-            <span class="home shareAwardIcon">O</span>
-          </div>
-        </div>
-      </div>
-    </div>
-		<!-- *************************************************************** -->
-    <div class="row awardContainer">
-      <div class="col awardWhiteContainer">
-        <!-- Logo With Name and Count of Gift for Exchange -->
-        <div class="row">
-          <!-- Name Customer And Gifts-->
-          <div class="col">
-            <!-- Name -->
-            <div class="row">
-              <span class="open_sans awardTitle">2x1 Pizzas Grandes de 1 ingrediente</span>
-            </div>
-            <!-- Gift -->
-            <div class="row awardDescriptionContainer">
-              <span class="awardDescriptionText">15% de descuento en Pollos Piolindo de 2 lbs o menos, unicamente en dia jueves. Solo por hoy.</span>
-            </div>
-          </div>
-        </div>
-        <!-- See More Container -->
-        <div class="row secondAwardBar">
-          <div class="col col-90 verticalCenteredObjects">
-            <span class="cantPointForExchangeText" style="color:#A7A9AC;">X 200 PUNTOS</span>
-          </div>
-          <div class="col spacingTop5">
             <span class="home shareAwardIcon">O</span>
           </div>
         </div>
