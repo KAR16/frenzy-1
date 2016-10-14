@@ -16,25 +16,26 @@
       </div>
     </div>
     <!-- Customer Points Container -->
-    <div class="row spacingAwardContainers">
+    <div class="row spacingAwardContainers" ng-repeat = 'award in instantAdwards'>
       <div class="col awardContainerInAwardView">
         <!-- Logo With Name and Count of Gift for Exchange -->
         <div class="row">
           <!-- Customer Logo -->
           <div class="col col-20">
             <div class="verticalCenteredObjects customerAwardImage">
-              <img class="customerImageSize" src="img/dominos_logo.png" alt=""/>
+              <img class="customerImageSize" ng-src="{{award.Logo}}" alt=""/>
             </div>
           </div>
           <!-- Name Customer And Gifts-->
           <div class="col">
             <!-- Name -->
             <div class="row">
-              <span class="open_sans awardTitle">Domino's Pizza</span>
+              <span class="open_sans awardTitle">{{award.Nombre}}</span>
             </div>
             <!-- Gift -->
-            <div class="row">
-              <span class="awardDescriptionText">Premio al instante</span>
+            <div class="row"> 
+              <span class="awardDescriptionText" ng-if = "award.Type == 'directAward'">Premio al instante</span>
+              <span class="awardDescriptionText" ng-if = "award.Type == 'points'">Premio por Acumulación de Puntos</span>
             </div>
           </div>
         </div>
@@ -42,7 +43,7 @@
         <div class="col awardImageContainer">
           <!-- Image Gift -->
           <div id="GeneralPaddingCols0" class="row">
-            <img class="awardImageSize" src="https://minisitios.s3.amazonaws.com/tarjetalibre/uploads/2015/04/PIZZA-2.jpg" alt="" />
+            <img class="awardImageSize" ng-src="{{award.Award.Photo}}" alt="" />
           </div>
           <!-- Logo With Name and Count of Gift for Exchange -->
           <div class="row">
@@ -50,11 +51,11 @@
             <div class="col">
               <!-- Name -->
               <div class="row">
-                <span class="awardTitleContainer">Una pizza grande de 1 ingrediente gratis</span>
+                <span class="awardTitleContainer">{{award.Award.Name}}</span>
               </div>
               <!-- Gift -->
               <div class="row awardDescriptionContainer">
-                <span class="awardDescriptionText">Únicamente canjeable en restaurantes Domino's. No aplica en entrega a domicilio.</span>
+                <span class="awardDescriptionText">{{award.Award.AwardDescription}}</span>
               </div>
             </div>
           </div>
@@ -70,68 +71,5 @@
         </div>
       </div>
     </div>
-    <!-- Customer Points Container -->
-    <div class="row spacingAwardContainers">
-      <div class="col awardContainerInAwardView">
-        <!-- Logo With Name and Count of Gift for Exchange -->
-        <div class="row">
-          <!-- Customer Logo -->
-          <div class="col col-20">
-            <div class="verticalCenteredObjects customerAwardImage">
-              <img class="customerImageSize" src="img/torre.png" alt=""/>
-            </div>
-          </div>
-          <!-- Name Customer And Gifts-->
-          <div class="col">
-            <!-- Name -->
-            <div class="row">
-              <span class="open_sans awardTitle">La Torre</span>
-            </div>
-            <!-- Gift -->
-            <div class="row">
-              <span class="awardDescriptionText">Premio por Acumulación de Puntos</span>
-            </div>
-          </div>
-        </div>
-        <!-- Image and Description of Award -->
-        <div class="col awardImageContainer">
-          <!-- Image Gift -->
-          <div id="GeneralPaddingCols0" class="row">
-            <img class="awardImageSize" src="img/pollo-entero.jpg" alt="" />
-          </div>
-          <!-- Logo With Name and Count of Gift for Exchange -->
-          <div class="row">
-            <!-- Name Customer And Gifts-->
-            <div class="col">
-              <!-- Name -->
-              <div class="row">
-                <span class="awardTitleContainer">Pollo Rey - Pollo sin Menudos</span>
-              </div>
-              <!-- Gift -->
-              <div class="row awardDescriptionContainer">
-                <span class="awardDescriptionText">Únicamente canjeable en tiendas La Torre. No aplica en entrega a domicilio.</span>
-              </div>
-            </div>
-          </div>
-          <!-- See More Container -->
-          <div class="row secondAwardBar">
-            <div class="col col-90 verticalCenteredObjects">
-              <span class="seeMoreText">CANJEAR</span>
-            </div>
-            <div class="col spacingTop5">
-              <span class="home shareAwardIcon">O</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-
-
-
   </ion-content>
 </ion-view>

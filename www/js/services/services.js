@@ -45,16 +45,19 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 }]);
 
 app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
+
   var user = firebase.auth().currentUser;
   var ref = firebase.database().ref('Userss/'+ user.uid)
-   return $firebaseArray(ref.child('CrossPromotion'))
+  console.log( $firebaseArray(ref.child('CrossPromotion')))
+  return $firebaseArray(ref.child('CrossPromotion'))
+    
 }]);
 
 app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'User', function($firebaseArray,Customer,User) {
   return {
     get : function () {
       var customer  = Customer;
-      var user = User;
+      var user = User
       var cross = firebase.database().ref("CrossPromotion");
       var crossPromotion = $firebaseArray(cross);
       var crossPromotionArray = []
@@ -100,6 +103,8 @@ app.factory('pointsDescripcion',function () {
     }
   }
 });
+
+
 app.filter('removeDashes', function() {
   return function(input) {
     input = input || "";

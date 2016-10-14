@@ -38,8 +38,8 @@
       </div>
     </div>
     <!-- Award Area -->
-    <div class="row awardContainer" ng-repeat = "award in pointsDescripcion.Award" >
-      <div class="col awardWhiteContainer" ng-click="modal.show()" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
+    <div class="row awardContainer" ng-repeat = "(key, award)  in pointsDescripcion.Award"  >
+      <div class="col awardWhiteContainer" ng-click="openModal(key)" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
         <div class="row" style="padding:0 !important">
            <img class="awardImage" ng-src="{{award.Photo}}" ng-if ='award.Photo' alt="" />
         </div>
@@ -115,7 +115,7 @@
 		      <ion-modal-view id="modales">
 		        <ion-content style="padding:0">
 							<!--Close Button-->
-							<div class="row">
+							<div class="row" ng-if = '!goAdwards'>
 								<div class="col" style="padding:0">
 									<div class="row" style="padding:0">
 										<div class="col">
@@ -129,37 +129,39 @@
 									</div>
 									<br>
 									<div class="row">
-										<div class="col center">
-											<span class="" style="font-size:18px;color:#263147;font-weight:bolder">¿Deseas cambiar 50 Puntos <br> por este premio?</span>
+										<div class="col center" ng-if =' pointsDescripcion.points >= dataAward.Points'>
+											<span class="" style="font-size:18px;color:#263147;font-weight:bolder" >¿Deseas cambiar {{dataAward.Points}} Puntos <br> por este premio?</span>
+										</div>
+										<div class="col center" ng-if =' pointsDescripcion.points < dataAward.Points'>
+											<span class="" style="font-size:18px;color:#263147;font-weight:bolder" > No tienes los puntos  suficientes <br> para canjear este premio</span>
 										</div>
 									</div>
 									<div class="row" style="padding:top:3%;padding-bottom:3%">
 										<div class="col center">
-											<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Un Calzone Gratis</span>
+											<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">{{dataAward.Name}}</span>
 										</div>
 									</div>
 									<center>
-										<div class="enterButtonStyle" ng-click="modal2.show()">
-											<div class="enterButtonTitle open_sans">
+										<div class="enterButtonStyle" ng-if =' pointsDescripcion.points >= dataAward.Points' >
+											<div class="enterButtonTitle open_sans" ng-click ="exchange(dataAward, true)" >
 												¡DÉMOSLE!
+											</div>
+										</div>
+
+										<div class="enterButtonStyle" ng-click="modal.hide()"  ng-if =' pointsDescripcion.points < dataAward.Points'>
+										
+											<div class="enterButtonTitle open_sans" ng-click ="modal.hide()" >
+												Ok
 											</div>
 										</div>
 									</center>
 								</div>
 							</div>
-		        </ion-content>
-		      </ion-modal-view>
-		    </script>
-
-				<script id="templates/modal2.html" type="text/ng-template">
-				      <ion-modal-view id="modales2">
-				        <ion-content style="padding:0">
-									<!--Close Button-->
-									<div class="row">
+							<div class="row" ng-if = 'goAdwards'>
 										<div class="col" style="padding:0">
 											<div class="row" style="padding:0">
 												<div class="col">
-													<span ng-click="modal2.hide()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
+													<span ng-click="closeModal()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
 												</div>
 											</div>
 											<div class="row">
@@ -180,17 +182,18 @@
 											</div>
 											<center>
 												<div class="enterButtonStyle">
-													<div class="enterButtonTitle open_sans">
+													<div class="enterButtonTitle open_sans" ng-click = 'closeModal()' href="#/app/regalos">
 														IR A MIS PREMIOS
 													</div>
 												</div>
 											</center>
 										</div>
 									</div>
-				        </ion-content>
-				      </ion-modal-view>
-				    </script>
 
+
+		        </ion-content>
+		      </ion-modal-view>
+		    </script>
 
   </ion-content>
 </ion-view>
