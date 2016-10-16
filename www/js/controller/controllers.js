@@ -311,7 +311,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 //********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) { 
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
   // First Mini Tutorial html file. Ionic Modal
   $scope.crossPromotion = CrossPromotionAcumulatePoints.get();
   $scope.$parent.dataPromotion = $scope.crossPromotion;
@@ -336,17 +336,16 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // Point Description Controller
-.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,User) {
-  $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)  
-  $scope.usr = User
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray) {
+  $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
   $ionicModal.fromTemplateUrl('templates/modal.html', {
      scope: $scope
     }).then(function(modal) {
-      
+
      $scope.modal = modal;
    });
-  $scope.dataAward = [];  
-  $scope.goAward = false ; 
+  $scope.dataAward = [];
+  $scope.goAward = false ;
   $scope.openModal = function (key , goAward) {
     $scope.dataAward = $scope.pointsDescripcion.Award[key];
     $scope.dataAward['key'] = key
@@ -354,21 +353,31 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   }
   $scope.$parent.exchangeArray =  [];
   $scope.exchange = function (dataAward , changeModal) {
-    $scope.usr.map(function (value) {
-      if (value.$id == $stateParams.idPromotion){
-        value.Award.AwardId = dataAward.key;
-        console.info("value.Award.AwardId", value.Award)
-                      
-        /*(value.Award).$save().then(function (ref) {
-          console.info("data send : " , ref)
-        })
-        .catch(function(error) {
-          console.error("Error:", error);
-        });*/
+    $scope.user = UserSave.get($stateParams.idPromotion,dataAward)
 
-      }
+    // for (a in $scope.usr) {
+    //   if ($scope.usr[a].$id == $stateParams.idPromotion) {
+    //     $scope.usr[a]["prueba"] = {foo:"bar"}
+    //     $scope.usr.$save()
+    //     // push.$add({AwardId:"oli"})
+    //   }
+    // }
 
-    })
+    // $scope.usr.map(function (value) {
+    //   if (value.$id == $stateParams.idPromotion){
+    //     value.Award.AwardId = dataAward.key;
+    //     console.info("value.Award.AwardId", value.Award)
+    //
+    //     /*(value.Award).$save().then(function (ref) {
+    //       console.info("data send : " , ref)
+    //     })
+    //     .catch(function(error) {
+    //       console.error("Error:", error);
+    //     });*/
+    //
+    //   }
+    //
+    // })
     $scope.goAdwards = changeModal
   }
   $scope.closeModal = function () {
@@ -394,27 +403,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 // Award Controller View
-.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,User) {
-  $scope.instantAdwards = [];
-  $scope.user = User
-  console.info($scope.user)  
-  if ($scope.dataPromotion != null ||  $scope.dataPromotion != undefined) {
-    $scope.dataPromotion.map(function (value) {
-      Object.keys(value.Award).map(function (key) {
-        $scope.exchangeArray.map(function (val) {
-          if (key == val ) {
-           $scope.instantAdwards.push({
-              Nombre  : value.Nombre ,
-              Logo    : value.Logo ,
-              Award   : value.Award[key] ,
-              Type    : value.type
-           })
-          }
-        })
-      })
-    })
-  }
-  
+.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
+
+  console.log($scope.instantAdwards);
   // First Mini Tutorial html file. Ionic Modal
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/ExchangeMyAwards.html', function(modal) {
     $scope.FirstModal = modal;
@@ -430,6 +421,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 
   $scope.$on('$ionicView.enter', function() {
+    $scope.instantAdwards = Awards.get();
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',

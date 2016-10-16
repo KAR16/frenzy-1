@@ -50,8 +50,76 @@ app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
   var ref = firebase.database().ref('Userss/'+ user.uid)
   console.log( $firebaseArray(ref.child('CrossPromotion')))
   return $firebaseArray(ref.child('CrossPromotion'))
-    
+
 }]);
+
+app.factory('UserSave' ,function ($firebaseArray) {
+return {
+  get:function (id,dataAward) {
+    var user = firebase.auth().currentUser;
+    var ref = firebase.database().ref('Userss/'+ user.uid)
+    // console.log($firebaseArray(ref.child('CrossPromotion').child(id).child("Award")));
+    // console.log(ref.child('CrossPromotion').child(id).child("Award"));
+    var pr = $firebaseArray(ref.child('CrossPromotion').child(id).child("Award"))
+    pr.$loaded().then(function () {
+      console.log(pr);
+       pr.$add({AwardID:dataAward.key,CodigoCanjeoRedimido:"",FechaDeSolicitud:"",FechaHoraCanjeo:"",Status:false})
+    })
+  }
+}
+  // var user = firebase.auth().currentUser;
+  // var ref = firebase.database().ref('Userss/'+ user.uid)
+  // console.log(ref.child('CrossPromotion'));
+  // return ref.child('CrossPromotion')
+
+});
+
+app.factory('Awards' ,function ($firebaseArray,Customer,User) {
+  return {
+    get : function () {
+      var customer  = Customer;
+      var user = User
+      var cross = firebase.database().ref("CrossPromotion");
+      var crossPromotion = $firebaseArray(cross);
+      var crossPromotionArray = []
+      user.$loaded().then(function () {
+        crossPromotion.$loaded().then(function() {
+          customer.$loaded().then(function () {
+            crossPromotion.map(function (promotion) {
+              customer.map(function (valCustomer) {
+                if (valCustomer.$id == promotion.customer) {
+                  promotion.Logo = valCustomer.Logo
+                  promotion.Nombre = valCustomer.Name
+                  user.map(function (valUser) {
+                    if (valUser.$id == promotion.$id) {
+                      if (valUser.Award != undefined) {
+                        Object.keys(valUser.Award).map(function(valAwardsUser) {
+                           Object.keys(promotion.Award).map(function(valAwards) {
+                             if (valUser.Award[valAwardsUser].AwardID == valAwards) {
+                               crossPromotionArray.push({
+                                 Nombre:promotion.Nombre,
+                                 Logo:promotion.Logo,
+                                 Type:promotion.type,
+                                 Award:promotion.Award[valAwards]
+                               })
+                             }
+                           })
+
+                        })
+                      }
+                    }
+                  })
+                }
+              })
+            })
+          })
+        })
+      })
+      return crossPromotionArray
+    }
+  }
+
+});
 
 app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'User', function($firebaseArray,Customer,User) {
   return {
@@ -75,15 +143,15 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                      promotion.points = valUser.Points
                      promotion.percentagePoints = (100 * valUser.Points )/ promotion.MaxPoints
                      if (isNaN(promotion.points)) {
-                          promotion.percentagePoints = 0 
+                          promotion.percentagePoints = 0
                           promotion.points = 0
                       }
                     }
                   })
-                } 
+                }
               })
             })
-          })  
+          })
         })
       })
       return crossPromotion
@@ -97,9 +165,9 @@ app.factory('pointsDescripcion',function () {
       crossPromotion.map(function (value) {
         if (value.$id == id) {
           arrayPromotion = value
-        }  
+        }
       })
-     return arrayPromotion         
+     return arrayPromotion
     }
   }
 });
