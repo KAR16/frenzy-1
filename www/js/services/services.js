@@ -45,33 +45,28 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 }]);
 
 app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
-
   var user = firebase.auth().currentUser;
   var ref = firebase.database().ref('Userss/'+ user.uid)
-  console.log( $firebaseArray(ref.child('CrossPromotion')))
   return $firebaseArray(ref.child('CrossPromotion'))
 
 }]);
 
-app.factory('UserSave' ,function ($firebaseArray) {
-return {
-  get:function (id,dataAward) {
-    var user = firebase.auth().currentUser;
-    var ref = firebase.database().ref('Userss/'+ user.uid)
-    // console.log($firebaseArray(ref.child('CrossPromotion').child(id).child("Award")));
-    // console.log(ref.child('CrossPromotion').child(id).child("Award"));
-    var pr = $firebaseArray(ref.child('CrossPromotion').child(id).child("Award"))
-    pr.$loaded().then(function () {
-      console.log(pr);
-       pr.$add({AwardID:dataAward.key,CodigoCanjeoRedimido:"",FechaDeSolicitud:"",FechaHoraCanjeo:"",Status:false})
-    })
+app.factory('UserSave' ,function ($firebaseArray,$firebaseObject) {
+  return {
+    get:function (id,dataAward) {
+      var user = firebase.auth().currentUser;
+      var ref = firebase.database().ref('Userss/'+ user.uid)
+      var AwardChange = $firebaseArray(ref.child('CrossPromotion').child(id).child("Award"))
+      var puntos = $firebaseObject(ref.child('CrossPromotion').child(id))
+      AwardChange.$loaded().then(function () {
+        var actualHour = moment().tz("America/Guatemala").format('LLL');
+        AwardChange.$add({AwardID:dataAward.key,CodigoCanjeoRedimido:"",FechaDeSolicitud:actualHour,FechaHoraCanjeo:"",Status:false})
+      }).then(function() {
+        puntos.Points = puntos.Points - dataAward.Points;
+        puntos.$save()
+      })
+    }
   }
-}
-  // var user = firebase.auth().currentUser;
-  // var ref = firebase.database().ref('Userss/'+ user.uid)
-  // console.log(ref.child('CrossPromotion'));
-  // return ref.child('CrossPromotion')
-
 });
 
 app.factory('Awards' ,function ($firebaseArray,Customer,User) {
