@@ -257,8 +257,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal) {
-
+.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal,codeCoupon) {
+  $scope.getCodePromotion = function (code) {
+    $scope.codeCoupon = codeCoupon.get(code);
+    $scope.SecondModal.show()
+  }
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
@@ -408,7 +411,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 // Award Controller View
 .controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
 
-  console.log($scope.instantAdwards);
+ 
   // First Mini Tutorial html file. Ionic Modal
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/ExchangeMyAwards.html', function(modal) {
     $scope.FirstModal = modal;
