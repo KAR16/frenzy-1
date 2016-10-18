@@ -257,8 +257,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal) {
-
+.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal,codeCoupon) {
+  $scope.getCodePromotion = function (code) {
+    $scope.codeCoupon = codeCoupon.get(code);
+    $scope.SecondModal.show()
+  }
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
@@ -309,13 +312,36 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     });
 })
-
-//********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) { 
+//********************** termsAndConditions puntos     *****************************
+.controller('termsAndConditionsPointsCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
   // First Mini Tutorial html file. Ionic Modal
-  $scope.crossPromotion = CrossPromotionAcumulatePoints.get();
-  $scope.$parent.dataPromotion = $scope.crossPromotion;
-  $scope.user = User;
+  console.log($scope.dataPromotion);
+  console.log($scope.dataPromotion);
+  console.log($stateParams.idCondition);
+  $scope.Name;
+  $scope.dataPromotion.map(function(value) {
+    console.log(value);
+    if (value.$id == $stateParams.idCondition) {
+      console.log(value.LegalTerms);
+      $scope.promotion = {TermsAndConditions: value.LegalTerms};
+      $scope.Name = value.Nombre;
+    }
+  });
+  $scope.$on('$ionicView.enter', function() {
+    $scope.$parent.data = {
+        heading: '',
+        image: 'img/icn-35.png',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
+        backButton: true,
+        toolsIcon: false,
+    };
+    $scope.$apply();
+  });
+})
+//********************** POINTS CONTROLLER *****************************
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
+  // First Mini Tutorial html file. Ionic Modal
+
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
     $scope.FirstModal = modal;
   }, {
@@ -324,6 +350,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 
   $scope.$on('$ionicView.enter', function() {
+    $scope.crossPromotion = CrossPromotionAcumulatePoints.get();
+    $scope.$parent.dataPromotion = $scope.crossPromotion;
+    $scope.user = User
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',
@@ -336,21 +365,39 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // Point Description Controller
-.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion) {
-  $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray) {
+
   $ionicModal.fromTemplateUrl('templates/modal.html', {
      scope: $scope
-   }).then(function(modal) {
+    }).then(function(modal) {
+
      $scope.modal = modal;
    });
-
+  $scope.dataAward = [];
+  $scope.goAward = false ;
+  $scope.openModal = function (key , goAward) {
+    $scope.dataAward = $scope.pointsDescripcion.Award[key];
+    $scope.dataAward['key'] = key
+    $scope.modal.show()
+  }
+  $scope.$parent.exchangeArray =  [];
+  $scope.exchange = function (dataAward , changeModal) {
+    $scope.user = UserSave.get($stateParams.idPromotion,dataAward);
+    $scope.goAdwards = changeModal;
+  }
+  $scope.closeModal = function () {
+     $scope.modal.hide()
+     $timeout(function() {
+        $scope.goAdwards =  !$scope.goAdwards ;
+      }, 1000);
+  }
    $ionicModal.fromTemplateUrl('templates/modal2.html', {
       scope: $scope
     }).then(function(modal2) {
       $scope.modal2 = modal2;
     });
-
     $scope.$on('$ionicView.enter', function() {
+      $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
       $scope.$parent.data = {
           heading: '',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
@@ -362,8 +409,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 // Award Controller View
-.controller('awardCtrl', ['$scope', '$state', '$ionicModal',function($scope, $state, $ionicModal) {
+.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
 
+ 
   // First Mini Tutorial html file. Ionic Modal
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/ExchangeMyAwards.html', function(modal) {
     $scope.FirstModal = modal;
@@ -379,6 +427,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 
   $scope.$on('$ionicView.enter', function() {
+    $scope.instantAdwards = Awards.get();
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',
@@ -389,7 +438,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$apply();
   });
 
-}])
+})
 
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite, Coupon) {

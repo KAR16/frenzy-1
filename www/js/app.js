@@ -212,7 +212,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
-
+	// **************** termsAndConditions puntos  *************
+	.state('app.termsAndConditionsPointss', {
+		url: "/termsAndConditionsPoints/:idCondition",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
+				controller: 'termsAndConditionsPointsCtrl'
+			}
+		}
+	})
 	// if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/loading');
 });
