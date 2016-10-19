@@ -168,7 +168,7 @@ app.factory('pointsDescripcion',function () {
 });
 app.factory('codeCoupon',function ($firebaseObject,$firebaseArray) {
   return{
-    get : function (codeID) {   
+    get : function (codeID) {
       var ref = firebase.database().ref('CuponCodes/'+ codeID);
       var user = firebase.auth().currentUser;
       var coupon = firebase.database().ref('CuponCodes');
@@ -176,11 +176,11 @@ app.factory('codeCoupon',function ($firebaseObject,$firebaseArray) {
       var objCouponCode = $firebaseObject(ref);
       couponArray.$loaded().then(function (val) {
        var record = couponArray.$getRecord(codeID);
-       if (record != null && !record.Status) { 
+       if (record != null && !record.Status) {
           var actualHour = moment().tz("America/Guatemala").format('LLL');
           objCouponCode.DateTimeExchange = actualHour;
           objCouponCode.Status = true;
-          objCouponCode.UserId = user.uid;        
+          objCouponCode.UserId = user.uid;
           objCouponCode.$save();
        }
       })

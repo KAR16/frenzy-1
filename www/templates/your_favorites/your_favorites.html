@@ -9,23 +9,28 @@
 		<div class="row">
 
       <div id="GeneralPaddingCols" class="col col-50" style="margin-left:5px">
-        <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/tusFavoritos" >
-          <div class="OffersAndCouponsTabText" style="color:white">
-            Tus Favoritos
-            <hr class="pageFavoritesLineDecorationOffers" style="color:white;background-color:white">
+        <a class="pageOffertsOffertsTitle" nav-transition="none">
+          <div class="OffersAndCouponsTabText" style="{{!viewMyBrand ? 'color:white;font-weight:bold' : ''}}">
+            Mis Marcas
+            <hr class="pageFavoritesLineDecorationOffers" style="{{!viewMyBrand ? 'color:white;background-color:white': ''}}">
           </div>
         </a>
       </div>
-
-			<div id="GeneralPaddingCols" class="col col-50"></div>
-
+			<div id="GeneralPaddingCols" class="col col-50">
+        <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/salvados">
+          <div class="OffersAndCouponsTabText" style="{{viewMyBrand ? 'color:white;font-weight:bold' : ''}}">
+            Mis Promociones
+            <hr class="pageFavoritesLineDecorationOffers" style="{{viewMyBrand ? 'color:white;background-color:white': ''}}">
+          </div>
+        </a>
+      </div>
 		</div>
 	</ion-header-bar>
 
   <!-- Your Favorites Container -->
   <ion-content class="backgroundCategories" ng-controller="AllFavoriteCtrl" >
     <!-- Customer Info Container -->
-    <div id="GeneralPaddingCols0" class="col" ng-repeat="customer in customers | filter:filterFavorite |orderBy:'-(QuantityCoupon + QuantityPromotion)'" >
+    <div ng-if="!viewMyBrand" id="GeneralPaddingCols0" class="col" ng-repeat="customer in customers | filter:filterFavorite |orderBy:'-(QuantityCoupon + QuantityPromotion)'" >
       <a style="text-decoration:none;" nav-transition="none" >
         <div class="row pageYourFavoritesGreyLine">
           <!-- Heart Icon -->

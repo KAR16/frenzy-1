@@ -4,8 +4,10 @@
 }
 /*General Container for Saved Promotions*/
 .savedPageBoxStyle {
+  background-color: white;
   height: auto;
   padding: 0px 10px 0px 5px !important;
+  border-top: 1px solid #E6E7E8 !important;
   border-bottom: 1px solid #E6E7E8 !important;
 }
 /*Style for the image saved*/

@@ -12,6 +12,16 @@
   display: table;
 }
 
+.exchangeAwardTutorialButton:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #6F197F, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #6F197F, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #6F197F, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+
 .exchangeAwardTextButton {
   color: white;
   font-size: 16px;

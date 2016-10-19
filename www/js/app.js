@@ -212,6 +212,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			}
 		}
 	})
+	// ******* AWARD VIEWS *******
+	.state('app.awardDescription', {
+		url: "/awardDescription",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/awardDescription/awardDescription.html",
+				controller: 'awardDescriptionCtrl'
+			}
+		}
+	})
 	// **************** termsAndConditions puntos  *************
 	.state('app.termsAndConditionsPointss', {
 		url: "/termsAndConditionsPoints/:idCondition",

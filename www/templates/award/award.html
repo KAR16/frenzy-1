@@ -33,7 +33,7 @@
               <span class="open_sans awardTitle">{{award.Nombre}}</span>
             </div>
             <!-- Gift -->
-            <div class="row"> 
+            <div class="row">
               <span class="awardDescriptionText" ng-if = "award.Type == 'directAward'">Premio al instante</span>
               <span class="awardDescriptionText" ng-if = "award.Type == 'points'">Premio por Acumulación de Puntos</span>
             </div>
@@ -62,14 +62,93 @@
           <!-- See More Container -->
           <div class="row secondAwardBar">
             <div class="col col-90 verticalCenteredObjects">
-              <span class="seeMoreText" style="">CANJEAR</span>
+              <span class="seeMoreText" ng-click="openModal()">CANJEAR</span>
             </div>
             <div class="col spacingTop5">
-              <span class="home shareAwardIcon">O</span>
+              <span class="home shareAwardIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">O</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
+    <script id="templates/modal.html" type="text/ng-template">
+      <ion-modal-view id="modales">
+        <ion-content style="padding:0">
+          <!--Close Button-->
+          <div class="row">
+            <div class="col" style="padding:0">
+              <div class="row" style="padding:0">
+                <div class="col">
+                  <span ng-click="closeModal()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col center">
+                    <span class="home" style="color:#3F51B5;font-size:70px">L</span>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col center">
+                    <span class="" style="font-size:18px;color:#263147;font-weight:bolder;text-align:center">Pide el Código de Verificación en cualquier establecimiento <br/> Domino's Pizza</span>
+                  </div>
+                </div>
+                <center>
+                  <a href="#/app/awardDescription" style="text-decoration:none">
+                    <div class="enterButtonStyle" ng-click="closeModal()">
+                      <div class="enterButtonTitle open_sans">
+                        CONTINUAR
+                      </div>
+                    </div>
+                  </a>
+                </center>
+              </div>
+            </div>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+    <!--**********  SECOND POP OVER SHARE  **********-->
+    <script id="templates/popoverNew.html" type="text/ng-template">
+      <ion-popover-view class="SharePopover">
+        <div class="PaddingShare">
+          <spam class="secondPopoverTitle">Compartir Oferta</spam>
+        </div>
+        <hr class="style-hr">
+        <div class="row facebookShareContainer PaddingShare">
+          <div class="col-20 verticalCenteredObjects iconCenterDiv">
+            <img class="secondPopoverFacebookIcon" src="img/facebookicon.png" alt="label">
+          </div>
+          <div class="col verticalCenteredObjects friendsOfFacebook">
+            <a class="secondPopoverText" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open=cordova.InAppBrowser.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank', 'location=yes');"
+                    style="text-decoration:none;">
+              Amigos de facebook
+            </a>
+          </div>
+        </div>
+        <div class="row PaddingShare">
+          <div class="col-20"></div>
+          <div class="col">
+            <hr class="style-hr">
+          </div>
+        </div>
+        <div class="row facebookShareContainer PaddingShare" ng-click="Analytics('message','promotion'); sendSms()">
+          <div class="col-20 verticalCenteredObjects iconCenterDiv">
+            <p class="home secondPopoverMailIcon">
+              V
+            </p>
+          </div>
+          <div class="col verticalCenteredObjects friendsOfFacebook">
+            <a class="secondPopoverText" style="text-decoration:none;">
+                Enviar mensajes de texto
+            </a>
+          </div>
+        </div>
+      </ion-popover-view>
+    </script>
   </ion-content>
 </ion-view>
