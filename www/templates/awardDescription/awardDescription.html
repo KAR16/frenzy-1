@@ -1,32 +1,31 @@
 <ion-view>
 	<ion-content class="generalBackgroundPoints">
 
-    <div class="row subHeaderPointDescription">
-      <div class="col">
-        <span class="winPointsText">Gana Puntos en cada compra.</span>
+    <div id="GeneralPaddingCols0" class="row" style="height:200px">
+      <div id="GeneralPaddingCols0" class="col">
+        <img class="awardDescriptionImage" src="img/frenzy_back.png" alt="awardImage" />
       </div>
     </div>
     <!-- Points Description For Each Customer -->
-    <div class="row pointsDescriptionForCustomer">
+    <div class="row awardDescription">
       <!-- Count of Points -->
-      <div class="col">
+      <div class="col" style="text-align:center;padding-bottom:5%">
         <div class="row center">
-          <span class="open_sans countPoints">{{pointsDescripcion.points}} puntos</span>
+          <span class="open_sans countPoints">Una pizza grande de 1 <br> ingrediente gratis</span>
         </div>
         <div class="row center" style="padding-top:1%">
-          <span class="descriptionAP">Acumula puntos para cambiarlos por los <br> siguientes premios.</span>
+          <span class="descriptionAP">Premio al instante</span>
         </div>
-        <!-- Status Bar of the Points -->
-        <div class="row generalContainerForPointBar">
-          <div class="col col-90 pointBarWhite">
-						<!-- Your points (Yellow Bar) -->
-            <div class="yourPointsBar" style="width:{{pointsDescripcion.percentagePoints}}%"></div>
-          </div>
-          <div class="col col-10">
-            <!-- Icon Star -->
-            <span class="home iconStar">C</span>
-          </div>
-        </div>
+				<!-- Input Change -->
+	      <div class="row" style="padding-top:3%">
+	        <div id="GeneralPaddingCols0" class="col">
+	          <!-- Input Code Promotion -->
+	          <!-- The direct styles doesn't work good in css file -->
+	          <input class="inputCodeVerificationStyle" type="text" placeholder="Ingresa Código de Verificación" name="name" style="width:75%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;font-size:24px !important;color:#A7A9AC;height:41px;float:left" ng-model = 'codePromotion'>
+	          <!-- Go Button for the Code Promotion exchanged -->
+	          <button type="button" name="button" class="codeVerificationButton">CANJEAR</button>
+	        </div>
+	      </div>
       </div>
     </div>
     <!-- Triangle And Available Gifts -->
@@ -34,81 +33,22 @@
     <!-- Available Gifts Text -->
     <div class="row" style="padding-top:3%">
       <div class="col center">
-        <span class="open_sans subTitles">Premios Disponibles</span>
+        <span class="open_sans subTitles">Descripción y Condiciones</span>
       </div>
     </div>
-    <!-- Award Area -->
-    <div class="row awardContainer" ng-repeat = "(key, award)  in pointsDescripcion.Award"  >
-      <div class="col awardWhiteContainer" ng-click="openModal(key)" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
-        <div class="row" style="padding:0 !important">
-           <img class="awardImage" ng-src="{{award.Photo}}" ng-if ='award.Photo' alt="" />
-        </div>
-        <!-- Logo With Name and Count of Gift for Exchange -->
-        <div class="row">
-          <!-- Name Customer And Gifts-->
-          <div class="col">
-            <!-- Name -->
-            <div class="row">
-              <span class="open_sans awardTitle">{{award.Name}}</span>
-            </div>
-            <!-- Gift -->
-            <div class="row awardDescriptionContainer">
-              <span class="awardDescriptionText">{{award.AwardDescription}}</span>
-            </div>
-          </div>
-        </div>
-        <!-- See More Container -->
-        <div class="row secondAwardBar">
-          <div class="col col-90 verticalCenteredObjects">
-            <span class="cantPointForExchangeText" ng-class = "pointsDescripcion.points >= award.Points ? 'textPointAvaible' : 'textPointUnavaible'" >X {{award.Points}} PUNTOS</span>
-          </div>
-          <div class="col spacingTop5">
-						<!-- Share Icon -->
-            <span class="home shareAwardIcon">O</span>
-          </div>
-        </div>
-      </div>
-    </div>
-		<!-- DESCRIPTION AND TERMS CONTAINER -->
-		<!-- Description Container -->
+    <!-- Description and Conditions -->
 		<div class="row">
-			<div class="col">
-				<div class="row center">
-					<div class="col">
-						<span class="open_sans subTitles">Descripción de la Promoción</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col justifyContent">
-						<span class="termsAndConditionsText">
-							{{pointsDescripcion.PromotionDescription}}
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Condition Container -->
-		<div class="row">
-			<div class="col">
-				<div class="row center">
-					<div class="col">
-						<span class="open_sans subTitles">Políticas de Canjeo</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col justifyContent">
-						<span class="termsAndConditionsText"> {{pointsDescripcion.ExchangePolicy}}</span>
-					</div>
-				</div>
+			<div class="col" style="text-align:justify">
+				<span class="termsAndConditionsText">Pide el código de verificación en cualquier restaurante Domino's. Únicamente canjeable en restaurantes Domino's. No aplica en entrega a domicilio.</span>
 			</div>
 		</div>
 		<br>
 		<!-- Bar Sub-Footer for Terms And Conditions href="#/app/termsAndConditionsOffers/{{promotion.$id}}" ng-if="promotion.TermsAndConditions"-->
-		<a class="row legalTermsLine styleRedirection" href="#/app/termsAndConditionsPoints/{{pointsDescripcion.$id}}" ng-if="pointsDescripcion.LegalTerms">
+		<a class="row legalTermsLine styleRedirection" href="#/app/termsAndConditionsPoints/{{pointsDescripcion.$id}}" style="position:absolute;bottom: 0px;">
 			<div class="LegalTerms verticalCenteredObjects col col-80" style="padding:0 !important">Términos Legales</div>
 			<div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
 		</a>
-		<!-- Modal Change -->
+
 		<script id="templates/modal.html" type="text/ng-template">
 		      <ion-modal-view id="modales">
 		        <ion-content style="padding:0">
@@ -188,8 +128,11 @@
 									</center>
 								</div>
 							</div>
+
+
 		        </ion-content>
 		      </ion-modal-view>
 		    </script>
+
   </ion-content>
 </ion-view>

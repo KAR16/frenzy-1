@@ -160,12 +160,19 @@
   font-size:19px;
 }
 
-/*.inputCodePromotionStyle {
-  width:90%;
-  display:inline-block;
-  border-radius:10px 0px 0px 10px;
-  font-family:Roboto;
-  font-size:24px;
-  color:#A7A9AC;
-  height:41px;
-}*/
+/* WebKit browsers */
+input.inputCodePromotionStyle::-webkit-input-placeholder {
+  font-size: 16px;
+}
+/* Mozilla Firefox 4 to 18 */
+input.inputCodePromotionStyle:-moz-placeholder {
+  font-size: 16px;
+}
+/* Mozilla Firefox 19+ */
+input.inputCodePromotionStyle::-moz-placeholder {
+  font-size: 16px;
+}
+/* Internet Explorer 10+ */
+input.inputCodePromotionStyle:-ms-input-placeholder {
+  font-size: 16px;
+}

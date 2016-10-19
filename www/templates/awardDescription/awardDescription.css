@@ -1,0 +1,44 @@
+.awardDescription {
+  background: #263147;
+  height: 150px;
+}
+/*Size award Description Image*/
+.awardDescriptionImage {
+  height: 100%;
+  width: 100%;
+}
+
+.codeVerificationButton {
+    /*float: right;*/
+    height: 41px;
+    width: 28%;
+    background: #FF5252;
+    border: none;
+    border-radius: 10px;
+    /* font-weight: bolder; */
+    position: absolute;
+    z-index: 1;
+    left: 69%;
+    margin-top: -1%;
+    font-size: 16px;
+    color: white;
+    font-family: Roboto, Helvetica, San Fransisco;
+    box-shadow: 0px 3px 0px #D24646;*/
+}
+
+/* WebKit browsers */
+input.inputCodeVerificationStyle::-webkit-input-placeholder {
+  font-size: 15px;
+}
+/* Mozilla Firefox 4 to 18 */
+input.inputCodeVerificationStyle:-moz-placeholder {
+  font-size: 15px;
+}
+/* Mozilla Firefox 19+ */
+input.inputCodeVerificationStyle::-moz-placeholder {
+  font-size: 15px;
+}
+/* Internet Explorer 10+ */
+input.inputCodeVerificationStyle:-ms-input-placeholder {
+  font-size: 15px;
+}

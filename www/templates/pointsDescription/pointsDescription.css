@@ -30,20 +30,20 @@ background-size: 20px 40px;
   border:1px solid #3F51B5;
 }
 .textPointAvaible{
- color:#3F51B5 
+ color:#3F51B5
 }
 .textPointUnavaible{
- color:#A7A9AC 
+ color:#A7A9AC
 }
 
 #modales.modal{
   border-radius: 2px;
-  top: 30% !important;
+  top: 28% !important;
   right: 10% !important;
-  bottom: 40% !important;
+  bottom: 41% !important;
   left: 10% !important;
   overflow: visible !important;
-  min-height: 250px !important;
+  min-height: 280px !important;
   width: 80% !important;
 }
 #modales2.modal{

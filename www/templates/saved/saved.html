@@ -1,7 +1,30 @@
 <ion-view>
-  <ion-content>
+
+  <ion-header-bar id="positive" class="bar bar-subheader bar-positive positive">
+    <!-- Offers and Coupons Tab with Popover -->
+    <div class="row">
+
+      <div id="GeneralPaddingCols" class="col col-50" style="margin-left:5px">
+        <a class="pageOffertsOffertsTitle" nav-transition="none" href="#/app/tusFavoritos">
+          <div class="OffersAndCouponsTabText" ng-click="setViewMyPromotions(false)" style="{{!viewMyPromotion ? 'color:white;font-weight:bold' : ''}}">
+            Mis Marcas
+            <hr class="pageFavoritesLineDecorationOffers" style="{{!viewMyPromotion ? 'color:white;background-color:white': ''}}">
+          </div>
+        </a>
+      </div>
+      <div id="GeneralPaddingCols" class="col col-50">
+        <a class="pageOffertsOffertsTitle" nav-transition="none">
+          <div class="OffersAndCouponsTabText" ng-click="setViewMyPromotions(true)" style="{{viewMyPromotion ? 'color:white;font-weight:bold' : ''}}">
+            Mis Promociones
+            <hr class="pageFavoritesLineDecorationOffers" style="{{viewMyPromotion ? 'color:white;background-color:white': ''}}">
+          </div>
+        </a>
+      </div>
+    </div>
+  </ion-header-bar>
+  <ion-content style="background-color:#F1F2F2">
     <!-- Promotion Saved -->
-    <div class="row savedPageBoxStyle" ng-repeat="promotion in promotions | filter:filterPinned" >
+    <div class="row savedPageBoxStyle" ng-repeat="promotion in promotions | filter:filterPinned">
       <!-- Saved Image Promotion -->
       <div class="col col-20 verticalAndHorizontalCenteredObjects">
         <img class="savedPageImage" alt="PhotoSavedPromotions" ng-src="{{promotion.Photo}}">
@@ -61,7 +84,7 @@
       </div>
     </div>
     <!-- Doesn't exist Your Favorites -->
-    <div ng-if="(pinsCount == 0)" class="noExisteSaved">
+    <div ng-if="(pinsCount == 1 || pinsCount == 0)" class="noExisteSaved">
       <div class="open_sans">
         <!-- Donkey Icon -->
         <p class="home savedPageNoItemsIcon">

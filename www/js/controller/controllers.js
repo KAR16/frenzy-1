@@ -262,6 +262,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.codeCoupon = codeCoupon.get(code);
     $scope.SecondModal.show()
   }
+
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
@@ -307,7 +308,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     			image: 'img/icn-35.png',
     			footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
     			backButton: false,
-          toolsIcon: true
+          toolsIcon: true,
+          footer: true
       };
 
     });
@@ -334,6 +336,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
         backButton: true,
         toolsIcon: false,
+        footer: true
     };
     $scope.$apply();
   });
@@ -358,7 +361,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         image: 'img/icn-35.png',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
         backButton: false,
-        toolsIcon: false
+        toolsIcon: false,
+        footer: true
     };
     $scope.$apply();
   });
@@ -403,6 +407,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
           backButton: true,
           toolsIcon: false,
+          footer: false
       };
       $scope.$apply();
     });
@@ -411,21 +416,33 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 // Award Controller View
 .controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
 
- 
+  $scope.sendSms = function() {
+    $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
+      console.log('error mensaje');
+    });
+  };
+
   // First Mini Tutorial html file. Ionic Modal
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/ExchangeMyAwards.html', function(modal) {
     $scope.FirstModal = modal;
+  }).then(function(modal) {
+    $scope.modFirstModal = modal;
+  })
 
-    setTimeout(
-      function(){
-        $scope.imageTypeGif = 'img/canjea.gif';
-      }, 2000);
+  // First Mini Tutorial html file. Ionic Modal
+  $ionicModal.fromTemplateUrl('templates/modal.html', {
+     scope: $scope
+   }).then(function(modal) {
+     $scope.modal = modal;
+   });
 
-  }, {
-    animation: 'slide-in-up',
-    focusFirstInput: false
-  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
 
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
   $scope.$on('$ionicView.enter', function() {
     $scope.instantAdwards = Awards.get();
     $scope.$parent.data = {
@@ -434,6 +451,22 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
         backButton: false,
         toolsIcon: false,
+        footer: true
+    };
+    $scope.$apply();
+  });
+
+})
+
+.controller('awardDescriptionCtrl',function($scope) {
+
+  $scope.$on('$ionicView.enter', function() {
+    $scope.$parent.data = {
+        heading: '',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
+        backButton: true,
+        toolsIcon: false,
+        footer: false
     };
     $scope.$apply();
   });
@@ -449,6 +482,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.coupons = Coupon;
 
   var customersLoaded = false;
+
+  $scope.viewMyPromotion = false;
 
   $scope.customers.$loaded(function(){
     getFavoriteCount();
@@ -491,7 +526,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
           backButton: false,
-          toolsIcon: false
+          toolsIcon: false,
+          footer: true
       };
       $scope.$apply();
     });
@@ -499,6 +535,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 // *************************** SAVED CONTROLLER ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, Promotion, Coupon, Pin) {
+
+    $scope.viewMyPromotion = true;
+    $scope.setViewMyPromotions = function(bool) {
+        $scope.viewMyPromotion =  !$scope.viewMyPromotion;
+    };
+
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "PinSaved",
@@ -529,14 +571,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }
     });
 
-    $scope.pinsCount = 0;
-    $scope.pins.$watch(function(event) {
+    $scope.filterPinned = function(item) {
+        return ($scope.pins[item.$id] && item.Status);
+    };
 
+    $scope.pins.$watch(function(event) {
       if ($scope.contentLoaded) {
         getPinCount();
       }
-
     });
+
+    $scope.pinsCount = 0;
 
     var getPinCount = function() {
       $scope.pinsCount = 0;
@@ -554,18 +599,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }
     };
 
-    $scope.filterPinned = function(item) {
-      return ($scope.pins[item.$id] && item.Status);
-    };
-
-
     $scope.$on('$ionicView.enter', function() {
       $scope.$parent.data = {
           heading: '',
           image: 'img/icn-35.png',
-          footerIconColors: ['#A7A9AC', '#A7A9AC', '#9C28B0', '#A7A9AC'],
+          footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
           backButton: false,
-          toolsIcon: false
+          toolsIcon: false,
+          footer: true
       };
       $scope.$apply();
     });
@@ -656,7 +697,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
             backButton: true,
-            toolsIcon: false
+            toolsIcon: false,
+            footer: true
         };
 
     });
@@ -685,7 +727,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             image: '',
             footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
             backButton: true,
-            toolsIcon: false
+            toolsIcon: false,
+            footer: true
         };
 
     });
@@ -938,7 +981,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           image: '',
           footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
           backButton: true,
-          toolsIcon: false
+          toolsIcon: false,
+          footer: true
       };
     });
 
@@ -1034,7 +1078,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         image: '',
         footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
         backButton: true,
-        toolsIcon: false
+        toolsIcon: false,
+        footer: true
     };
 
   });
@@ -1297,7 +1342,8 @@ $scope.$on('$ionicView.enter', function() {
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5'],
           backButton: false,
-          toolsIcon: false
+          toolsIcon: false,
+          footer: true
       };
     });
 }])
