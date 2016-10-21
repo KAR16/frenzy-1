@@ -154,11 +154,36 @@
 									</center>
 								</div>
 							</div>
-							<div class="row" ng-if='goAdwards'>
-								<div class="col" style="padding:0">
-									<div class="row" style="padding:0">
-										<div class="col">
-											<span ng-click="closeModal()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
+							<div class="row" ng-if = 'goAdwards'>
+										<div class="col" style="padding:0">
+											<div class="row" style="padding:0">
+												<div class="col">
+													<span ng-click="closeModal()" class="icon ion-close-circled" style="font-size:30px;color:#A7A9AC;float:right !important"></span>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col center">
+													<span class="home" style="color:#FFD922;font-size:70px">d</span>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col center">
+													<span class="" style="font-size:18px;color:#263147;font-weight:bolder">¿Tu premio fue agregado <br> a "Premios"?</span>
+												</div>
+											</div>
+											<div class="row" style="padding:top:3%;padding-bottom:3%">
+												<div class="col center">
+													<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Te restan {{dataAward.Points}} Puntos en la promoción de <br> Domino's Pizza</span>
+												</div>
+											</div>
+											<center>
+												<div class="enterButtonStyle">
+													<div class="enterButtonTitle open_sans" ng-click = 'closeModal()' href="#/app/regalos">
+														IR A MIS PREMIOS
+													</div>
+												</div>
+											</center>
 										</div>
 									</div>
 									<div class="row">
