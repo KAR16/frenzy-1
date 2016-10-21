@@ -166,30 +166,6 @@ app.factory('pointsDescripcion',function () {
     }
   }
 });
-app.factory('codeCoupon',function ($firebaseObject,$firebaseArray) {
-  return{
-    get : function (codeID) {   
-      var ref = firebase.database().ref('CuponCodes/'+ codeID);
-      var user = firebase.auth().currentUser;
-      var coupon = firebase.database().ref('CuponCodes');
-      var couponArray  = $firebaseArray(coupon);
-      var objCouponCode = $firebaseObject(ref);
-      couponArray.$loaded().then(function (val) {
-       var record = couponArray.$getRecord(codeID);
-       if (record != null && !record.Status) { 
-          var actualHour = moment().tz("America/Guatemala").format('LLL');
-          objCouponCode.DateTimeExchange = actualHour;
-          objCouponCode.Status = true;
-          objCouponCode.UserId = user.uid;        
-          objCouponCode.$save();
-       }
-      })
-
-      return $firebaseObject(ref)
-
-    }
-  }
-})
 
 app.filter('removeDashes', function() {
   return function(input) {

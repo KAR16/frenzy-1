@@ -257,11 +257,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
 })
 // ********************* PAGE_START CONTROLLER ****************************
-.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal,codeCoupon) {
-  $scope.getCodePromotion = function (code) {
-    $scope.codeCoupon = codeCoupon.get(code);
-    $scope.SecondModal.show()
-  }
+.controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal,User,$firebaseArray,$firebaseObject) {
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Categorys",
@@ -278,20 +274,84 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 
     // First Mini Tutorial html file. Ionic Modal
-    $ionicModal.fromTemplateUrl('templates/mini_tutorials/youWinWithACode.html', function(modal2) {
-      $scope.SecondModal = modal2;
-    }, {
+ $ionicModal.fromTemplateUrl('templates/mini_tutorials/youWinWithACode.html', {scope: $scope}).then(function(modal2) {$scope.SecondModal = modal2;
+     }, {
       animation: 'slide-in-up',
       focusFirstInput: false
     });
 
     var ref = mainApp.database().ref().child('AppCategory');
     $scope.categories = $firebaseArray(ref);
+  
 
     ////////////////////////////////////////////////////////////////////////////////////
-    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
+    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****  
+    $scope.userService = User; 
+    $scope.refCrossPromotion = firebase.database().ref('CrossPromotion')
+    $scope.crossPromotion = $firebaseArray($scope.refCrossPromotion)
+    $scope.refCustomer = secondaryApp.database().ref('Customer')
+    $scope.user = firebase.auth().currentUser;
+    $scope.coupon = firebase.database().ref('CuponCodes');
+    $scope.couponArray  = $firebaseArray($scope.coupon);      
     $scope.$on('$ionicView.enter', function() {
-
+      $scope.modalInfo = {}; 
+      $scope.getCodePromotion = function (code) {
+        $scope.load =  $ionicLoading.show({
+          noBackdrop: true,
+          template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
+        });
+        $scope.ref = firebase.database().ref('CuponCodes/'+ code);
+        $scope.objCouponCode = $firebaseObject( $scope.ref);
+        $scope.couponArray.$loaded().then(function () {
+          var record =  $scope.couponArray.$getRecord(code);
+          if (record != null && !record.Status ) { 
+            var actualHour = moment().tz("America/Guatemala").format('LLL');
+            $scope.objCouponCode.DateTimeExchange = actualHour;
+            $scope.objCouponCode.Status = true;
+            $scope.objCouponCode.UserId = $scope.user.uid;        
+            $scope.objCouponCode.$save();  
+            $scope.userService.$loaded().then(function () {
+            $scope.crossPromotion.$loaded().then(function () { 
+              $scope.crossPromotion.map(function (promotion) {
+                var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
+                var objInfoCustomer = $firebaseObject(refInfoCustomer)
+                Object.keys(promotion.Award).map(function (key) {
+                  $scope.userService.map(function (user) { 
+                    if ( $scope.objCouponCode.AwardID == key ) {
+                      if (user.$id == promotion.$id) {
+                        objInfoCustomer.$loaded(function () {
+                          if (objInfoCustomer.$id == promotion.customer) {
+                            $scope.modalInfo.Name =  objInfoCustomer.Name
+                            $scope.modalInfo.Logo = objInfoCustomer.Logo ,
+                            $scope.modalInfo.Points = $scope.objCouponCode.CouponValue  
+                            $ionicLoading.hide()
+                            $scope.SecondModal.show()
+                          }
+                        
+                        })
+                        var userInfoService = $scope.userService.$ref()
+                        var objUserInfoService = $firebaseObject(userInfoService)
+                        objUserInfoService.$loaded(function () { 
+                          objUserInfoService[promotion.$id].Points +=  $scope.objCouponCode.CouponValue;
+                          if ( user.Points > promotion.MaxPoints) {
+                            objUserInfoService[promotion.$id].Points =  promotion.MaxPoints
+                            objUserInfoService.$save()
+                          }else{
+                            objUserInfoService.$save()
+                          }
+                        })  
+                      }
+                    }
+                  })  
+                })
+              }) 
+            })
+            })
+        }else{
+          $ionicLoading.hide()
+        }
+      })   
+    }
       // Show Loading Icon
       $scope.loading = $ionicLoading.show({
           noBackdrop: true,
@@ -309,7 +369,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     			backButton: false,
           toolsIcon: true
       };
-
+      $scope.$apply();
     });
 })
 //********************** termsAndConditions puntos     *****************************
@@ -391,9 +451,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.goAdwards =  !$scope.goAdwards ;
       }, 1000);
   }
-   $ionicModal.fromTemplateUrl('templates/modal2.html', {
-      scope: $scope
-    }).then(function(modal2) {
+
+
+
+ 
+
+   $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope}).then(function(modal2) {
       $scope.modal2 = modal2;
     });
     $scope.$on('$ionicView.enter', function() {

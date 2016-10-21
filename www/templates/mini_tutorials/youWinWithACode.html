@@ -1,7 +1,7 @@
 <ion-modal-view>
   <ion-content style="background-color:#9C28B0;padding:10px 0px 10px 0px">
     <div class="row">
-      <div class="col col-20" ng-click="modal.hide()">
+      <div class="col col-20" ng-click="SecondModal.hide()">
         <div class="home" style="color:rgba(241, 242, 242, 0.61);font-size:50px">
           T
         </div>
@@ -18,7 +18,7 @@
               <!-- Customer Image -->
               <div class="col col-100">
                 <div class="" style="width:60px;height:60px;border:1px solid #A7A9AC;border-radius:4px;margin:0 auto">
-                  <img style="width:100%;border-radius:4px;padding:10%" src="img/dominos_logo.png" alt="" />
+                  <img style="width:100%;border-radius:4px;padding:10%" ng-src="{{modalInfo.Logo}}" alt="" />
                 </div>
               </div>
             </div>
@@ -28,7 +28,7 @@
             </div>
             <!-- You Win Points Cant -->
             <div class="row center" style="margin-top:5px">
-              <span style="color:blue;font-size:16px">+25 Puntos</span>
+              <span style="color:blue;font-size:16px">+ {{modalInfo.Points}} Puntos</span>
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
     <!-- Your Points has added -->
     <div class="row">
       <div class="col center">
-        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco">Tus Puntos fueron agregados en <br> Domino's Pizza.</span>
+        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco">Tus Puntos fueron agregados en <br> {{modalInfo.Name}}.</span>
       </div>
     </div>
   </ion-content>
