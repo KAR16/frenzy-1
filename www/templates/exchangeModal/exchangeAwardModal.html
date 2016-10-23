@@ -1,0 +1,54 @@
+<ion-modal-view>
+  <ion-content class="exchangeBackgroundModal">
+    <div class="row">
+      <div class="col col-20" ng-click="modal.hide()">
+        <!-- Back Button -->
+        <button id="styleBackButton" class="ion-chevron-left button-clear styleBackButton" nav-transition="none"></button>
+      </div>
+      <div class="col"></div>
+    </div>
+    <br>
+    <!-- General Container Image -->
+    <div class="row" style="padding:10%">
+      <div class="col awardModalContent">
+        <div id="GeneralPaddingCols0" class="row" style="background:white;border-radius: 2% 2% 0% 0%;">
+          <div class="col">
+            <!-- Customer Image -->
+            <div class="row">
+              <div class="customerAwardImage">
+                <img class="customerImageSize" ng-src="img/torre.png" alt=""/>
+              </div>
+            </div>
+            <br>
+            <!-- Award Message Description -->
+            <div class="row">
+              <span class="open_sans awardTitle textCentered">Muestra este mensaje en caja para recibir tu premio.</span>
+            </div>
+            <br>
+            <!-- Date of Exchange -->
+            <div class="row">
+              <span style="width:100%" class="termsAndConditionsText textCentered">Fecha de canje: 3/3/2017</span>
+            </div>
+          </div>
+        </div>
+        <!-- Award Image -->
+        <div id="GeneralPaddingCols0" class="row ImageContainerModal">
+          <div id="GeneralPaddingCols0" class="col">
+            <img class="awardImageModal" src="img/pollo-entero.jpg" alt="customerAward"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <a style="text-decoration:none" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open=cordova.InAppBrowser.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank', 'location=yes');">
+          <div class="textCentered awardShareWithFacebook verticalAndHorizontalCenteredObjects">
+            <span class="facebookTextLoginAward">COMPARTIR</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-modal-view>

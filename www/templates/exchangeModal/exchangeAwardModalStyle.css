@@ -1,0 +1,61 @@
+/*Box Shadow Contain*/
+.awardModalContent {
+  box-shadow: 1px 2px 5px #263147;
+  padding: 0px;
+  border-radius: 2% 2% 2% 2%;
+}
+
+.ImageContainerModal {
+  height:201px;
+  margin-top:0 !important;
+}
+/*Background Image*/
+.exchangeBackgroundModal {
+  background: url("../../img/espiral.png") no-repeat fixed center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.awardImageModal {
+  width: 100%;
+  height: 201px;
+  border-radius: 0% 0% 2% 2%;
+}
+
+.centeredAwardContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.awardShareWithFacebook {
+  width:150px;
+  background:white;
+  margin:0 auto;
+  height:40px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 0px #D2D8D7;
+}
+
+.awardShareWithFacebook:active{
+  /* Disminiumos la cantidad de sombras */
+  -webkit-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 0 #A7A9AC, 0 5px 10px rgba(0, 0, 0, .4);
+  /* Movemos ligeramente el botón hacia abajo */
+  position: relative;
+  top: 3px;
+}
+
+.facebookTextLoginAward {
+  font-size: 16px;
+  font-weight: bolder;
+  color: #3F51B5;
+  text-align: center;
+  display: inline-block;
+  width: 170px;
+}
