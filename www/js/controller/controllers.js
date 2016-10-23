@@ -283,19 +283,19 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     var ref = mainApp.database().ref().child('AppCategory');
     $scope.categories = $firebaseArray(ref);
-  
+
 
     ////////////////////////////////////////////////////////////////////////////////////
-    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****  
-    $scope.userService = User; 
+    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
+    $scope.userService = User;
     $scope.refCrossPromotion = firebase.database().ref('CrossPromotion')
     $scope.crossPromotion = $firebaseArray($scope.refCrossPromotion)
     $scope.refCustomer = secondaryApp.database().ref('Customer')
     $scope.user = firebase.auth().currentUser;
     $scope.coupon = firebase.database().ref('CuponCodes');
-    $scope.couponArray  = $firebaseArray($scope.coupon);      
+    $scope.couponArray  = $firebaseArray($scope.coupon);
     $scope.$on('$ionicView.enter', function() {
-      $scope.modalInfo = {}; 
+      $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
         $scope.load =  $ionicLoading.show({
           noBackdrop: true,
@@ -305,34 +305,34 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.objCouponCode = $firebaseObject( $scope.ref);
         $scope.couponArray.$loaded().then(function () {
           var record =  $scope.couponArray.$getRecord(code);
-          if (record != null && !record.Status ) { 
+          if (record != null && !record.Status ) {
             var actualHour = moment().tz("America/Guatemala").format('LLL');
             $scope.objCouponCode.DateTimeExchange = actualHour;
             $scope.objCouponCode.Status = true;
-            $scope.objCouponCode.UserId = $scope.user.uid;        
-            $scope.objCouponCode.$save();  
+            $scope.objCouponCode.UserId = $scope.user.uid;
+            $scope.objCouponCode.$save();
             $scope.userService.$loaded().then(function () {
-            $scope.crossPromotion.$loaded().then(function () { 
+            $scope.crossPromotion.$loaded().then(function () {
               $scope.crossPromotion.map(function (promotion) {
                 var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
                 var objInfoCustomer = $firebaseObject(refInfoCustomer)
                 Object.keys(promotion.Award).map(function (key) {
-                  $scope.userService.map(function (user) { 
+                  $scope.userService.map(function (user) {
                     if ( $scope.objCouponCode.AwardID == key ) {
                       if (user.$id == promotion.$id) {
                         objInfoCustomer.$loaded(function () {
                           if (objInfoCustomer.$id == promotion.customer) {
                             $scope.modalInfo.Name =  objInfoCustomer.Name
                             $scope.modalInfo.Logo = objInfoCustomer.Logo ,
-                            $scope.modalInfo.Points = $scope.objCouponCode.CouponValue  
+                            $scope.modalInfo.Points = $scope.objCouponCode.CouponValue
                             $ionicLoading.hide()
                             $scope.SecondModal.show()
                           }
-                        
+
                         })
                         var userInfoService = $scope.userService.$ref()
                         var objUserInfoService = $firebaseObject(userInfoService)
-                        objUserInfoService.$loaded(function () { 
+                        objUserInfoService.$loaded(function () {
                           objUserInfoService[promotion.$id].Points +=  $scope.objCouponCode.CouponValue;
                           if ( user.Points > promotion.MaxPoints) {
                             objUserInfoService[promotion.$id].Points =  promotion.MaxPoints
@@ -340,18 +340,18 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                           }else{
                             objUserInfoService.$save()
                           }
-                        })  
+                        })
                       }
                     }
-                  })  
+                  })
                 })
-              }) 
+              })
             })
             })
         }else{
           $ionicLoading.hide()
         }
-      })   
+      })
     }
       // Show Loading Icon
       $scope.loading = $ionicLoading.show({
@@ -458,7 +458,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 
 
- 
+
 
    $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope}).then(function(modal2) {
       $scope.modal2 = modal2;
@@ -521,7 +521,27 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('awardDescriptionCtrl',function($scope) {
+.controller('awardDescriptionCtrl',function($scope, $ionicModal) {
+
+  // First Mini Tutorial html file. Ionic Modal
+  $ionicModal.fromTemplateUrl('templates/exchangeModal/exchangeAwardModal.html', function(modal) {
+    $scope.FirstModal = modal;
+  }, {
+    animation: 'slide-in-left',
+    focusFirstInput: false
+  });
+
+  $scope.openModal = function() {
+    $scope.FirstModal.show();
+
+    setTimeout(function(){
+      $scope.closeModal();
+    }, 20000);
+  };
+
+  $scope.closeModal = function() {
+    $scope.FirstModal.hide();
+  };
 
   $scope.$on('$ionicView.enter', function() {
     $scope.$parent.data = {
