@@ -214,7 +214,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	})
 	// ******* AWARD VIEWS *******
 	.state('app.awardDescription', {
-		url: "/awardDescription",
+		url: "/awardDescription/:idAward",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/awardDescription/awardDescription.html",
@@ -229,6 +229,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			'menuContent': {
 				templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
 				controller: 'termsAndConditionsPointsCtrl'
+			}
+		}
+	})
+	// **************** termsAndConditions awards  *************
+	.state('app.termsAndConditionsAwards', {
+		url: "/termsAndConditionsAwards/:idterms",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/term_and_conditions/termsAndConditionsForOffers.html",
+				controller: 'termsAndConditionsAwardsCtrl'
 			}
 		}
 	})

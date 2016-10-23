@@ -401,6 +401,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$apply();
   });
 })
+
 //********************** POINTS CONTROLLER *****************************
 .controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
   // First Mini Tutorial html file. Ionic Modal
@@ -498,8 +499,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
    }).then(function(modal) {
      $scope.modal = modal;
    });
-
-  $scope.openModal = function() {
+  $scope.awardid = '';
+  $scope.openModal = function(id) {
+    $scope.awardid = id;
     $scope.modal.show();
   };
 
@@ -508,6 +510,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   };
   $scope.$on('$ionicView.enter', function() {
     $scope.instantAdwards = Awards.get();
+    $scope.$parent.instantAdwardsDescription = $scope.instantAdwards;
+    console.log($scope.instantAdwards);
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',
@@ -521,19 +525,28 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('awardDescriptionCtrl',function($scope, $ionicModal) {
+.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,UserSaveAward) {
+  $scope.idAwards = $stateParams.idAward;
+  console.log($scope.instantAdwardsDescription);
+  $scope.Date = moment().tz("America/Guatemala").format('DD/MM/YYYY');
 
   // First Mini Tutorial html file. Ionic Modal
-  $ionicModal.fromTemplateUrl('templates/exchangeModal/exchangeAwardModal.html', function(modal) {
-    $scope.FirstModal = modal;
-  }, {
-    animation: 'slide-in-left',
-    focusFirstInput: false
-  });
+  $ionicModal.fromTemplateUrl('templates/exchangeModal/exchangeAwardModal.html', {scope: $scope}).then(function(modal) {
+     $scope.FirstModal = modal;
+   }, {
+     animation: 'slide-in-left',
+     focusFirstInput: false
+   });
+  // $ionicModal.fromTemplateUrl('templates/exchangeModal/exchangeAwardModal.html', function(modal) {
+  //   $scope.FirstModal = modal;
+  // }, {
+  //   animation: 'slide-in-left',
+  //   focusFirstInput: false
+  // });
 
-  $scope.openModal = function() {
+  $scope.openModal = function(AwardID,code,id) {
     $scope.FirstModal.show();
-
+    $scope.UserSaveAwards = UserSaveAward.get(AwardID,code,id)
     setTimeout(function(){
       $scope.closeModal();
     }, 20000);
@@ -556,6 +569,24 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
+//********************** termsAndConditions award     *****************************
+.controller('termsAndConditionsAwardsCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
+  $scope.instantAdwardsDescription.map(function(value) {
+    if (value.AwardID == $stateParams.idterms) {
+      $scope.promotion = {TermsAndConditions: value.LegalTerms};
+    }
+  });
+  $scope.$on('$ionicView.enter', function() {
+    $scope.$parent.data = {
+        heading: '',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
+        backButton: true,
+        toolsIcon: false,
+        footer: false
+    };
+    $scope.$apply();
+  });
+})
 // ******************* YOUR FAVORITE CONTROLLER ***************************
 .controller('AllFavoriteCtrl', function($scope, $stateParams, Customer, Promotion, Favorite, Coupon) {
 
