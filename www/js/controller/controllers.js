@@ -525,35 +525,55 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,UserSaveAward) {
+.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject) {
   $scope.idAwards = $stateParams.idAward;
   console.log($scope.instantAdwardsDescription);
   $scope.Date = moment().tz("America/Guatemala").format('DD/MM/YYYY');
 
   // First Mini Tutorial html file. Ionic Modal
   $ionicModal.fromTemplateUrl('templates/exchangeModal/exchangeAwardModal.html', {scope: $scope}).then(function(modal) {
-     $scope.FirstModal = modal;
+     $scope.FirstModals = modal;
    }, {
      animation: 'slide-in-left',
      focusFirstInput: false
    });
-  // $ionicModal.fromTemplateUrl('templates/exchangeModal/exchangeAwardModal.html', function(modal) {
-  //   $scope.FirstModal = modal;
-  // }, {
-  //   animation: 'slide-in-left',
-  //   focusFirstInput: false
-  // });
 
   $scope.openModal = function(AwardID,code,id) {
-    $scope.FirstModal.show();
-    $scope.UserSaveAwards = UserSaveAward.get(AwardID,code,id)
+    var user = firebase.auth().currentUser;
+    var refUser = firebase.database().ref('Userss/'+ user.uid)
+    var refCrossPromotion = firebase.database().ref('CrossPromotion')
+    var AwardChange = $firebaseArray(refUser.child('CrossPromotion').child(id).child('Award'))
+    var codeval = $firebaseObject(refCrossPromotion.child(id))
+    var actualHour = moment().tz("America/Guatemala").format('LLL');
+
+    codeval.$loaded().then(function () {
+      AwardChange.$loaded().then(function () {
+        codeval.VerificationCodes.map(function(valueCodes) {
+          if (valueCodes == code) {
+            $scope.FirstModals.show();
+            AwardChange.map(function(valueAward) {
+              if (valueAward.AwardID == AwardID) {
+                var change = AwardChange.$ref()
+                var savechange = $firebaseObject(change)
+                savechange.$loaded(function () {
+                  savechange[valueAward.$id].FechaHoraCanjeo = actualHour;
+                  savechange[valueAward.$id].Status = true;
+                  savechange[valueAward.$id].CodigoCanjeoRedimido = code;
+                  savechange.$save()
+                });
+              }
+            })
+          }
+        })
+      });
+    });
     setTimeout(function(){
       $scope.closeModal();
     }, 20000);
   };
 
   $scope.closeModal = function() {
-    $scope.FirstModal.hide();
+    $scope.FirstModals.hide();
   };
 
   $scope.$on('$ionicView.enter', function() {
