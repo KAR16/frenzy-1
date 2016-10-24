@@ -43,7 +43,7 @@
         <div class="col awardImageContainer">
           <!-- Image Gift -->
           <div id="GeneralPaddingCols0" class="row">
-            <img class="awardImageSize" ng-src="{{award.Award.Photo}}" alt="" />
+            <img class="awardImageSize" ng-src="{{award.Award.Photo}}" ng-if="award.Award.Photo" alt="" />
           </div>
           <!-- Logo With Name and Count of Gift for Exchange -->
           <div class="row">
@@ -62,7 +62,7 @@
           <!-- See More Container -->
           <div class="row secondAwardBar">
             <div class="col col-90 verticalCenteredObjects">
-              <span class="seeMoreText" ng-click="openModal()">CANJEAR</span>
+              <span class="seeMoreText" ng-click="openModal('{{award.AwardID}}')">CANJEAR</span>
             </div>
             <div class="col spacingTop5">
               <span class="home shareAwardIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">O</span>
@@ -98,7 +98,7 @@
                   </div>
                 </div>
                 <center>
-                  <a href="#/app/awardDescription" style="text-decoration:none">
+                  <a href="#/app/awardDescription/{{awardid}}" style="text-decoration:none">
                     <div class="enterButtonStyle" ng-click="closeModal()">
                       <div class="enterButtonTitle open_sans">
                         CONTINUAR
