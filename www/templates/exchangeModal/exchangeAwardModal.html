@@ -3,7 +3,7 @@
     <div ng-repeat = 'award in instantAdwardsDescription'>
       <div ng-if = "idAwards == award.AwardID">
         <div class="row">
-          <div class="col col-20" ng-click="FirstModal.hide()">
+          <div class="col col-20" ng-click="FirstModals.hide()">
             <!-- Back Button -->
             <button id="styleBackButton" class="ion-chevron-left button-clear styleBackButton" nav-transition="none"></button>
           </div>
@@ -37,7 +37,8 @@
             <!-- Award Image -->
             <div id="GeneralPaddingCols0" class="row ImageContainerModal">
               <div id="GeneralPaddingCols0" class="col">
-                <img class="awardImageModal" src="{{award.Award.Photo}}" alt="customerAward"/>
+                <img class="awardDescriptionImage" ng-src="img/frenzy_back.png" ng-if="!award.Award.Photo" alt="awardImage" />
+                <img class="awardImageModal" src="{{award.Award.Photo}}" ng-if="award.Award.Photo" alt="customerAward"/>
               </div>
             </div>
           </div>

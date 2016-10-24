@@ -69,66 +69,6 @@ app.factory('UserSave' ,function ($firebaseArray,$firebaseObject) {
   }
 });
 
-app.factory('UserSaveAward' ,function ($firebaseArray,$firebaseObject) {
-  return {
-    get:function (AwardID,code,id) {
-      console.log(AwardID);
-      console.log(code);
-      console.log(id);
-      var user = firebase.auth().currentUser;
-      var refUser = firebase.database().ref('Userss/'+ user.uid)
-      var refCrossPromotion = firebase.database().ref('CrossPromotion')
-      var AwardChange = $firebaseArray(refUser.child('CrossPromotion').child(id).child('Award'))
-      var codeval = $firebaseObject(refCrossPromotion.child(id))
-      var actualHour = moment().tz("America/Guatemala").format('LLL');
-      // var userchangeAward = $firebaseObject(ref.child('CrossPromotion').child(id))
-
-
-
-      codeval.$loaded().then(function () {
-        AwardChange.$loaded().then(function () {
-          console.log(codeval.VerificationCodes);
-          codeval.VerificationCodes.map(function(valueCodes) {
-            if (valueCodes == code) {
-              console.log(valueCodes);
-              console.log(AwardChange);
-              AwardChange.map(function(valueAward) {
-                if (valueAward.AwardID == AwardID) {
-                  //console.log(Object.keys(valueAward));
-                  console.log(valueAward);
-                  console.log(valueAward.$id);
-                  //AwardChange[valueAward.$id].FechaHoraCanjeo = "sadasdas"
-                  // valueAward.FechaHoraCanjeo = "sadasdas"
-                  // console.log(valueAward.FechaHoraCanjeo);
-                  var change = AwardChange.$ref()
-                  var savechange = $firebaseObject(change)
-                  savechange.$loaded(function () {
-                    console.log("------------------------------------------");
-                    console.log(savechange[valueAward.$id]);
-                    savechange[valueAward.$id].FechaHoraCanjeo = actualHour;
-                    savechange[valueAward.$id].Status = true;
-                    savechange[valueAward.$id].CodigoCanjeoRedimido = code;
-                    savechange.$save()
-                  });
-                }
-              })
-              console.log("codigo encontrada mada facar bit");
-            }
-          })
-        });
-      });
-
-      // AwardChange.$loaded().then(function () {
-      //   var actualHour = moment().tz("America/Guatemala").format('LLL');
-      //   AwardChange.$add({AwardID:dataAward.key,CodigoCanjeoRedimido:"",FechaDeSolicitud:actualHour,FechaHoraCanjeo:"",Status:false})
-      // }).then(function() {
-      //   puntos.Points = puntos.Points - dataAward.Points;
-      //   puntos.$save()
-      // })
-    }
-  }
-});
-
 app.factory('Awards' ,function ($firebaseArray,Customer,User) {
   return {
     get : function () {
