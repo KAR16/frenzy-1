@@ -11,11 +11,9 @@
 }
 /*Background Image*/
 .exchangeBackgroundModal {
-  background: url("../../img/espiral.png") no-repeat fixed center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: #FF5252;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .awardImageModal {
@@ -58,4 +56,31 @@
   text-align: center;
   display: inline-block;
   width: 170px;
+}
+/*Background Image*/
+.backgroundModal {
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  background: url("../../img/espiral.png") no-repeat center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1 !important;
+  /*This code works for to rotate the background*/
+  transform: rotateZ(90deg);
+  animation: backgroundModal 150s infinite;
+
+}
+/*Animation*/
+@keyframes backgroundModal {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(7500deg);
+  }
 }
