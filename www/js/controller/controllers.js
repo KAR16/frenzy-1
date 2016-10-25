@@ -286,13 +286,20 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 
     ////////////////////////////////////////////////////////////////////////////////////
+    var user = firebase.auth().currentUser;
+
+    var ref = firebase.database().ref('Users/'+IdUsuario);
+    // var ref = firebase.database().ref('Users')
+    var refuserObject = $firebaseObject(ref); ///// h
+    var refuserArray = $firebaseArray(ref); ///firebaseArray firebaseObject /// j
+    console.log(IdUsuario);
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
     $scope.userService = User;
     $scope.refCrossPromotion = firebase.database().ref('CrossPromotion')
     $scope.crossPromotion = $firebaseArray($scope.refCrossPromotion)
     $scope.refCustomer = secondaryApp.database().ref('Customer')
     $scope.user = firebase.auth().currentUser;
-    $scope.coupon = firebase.database().ref('CuponCodes');
+    $scope.coupon = firebase.database().ref('CouponCodes');
     $scope.couponArray  = $firebaseArray($scope.coupon);
     $scope.$on('$ionicView.enter', function() {
       $scope.modalInfo = {};
@@ -301,57 +308,71 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           noBackdrop: true,
           template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
         });
-        $scope.ref = firebase.database().ref('CuponCodes/'+ code);
+        $scope.ref = firebase.database().ref('CouponCodes/'+ code);
         $scope.objCouponCode = $firebaseObject( $scope.ref);
-        $scope.couponArray.$loaded().then(function () {
-          var record =  $scope.couponArray.$getRecord(code);
-          if (record != null && !record.Status ) {
-            var actualHour = moment().tz("America/Guatemala").format('LLL');
-            $scope.objCouponCode.DateTimeExchange = actualHour;
-            $scope.objCouponCode.Status = true;
-            $scope.objCouponCode.UserId = $scope.user.uid;
-            $scope.objCouponCode.$save();
-            $scope.userService.$loaded().then(function () {
-            $scope.crossPromotion.$loaded().then(function () {
-              $scope.crossPromotion.map(function (promotion) {
-                var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
-                var objInfoCustomer = $firebaseObject(refInfoCustomer)
-                Object.keys(promotion.Award).map(function (key) {
-                  $scope.userService.map(function (user) {
-                    if ( $scope.objCouponCode.AwardID == key ) {
-                      if (user.$id == promotion.$id) {
-                        objInfoCustomer.$loaded(function () {
-                          if (objInfoCustomer.$id == promotion.customer) {
-                            $scope.modalInfo.Name =  objInfoCustomer.Name
-                            $scope.modalInfo.Logo = objInfoCustomer.Logo ,
-                            $scope.modalInfo.Points = $scope.objCouponCode.CouponValue
-                            $ionicLoading.hide()
-                            $scope.SecondModal.show()
-                          }
 
-                        })
-                        var userInfoService = $scope.userService.$ref()
-                        var objUserInfoService = $firebaseObject(userInfoService)
-                        objUserInfoService.$loaded(function () {
-                          objUserInfoService[promotion.$id].Points +=  $scope.objCouponCode.CouponValue;
-                          if ( user.Points > promotion.MaxPoints) {
-                            objUserInfoService[promotion.$id].Points =  promotion.MaxPoints
-                            objUserInfoService.$save()
-                          }else{
-                            objUserInfoService.$save()
-                          }
-                        })
+        refuserArray.$loaded().then(function () {
+          refuserObject.$loaded().then(function () {
+            var ids = $scope.objCouponCode.CrossPromotion;
+            if (refuserArray.$getRecord("CrossPromotion") == null) {
+              var NewObject = new Object;
+              NewObject[ids] = {Points:0,Status:true,"Award": {"dahgshdgaASDJjssjd": {"AwardID": "-KTLUFOTkCHBSUOBHCSL","FechaDeSolicitud":"","Status":true,"CodigoCanjeoRedimido":"","FechaHoraCanjeo":""}}}
+              refuserObject["CrossPromotion"] = NewObject;
+              refuserObject.$save();
+            }
+          })
+        }).then(function() {
+          $scope.couponArray.$loaded().then(function () {
+            var record =  $scope.couponArray.$getRecord(code);
+            if (record != null && !record.Status ) {
+              var actualHour = moment().tz("America/Guatemala").format('LLL');
+              $scope.objCouponCode.DateTimeExchange = actualHour;
+              $scope.objCouponCode.Status = true;
+              $scope.objCouponCode.UserId = IdUsuario;
+              $scope.objCouponCode.$save();
+              $scope.userService.$loaded().then(function () {
+              $scope.crossPromotion.$loaded().then(function () {
+                $scope.crossPromotion.map(function (promotion) {
+                  var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
+                  var objInfoCustomer = $firebaseObject(refInfoCustomer)
+                  Object.keys(promotion.Award).map(function (key) {
+                    $scope.userService.map(function (user) {
+                      if ( $scope.objCouponCode.AwardID == key ) {
+                        if (user.$id == promotion.$id) {
+                          objInfoCustomer.$loaded(function () {
+                            if (objInfoCustomer.$id == promotion.customer) {
+                              $scope.modalInfo.Name =  objInfoCustomer.Name
+                              $scope.modalInfo.Logo = objInfoCustomer.Logo ,
+                              $scope.modalInfo.Points = $scope.objCouponCode.CouponValue
+                              $ionicLoading.hide()
+                              $scope.SecondModal.show()
+                            }
+                          })
+                          var userInfoService = $scope.userService.$ref()
+                          var objUserInfoService = $firebaseObject(userInfoService)
+                          objUserInfoService.$loaded(function () {
+                            objUserInfoService[promotion.$id].Points +=  $scope.objCouponCode.CouponValue;
+                            if ( user.Points > promotion.MaxPoints) {
+                              objUserInfoService[promotion.$id].Points =  promotion.MaxPoints
+                              objUserInfoService.$save()
+                            }else{
+                              objUserInfoService.$save()
+                            }
+                          })
+                        }
                       }
-                    }
+                    })
                   })
                 })
               })
-            })
-            })
-        }else{
-          $ionicLoading.hide()
-        }
-      })
+              })
+          }else{
+            sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+            $ionicLoading.hide()
+          }
+        })
+        })
+
     }
       // Show Loading Icon
       $scope.loading = $ionicLoading.show({
@@ -382,9 +403,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   console.log($stateParams.idCondition);
   $scope.Name;
   $scope.dataPromotion.map(function(value) {
-    console.log(value);
     if (value.$id == $stateParams.idCondition) {
-      console.log(value.LegalTerms);
       $scope.promotion = {TermsAndConditions: value.LegalTerms};
       $scope.Name = value.Nombre;
     }
@@ -540,7 +559,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   $scope.openModal = function(AwardID,code,id) {
     var user = firebase.auth().currentUser;
-    var refUser = firebase.database().ref('Userss/'+ user.uid)
+    var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
     var AwardChange = $firebaseArray(refUser.child('CrossPromotion').child(id).child('Award'))
     var codeval = $firebaseObject(refCrossPromotion.child(id))

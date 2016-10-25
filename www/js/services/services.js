@@ -46,7 +46,7 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 
 app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
   var user = firebase.auth().currentUser;
-  var ref = firebase.database().ref('Userss/'+ user.uid)
+  var ref = firebase.database().ref('Users/'+ IdUsuario)
   return $firebaseArray(ref.child('CrossPromotion'))
 
 }]);
@@ -55,7 +55,7 @@ app.factory('UserSave' ,function ($firebaseArray,$firebaseObject) {
   return {
     get:function (id,dataAward) {
       var user = firebase.auth().currentUser;
-      var ref = firebase.database().ref('Userss/'+ user.uid)
+      var ref = firebase.database().ref('Users/'+ IdUsuario)
       var AwardChange = $firebaseArray(ref.child('CrossPromotion').child(id).child("Award"))
       var puntos = $firebaseObject(ref.child('CrossPromotion').child(id))
       AwardChange.$loaded().then(function () {
@@ -147,6 +147,14 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                           promotion.percentagePoints = 0
                           promotion.points = 0
                       }
+                    }else{
+                       promotion.countPromotion = Object.keys(promotion.Award).length
+                       promotion.points = 0
+                      promotion.percentagePoints = (100 * promotion.points )/ promotion.MaxPoints
+                      if (isNaN(promotion.points)) {
+                           promotion.percentagePoints = 0
+                           promotion.points = 0
+                       }
                     }
                   })
                 }
