@@ -1,6 +1,6 @@
 <ion-view>
 	<ion-content class="generalBackgroundPoints">
-		<div ng-repeat = 'award in instantAdwardsDescription'>
+		<div ng-repeat = 'award in instantAdwardsDescription | limitTo:1'>
 			<div ng-if = "idAwards == award.AwardID">
 				<div id="GeneralPaddingCols0" class="row" style="height:200px" >
 		      <div id="GeneralPaddingCols0" class="col">

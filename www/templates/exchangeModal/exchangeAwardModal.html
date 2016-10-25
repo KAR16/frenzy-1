@@ -1,6 +1,6 @@
 <ion-modal-view>
   <ion-content class="exchangeBackgroundModal">
-    <div ng-repeat = 'award in instantAdwardsDescription'>
+    <div ng-repeat = 'award in instantAdwardsDescription | limitTo:1'>
       <div ng-if = "idAwards == award.AwardID">
         <div class="row">
           <div class="col col-20" ng-click="FirstModals.hide()">

@@ -104,11 +104,13 @@
 		</div>
 		<br>
 		<!-- Bar Sub-Footer for Terms And Conditions href="#/app/termsAndConditionsOffers/{{promotion.$id}}" ng-if="promotion.TermsAndConditions"-->
-		<a class="row legalTermsLine styleRedirection" href="#/app/termsAndConditionsPoints/{{pointsDescripcion.$id}}" ng-if="pointsDescripcion.LegalTerms">
+		<a class="row legalTermsLine" href="#/app/termsAndConditionsPoints/{{pointsDescripcion.$id}}" ng-if="pointsDescripcion.LegalTerms">
 			<div class="LegalTerms verticalCenteredObjects col col-80" style="padding:0 !important">Términos Legales</div>
 			<div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
 		</a>
-		<!-- Modal Change -->
+
+
+
 		<script id="templates/modal.html" type="text/ng-template">
 		      <ion-modal-view id="modales">
 		        <ion-content style="padding:0">
@@ -140,11 +142,12 @@
 										</div>
 									</div>
 									<center>
-										<div class="enterButtonStyle" ng-if ='pointsDescripcion.points >= dataAward.Points' >
+										<div class="enterButtonStyle" ng-if =' pointsDescripcion.points >= dataAward.Points' >
 											<div class="enterButtonTitle open_sans" ng-click ="exchange(dataAward, true)" >
 												¡DÉMOSLE!
 											</div>
 										</div>
+
 										<div class="enterButtonStyle" ng-click="modal.hide()"  ng-if =' pointsDescripcion.points < dataAward.Points'>
 
 											<div class="enterButtonTitle open_sans" ng-click ="modal.hide()" >
@@ -174,7 +177,7 @@
 											</div>
 											<div class="row" style="padding:top:3%;padding-bottom:3%">
 												<div class="col center">
-													<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Te restan {{dataAward.Points}} Puntos en la promoción de <br> Domino's Pizza</span>
+													<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Te restan {{dataAward.Points}} Puntos en la promoción de <br> {{dataAward.Name}}</span>
 												</div>
 											</div>
 											<center>
@@ -186,35 +189,11 @@
 											</center>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col center">
-											<span class="home" style="color:#FFD922;font-size:70px">d</span>
-										</div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col center">
-											<span class="" style="font-size:18px;color:#263147;font-weight:bolder">Tu premio fue agregado <br> a "Premios"</span>
-										</div>
-									</div>
-									<div class="row" style="padding:top:3%;padding-bottom:3%">
-										<div class="col center">
-											<span class="" style="font-size: 12px;color: #A7A9AC;font-family: Roboto, Helvetica;">Te restan 22 Puntos en la promoción de <br> Domino's Pizza</span>
-										</div>
-									</div>
-									<center>
-										<a href="#/app/regalos" style="text-decoration:none">
-											<div class="enterButtonStyle">
-												<div class="enterButtonTitle open_sans" ng-click = 'closeModal()' href="#/app/regalos">
-													IR A MIS PREMIOS
-												</div>
-											</div>
-										</a>
-									</center>
-								</div>
-							</div>
+
+
 		        </ion-content>
 		      </ion-modal-view>
 		    </script>
+
   </ion-content>
 </ion-view>
