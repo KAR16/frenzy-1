@@ -569,6 +569,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       AwardChange.$loaded().then(function () {
         codeval.VerificationCodes.map(function(valueCodes) {
           if (valueCodes == code) {
+            $scope.valChange = true;
             $scope.FirstModals.show();
             AwardChange.map(function(valueAward) {
               if (valueAward.AwardID == AwardID) {
@@ -584,6 +585,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             })
           }
         })
+      }).then(function() {
+        if ($scope.valChange == false) {
+          sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+        }
+
       });
     });
     setTimeout(function(){
@@ -596,6 +602,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   };
 
   $scope.$on('$ionicView.enter', function() {
+    $scope.valChange = false;
     $scope.$parent.data = {
         heading: '',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
