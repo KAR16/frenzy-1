@@ -318,13 +318,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
               var NewObject = new Object;
               NewObject[ids] = {Points:0,Status:true,"Award": {"dahgshdgaASDJjssjd": {"AwardID": "-KTLUFOTkCHBSUOBHCSL","FechaDeSolicitud":"","Status":true,"CodigoCanjeoRedimido":"","FechaHoraCanjeo":""}}}
               refuserObject["CrossPromotion"] = NewObject;
-              refuserObject.$save();
+
             }
           })
         }).then(function() {
           $scope.couponArray.$loaded().then(function () {
             var record =  $scope.couponArray.$getRecord(code);
             if (record != null && !record.Status ) {
+              refuserObject.$save();
               var actualHour = moment().tz("America/Guatemala").format('LLL');
               $scope.objCouponCode.DateTimeExchange = actualHour;
               $scope.objCouponCode.Status = true;
