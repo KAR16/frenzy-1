@@ -138,9 +138,12 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                 if (valCustomer.$id == promotion.customer) {
                   promotion.Logo = valCustomer.Logo
                   promotion.Nombre = valCustomer.Name
+                  promotion.countPromotion = Object.keys(promotion.Award).length;
+                  promotion.points = 0;
+                  promotion.percentagePoints = (100 * promotion.points )/ promotion.MaxPoints
                   user.map(function (valUser) {
+                    console.log(valUser);
                     if (valUser.$id == promotion.$id) {
-                     promotion.countPromotion = Object.keys(promotion.Award).length
                      promotion.points = valUser.Points
                      promotion.percentagePoints = (100 * valUser.Points )/ promotion.MaxPoints
                      if (isNaN(promotion.points)) {
@@ -148,15 +151,13 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                           promotion.points = 0
                       }
                     }else{
-                       promotion.countPromotion = Object.keys(promotion.Award).length
-                       promotion.points = 0
-                      promotion.percentagePoints = (100 * promotion.points )/ promotion.MaxPoints
                       if (isNaN(promotion.points)) {
                            promotion.percentagePoints = 0
                            promotion.points = 0
                        }
                     }
                   })
+                  console.log(promotion);
                 }
               })
             })
