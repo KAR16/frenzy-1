@@ -1,7 +1,7 @@
 var displayNoneInline = [];
 var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
-
+var Check =  true
 /****FIREBASE***/
 var config = {
     apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
@@ -23,13 +23,7 @@ var secondaryApp = firebase.initializeApp(config2, "Secondary");
 
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic', 'firebase'])
-.controller('MenuCheck', function($scope, $state, $ionicLoading, $rootScope) {
 
-  $scope.pushNotificationChange = function() {
-  console.log('Tutorial Change', $scope.TutorialActive.checked);
-  };
-
-})
 // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
 // ************************* LOGIN WITH FACEBOOK *************************
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
@@ -308,14 +302,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.user = firebase.auth().currentUser;
     $scope.coupon = firebase.database().ref('CouponCodes');
     $scope.couponArray  = $firebaseArray($scope.coupon);
-    $scope.$parent.TutorialActive = {checked: true};
-    $scope.pushNotificationChange = function() {
-      console.log('Push Notification Change');
-      console.log($scope.TutorialActive.checked);
-      var check = $scope.TutorialActive.checked
-      $scope.$parent.TutorialActive = {checked:check}
 
-    };
+
+
+
     $scope.$on('$ionicView.enter', function() {
 
       $scope.modalInfo = {};
@@ -400,7 +390,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $timeout(function() {
           $ionicLoading.hide();
       }, 2000);
-
+      $scope.$parent.dataT = {
+        checked: Check
+      };
       $scope.$parent.data = {
     			heading: '',
     			image: 'img/icn-35.png',
@@ -439,11 +431,31 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$apply();
   });
 })
+.controller('MenuCheck', function($scope, $state, $ionicLoading, $rootScope,Changecheck, $rootScope) {
+  $scope.TutorialActives = {checked: Check};
+    $scope.pushNotificationChange = function() {
+      console.log('Push Notification Change');
+      $scope.$parent.dataT = {checked:$scope.TutorialActives.checked}
+      console.log($scope.TutorialActives.checked);
+      console.log($scope.$parent.dataT);
+      Check = $scope.TutorialActives.checked
+      $scope.$parent.dataT = {checked:Check}
+      console.log($scope.$parent.dataT);
+    };
 
+
+})
 //********************** POINTS CONTROLLER *****************************
 .controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
   // First Mini Tutorial html file. Ionic Modal
-
+  $scope.TutorialActives = {checked: Check};
+  $scope.pushNotificationChange = function() {
+    console.log('Push Notification Change');
+    console.log($scope.TutorialActives.checked);
+    console.log($scope.$parent.dataT);
+    Check = $scope.TutorialActives.checked
+    $scope.$parent.dataT = {checked:$scope.TutorialActives.checked}
+  };
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
     $scope.FirstModal = modal;
   }, {

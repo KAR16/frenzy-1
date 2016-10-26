@@ -234,14 +234,15 @@
                   </div>
               </div>
               <div class="col open_sans">
-                  <p class="settingsTermsTitle">Tutorial.. {{TutorialActive}}</p>
+                  <p class="settingsTermsTitle">Tutorial.. {{TutorialActives}} {{data}}</p>
               </div>
 
           </div>
       </a>
-      <div class = 'cp_oculta settingsBoxHide' id='TutorialS' ng-controller="HomeCtrl">
-        <ion-toggle ng-model="TutorialActive.checked" ng-change="pushNotificationChange()">
-            Activar Tutorial
+      <div class = 'cp_oculta settingsBoxHide' id='TutorialS' ng-controller="MenuCheck">
+
+        <ion-toggle ng-model="TutorialActives.checked" ng-change="pushNotificationChange()">
+          Activar Tutorial
         </ion-toggle>
         <a class="row legalTermsLine styleRedirection" style="" href="#/tutorial2">
           <div class="LegalTerms verticalCenteredObjects col col-80"    style="padding:0 !important">Términos Legales</div>
