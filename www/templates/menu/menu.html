@@ -241,7 +241,7 @@
       </a>
       <div class = 'cp_oculta settingsBoxHide' id='TutorialS' ng-controller="MenuCheck">
 
-        <ion-toggle ng-model="TutorialActives.checked" ng-change="pushNotificationChange()">
+        <ion-toggle ng-model="config.tutorial" ng-change="config.$save()">
           Activar Tutorial
         </ion-toggle>
         <a class="row legalTermsLine styleRedirection" style="" href="#/tutorial2">

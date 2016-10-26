@@ -267,6 +267,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         "User": NameUser
     });
 
+    var ref = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
+    $scope.config = $firebaseObject(ref.child('config'));
+
     // First Mini Tutorial html file. Ionic Modal
     $ionicModal.fromTemplateUrl('templates/mini_tutorials/getUpCodePromotion.html', function(modal) {
       $scope.FirstModal = modal;
@@ -393,6 +396,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.$parent.dataT = {
         checked: Check
       };
+
       $scope.$parent.data = {
     			heading: '',
     			image: 'img/icn-35.png',
@@ -1502,8 +1506,10 @@ $scope.$on('$ionicView.enter', function() {
 
 }])
 /******************************************************/
-.controller('toolsCtrl',  function($scope, $state) {
-  console.log("hola");
+.controller('toolsCtrl',  function($scope, $state, $firebaseObject) {
+
+    var ref = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
+    $scope.config = $firebaseObject(ref.child('config'));
 
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
