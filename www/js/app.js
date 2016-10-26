@@ -18,6 +18,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 			if (window.StatusBar) {
 				StatusBar.styleLightContent();
 			}
+
 		});
 		// Disable back for app
 		$ionicPlatform.registerBackButtonAction(function(event) {

@@ -157,7 +157,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             // Call to Users Entity Firebase Data
             mainApp.database().ref('Users').once('value', function(snapshot) {
                 // If doesn't exist anything data then to save the new data
-                mixpanel.identify(email);
+                mixpanel.identify(firebase.auth().currentUser.uid);
                 mixpanel.people.set({
                     "$email": email,
                     "$gender": gender,
@@ -241,16 +241,19 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                   sweetAlert('Oops', 'Por favor revisa que tu correo y contraseña sea correcta  ', 'error');
             }).then(function() {
                 if (mainApp.auth().currentUser != null) {
-                    // TODO sign in error.
+                    //  check if Email is verified.
                     IdUsuario = mainApp.auth().currentUser.uid;
                     mainApp.database().ref('Users').once('value', function(snapshot) {
                         if (snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == true) {
                             IdGender = snapshot.val()[mainApp.auth().currentUser.uid].Gender;
                             $state.go('loadingLoginUser');
                         } else if (snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == undefined) {
-                            $scope.VerifyEmail()
+                            $scope.VerifyEmail();
                         }
                     });
+
+                    mixpanel.identify(firebase.auth().currentUser.uid);
+
                 }
             })
         }
@@ -1567,12 +1570,16 @@ $scope.$on('$ionicView.enter', function() {
                     }
                 });
             }).then(function() {
-                $timeout(function() {
+
+
+              if(!firebase.auth().currentUser.IdFacebook) {
+
                     $cordovaFacebook.getLoginStatus()
                         .then(function(success) {
                             $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
                                 .then(function(success) {
-                                    mixpanel.identify(success.id);
+
+                                    mixpanel.identify(firebase.auth().currentUser.uid);
                                     mixpanel.people.set({
                                         "$email": success.email,
                                         "$gender": success.gender,
@@ -1600,9 +1607,9 @@ $scope.$on('$ionicView.enter', function() {
                             // error
                         });
                     $ionicLoading.hide();
-                }, 2000);
-
+                  } else {
+                    mixpanel.alias(firebase.auth().currentUser.uid);
+                  }
             });
-
     };
 });
