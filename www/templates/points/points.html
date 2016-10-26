@@ -1,12 +1,12 @@
 <ion-view>
 	<ion-content class="generalBackgroundPoints">
 
-    <div class="row" style="padding-top:5%;padding-bottom:7%">
+    <div class="row" style="padding-top:5%;padding-bottom:7%" ng-if="TutorialActive.checked" >
       <div class="col center">
         <a class="styleRedirection" nav-transition="android" ng-click="FirstModal.show()">
           <div class="winAndChangePoints center">
             <div class="winAndChangePointsText open_sans verticalCentered">
-              ¿Cómo gano y cambio puntos?
+              ¿Cómo gano y cambio puntos? {{TutorialActive}}
             </div>
           </div>
         </a>

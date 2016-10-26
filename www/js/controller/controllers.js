@@ -23,6 +23,13 @@ var secondaryApp = firebase.initializeApp(config2, "Secondary");
 
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic', 'firebase'])
+.controller('MenuCheck', function($scope, $state, $ionicLoading, $rootScope) {
+
+  $scope.pushNotificationChange = function() {
+  console.log('Tutorial Change', $scope.TutorialActive.checked);
+  };
+
+})
 // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
 // ************************* LOGIN WITH FACEBOOK *************************
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
@@ -301,7 +308,16 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.user = firebase.auth().currentUser;
     $scope.coupon = firebase.database().ref('CouponCodes');
     $scope.couponArray  = $firebaseArray($scope.coupon);
+    $scope.$parent.TutorialActive = {checked: true};
+    $scope.pushNotificationChange = function() {
+      console.log('Push Notification Change');
+      console.log($scope.TutorialActive.checked);
+      var check = $scope.TutorialActive.checked
+      $scope.$parent.TutorialActive = {checked:check}
+
+    };
     $scope.$on('$ionicView.enter', function() {
+
       $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
         $scope.load =  $ionicLoading.show({
@@ -395,6 +411,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       };
       $scope.$apply();
     });
+
 })
 //********************** termsAndConditions puntos     *****************************
 .controller('termsAndConditionsPointsCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
@@ -410,6 +427,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
   });
   $scope.$on('$ionicView.enter', function() {
+
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',
@@ -1472,7 +1490,9 @@ $scope.$on('$ionicView.enter', function() {
 
 }])
 /******************************************************/
-.controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
+.controller('toolsCtrl',  function($scope, $state) {
+  console.log("hola");
+
     var NameUser = String(IdUsuario);
     mixpanel.track("view", {
         "type": "Tools",
@@ -1495,9 +1515,11 @@ $scope.$on('$ionicView.enter', function() {
         });
         $state.go('loginAndRegister');
     };
-
+  console.log($scope.$parent.TutorialActive);
+  console.log($scope.data);
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
     $scope.$on('$ionicView.enter', function() {
+
       $scope.$parent.data = {
           heading: '',
           image: 'img/icn-35.png',
@@ -1506,8 +1528,9 @@ $scope.$on('$ionicView.enter', function() {
           toolsIcon: false,
           footer: true
       };
+      $scope.$apply();
     });
-}])
+})
     /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
 .controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook, $q, $ionicLoading, $timeout) {
