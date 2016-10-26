@@ -223,8 +223,10 @@
           <p>innova@frenzy.com.gt</p>
       </div>
       <!--************ TUTORIAL  ***********************-->
-      <a href="#/tutorial2" style="text-decoration:none;"  ng-click = "AnalyticsTools('Tutorial')">
+
+      <a href="javascript:MostrarOcultar('TutorialS');" style="text-decoration:none;"  ng-click = "AnalyticsTools('Tutorial')">
           <div class="row" style="margin-top:10px;">
+
               <div class="col col-33">
                   <!--**********  ICON CATEGORIES  **********-->
                   <div class="verticalAndHorizontalCenteredObjects">
@@ -232,11 +234,21 @@
                   </div>
               </div>
               <div class="col open_sans">
-                  <p class="settingsTermsTitle">Tutorial</p>
+                  <p class="settingsTermsTitle">Tutorial.. {{TutorialActive}}</p>
               </div>
 
           </div>
       </a>
+      <div class = 'cp_oculta settingsBoxHide' id='TutorialS' ng-controller="HomeCtrl">
+        <ion-toggle ng-model="TutorialActive.checked" ng-change="pushNotificationChange()">
+            Activar Tutorial
+        </ion-toggle>
+        <a class="row legalTermsLine styleRedirection" style="" href="#/tutorial2">
+          <div class="LegalTerms verticalCenteredObjects col col-80"    style="padding:0 !important">Términos Legales</div>
+          <div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
+        </a>
+      </div>
+
       <!--************ CERRAR FACEBOOK *****************-->
       <div class="row" style="margin-top:10px;"  ng-click = "AnalyticsTools('CerrarFB')">
           <div class="col col-33">
