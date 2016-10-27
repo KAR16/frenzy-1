@@ -44,14 +44,6 @@ app.factory('Pin', ['$firebaseObject', function($firebaseObject) {
 
 }]);
 
-app.factory('Changecheck' ,  function () {
-  return{
-    get:function () {
-      //console.log($scope.$parent.dataT)
-    }
-  }
-
-});
 app.factory('User' , ['$firebaseArray' , function ($firebaseArray) {
   var user = firebase.auth().currentUser;
   var ref = firebase.database().ref('Users/'+ IdUsuario)

@@ -1,20 +1,17 @@
 <ion-view>
 	<ion-content class="generalBackgroundPoints">
 
-    <div class="row" style="padding-top:5%;padding-bottom:7%" ng-if="dataT.checked" >
+    <div class="row" style="padding-top:5%;padding-bottom:7%" ng-if="config.tutorial" >
       <div class="col center">
         <a class="styleRedirection" nav-transition="android" ng-click="FirstModal.show()">
           <div class="winAndChangePoints center">
             <div class="winAndChangePointsText open_sans verticalCentered">
-              ¿Cómo gano y cambio puntos? {{dataT}}
+              ¿Cómo gano y cambio puntos?
             </div>
           </div>
         </a>
       </div>
     </div>
-		<ion-toggle ng-model="TutorialActives.checked" ng-change="pushNotificationChange()">
-			Activar Tutorial
-		</ion-toggle>
 		<!-- Customer Points Container -->
 		<div class="row rowForCustomerAward" ng-repeat= 'point in crossPromotion'>
 			<a class="styleRedirection" href="#/app/pointsDescription/{{point.$id}}">

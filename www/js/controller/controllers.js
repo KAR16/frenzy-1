@@ -267,9 +267,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         "User": NameUser
     });
 
-    var ref = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
-    $scope.config = $firebaseObject(ref.child('config'));
-
+    var refs = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
     // First Mini Tutorial html file. Ionic Modal
     $ionicModal.fromTemplateUrl('templates/mini_tutorials/getUpCodePromotion.html', function(modal) {
       $scope.FirstModal = modal;
@@ -310,7 +308,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 
     $scope.$on('$ionicView.enter', function() {
-
+      /////////////////////////// tutorial True or false
+      $scope.$parent.config = $firebaseObject(refs.child('config'));
+      $scope.config.$loaded().then(function () {
+        if (typeof($scope.config.$value) == 'object') {
+          $scope.config.tutorial =  true
+          $scope.config.$save();
+        }
+      })
+      ///////////////////////////////////////////////////////////
       $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
         $scope.load =  $ionicLoading.show({
@@ -434,20 +440,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     };
     $scope.$apply();
   });
-})
-.controller('MenuCheck', function($scope, $state, $ionicLoading, $rootScope,Changecheck, $rootScope) {
-  $scope.TutorialActives = {checked: Check};
-    $scope.pushNotificationChange = function() {
-      console.log('Push Notification Change');
-      $scope.$parent.dataT = {checked:$scope.TutorialActives.checked}
-      console.log($scope.TutorialActives.checked);
-      console.log($scope.$parent.dataT);
-      Check = $scope.TutorialActives.checked
-      $scope.$parent.dataT = {checked:Check}
-      console.log($scope.$parent.dataT);
-    };
-
-
 })
 //********************** POINTS CONTROLLER *****************************
 .controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
