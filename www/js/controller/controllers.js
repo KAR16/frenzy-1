@@ -309,6 +309,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$on('$ionicView.enter', function() {
       $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
+        mixpanel.track("ClickCrossPromotion", {"Code":code});
+
         $scope.load =  $ionicLoading.show({
           noBackdrop: true,
           template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
@@ -364,7 +366,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             }else{
                               objUserInfoService.$save()
                             }
-
+                            mixplane.track("RedeemCrossPromotion", {"CrossPromotionId": promotion.$id, "Points":objUserInfoService[promotion.$id].Points, "Type": "Points"});
                           })
                         }
                       }
@@ -600,6 +602,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                 });
               }
             })
+            mixplane.track("RedeemAward", {"AwardId": valueAward.AwardID});
           }
         })
       }).then(function() {
@@ -929,6 +932,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
     if ($scope.customerCoupons.length < 1) {
       $scope.viewCoupons = false;
+      mixpanel.track("view", {"type": "Promotion","Namepromotion": $scope.customerId});
     }
   });
 
@@ -955,12 +959,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
             console.log('error mensaje');
         });
+        mixpanel.track("ClickSMS", {"Customer": $scope.customer.Name})
     };
 
 
         // *************** URL BROWSER SHOP FUNCTION ***************
     $scope.shopUrl = function(url, id, name) {
-        var NameUser = String(IdUsuario);
         var options = {
           location: 'yes',
           clearcache:'yes',
@@ -1133,6 +1137,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
       // Analytics
       mixpanel.track("view", {"type": "copuns","CustomerId": $scope.customerId});
+      mixpanel.track("ClickCustomer", {"Name": $scope.customerId,"CustomerId": $scope.customerId});
+
     });
 
 })
