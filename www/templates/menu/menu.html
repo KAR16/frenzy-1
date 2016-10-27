@@ -58,14 +58,12 @@
     </ion-nav-view>
   </ion-side-menu-content>
 
-
-
   <!-- Aside Menu Right -->
   <ion-side-menu side="right" class="menuTools">
     <ion-header-bar class="bar-positive">
       <h1 class="title" style="text-align:center">Herramientas</h1>
     </ion-header-bar>
-    <ion-content style="background-color:#F1F2F2" ng-controller='toolsCtrl'>
+    <ion-content style="background-color:#F1F2F2;overflow-y:hidden" ng-controller='toolsCtrl'>
       <!--**************  TERMINOS   *******************-->
       <a href="javascript:MostrarOcultar('texto1');" style="text-decoration:none;" ng-click = "AnalyticsTools('Terminos')">
           <div class="row" style="margin-top:25px">
@@ -240,16 +238,14 @@
           </div>
       </a>
       <div class = 'cp_oculta settingsBoxHide' id='TutorialS'>
-
-        <ion-toggle ng-model="config.tutorial" ng-change="config.$save()">
+        <ion-toggle class="tutorialLine" ng-model="config.tutorial" ng-change="config.$save()">
           Activar Tutorial
         </ion-toggle>
-        <a class="row legalTermsLine styleRedirection" style="" href="#/tutorial2">
-          <div class="LegalTerms verticalCenteredObjects col col-80"    style="padding:0 !important">Términos Legales</div>
-          <div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
+        <a class="row legalTermsLine styleRedirection" style="padding:3% !important" href="#/tutorial2">
+          <div class="LegalTerms verticalCenteredObjects col col-75" style="font-size:16px;color:#263147;">Ver Tutorial</div>
+          <div id="backgroundTutorialButton" class="seeTutorialButton icon ion-chevron-right col"></div>
         </a>
       </div>
-
       <!--************ CERRAR FACEBOOK *****************-->
       <div class="row" style="margin-top:10px;"  ng-click = "AnalyticsTools('CerrarFB')">
           <div class="col col-33">
