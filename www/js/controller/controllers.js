@@ -171,7 +171,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                         Username: name,
                         Email: email,
                         Gender: gender,
-                        Birthday: dateBirthday
+                        Birthday: dateBirthday,
+                        config: {analyticsAlias: true}
                     });
                     $ionicLoading.hide();
                     $scope.SendEmail();
@@ -196,7 +197,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ************************* LOGIN WITH FRENZY *************************
-.controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading) {
+.controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading, $firebaseObject) {
 
     // Verify Email with Firebase
     $scope.VerifyEmail = function() {
@@ -241,18 +242,25 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                   sweetAlert('Oops', 'Por favor revisa que tu correo y contraseña sea correcta  ', 'error');
             }).then(function() {
                 if (mainApp.auth().currentUser != null) {
+
+                  var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
+                  var user = $firebaseObject(ref);
                     //  check if Email is verified.
                     IdUsuario = mainApp.auth().currentUser.uid;
-                    mainApp.database().ref('Users').once('value', function(snapshot) {
-                        if (snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == true) {
-                            IdGender = snapshot.val()[mainApp.auth().currentUser.uid].Gender;
-                            $state.go('loadingLoginUser');
-                        } else if (snapshot.val()[mainApp.auth().currentUser.uid]['Parse'] == undefined) {
-                            $scope.VerifyEmail();
-                        }
-                    });
-
-                    mixpanel.identify(firebase.auth().currentUser.uid);
+                    if (user.Parse == true) {
+                        IdGender = snapshot.val()[mainApp.auth().currentUser.uid].Gender;
+                        $state.go('loadingLoginUser');
+                    } else if (user.Parse == undefined) {
+                        $scope.VerifyEmail();
+                    }
+                    // Check if user has already been passed to new Mixpanel ID.
+                    if(!user.config.analyticsAlias) {
+                        mixpanel.alias(firebase.auth().currentUser.uid);
+                        user.config.analyticsAlias = true;
+                        user.$save();
+                    } else {
+                      mixpanel.identify(firebase.auth().currentUser.uid);
+                    }
 
                 }
             })
@@ -262,12 +270,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 // ********************* PAGE_START CONTROLLER ****************************
 
 .controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal,User,$firebaseArray,$firebaseObject) {
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "Categorys",
-        "Gender": IdGender,
-        "User": NameUser
-    });
 
     // First Mini Tutorial html file. Ionic Modal
     $ionicModal.fromTemplateUrl('templates/mini_tutorials/getUpCodePromotion.html', function(modal) {
@@ -346,7 +348,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                           objInfoCustomer.$loaded(function () {
                             if (objInfoCustomer.$id == promotion.customer) {
                               $scope.modalInfo.Name =  objInfoCustomer.Name
-                              $scope.modalInfo.Logo = objInfoCustomer.Logo ,
+                              $scope.modalInfo.Logo = objInfoCustomer.Logo
                               $scope.modalInfo.Points = $scope.objCouponCode.CouponValue
                               $ionicLoading.hide()
                               $scope.SecondModal.show()
@@ -362,6 +364,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             }else{
                               objUserInfoService.$save()
                             }
+
                           })
                         }
                       }
@@ -372,6 +375,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
               })
           }else{
             sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+            mixpanel.track("ClickCrossPromotion", {"type":"Invalid Code"});
             $ionicLoading.hide()
           }
         })
@@ -397,6 +401,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footer: true
       };
       $scope.$apply();
+
+      mixpanel.track("view", {"type": "Categorys"});
     });
 })
 //********************** termsAndConditions puntos     *****************************
@@ -449,6 +455,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footer: true
     };
     $scope.$apply();
+
+    // Analytics
+    mixpanel.track("view", {"type": "YourPoints"});
+
   });
 })
 
@@ -465,24 +475,20 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.goAward = false ;
   $scope.openModal = function (key , goAward) {
     $scope.dataAward = $scope.pointsDescripcion.Award[key];
-    $scope.dataAward['key'] = key
-    $scope.modal.show()
-  }
+    $scope.dataAward['key'] = key;
+    $scope.modal.show();
+  };
   $scope.$parent.exchangeArray =  [];
   $scope.exchange = function (dataAward , changeModal) {
     $scope.user = UserSave.get($stateParams.idPromotion,dataAward);
     $scope.goAdwards = changeModal;
-  }
+  };
   $scope.closeModal = function () {
-     $scope.modal.hide()
+     $scope.modal.hide();
      $timeout(function() {
         $scope.goAdwards =  !$scope.goAdwards ;
       }, 1000);
-  }
-
-
-
-
+  };
 
    $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope}).then(function(modal2) {
       $scope.modal2 = modal2;
@@ -497,11 +503,18 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footer: false
       };
       $scope.$apply();
+
+      // Analytics
+      mixpanel.track("view", {"type": "PointsDescription"});
+
     });
 
 })
 // Award Controller View
 .controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
+
+  // Analytics
+  mixpanel.track("view", {"type": "Awards"});
 
   $scope.sendSms = function() {
     $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
@@ -615,6 +628,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footer: false
     };
     $scope.$apply();
+
+    // Analytics
+    mixpanel.track("view", {"type": "AwardDescription"});
+
   });
 
 })
@@ -662,6 +679,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.favoritesCount += 1;
       }
     }
+    mixpanel.track("view", {"type": "YourFavorites", "#favorites": $scope.favoritesCount});
   };
 
   $scope.favoritesCount = 0;
@@ -674,15 +692,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.filterFavorite = function(item) {
     return $scope.favorites[item.$id];
   };
-
-    /*************************************************/
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "YourFavorites",
-        "Gender": IdGender,
-        "User": NameUser
-    });
-        /**************************************************/
 
     $scope.$on('$ionicView.enter', function() {
       $scope.$parent.data = {
@@ -704,13 +713,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.setViewMyPromotions = function(bool) {
         $scope.viewMyPromotion =  !$scope.viewMyPromotion;
     };
-
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "PinSaved",
-        "Gender": IdGender,
-        "User": NameUser
-    });
 
     $scope.pins = Pin;
     $scope.promotions = Promotion;
@@ -761,6 +763,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           $scope.pinsCount += 1;
         }
       }
+
+      mixpanel.track("view", {"type": "PinSaved", "#pins": $scope.pinsCount});
     };
 
     $scope.$on('$ionicView.enter', function() {
@@ -795,6 +799,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }, function(error){
       console.log("Error:", error);
     });
+
+    // Analytics
+    mixpanel.track("ClickHeart", {"CustomerId": customerId, "Customer": $scope.favorites[customerId].Name });
+
   };
 })
 
@@ -816,6 +824,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }, function(error){
       console.log("Error:", error);
     });
+
+    // Analytics
+    mixpanel.track("ClickPin", {"PinId": id });
   };
 
 })
@@ -836,17 +847,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $ionicLoading.hide();
     });
 
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "Customers",
-        "Gender": IdGender,
-        "User": NameUser
-    });
-    mixpanel.track("ClickCategory", {
-        "NameCategory": $scope.category,
-        "Gender": IdGender,
-        "User": NameUser
-    });
     // Loading scope
     $scope.loading = $ionicLoading.show({
         noBackdrop: true,
@@ -865,15 +865,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             footer: true
         };
 
+        // Analytics
+        mixpanel.track("view", {"type": "Customers", "Category":$scope.category});
+        mixpanel.track("ClickCategory", {"NameCategory": $scope.category});
     });
 })
 ///////////
 .controller('PromotionsDescription', function($scope, $stateParams, Promotion) {
-    mixpanel.track("view", {
-        "type": "PromotionsDescription",
-        "Gender": IdGender,
-        "User": IdUsuario
-    });
 
     $scope.promotions = Promotion;
     $scope.promotions.$loaded(function(data){
@@ -895,6 +893,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             footer: true
         };
 
+        mixpanel.track("view", {"type": "PromotionsDescription", "PromotionId": $stateParams.promotionId});
     });
 })
 
@@ -952,15 +951,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
   });
 
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "copuns",
-        "Gender": IdGender,
-        "User": NameUser
-    });
-    // For to update QuantityExchanged
-
-
     $scope.sendSms = function() {
         $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
             console.log('error mensaje');
@@ -979,16 +969,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
         if (id == "web") {
             mixpanel.track("ClickWeb", {
-                "Costumer": name,
-                "User": NameUser,
-                "Gender": IdGender
+                "Costumer": name
             });
             window.open = cordova.InAppBrowser.open(url, '_blank', options);
         } else {
             mixpanel.track("ClickCartShop", {
-                "Costumer": name,
-                "User": NameUser,
-                "Gender": IdGender
+                "Costumer": name
             });
             window.open = cordova.InAppBrowser.open(url, '_blank', options);
         }
@@ -1022,8 +1008,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                     })
                                     mixpanel.track("clickCanjear", {
                                         "type": "fecha",
-                                        "Gender": IdGender,
-                                        "User": NameUser,
                                         "NameCoupon": id
                                     });
                                     QuantityExchangedSuma = snapshot.val()[id].QuantityExchanged + 1
@@ -1065,8 +1049,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                         });
                                         mixpanel.track("clickCanjear", {
                                             "type": "Cupon",
-                                            "Gender": IdGender,
-                                            "User": NameUser,
                                             "NameCoupon": id
                                         });
 
@@ -1148,6 +1130,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           toolsIcon: false,
           footer: true
       };
+
+      // Analytics
+      mixpanel.track("view", {"type": "copuns","CustomerId": $scope.customerId});
     });
 
 })
@@ -1157,11 +1142,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   var ref = mainApp.database().ref('Coupon').child($stateParams.couponId);
   $scope.cupon = $firebaseObject(ref);
-  mixpanel.track("view", {
-      "type": "DescriptionCupon",
-      "Gender": IdGender,
-      "User": IdUsuario
-  });
+
+  // Analytics for view
+  mixpanel.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
 
   //
   // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
@@ -1186,8 +1169,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     mixpanel.track("clickCanjear", {
         "type": "Cupon",
-        "Gender": IdGender,
-        "User": firebase.auth().currentUser.Name,
         "NameCoupon": $stateParams.couponId
     });
 
@@ -1260,26 +1241,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 //*******************  NEW CONTROLLER POPOVER  ************************
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
-    $scope.Analytics = function(id, nameShare) {
-        var NameUser = String(IdUsuario);
-        var Dimensions = {
-            name: 'share_' + id,
-            user: NameUser
-        };
-        if (nameShare == "promotion") {
-            mixpanel.track("ClickShare", {
-                "NameShareID": id,
-                "User": NameUser,
-                "Gender": IdGender
-            });
-        } else {
-            mixpanel.track("ClickShare", {
-                "NameShareID": id,
-                "User": NameUser,
-                "Gender": IdGender
-            });
-        }
 
+    $scope.Analytics = function(id, nameShare) {
+      mixpanel.track("ClickShare", {"NameShareID": id});
     };
     $ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
         scope: $scope,
@@ -1476,19 +1440,11 @@ $scope.$on('$ionicView.enter', function() {
 }])
 /******************************************************/
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
-    var NameUser = String(IdUsuario);
-    mixpanel.track("view", {
-        "type": "Tools",
-        "Gender": IdGender,
-        "User": NameUser
-    });
+
+    // Analytics Calls
+    mixpanel.track("view", {"type": "Tools"});
     $scope.AnalyticsTools = function(id) {
-        var NameUser = String(IdUsuario);
-        mixpanel.track("ClickOtros", {
-            "type": id,
-            "Gender": IdGender,
-            "User": NameUser
-        });
+        mixpanel.track("ClickOtros", {"type": id});
     };
     $scope.logout = function() {
         firebase.auth().signOut().then(function() {
@@ -1513,7 +1469,7 @@ $scope.$on('$ionicView.enter', function() {
 }])
     /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
-.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook, $q, $ionicLoading, $timeout) {
+.controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook, $q, $ionicLoading, $timeout, $firebaseObject) {
 
     // This method is to get the user profile info from the facebook api
     var getFacebookProfileInfo = function(authResponse) {
@@ -1570,9 +1526,10 @@ $scope.$on('$ionicView.enter', function() {
                     }
                 });
             }).then(function() {
+              var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
+              var user = $firebaseObject(ref);
 
-
-              if(!firebase.auth().currentUser.IdFacebook) {
+              if(!user.IdFacebook) {
 
                     $cordovaFacebook.getLoginStatus()
                         .then(function(success) {
@@ -1607,9 +1564,13 @@ $scope.$on('$ionicView.enter', function() {
                             // error
                         });
                     $ionicLoading.hide();
-                  } else {
-                    mixpanel.alias(firebase.auth().currentUser.uid);
                   }
+              //
+              if(!user.config.analyticsAlias) {
+                  mixpanel.alias(firebase.auth().currentUser.uid);
+                  user.config.analyticsAlias = true;
+                  user.$save();
+              }
             });
     };
 });
