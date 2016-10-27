@@ -1,7 +1,7 @@
 var displayNoneInline = [];
 var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
-
+var Check =  true
 /****FIREBASE***/
 var config = {
     apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
@@ -23,6 +23,7 @@ var secondaryApp = firebase.initializeApp(config2, "Secondary");
 
 /*****  CONTROLLERS  *****/
 angular.module('starter.controllers', ['ionic', 'firebase'])
+
 // -------------------- LOGIN WITHOUT FACEBOOK ------------------------
 // ************************* LOGIN WITH FACEBOOK *************************
 .controller('RegisterController', function($scope, $state, $ionicLoading, $rootScope) {
@@ -271,6 +272,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 .controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $timeout, $firebaseArray, $ionicModal,User,$firebaseArray,$firebaseObject) {
 
+    var refs = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
     // First Mini Tutorial html file. Ionic Modal
     $ionicModal.fromTemplateUrl('templates/mini_tutorials/getUpCodePromotion.html', function(modal) {
       $scope.FirstModal = modal;
@@ -306,7 +308,20 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.user = firebase.auth().currentUser;
     $scope.coupon = firebase.database().ref('CouponCodes');
     $scope.couponArray  = $firebaseArray($scope.coupon);
+
+
+
+
     $scope.$on('$ionicView.enter', function() {
+      /////////////////////////// tutorial True or false
+      $scope.$parent.config = $firebaseObject(refs.child('config'));
+      $scope.config.$loaded().then(function () {
+        if (typeof($scope.config.$value) == 'object') {
+          $scope.config.tutorial =  true
+          $scope.config.$save();
+        }
+      })
+      ///////////////////////////////////////////////////////////
       $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
         mixpanel.track("ClickCrossPromotion", {"Code":code});
@@ -393,6 +408,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $timeout(function() {
           $ionicLoading.hide();
       }, 2000);
+      $scope.$parent.dataT = {
+        checked: Check
+      };
 
       $scope.$parent.data = {
     			heading: '',
@@ -406,6 +424,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
       mixpanel.track("view", {"type": "Categorys"});
     });
+
 })
 //********************** termsAndConditions puntos     *****************************
 .controller('termsAndConditionsPointsCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
@@ -421,6 +440,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
   });
   $scope.$on('$ionicView.enter', function() {
+
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',
@@ -432,11 +452,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$apply();
   });
 })
-
 //********************** POINTS CONTROLLER *****************************
 .controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
   // First Mini Tutorial html file. Ionic Modal
-
+  $scope.TutorialActives = {checked: Check};
+  $scope.pushNotificationChange = function() {
+    console.log('Push Notification Change');
+    console.log($scope.TutorialActives.checked);
+    console.log($scope.$parent.dataT);
+    Check = $scope.TutorialActives.checked
+    $scope.$parent.dataT = {checked:$scope.TutorialActives.checked}
+  };
   $ionicModal.fromTemplateUrl('templates/mini_tutorials/howIWinPoints.html', function(modal) {
     $scope.FirstModal = modal;
   }, {
@@ -1445,34 +1471,41 @@ $scope.$on('$ionicView.enter', function() {
 
 }])
 /******************************************************/
+<<<<<<< HEAD
 .controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
 
-    // Analytics Calls
-    mixpanel.track("view", {"type": "Tools"});
-    $scope.AnalyticsTools = function(id) {
-        mixpanel.track("ClickOtros", {"type": id});
-    };
-    $scope.logout = function() {
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-        }, function(error) {
-            // An error happened.
-        });
-        $state.go('loginAndRegister');
-    };
+  var ref = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
+  $scope.config = $firebaseObject(ref.child('config'));
 
-    // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
-    $scope.$on('$ionicView.enter', function() {
-      $scope.$parent.data = {
-          heading: '',
-          image: 'img/icn-35.png',
-          footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5'],
-          backButton: false,
-          toolsIcon: false,
-          footer: true
-      };
-    });
-}])
+  // Analytics Calls
+  mixpanel.track("view", {"type": "Tools"});
+
+  $scope.AnalyticsTools = function(id) {
+      mixpanel.track("ClickOtros", {"type": id});
+  };
+  $scope.logout = function() {
+      firebase.auth().signOut().then(function() {
+          // Sign-out successful.
+      }, function(error) {
+          // An error happened.
+      });
+      $state.go('loginAndRegister');
+  };
+
+  // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
+  $scope.$on('$ionicView.enter', function() {
+
+    $scope.$parent.data = {
+        heading: '',
+        image: 'img/icn-35.png',
+        footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#3F51B5'],
+        backButton: false,
+        toolsIcon: false,
+        footer: true
+    };
+    $scope.$apply();
+  });
+})
     /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
 
 .controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook, $q, $ionicLoading, $timeout, $firebaseObject) {
