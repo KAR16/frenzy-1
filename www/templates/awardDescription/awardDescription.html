@@ -1,67 +1,69 @@
 <ion-view>
 	<ion-content class="generalBackgroundPoints">
-		<div ng-repeat = 'award in instantAdwardsDescription | limitTo:1'>
+		<div ng-repeat = 'award in instantAdwardsDescription'>
 			<div ng-if = "idAwards == award.AwardID">
-				<div id="GeneralPaddingCols0" class="row" style="height:200px" >
-		      <div id="GeneralPaddingCols0" class="col">
-		        <img class="awardDescriptionImage" ng-src="{{award.Award.Photo}}" ng-if="award.Award.Photo" alt="awardImage" />
-						<img class="awardDescriptionImage" ng-src="img/frenzy_back.png" ng-if="!award.Award.Photo" alt="awardImage" />
-		      </div>
-		    </div>
-		    <!-- Points Description For Each Customer -->
-		    <div class="row awardDescription">
-		      <!-- Count of Points -->
-		      <div class="col" style="text-align:center;padding-bottom:5%">
-		        <div class="row center">
-		          <span class="open_sans countPoints">{{award.Award.Name}}</span>
-		        </div>
-		        <div class="row center" style="padding-top:1%">
-		          <span class="descriptionAP">Premio al instante</span>
-		        </div>
-						<!-- Input Change -->
-			      <div class="row" style="padding-top:3%">
-			        <div id="GeneralPaddingCols0" class="col">
-			          <!-- Input Code Promotion -->
-			          <!-- The direct styles doesn't work good in css file -->
-			          <input class="inputCodeVerificationStyle" type="text" placeholder="Ingresa Código de Verificación" name="name" style="width:75%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;font-size:24px !important;color:#A7A9AC;height:41px;float:left" ng-model = 'code'>
-			          <!-- Go Button for the Code Promotion exchanged -->
-			          <button ng-click="openModal('{{award.AwardID}}',code,'{{award.id}}')" type="button" name="button" class="codeVerificationButton">CANJEAR</button>
-			        </div>
+				<div ng-if = "instantAdwardsDescription[$index].AwardID != instantAdwardsDescription[$index - 1].AwardID ">
+					<div id="GeneralPaddingCols0" class="row" style="height:200px" >
+			      <div id="GeneralPaddingCols0" class="col">
+			        <img class="awardDescriptionImage" ng-src="{{award.Award.Photo}}" ng-if="award.Award.Photo" alt="awardImage" />
+							<img class="awardDescriptionImage" ng-src="img/frenzy_back.png" ng-if="!award.Award.Photo" alt="awardImage" />
 			      </div>
-		      </div>
-		    </div>
-		    <!-- Triangle And Available Gifts -->
-		    <div class="row containerTrianglePoints zigzagPoints"></div>
-		    <!-- Available Gifts Text -->
-		    <div class="row" style="padding-top:3%">
-		      <div class="col center">
-		        <span class="open_sans subTitles">Descripción</span>
-		      </div>
-		    </div>
-		    <!-- Description and Conditions -->
-				<div class="row">
-					<div class="col" style="text-align:justify">
-						<span class="termsAndConditionsText">{{award.PromotionDescription}}</span>
+			    </div>
+			    <!-- Points Description For Each Customer -->
+			    <div class="row awardDescription">
+			      <!-- Count of Points -->
+			      <div class="col" style="text-align:center;padding-bottom:5%">
+			        <div class="row center">
+			          <span class="open_sans countPoints">{{award.Award.Name}}</span>
+			        </div>
+			        <div class="row center" style="padding-top:1%">
+			          <span class="descriptionAP">Premio al instante</span>
+			        </div>
+							<!-- Input Change -->
+				      <div class="row" style="padding-top:3%">
+				        <div id="GeneralPaddingCols0" class="col">
+				          <!-- Input Code Promotion -->
+				          <!-- The direct styles doesn't work good in css file -->
+				          <input class="inputCodeVerificationStyle" type="text" placeholder="Ingresa Código de Verificación" name="name" style="width:75%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;font-size:24px !important;color:#A7A9AC;height:41px;float:left" ng-model = 'code'>
+				          <!-- Go Button for the Code Promotion exchanged -->
+				          <button ng-click="openModal('{{award.AwardID}}',code,'{{award.id}}','{{award.IdCouponCode}}','{{award.IdUserAward}}')" type="button" name="button" class="codeVerificationButton">CANJEAR</button>
+				        </div>
+				      </div>
+			      </div>
+			    </div>
+			    <!-- Triangle And Available Gifts -->
+			    <div class="row containerTrianglePoints zigzagPoints"></div>
+			    <!-- Available Gifts Text -->
+			    <div class="row" style="padding-top:3%">
+			      <div class="col center">
+			        <span class="open_sans subTitles">Descripción</span>
+			      </div>
+			    </div>
+			    <!-- Description and Conditions -->
+					<div class="row">
+						<div class="col" style="text-align:justify">
+							<span class="termsAndConditionsText">{{award.PromotionDescription}}</span>
+						</div>
 					</div>
-				</div>
-				<!-- Available Gifts Text -->
-				<div class="row" style="padding-top:3%">
-					<div class="col center">
-						<span class="open_sans subTitles">Condiciones</span>
+					<!-- Available Gifts Text -->
+					<div class="row" style="padding-top:3%">
+						<div class="col center">
+							<span class="open_sans subTitles">Condiciones</span>
+						</div>
 					</div>
-				</div>
-				<!-- Description and Conditions -->
-				<div class="row">
-					<div class="col" style="text-align:justify">
-						<span class="termsAndConditionsText">{{award.ExchangePolicy}}</span>
+					<!-- Description and Conditions -->
+					<div class="row">
+						<div class="col" style="text-align:justify">
+							<span class="termsAndConditionsText">{{award.ExchangePolicy}}</span>
+						</div>
 					</div>
+					<br>
+					<!-- Bar Sub-Footer for Terms And Conditions href="#/app/termsAndConditionsOffers/{{promotion.$id}}" ng-if="promotion.TermsAndConditions"-->
+					<a class="row legalTermsLine styleRedirection" href="#/app/termsAndConditionsAwards/{{award.AwardID}}" ng-if="award.LegalTerms"style="position:absolute;bottom: 0px;">
+						<div class="LegalTerms verticalCenteredObjects col col-80" style="padding:0 !important">Términos Legales</div>
+						<div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
+					</a>
 				</div>
-				<br>
-				<!-- Bar Sub-Footer for Terms And Conditions href="#/app/termsAndConditionsOffers/{{promotion.$id}}" ng-if="promotion.TermsAndConditions"-->
-				<a class="row legalTermsLine styleRedirection" href="#/app/termsAndConditionsAwards/{{award.AwardID}}" ng-if="award.LegalTerms"style="position:absolute;bottom: 0px;">
-					<div class="LegalTerms verticalCenteredObjects col col-80" style="padding:0 !important">Términos Legales</div>
-					<div id="Terms" class="TermButton button icon ion-chevron-right col"></div>
-				</a>
 			</div>
 		</div>
   </ion-content>

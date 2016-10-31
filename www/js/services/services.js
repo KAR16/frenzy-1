@@ -69,7 +69,7 @@ app.factory('UserSave' ,function ($firebaseArray,$firebaseObject) {
   }
 });
 
-app.factory('Awards' ,function ($firebaseArray,Customer,User) {
+app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
   return {
     get : function () {
       var customer  = Customer;
@@ -87,11 +87,35 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User) {
                   promotion.Nombre = valCustomer.Name
                   user.map(function (valUser) {
                     if (valUser.$id == promotion.$id) {
+                      if (promotion.type == "directAward") {
+                        Object.keys(valUser).map(function (keyAward) {
+                          try {
+                            if (valUser[keyAward].AwardID != null && !valUser[keyAward].Status ) {
+                              crossPromotionArray.push({
+                                Nombre:promotion.Nombre,
+                                Logo:promotion.Logo,
+                                Type:promotion.type,
+                                Award:promotion.Award[valUser[keyAward].AwardID],
+                                AwardID:valUser[keyAward].AwardID,
+                                LegalTerms:promotion.LegalTerms,
+                                ExchangePolicy:promotion.ExchangePolicy,
+                                PromotionDescription:promotion.PromotionDescription,
+                                id:promotion.$id,
+                                IdCouponCode:keyAward
+                              })
+                            }
+                          } catch (e) {
+
+                          } finally {
+
+                          }
+                        })
+                      }
                       if (valUser.Award != undefined) {
                         Object.keys(valUser.Award).map(function(valAwardsUser) {
+                          console.log(valAwardsUser);
                            Object.keys(promotion.Award).map(function(valAwards) {
-                             if (valUser.Award[valAwardsUser].AwardID == valAwards && !valUser.Award[valAwardsUser].Status  ) {
-                               console.log(promotion);
+                             if (valUser.Award[valAwardsUser].AwardID == valAwards && !valUser.Award[valAwardsUser].Status) {
                                crossPromotionArray.push({
                                  Nombre:promotion.Nombre,
                                  Logo:promotion.Logo,
@@ -101,7 +125,8 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User) {
                                  LegalTerms:promotion.LegalTerms,
                                  ExchangePolicy:promotion.ExchangePolicy,
                                  PromotionDescription:promotion.PromotionDescription,
-                                 id:promotion.$id
+                                 id:promotion.$id,
+                                 IdUserAward: valAwardsUser
                                })
                              }
                            })
@@ -142,7 +167,6 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                   promotion.points = 0;
                   promotion.percentagePoints = (100 * promotion.points )/ promotion.MaxPoints
                   user.map(function (valUser) {
-                    console.log(valUser);
                     if (valUser.$id == promotion.$id) {
                      promotion.points = valUser.Points
                      promotion.percentagePoints = (100 * valUser.Points )/ promotion.MaxPoints
@@ -157,7 +181,6 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                        }
                     }
                   })
-                  console.log(promotion);
                 }
               })
             })
