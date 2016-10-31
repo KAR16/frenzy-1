@@ -113,7 +113,6 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
                       }
                       if (valUser.Award != undefined) {
                         Object.keys(valUser.Award).map(function(valAwardsUser) {
-                          console.log(valAwardsUser);
                            Object.keys(promotion.Award).map(function(valAwards) {
                              if (valUser.Award[valAwardsUser].AwardID == valAwards && !valUser.Award[valAwardsUser].Status) {
                                crossPromotionArray.push({

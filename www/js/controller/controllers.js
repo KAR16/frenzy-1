@@ -621,25 +621,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     codeval.$loaded().then(function () {
       if (codeval.type == "points") {
-        console.log("points");
-        console.log(codeval);
         AwardChange.$loaded().then(function () {
-          console.log(AwardChange);
           codeval.VerificationCodes.map(function(valueCodes) {
             if (valueCodes == code) {
-              console.log(valueCodes);
               $scope.valChange = true;
               $scope.FirstModals.show();
               AwardChange.map(function(valueAward) {
-
-                if (valueAward.AwardID == AwardID) {//
-                  console.log(valueAward);
+                if (valueAward.AwardID == AwardID) {
                   mixpanel.track("RedeemAward", {"AwardId": valueAward.AwardID});
                   var change = AwardChange.$ref()
                   var savechange = $firebaseObject(change.child(IdUserAward))
                   savechange.$loaded(function () {
-                    console.log(savechange);
-                    console.log(valueAward.$id);
                     savechange.FechaHoraCanjeo = actualHour;
                     savechange.Status = true;
                     savechange.CodigoCanjeoRedimido = code;
