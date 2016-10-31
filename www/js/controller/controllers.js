@@ -609,9 +609,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
    });
 
   $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
-    console.log(AwardID);
-    console.log(code);
-    console.log(id);
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
@@ -651,6 +648,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
             codeval.VerificationCodes.map(function(valueCodes) {
               if (valueCodes == code) {
+                mixpanel.track("RedeemAward", {"IdCouponCode": IdCouponCode});
                 $scope.valChangeDirectAward = true;
                 AwardDirecChange.$loaded().then(function () {
                   $scope.FirstModals.show();
