@@ -301,6 +301,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     var refuserArray = $firebaseArray(ref); ///firebaseArray firebaseObject /// j
     console.log(IdUsuario);
     // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER $ionicView.loaded	 *****
+    ///////////////////////////////////////////////////////////
+    var refUser = firebase.database().ref('Users/'+ IdUsuario)
+    $scope.VerifyArrayUser = $firebaseArray(refUser)
+    /////////////////////////////////////////////////////////
     $scope.userService = User;
     $scope.refCrossPromotion = firebase.database().ref('CrossPromotion')
     $scope.crossPromotion = $firebaseArray($scope.refCrossPromotion)
@@ -308,10 +312,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.user = firebase.auth().currentUser;
     $scope.coupon = firebase.database().ref('CouponCodes');
     $scope.couponArray  = $firebaseArray($scope.coupon);
-
-
-
-
     $scope.$on('$ionicView.enter', function() {
       /////////////////////////// tutorial True or false
       $scope.$parent.config = $firebaseObject(refs.child('config'));
@@ -325,80 +325,88 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
         mixpanel.track("ClickCrossPromotion", {"Code":code});
-
-        $scope.load =  $ionicLoading.show({
-          noBackdrop: true,
-          template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner>'
-        });
         $scope.ref = firebase.database().ref('CouponCodes/'+ code);
-        $scope.objCouponCode = $firebaseObject( $scope.ref);
-
-        refuserArray.$loaded().then(function () {
-          refuserObject.$loaded().then(function () {
-            var ids = $scope.objCouponCode.CrossPromotion;
-            if (refuserArray.$getRecord("CrossPromotion") == null) {
-              var NewObject = new Object;
-              NewObject[ids] = {Points:0,Status:true,"Award": {"dahgshdgaASDJjssjd": {"AwardID": "-KTLUFOTkCHBSUOBHCSL","FechaDeSolicitud":"","Status":true,"CodigoCanjeoRedimido":"","FechaHoraCanjeo":""}}}
-              refuserObject["CrossPromotion"] = NewObject;
-
-            }
-          })
-        }).then(function() {
-          $scope.couponArray.$loaded().then(function () {
-            var record =  $scope.couponArray.$getRecord(code);
-            if (record != null && !record.Status ) {
-              refuserObject.$save();
-              var actualHour = moment().tz("America/Guatemala").format('LLL');
-              $scope.objCouponCode.DateTimeExchange = actualHour;
-              $scope.objCouponCode.Status = true;
-              $scope.objCouponCode.UserId = IdUsuario;
-              $scope.objCouponCode.$save();
-              $scope.userService.$loaded().then(function () {
-              $scope.crossPromotion.$loaded().then(function () {
-                $scope.crossPromotion.map(function (promotion) {
-                  var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
-                  var objInfoCustomer = $firebaseObject(refInfoCustomer)
-                  Object.keys(promotion.Award).map(function (key) {
-                    $scope.userService.map(function (user) {
-                      if ( $scope.objCouponCode.AwardID == key ) {
-                        if (user.$id == promotion.$id) {
-                          objInfoCustomer.$loaded(function () {
-                            if (objInfoCustomer.$id == promotion.customer) {
-                              $scope.modalInfo.Name =  objInfoCustomer.Name
-                              $scope.modalInfo.Logo = objInfoCustomer.Logo
-                              $scope.modalInfo.Points = $scope.objCouponCode.CouponValue
-                              $ionicLoading.hide()
-                              $scope.SecondModal.show()
-                            }
-                          })
-                          var userInfoService = $scope.userService.$ref()
-                          var objUserInfoService = $firebaseObject(userInfoService)
-                          objUserInfoService.$loaded(function () {
-                            objUserInfoService[promotion.$id].Points +=  $scope.objCouponCode.CouponValue;
-                            if ( user.Points > promotion.MaxPoints) {
-                              objUserInfoService[promotion.$id].Points =  promotion.MaxPoints
-                              objUserInfoService.$save()
-                            }else{
-                              objUserInfoService.$save()
-                            }
-                            mixplane.track("RedeemCrossPromotion", {"CrossPromotionId": promotion.$id, "Points":objUserInfoService[promotion.$id].Points, "Type": "Points"});
-                          })
-                        }
+        $scope.objCouponCode = $firebaseObject($scope.ref);
+        $scope.couponArray.$loaded().then(function () {
+          var record =  $scope.couponArray.$getRecord(code);
+          if (record != null && !record.Status ) {
+            var actualHour = moment().tz("America/Guatemala").format('LLL');
+            $scope.objCouponCode.DateTimeExchange = actualHour;
+            $scope.objCouponCode.Status = true;
+            $scope.objCouponCode.UserId = IdUsuario;
+            $scope.objCouponCode.$save();
+            $scope.userService.$loaded().then(function () {
+              var userInfoService = $scope.userService.$ref()
+              var objUserInfoService = $firebaseObject(userInfoService)
+              var ids = $scope.objCouponCode.CrossPromotion;
+              var Crossinfo =  $firebaseObject($scope.refCrossPromotion.child(ids));
+              objUserInfoService.$loaded(function () {
+                Crossinfo.$loaded(function () {
+                  if ($scope.objCouponCode.type == "Points") {
+                    try {
+                      if (objUserInfoService[ids].Points == undefined) {}
+                    } catch (e) {
+                      if (e.message == "Cannot read property 'Points' of undefined") {
+                        objUserInfoService[ids] = {Points:0,Status:true,"Award": {"dahgshdgaASDJjssjd": {"AwardID": "-KTLUFOTkCHBSUOBHCSL","FechaDeSolicitud":"","Status":true,"CodigoCanjeoRedimido":"","FechaHoraCanjeo":""}}}
                       }
+                    } finally {
+                        mixpanel.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id, "Points":$scope.objCouponCode.CouponValue, "Type": "Points"});
+                        objUserInfoService[ids].Points +=  $scope.objCouponCode.CouponValue;
+                        if (objUserInfoService[ids].Points > Crossinfo.MaxPoints) {
+                          objUserInfoService[ids].Points =  Crossinfo.MaxPoints
+                          objUserInfoService.$save()
+                        }else{
+                          objUserInfoService.$save()
+                        }
+
+                    }
+                  }else if ($scope.objCouponCode.type == "directAward") {
+                    mixpanel.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id ,"Type": "directAward"});
+                    var newAwardObjet = $firebaseObject(objUserInfoService.$ref().child(ids))
+                    newAwardObjet.$loaded(function () {
+                      newAwardObjet[code] = {CodigoCanjeoRedimido:"",FechaHoraCanjeo:"",Status:false,AwardID:$scope.objCouponCode.AwardID}
+                      newAwardObjet.$save()
+                    })
+                  }
+                })
+              }).then(function() {
+                $scope.userService.$loaded().then(function () {
+                $scope.crossPromotion.$loaded().then(function () {
+                  $scope.crossPromotion.map(function (promotion) {
+                    var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
+                    var objInfoCustomer = $firebaseObject(refInfoCustomer)
+                    Object.keys(promotion.Award).map(function (key) {
+                      $scope.userService.map(function (user) {
+                        if ( $scope.objCouponCode.AwardID == key ) {
+                          if (user.$id == promotion.$id) {
+                            objInfoCustomer.$loaded(function () {
+                              if (objInfoCustomer.$id == promotion.customer) {
+                                $scope.modalInfo.Name =  objInfoCustomer.Name;
+                                $scope.modalInfo.Logo = objInfoCustomer.Logo;
+                                $scope.modalInfo.Points = $scope.objCouponCode.CouponValue;
+                                $scope.modalInfo.type = $scope.objCouponCode.type;
+                                $scope.modalInfo.NameAward = promotion.Award[$scope.objCouponCode.AwardID].Name;
+                                $scope.modalInfo.Photo = promotion.Award[$scope.objCouponCode.AwardID].Photo;
+                                $ionicLoading.hide();
+                                $scope.SecondModal.show() ;
+                              }
+                            })
+                          }
+                        }
+                      })
                     })
                   })
                 })
+                })
               })
-              })
-          }else{
-            sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-            mixpanel.track("ClickCrossPromotion", {"type":"Invalid Code"});
-            $ionicLoading.hide()
-          }
-        })
-        })
-
-    }
+             })
+        }else{
+          sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+          mixpanel.track("ClickCrossPromotion", {"type":"Invalid Code"});
+          $ionicLoading.hide()
+        }
+      })
+      }
       // Show Loading Icon
       $scope.loading = $ionicLoading.show({
           noBackdrop: true,
@@ -429,9 +437,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 //********************** termsAndConditions puntos     *****************************
 .controller('termsAndConditionsPointsCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
   // First Mini Tutorial html file. Ionic Modal
-  console.log($scope.dataPromotion);
-  console.log($scope.dataPromotion);
-  console.log($stateParams.idCondition);
+
   $scope.Name;
   $scope.dataPromotion.map(function(value) {
     if (value.$id == $stateParams.idCondition) {
@@ -457,9 +463,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   // First Mini Tutorial html file. Ionic Modal
   $scope.TutorialActives = {checked: Check};
   $scope.pushNotificationChange = function() {
-    console.log('Push Notification Change');
-    console.log($scope.TutorialActives.checked);
-    console.log($scope.$parent.dataT);
     Check = $scope.TutorialActives.checked
     $scope.$parent.dataT = {checked:$scope.TutorialActives.checked}
   };
@@ -574,6 +577,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   };
   $scope.$on('$ionicView.enter', function() {
     $scope.instantAdwards = Awards.get();
+    console.log("---------------------------------");
+    console.log($scope.instantAdwards);
+    console.log("---------------------------------");
     $scope.$parent.instantAdwardsDescription = $scope.instantAdwards;
     console.log($scope.instantAdwards);
     $scope.$parent.data = {
@@ -602,7 +608,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
      focusFirstInput: false
    });
 
-  $scope.openModal = function(AwardID,code,id) {
+  $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
@@ -611,36 +617,61 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     var actualHour = moment().tz("America/Guatemala").format('LLL');
 
     codeval.$loaded().then(function () {
-      AwardChange.$loaded().then(function () {
-        codeval.VerificationCodes.map(function(valueCodes) {
-          if (valueCodes == code) {
-            $scope.valChange = true;
-            $scope.FirstModals.show();
-            AwardChange.map(function(valueAward) {
-              if (valueAward.AwardID == AwardID) {
-                var change = AwardChange.$ref()
-                var savechange = $firebaseObject(change)
-                savechange.$loaded(function () {
-                  savechange[valueAward.$id].FechaHoraCanjeo = actualHour;
-                  savechange[valueAward.$id].Status = true;
-                  savechange[valueAward.$id].CodigoCanjeoRedimido = code;
-                  savechange.$save()
-                });
+      if (codeval.type == "points") {
+        AwardChange.$loaded().then(function () {
+          codeval.VerificationCodes.map(function(valueCodes) {
+            if (valueCodes == code) {
+              $scope.valChange = true;
+              $scope.FirstModals.show();
+              AwardChange.map(function(valueAward) {
+                if (valueAward.AwardID == AwardID) {
+                  mixpanel.track("RedeemAward", {"AwardId": valueAward.AwardID});
+                  var change = AwardChange.$ref()
+                  var savechange = $firebaseObject(change.child(IdUserAward))
+                  savechange.$loaded(function () {
+                    savechange.FechaHoraCanjeo = actualHour;
+                    savechange.Status = true;
+                    savechange.CodigoCanjeoRedimido = code;
+                    savechange.$save()
+                  });
+                }
+              })
+              //
+            }
+          })
+        }).then(function() {
+          if ($scope.valChange == false) {
+            sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+          }
+        });
+      }else if (codeval.type == "directAward") {
+        var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
+            codeval.VerificationCodes.map(function(valueCodes) {
+              if (valueCodes == code) {
+                mixpanel.track("RedeemAward", {"IdCouponCode": IdCouponCode});
+                $scope.valChangeDirectAward = true;
+                AwardDirecChange.$loaded().then(function () {
+                  $scope.FirstModals.show();
+                  AwardDirecChange.CodigoCanjeoRedimido = code
+                  AwardDirecChange.FechaHoraCanjeo = actualHour
+                  AwardDirecChange.Status = true;
+                  AwardDirecChange.$save();
+                }).then(function() {
+                  if ($scope.valChangeDirectAward == false) {
+                    sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+                  }
+                })
               }
             })
-            mixplane.track("RedeemAward", {"AwardId": valueAward.AwardID});
-          }
-        })
-      }).then(function() {
-        if ($scope.valChange == false) {
-          sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-        }
 
-      });
+      }
+    }).then(function() {
+
+
     });
     setTimeout(function(){
       $scope.closeModal();
-    }, 20000);
+    }, 5000);
   };
 
   $scope.closeModal = function() {
@@ -648,6 +679,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   };
 
   $scope.$on('$ionicView.enter', function() {
+    $scope.valChangeDirectAward = false
     $scope.valChange = false;
     $scope.$parent.data = {
         heading: '',
@@ -1471,8 +1503,7 @@ $scope.$on('$ionicView.enter', function() {
 
 }])
 /******************************************************/
-<<<<<<< HEAD
-.controller('toolsCtrl', ['$scope', '$state', function($scope, $state) {
+.controller('toolsCtrl', function($scope, $state, $firebaseObject) {
 
   var ref = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
   $scope.config = $firebaseObject(ref.child('config'));

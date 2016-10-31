@@ -28,13 +28,15 @@
             </div>
             <!-- You Win Points Cant -->
             <div class="row center" style="margin-top:5px">
-              <span style="color:blue;font-size:16px">+ {{modalInfo.Points}} Puntos</span>
+                <span style="color:blue;font-size:16px" ng-if='modalInfo.type == "Points"'>+ {{modalInfo.Points}} Puntos</span>
+                <span style="color:blue;font-size:16px" ng-if='modalInfo.type == "directAward"'>{{modalInfo.NameAward}} </span>
             </div>
           </div>
         </div>
         <!-- Star Image -->
         <div class="row" style="background-color:#FF5252;height:150px;margin-top:0;padding:0;border-radius: 0px 0px 4px 4px;">
-          <img style="width:100%;" src="img/stars.png" alt="starWin" />
+          <img style="width:100%;" src="img/stars.png" alt="starWin" ng-if='modalInfo.type == "Points"' />
+          <img style="width:100%;" src="{{modalInfo.Photo}}" alt="starWin" ng-if='modalInfo.type == "directAward"' />
         </div>
       </div>
     </div>
@@ -42,7 +44,9 @@
     <!-- Your Points has added -->
     <div class="row">
       <div class="col center">
-        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco">Tus Puntos fueron agregados en <br> {{modalInfo.Name}}.</span>
+        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco" ng-if='modalInfo.type == "Points"'>Tus Puntos fueron agregados en <br> {{modalInfo.Name}}.</span>
+        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco" ng-if='modalInfo.type == "directAward"'>Puedes ver lo que has ganado en premios</span>
+
       </div>
     </div>
   </ion-content>
