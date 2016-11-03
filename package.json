@@ -44,7 +44,8 @@
     "cordova-plugin-contacts@~2.2.0",
     "cordova-plugin-facebook4@~1.7.4",
     "cordova-plugin-inappbrowser@~1.5.0",
-    "cordova-plugin-mixpanel"
+    "cordova-plugin-mixpanel",
+    "cordova-plugin-mixpanel@~2.2.1"
   ],
   "cordovaPlatforms": []
 }

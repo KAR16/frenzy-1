@@ -52,7 +52,7 @@ gulp.task('git-check', function(done) {
   done();
 });
 gulp.task('ionic-hooks' , function () {
-   return run('ionic hooks add').exec()    
+   return run('ionic hooks add').exec()
 });
 gulp.task('ionic-android', ['ionic-hooks'], function() {
    return run('ionic platform add android').exec()
@@ -64,7 +64,7 @@ gulp.task('create-signing-propieties',['ionic-resources'], function(cb){
   //  Enter passphrase for keystore:
   var storePassword ='';
   //  Enter key password for mykey
-  var keyPassword = ''; 
+  var keyPassword = '';
   var config = 'storeFile=build/outputs/apk/my.keystore\nkeyAlias=mykey\nstorePassword=' + storePassword + '\nkeyPassword='+keyPassword ;
   fs.writeFile('platforms/android/release-signing.properties', config, cb);
 });
