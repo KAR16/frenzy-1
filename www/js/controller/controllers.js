@@ -375,9 +375,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                   $scope.crossPromotion.map(function (promotion) {
                     var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
                     var objInfoCustomer = $firebaseObject(refInfoCustomer)
-                  //  Object.keys(promotion.Award).map(function (key) {
+                    if ($scope.objCouponCode.type == "Points") { //directAward
                       $scope.userService.map(function (user) {
-                        //if ( $scope.objCouponCode.AwardID == key ) {
                           if (user.$id == promotion.$id) {
                             objInfoCustomer.$loaded(function () {
                               if (objInfoCustomer.$id == promotion.customer) {
@@ -385,16 +384,36 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                 $scope.modalInfo.Logo = objInfoCustomer.Logo;
                                 $scope.modalInfo.Points = $scope.objCouponCode.CouponValue;
                                 $scope.modalInfo.type = $scope.objCouponCode.type;
-                                // $scope.modalInfo.NameAward = promotion.Award[$scope.objCouponCode.AwardID].Name;
-                                // $scope.modalInfo.Photo = promotion.Award[$scope.objCouponCode.AwardID].Photo;
                                 $ionicLoading.hide();
                                 $scope.SecondModal.show() ;
                               }
                             })
                           }
-                      //  }
+
                       })
-                  ///  })//
+                    }else if ($scope.objCouponCode.type == "directAward") {
+                      Object.keys(promotion.Award).map(function (key) {
+                          $scope.userService.map(function (user) {
+                            if ( $scope.objCouponCode.AwardID == key ) {
+                              if (user.$id == promotion.$id) {
+                                objInfoCustomer.$loaded(function () {
+                                  if (objInfoCustomer.$id == promotion.customer) {
+                                    $scope.modalInfo.Name =  objInfoCustomer.Name;
+                                    $scope.modalInfo.Logo = objInfoCustomer.Logo;
+                                    $scope.modalInfo.Points = $scope.objCouponCode.CouponValue;
+                                    $scope.modalInfo.type = $scope.objCouponCode.type;
+                                    $scope.modalInfo.NameAward = promotion.Award[$scope.objCouponCode.AwardID].Name;
+                                    $scope.modalInfo.Photo = promotion.Award[$scope.objCouponCode.AwardID].Photo;
+                                    $ionicLoading.hide();
+                                    $scope.SecondModal.show() ;
+                                  }
+                                })
+                              }
+                            }
+                          })
+                      })   //
+                    }
+
                   })
                 })
                 })

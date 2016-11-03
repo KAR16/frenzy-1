@@ -24,7 +24,6 @@
     </feature>
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="onesignal-cordova-plugin" spec="~1.13.1" />
-    <plugin name="com.cordova.plugins.sms" spec="~0.1.10" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="cordova-plugin-device-orientation" spec="~1.0.4" />
     <plugin name="cordova-plugin-device" spec="~1.1.2" />
