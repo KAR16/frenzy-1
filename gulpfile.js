@@ -52,7 +52,7 @@ gulp.task('git-check', function(done) {
   done();
 });
 gulp.task('ionic-hooks' , function () {
-   return run('ionic hooks add').exec()    
+   return run('ionic hooks add').exec()
 });
 gulp.task('ionic-android', ['ionic-hooks'], function() {
    return run('ionic platform add android').exec()
@@ -62,9 +62,9 @@ gulp.task('ionic-resources' , ['ionic-android'],function () {
 });
 gulp.task('create-signing-propieties',['ionic-resources'], function(cb){
   //  Enter passphrase for keystore:
-  var storePassword ='';
+  var storePassword ='5*7S:?}t&Tp=TAM=';
   //  Enter key password for mykey
-  var keyPassword = ''; 
+  var keyPassword = '7iJ_$T_H^zPaZ1ji';
   var config = 'storeFile=build/outputs/apk/my.keystore\nkeyAlias=mykey\nstorePassword=' + storePassword + '\nkeyPassword='+keyPassword ;
   fs.writeFile('platforms/android/release-signing.properties', config, cb);
 });
@@ -72,8 +72,8 @@ gulp.task('cordova-build', ['create-signing-propieties'],function () {
   return run ('cordova build -release android').exec();
 });
 gulp.task('zipalign' ,['cordova-build'],function () {
-  var pathZipalign = '';
-  var pathApk = '';
+  var pathZipalign = '/home/oscar/android-sdk-linux/build-tools/24.0.3/zipalign';
+  var pathApk = '/home/oscar/Desktop/frenzy/platforms/android/build/outputs/apk';
   return run(pathZipalign + ' -v 4 ' + pathApk + '/android-release-unaligned.apk frenzy.apk' ).exec();
 });
 gulp.task('deploy-android', ['ionic-hooks', 'ionic-android','ionic-resources','create-signing-propieties','cordova-build','zipalign']);

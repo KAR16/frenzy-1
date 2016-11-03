@@ -959,7 +959,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
+.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
 
 
   $ionicPopover.fromTemplateUrl('templates/popover2.html', {
@@ -1041,7 +1041,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             window.open = cordova.InAppBrowser.open(url, '_blank', options);
         }
     };
+    // *********** Share Facebook Function ********
+    $scope.share = function(image , name ,description ){
+      facebookConnectPlugin.showDialog({
+        method: "feed",
+        link: "http://www.frenzy.com.gt",
+        description: description,
+        caption: name,
+        picture: image
+      }, function(success) { }, function(error) { });
 
+    }
     $scope.showCouponDescription = function(id) {
         var QuantityExchangedSuma = 0;
         mainApp.database().ref('Coupon').once('value', function(snapshot) {
