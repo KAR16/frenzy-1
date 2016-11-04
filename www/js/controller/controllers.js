@@ -310,8 +310,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.crossPromotion = $firebaseArray($scope.refCrossPromotion)
     $scope.refCustomer = secondaryApp.database().ref('Customer')
     $scope.user = firebase.auth().currentUser;
-    $scope.coupon = firebase.database().ref('CouponCodes');
-    $scope.couponArray  = $firebaseArray($scope.coupon);
     $scope.$on('$ionicView.enter', function() {
       /////////////////////////// tutorial True or false
       $scope.$parent.config = $firebaseObject(refs.child('config'));
@@ -327,9 +325,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         mixpanel.track("ClickCrossPromotion", {"Code":code});
         $scope.ref = firebase.database().ref('CouponCodes/'+ code);
         $scope.objCouponCode = $firebaseObject($scope.ref);
-        $scope.couponArray.$loaded().then(function () {
-          var record =  $scope.couponArray.$getRecord(code);
-          if (record != null && !record.Status ) {
+        $scope.Valdiacion = $firebaseArray($scope.ref);
+        $scope.objCouponCode.$loaded().then(function () {
+          console.log($scope.Valdiacion);
+          console.log($scope.Valdiacion.$indexFor('Status'));
+          var valCode =  $scope.Valdiacion.$indexFor('Status');
+          if (valCode != -1 && $scope.Valdiacion[valCode].$value == false) {
+            console.log("si se puede cambiar la promocion");
+            console.log($scope.Valdiacion[valCode].$value);
             var actualHour = moment().tz("America/Guatemala").format('LLL');
             $scope.objCouponCode.DateTimeExchange = actualHour;
             $scope.objCouponCode.Status = true;
