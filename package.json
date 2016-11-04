@@ -27,7 +27,6 @@
     "org.apache.cordova.device-orientation",
     "cordova-plugin-contacts",
     "cordova-plugin-whitelist@~1.0.0",
-    "cordova-sms-plugin",
     "onesignal-cordova-plugin",
     "cordova-plugin-statusbar",
     "cordova-plugin-facebook4",
