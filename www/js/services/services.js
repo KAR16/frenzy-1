@@ -83,6 +83,7 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
             crossPromotion.map(function (promotion) {
               customer.map(function (valCustomer) {
                 if (valCustomer.$id == promotion.customer) {
+                  console.log(promotion);
                   promotion.Logo = valCustomer.Logo
                   promotion.Nombre = valCustomer.Name
                   user.map(function (valUser) {
@@ -153,13 +154,15 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
       var user = User
       var cross = firebase.database().ref("CrossPromotion");
       var crossPromotion = $firebaseArray(cross);
-      var crossPromotionArray = []
+      var crossPromotionArrayss = []
       user.$loaded().then(function () {
         crossPromotion.$loaded().then(function() {
           customer.$loaded().then(function () {
             crossPromotion.map(function (promotion) {
               customer.map(function (valCustomer) {
-                if (valCustomer.$id == promotion.customer) {
+                if (valCustomer.$id == promotion.customer && promotion.Status == true && promotion.type == 'points') {
+                  console.log(promotion);
+                  console.log(crossPromotionArrayss);
                   promotion.Logo = valCustomer.Logo
                   promotion.Nombre = valCustomer.Name
                   promotion.countPromotion = Object.keys(promotion.Award).length;
@@ -179,6 +182,7 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
                            promotion.points = 0
                        }
                     }
+                  //  crossPromotionArrayss.push(promotion)
                   })
                 }
               })

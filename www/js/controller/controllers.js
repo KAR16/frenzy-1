@@ -335,7 +335,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             console.log($scope.Valdiacion[valCode].$value);
             var actualHour = moment().tz("America/Guatemala").format('LLL');
             $scope.objCouponCode.DateTimeExchange = actualHour;
-            $scope.objCouponCode.Status = true;
+            $scope.objCouponCode.Status = false;
             $scope.objCouponCode.UserId = IdUsuario;
             $scope.objCouponCode.$save();
             $scope.userService.$loaded().then(function () {
@@ -364,10 +364,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
                     }
                   }else if ($scope.objCouponCode.type == "directAward") {
+                    console.log("-----------------directAward------------------");
+                    console.log($scope.objCouponCode);
+                    console.log(ids);
                     mixpanel.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id ,"Type": "directAward"});
                     var newAwardObjet = $firebaseObject(objUserInfoService.$ref().child(ids))
                     newAwardObjet.$loaded(function () {
+                      console.log(newAwardObjet);
                       newAwardObjet[code] = {CodigoCanjeoRedimido:"",FechaHoraCanjeo:"",Status:false,AwardID:$scope.objCouponCode.AwardID}
+                      console.log(newAwardObjet);
                       newAwardObjet.$save()
                     })
                   }
