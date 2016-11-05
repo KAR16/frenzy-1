@@ -327,15 +327,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.objCouponCode = $firebaseObject($scope.ref);
         $scope.Valdiacion = $firebaseArray($scope.ref);
         $scope.objCouponCode.$loaded().then(function () {
-          console.log($scope.Valdiacion);
-          console.log($scope.Valdiacion.$indexFor('Status'));
           var valCode =  $scope.Valdiacion.$indexFor('Status');
           if (valCode != -1 && $scope.Valdiacion[valCode].$value == false) {
-            console.log("si se puede cambiar la promocion");
-            console.log($scope.Valdiacion[valCode].$value);
             var actualHour = moment().tz("America/Guatemala").format('LLL');
             $scope.objCouponCode.DateTimeExchange = actualHour;
-            $scope.objCouponCode.Status = false;
+            $scope.objCouponCode.Status = true;
             $scope.objCouponCode.UserId = IdUsuario;
             $scope.objCouponCode.$save();
             $scope.userService.$loaded().then(function () {
@@ -357,51 +353,35 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                         objUserInfoService[ids].Points +=  $scope.objCouponCode.CouponValue;
                         if (objUserInfoService[ids].Points > Crossinfo.MaxPoints) {
                           objUserInfoService[ids].Points =  Crossinfo.MaxPoints
-                          console.log(objUserInfoService);
                           objUserInfoService.$save()
                         }else{
-                          console.log(objUserInfoService);
                           objUserInfoService.$save()
                         }
 
                     }
                   }else if ($scope.objCouponCode.type == "directAward") {
-                    console.log("-----------------directAward------------------");
-                    console.log($scope.objCouponCode);
-                    console.log(ids);
                     mixpanel.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id ,"Type": "directAward"});
                     var newAwardObjet = $firebaseObject(objUserInfoService.$ref().child(ids))
                     newAwardObjet.$loaded(function () {
-                      console.log(newAwardObjet);
-                      newAwardObjet[code] = {CodigoCanjeoRedimido:"",FechaHoraCanjeo:"",Status:false,AwardID:$scope.objCouponCode.AwardID}
+                      if ($scope.objCouponCode.thanksParticipation == true) {
+                          newAwardObjet[code] = {CodigoCanjeoRedimido:actualHour,FechaHoraCanjeo:actualHour,Status:true,AwardID:$scope.objCouponCode.AwardID}
+                      }else {
+                        newAwardObjet[code] = {CodigoCanjeoRedimido:"",FechaHoraCanjeo:actualHour,Status:false,AwardID:$scope.objCouponCode.AwardID}
+                      }
+
                       console.log(newAwardObjet);
                       newAwardObjet.$save()
                     })
                   }
                 })
               }).then(function() {
-                console.log("******************************************");
-                console.log($scope.objCouponCode);
-                console.log("******************************************");
                 $scope.userService.$loaded().then(function () {
                 $scope.crossPromotion.$loaded().then(function () {
-                  console.log("******************************************");
-                  console.log($scope.crossPromotion);
-                  console.log("******************************************");
                   $scope.crossPromotion.map(function (promotion) {
                     var refInfoCustomer =  $scope.refCustomer.child(promotion.customer)
                     var objInfoCustomer = $firebaseObject(refInfoCustomer)
                     if ($scope.objCouponCode.type == "Points") { //directAward
-                      console.log($scope.objCouponCode.type);
-                      // $scope.userService.map(function (user) {
-                        console.log("----------------id----------------------------");
-                        // console.log(user.$id);
                           if (ids == promotion.$id) {
-                            console.log("------------------------------");
-                            // console.log(user.$id);
-                            console.log(promotion.$id);
-                            console.log(promotion);
-                            console.log(ids);
                             objInfoCustomer.$loaded(function () {
                               if (objInfoCustomer.$id == promotion.customer) {
                                 $scope.modalInfo.Name =  objInfoCustomer.Name;
@@ -416,17 +396,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             })
                           }
 
-                      // })
+                      
                     }else if ($scope.objCouponCode.type == "directAward") {
-                      console.log("-------------------------------directAward------------------------------------");
                       Object.keys(promotion.Award).map(function (key) {
-                          // $scope.userService.map(function (user) {
+
                             if ( $scope.objCouponCode.AwardID == key ) {
                               if (ids == promotion.$id) {
                                 objInfoCustomer.$loaded(function () {
                                   if (objInfoCustomer.$id == promotion.customer) {
-                                    console.log(objInfoCustomer);
-                                    console.log(promotion.Award[$scope.objCouponCode.AwardID].Name);
                                     $scope.modalInfo.Name =  objInfoCustomer.Name;
                                     $scope.modalInfo.Logo = objInfoCustomer.Logo;
                                     $scope.modalInfo.Points = $scope.objCouponCode.CouponValue;
@@ -441,7 +418,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                 })
                               }
                             }
-                          // })
+
                       })   //
                     }
 

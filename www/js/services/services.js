@@ -161,8 +161,6 @@ app.factory('CrossPromotionAcumulatePoints', ['$firebaseArray' , 'Customer' , 'U
             crossPromotion.map(function (promotion) {
               customer.map(function (valCustomer) {
                 if (valCustomer.$id == promotion.customer && promotion.Status == true && promotion.type == 'points') {
-                  console.log(promotion);
-                  console.log(crossPromotionArrayss);
                   promotion.Logo = valCustomer.Logo
                   promotion.Nombre = valCustomer.Name
                   promotion.countPromotion = Object.keys(promotion.Award).length;
