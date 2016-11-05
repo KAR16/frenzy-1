@@ -14,7 +14,7 @@
     </div>
 		<!-- Customer Points Container -->
 		<div class="row rowForCustomerAward" ng-repeat= 'point in crossPromotion'>
-			<a class="styleRedirection" href="#/app/pointsDescription/{{point.$id}}">
+			<a class="styleRedirection" href="#/app/pointsDescription/{{point.$id}}" ng-if = "point.type == 'points' && point.Status == true">
 				<div class="col whiteAwardContainer" style="">
 					<!-- Logo With Name and Count of Gift for Exchange -->
 					<div class="row customerAwardDescriptionContainer">
