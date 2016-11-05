@@ -10,6 +10,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .run(function($ionicPlatform, $rootScope) {
 
 		$ionicPlatform.ready(function() {
+			// Hide StatusBar Android Platform
+			if (ionic.Platform.isAndroid()) {
+				window.addEventListener("native.hidekeyboard", function () {
+					//show stuff on keyboard hide
+					StatusBar.hide();
+					window.AndroidFullScreen.immersiveMode(false, false);
+				});
+			}
 
 			ionic.Platform.fullScreen();
 			if (window.StatusBar) {
