@@ -11,6 +11,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
 		$ionicPlatform.ready(function() {
 
+			ionic.Platform.fullScreen();
+			if (window.StatusBar) {
+				return StatusBar.hide();
+			}
+
 			// StatusBar.hide();
 			if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
 				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
