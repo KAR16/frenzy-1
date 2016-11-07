@@ -1661,13 +1661,16 @@ $scope.$on('$ionicView.enter', function() {
                                     });
 
                                     $state.go('app.playlists');
+
                                 }, function(error) {
                                     // error
                                 });
                         }, function(error) {
                             // error
+                        }).then(function () {
+                          $ionicLoading.hide();
+
                         });
-                    $ionicLoading.hide();
                   }
               //
               try {
