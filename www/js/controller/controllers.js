@@ -1670,10 +1670,15 @@ $scope.$on('$ionicView.enter', function() {
                     $ionicLoading.hide();
                   }
               //
-              if(!user.config.analyticsAlias) {
+              try {
+                
+                if(!user.config.analyticsAlias) {
                   mixpanel.alias(firebase.auth().currentUser.uid);
                   user.config.analyticsAlias = true;
                   user.$save();
+                }
+              } catch (e) {
+
               }
             });
     };
