@@ -1630,8 +1630,8 @@ $scope.$on('$ionicView.enter', function() {
                     }
                 });
             }).then(function() {
-              var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
-              var user = $firebaseObject(ref);
+              // var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
+              // var user = $firebaseObject(ref);
 
               if(!user.IdFacebook) {
 
@@ -1671,7 +1671,7 @@ $scope.$on('$ionicView.enter', function() {
                   }
               //
               try {
-                
+
                 if(!user.config.analyticsAlias) {
                   mixpanel.alias(firebase.auth().currentUser.uid);
                   user.config.analyticsAlias = true;
