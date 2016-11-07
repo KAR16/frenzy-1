@@ -384,6 +384,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                           if (ids == promotion.$id) {
                             objInfoCustomer.$loaded(function () {
                               if (objInfoCustomer.$id == promotion.customer) {
+                                console.log($scope.objCouponCode);
                                 $scope.modalInfo.Name =  objInfoCustomer.Name;
                                 $scope.modalInfo.Logo = objInfoCustomer.Logo;
                                 $scope.modalInfo.Points = $scope.objCouponCode.CouponValue;
@@ -396,10 +397,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             })
                           }
 
-                      
+
                     }else if ($scope.objCouponCode.type == "directAward") {
                       Object.keys(promotion.Award).map(function (key) {
-
+                          console.log($scope.objCouponCode.thanksParticipation);
                             if ( $scope.objCouponCode.AwardID == key ) {
                               if (ids == promotion.$id) {
                                 objInfoCustomer.$loaded(function () {
@@ -410,6 +411,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                     $scope.modalInfo.type = $scope.objCouponCode.type;
                                     $scope.modalInfo.NameAward = promotion.Award[$scope.objCouponCode.AwardID].Name;
                                     $scope.modalInfo.Photo = promotion.Award[$scope.objCouponCode.AwardID].Photo;
+                                    $scope.modalInfo.thanksParticipation = $scope.objCouponCode.thanksParticipation
                                     $ionicLoading.hide();
                                     $scope.SecondModal.show();
                                     $("#inputCodePromotionStyle").val("");
@@ -698,7 +700,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
     setTimeout(function(){
       $scope.closeModal();
-    }, 5000);
+    }, 20000);
   };
 
   $scope.closeModal = function() {
