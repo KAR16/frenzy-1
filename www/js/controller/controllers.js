@@ -254,14 +254,19 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     } else if (user.Parse == undefined) {
                         $scope.VerifyEmail();
                     }
-                    // Check if user has already been passed to new Mixpanel ID.
-                    if(!user.config.analyticsAlias) {
-                        mixpanel.alias(firebase.auth().currentUser.uid);
-                        user.config.analyticsAlias = true;
-                        user.$save();
-                    } else {
-                      mixpanel.identify(firebase.auth().currentUser.uid);
+                    // // Check if user has already been passed to new Mixpanel ID.
+                    try {
+                      if(!user.config.analyticsAlias) {
+                          mixpanel.alias(firebase.auth().currentUser.uid);
+                          user.config.analyticsAlias = true;
+                          user.$save();
+                      } else {
+                        mixpanel.identify(firebase.auth().currentUser.uid);
+                      }
+                    } catch (e) {
+
                     }
+
 
                 }
             })
