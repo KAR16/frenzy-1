@@ -1630,8 +1630,8 @@ $scope.$on('$ionicView.enter', function() {
                     }
                 });
             }).then(function() {
-              // var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
-              // var user = $firebaseObject(ref);
+              var ref = firebase.database().ref('Users/' +  UserUID);
+              var user = $firebaseObject(ref);
 
               if(!user.IdFacebook) {
 
@@ -1640,7 +1640,7 @@ $scope.$on('$ionicView.enter', function() {
                             $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
                                 .then(function(success) {
 
-                                    mixpanel.identify(firebase.auth().currentUser.uid);
+                                    mixpanel.identify(UserUID);
                                     mixpanel.people.set({
                                         "$email": success.email,
                                         "$gender": success.gender,
