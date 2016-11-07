@@ -1659,7 +1659,7 @@ $scope.$on('$ionicView.enter', function() {
                                         Hometown: success.hometown,
                                         IdFacebook: success.id
                                     });
-
+                                    $ionicLoading.hide();
                                     $state.go('app.playlists');
 
                                 }, function(error) {
@@ -1667,10 +1667,8 @@ $scope.$on('$ionicView.enter', function() {
                                 });
                         }, function(error) {
                             // error
-                        }).then(function () {
-                          $ionicLoading.hide();
-
                         });
+                  //  $ionicLoading.hide();
                   }
               //
               try {
