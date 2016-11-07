@@ -1634,7 +1634,8 @@ $scope.$on('$ionicView.enter', function() {
               var user = $firebaseObject(ref);
 
               if(!user.IdFacebook) {
-
+                console.log("hola");
+                 $timeout(function () {
                     $cordovaFacebook.getLoginStatus()
                         .then(function(success) {
                             $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
@@ -1668,7 +1669,8 @@ $scope.$on('$ionicView.enter', function() {
                         }, function(error) {
                             // error
                         });
-                  //  $ionicLoading.hide();
+                    //$ionicLoading.hide();
+                   }, 2000);
                   }
               //
               try {
@@ -1681,6 +1683,7 @@ $scope.$on('$ionicView.enter', function() {
               } catch (e) {
 
               }
+
             });
     };
 });
