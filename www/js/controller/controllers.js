@@ -493,8 +493,20 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 })
 //********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User) {
+.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User,requestStore) {
   // First Mini Tutorial html file. Ionic Modal
+  $scope.requestStore = requestStore ;
+  $scope.sendBrand = function (brand) {
+    var actualHour = moment().tz("America/Guatemala").format('LLL');
+    $scope.requestStore.$add({
+        brand   : brand.toLowerCase() ,
+        addDate : actualHour,
+        userId  : IdUsuario
+    }).then(function () {
+
+    })
+    $scope.brand = '' ; 
+  }
   $scope.TutorialActives = {checked: Check};
   $scope.pushNotificationChange = function() {
     Check = $scope.TutorialActives.checked
@@ -1086,6 +1098,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }, function(success) { }, function(error) { });
 
     }
+    // ******** Share whatsapp ******
+    $scope.shareViaWhatsApp = function (image,name,description) {
+      $cordovaSocialSharing
+      .share(name, description, null, image) // Share via native share sheet
+      .then(function(result) {
+        // Success!
+      }, function(err) {
+        // An error occured. Show a message to the user
+      });
+
+    }
     $scope.showCouponDescription = function(id) {
         var QuantityExchangedSuma = 0;
         mainApp.database().ref('Coupon').once('value', function(snapshot) {
@@ -1640,18 +1663,17 @@ $scope.$on('$ionicView.enter', function() {
                     }
                 });
             }).then(function() {
-              var ref = firebase.database().ref('Users/' +  UserUID);
+              var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
               var user = $firebaseObject(ref);
 
               if(!user.IdFacebook) {
-                console.log("hola");
-                 $timeout(function () {
+
                     $cordovaFacebook.getLoginStatus()
                         .then(function(success) {
                             $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
                                 .then(function(success) {
 
-                                    mixpanel.identify(UserUID);
+                                    mixpanel.identify(firebase.auth().currentUser.uid);
                                     mixpanel.people.set({
                                         "$email": success.email,
                                         "$gender": success.gender,
@@ -1670,30 +1692,22 @@ $scope.$on('$ionicView.enter', function() {
                                         Hometown: success.hometown,
                                         IdFacebook: success.id
                                     });
-                                    $ionicLoading.hide();
-                                    $state.go('app.playlists');
 
+                                    $state.go('app.playlists');
                                 }, function(error) {
                                     // error
                                 });
                         }, function(error) {
                             // error
                         });
-                    //$ionicLoading.hide();
-                   }, 2000);
+                    $ionicLoading.hide();
                   }
               //
-              try {
-
-                if(!user.config.analyticsAlias) {
+              if(!user.config.analyticsAlias) {
                   mixpanel.alias(firebase.auth().currentUser.uid);
                   user.config.analyticsAlias = true;
                   user.$save();
-                }
-              } catch (e) {
-
               }
-
             });
     };
 });

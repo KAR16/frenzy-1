@@ -205,7 +205,10 @@ app.factory('pointsDescripcion',function () {
     }
   }
 });
-
+app.factory('requestStore',function ($firebaseArray) {
+  var ref = firebase.database().ref('RequestStore');
+  return $firebaseArray(ref);
+})
 app.filter('removeDashes', function() {
   return function(input) {
     input = input || "";
