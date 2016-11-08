@@ -1640,17 +1640,18 @@ $scope.$on('$ionicView.enter', function() {
                     }
                 });
             }).then(function() {
-              var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
+              var ref = firebase.database().ref('Users/' +  UserUID);
               var user = $firebaseObject(ref);
 
               if(!user.IdFacebook) {
-
+                console.log("hola");
+                 $timeout(function () {
                     $cordovaFacebook.getLoginStatus()
                         .then(function(success) {
                             $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
                                 .then(function(success) {
 
-                                    mixpanel.identify(firebase.auth().currentUser.uid);
+                                    mixpanel.identify(UserUID);
                                     mixpanel.people.set({
                                         "$email": success.email,
                                         "$gender": success.gender,
@@ -1669,22 +1670,30 @@ $scope.$on('$ionicView.enter', function() {
                                         Hometown: success.hometown,
                                         IdFacebook: success.id
                                     });
-
+                                    $ionicLoading.hide();
                                     $state.go('app.playlists');
+
                                 }, function(error) {
                                     // error
                                 });
                         }, function(error) {
                             // error
                         });
-                    $ionicLoading.hide();
+                    //$ionicLoading.hide();
+                   }, 2000);
                   }
               //
-              if(!user.config.analyticsAlias) {
+              try {
+
+                if(!user.config.analyticsAlias) {
                   mixpanel.alias(firebase.auth().currentUser.uid);
                   user.config.analyticsAlias = true;
                   user.$save();
+                }
+              } catch (e) {
+
               }
+
             });
     };
 });
