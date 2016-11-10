@@ -505,7 +505,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }).then(function () {
 
     })
-    $scope.brand = '' ; 
+    $scope.brand = '' ;
   }
   $scope.TutorialActives = {checked: Check};
   $scope.pushNotificationChange = function() {
@@ -1605,109 +1605,112 @@ $scope.$on('$ionicView.enter', function() {
   });
 })
     /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
-
 .controller('loginCtrlFacebook', function($scope, $state, $cordovaFacebook, $q, $ionicLoading, $timeout, $firebaseObject) {
 
-    // This method is to get the user profile info from the facebook api
-    var getFacebookProfileInfo = function(authResponse) {
-        var info = $q.defer();
+        // This method is to get the user profile info from the facebook api
+        var getFacebookProfileInfo = function(authResponse) {
+            var info = $q.defer();
 
-        facebookConnectPlugin.api('/me?fields=email,name&access_token=' + authResponse.accessToken, null,
-            function(response) {
-                info.resolve(response);
-            },
-            function(response) {
-                info.reject(response);
-            }
-        );
-        return info.promise;
-    };
-
-    ///////////////////
-
-    //===============LOGIN WITH FB==========//
-    $scope.loginfb = function() {
-        mixpanel.track("LoginClick", {
-            "loginButton": "Facebook"
-        });
-        $ionicLoading.show({
-            noBackdrop: true,
-            template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
-        });
-        var UserUID;
-        $cordovaFacebook.login(["public_profile", "user_birthday", "email", "user_hometown"])
-            .then(function(success) {
-
-                var credential = firebase.auth.FacebookAuthProvider.credential(success.authResponse.accessToken);
-                mainApp.auth().signInWithCredential(credential).catch(function(error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    // The email of the user's account used.
-                    var email = error.email;
-                    // The firebase.auth.AuthCredential type that was used.
-                    var credential = error.credential;
-                    // ...
-                });
-
-            }, function(error) {
-                //alert(error)
-                // error
-            }).then(function() {
-
-                mainApp.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        // User is signed in.
-                        UserUID = user.providerData[0].uid;
-
-                    }
-                });
-            }).then(function() {
-              var ref = firebase.database().ref('User/' +  firebase.auth().currentUser.uid);
-              var user = $firebaseObject(ref);
-
-              if(!user.IdFacebook) {
-
-                    $cordovaFacebook.getLoginStatus()
-                        .then(function(success) {
-                            $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
-                                .then(function(success) {
-
-                                    mixpanel.identify(firebase.auth().currentUser.uid);
-                                    mixpanel.people.set({
-                                        "$email": success.email,
-                                        "$gender": success.gender,
-                                        "$birthday": success.birthday,
-                                        "$name": success.name,
-                                        "$typeLogin": "Facebook"
-
-                                    });
-                                    IdUsuario = UserUID;
-                                    IdGender = success.gender;
-                                    mainApp.database().ref('Users/' + UserUID).update({
-                                        Username: success.name,
-                                        Email: success.email,
-                                        Gender: success.gender,
-                                        Birthday: success.birthday,
-                                        Hometown: success.hometown,
-                                        IdFacebook: success.id
-                                    });
-
-                                    $state.go('app.playlists');
-                                }, function(error) {
-                                    // error
-                                });
-                        }, function(error) {
-                            // error
-                        });
-                    $ionicLoading.hide();
-                  }
-              //
-              if(!user.config.analyticsAlias) {
-                  mixpanel.alias(firebase.auth().currentUser.uid);
-                  user.config.analyticsAlias = true;
-                  user.$save();
-              }
+            facebookConnectPlugin.api('/me?fields=email,name&access_token=' + authResponse.accessToken, null,
+                function(response) {
+                    info.resolve(response);
+                },
+                function(response) {
+                    info.reject(response);
+                }
+            );
+            return info.promise;
+        };
+        //===============LOGIN WITH FB==========//
+        $scope.loginfb = function() {
+            mixpanel.track("LoginClick", {
+                "loginButton": "Facebook"
             });
-    };
-});
+            $ionicLoading.show({
+                noBackdrop: true,
+                template: '<ion-spinner customer1lass="spinner" icon="lines" style="stroke: #00BAB9; fill: #00BAB9;"></ion-spinner> <p style = "color:white">Cargando...</p>'
+            });
+            var UserUID;
+            $cordovaFacebook.login(["public_profile", "user_birthday", "email", "user_hometown"])
+                .then(function(success) {
+
+                    var credential = firebase.auth.FacebookAuthProvider.credential(success.authResponse.accessToken);
+                    mainApp.auth().signInWithCredential(credential).catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        // ...
+                    });
+
+                }, function(error) {
+                    //alert(error)
+                    // error
+                }).then(function() {
+
+                    mainApp.auth().onAuthStateChanged(function(user) {
+                        if (user) {
+                            // User is signed in.
+                            UserUID = user.providerData[0].uid;
+
+                        }
+                    });
+                }).then(function() {
+                  var ref = firebase.database().ref('Users/' +  UserUID);
+                  var user = $firebaseObject(ref);
+                  if(!user.IdFacebook) {
+                    console.log("hola");
+                     $timeout(function () {
+                        $cordovaFacebook.getLoginStatus()
+                            .then(function(success) {
+                                $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
+                                    .then(function(success) {
+
+                                        mixpanel.identify(UserUID);
+                                        mixpanel.people.set({
+                                            "$email": success.email,
+                                            "$gender": success.gender,
+                                            "$birthday": success.birthday,
+                                            "$name": success.name,
+                                            "$typeLogin": "Facebook"
+
+                                        });
+                                        IdUsuario = UserUID;
+                                        IdGender = success.gender;
+                                        mainApp.database().ref('Users/' + UserUID).update({
+                                            Username: success.name,
+                                            Email: success.email,
+                                            Gender: success.gender,
+                                            Birthday: success.birthday,
+                                            Hometown: success.hometown,
+                                            IdFacebook: success.id
+                                        });
+                                        $ionicLoading.hide();
+                                        $state.go('app.playlists');
+
+                                    }, function(error) {
+                                        // error
+                                    });
+                            }, function(error) {
+                                // error
+                            });
+                        //$ionicLoading.hide();
+                       }, 2000);
+                      }
+                  try {
+
+                    if(!user.config.analyticsAlias) {
+                      mixpanel.alias(firebase.auth().currentUser.uid);
+                      user.config.analyticsAlias = true;
+                      user.$save();
+                    }
+                  } catch (e) {
+
+                  }
+
+                });
+        };
+    });
