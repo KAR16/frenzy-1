@@ -1,4 +1,4 @@
-// ********* MODULE STARTER *********
+// ********* MODULE STARTER **********
 var app = angular.module('starter.services', []);
 
 app.factory('Auth', ['$firebaseAuth',
