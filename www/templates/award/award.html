@@ -62,7 +62,7 @@
           <!-- See More Container -->
           <div class="row secondAwardBar">
             <div class="col col-90 verticalCenteredObjects">
-              <span class="seeMoreText" ng-click="openModal('{{award.AwardID}}')">CANJEAR</span>
+              <span class="seeMoreText" ng-click='openModal("{{award.AwardID}}","{{award.Nombre}}")'>CANJEAR</span>
             </div>
             <div class="col spacingTop5">
               <span class="home shareAwardIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">O</span>
@@ -95,7 +95,7 @@
                 <br>
                 <div class="row">
                   <div class="col center">
-                    <span class="" style="font-size:18px;color:#263147;font-weight:bolder;text-align:center">Pide el Código de Verificación en cualquier establecimiento <br/> Domino's Pizza</span>
+                    <span class="" style="font-size:18px;color:#263147;font-weight:bolder;text-align:center">Pide el Código de Verificación en cualquier establecimiento <br/> {{awardName}}</span>
                   </div>
                 </div>
                 <center>

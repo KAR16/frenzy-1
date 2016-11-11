@@ -7,6 +7,7 @@
       <div id="PaddingBox" class="col col-50 categoriesBoxesEnlineBlock" ng-repeat="customer in customers | filter: {CategoryApp: category} | orderBy:'-(QuantityCoupon + QuantityPromotion)'">
         <customer-info customer="customer"></customer-info>
       </div>
+      <br><br><br>
       <!-- Doesn't exist Coupons or Promotions -->
       <div ng-if="customerCount == 0">
         <div class="open_sans">

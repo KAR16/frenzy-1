@@ -528,7 +528,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         image: 'img/icn-35.png',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
         backButton: false,
-        toolsIcon: false,
+        toolsIcon: true,
         footer: true
     };
     $scope.$apply();
@@ -574,6 +574,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
       $scope.$parent.data = {
           heading: '',
+          image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#A7A9AC', '#FFD922', '#A7A9AC'],
           backButton: true,
           toolsIcon: false,
@@ -613,8 +614,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
      $scope.modal = modal;
    });
   $scope.awardid = '';
-  $scope.openModal = function(id) {
+  $scope.openModal = function(id, Nombre) {
     $scope.awardid = id;
+    $scope.awardName = Nombre;
     $scope.modal.show();
   };
 
@@ -623,17 +625,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   };
   $scope.$on('$ionicView.enter', function() {
     $scope.instantAdwards = Awards.get();
-    console.log("---------------------------------");
-    console.log($scope.instantAdwards);
-    console.log("---------------------------------");
     $scope.$parent.instantAdwardsDescription = $scope.instantAdwards;
-    console.log($scope.instantAdwards);
     $scope.$parent.data = {
         heading: '',
         image: 'img/icn-35.png',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
         backButton: false,
-        toolsIcon: false,
+        toolsIcon: true,
         footer: true
     };
     $scope.$apply();
@@ -643,7 +641,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 .controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject) {
   $scope.idAwards = $stateParams.idAward;
-  console.log($scope.instantAdwardsDescription);
   $scope.Date = moment().tz("America/Guatemala").format('DD/MM/YYYY');
 
   // First Mini Tutorial html file. Ionic Modal
@@ -664,6 +661,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     codeval.$loaded().then(function () {
       if (codeval.type == "points") {
+        console.log("points");
         AwardChange.$loaded().then(function () {
           codeval.VerificationCodes.map(function(valueCodes) {
             if (valueCodes == code) {
@@ -691,8 +689,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           }
         });
       }else if (codeval.type == "directAward") {
+        console.log("directAward");
+        console.log($scope.valChangeDirectAward);
         var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
             codeval.VerificationCodes.map(function(valueCodes) {
+              console.log("dentro de valueCodes");
               if (valueCodes == code) {
                 mixpanel.track("RedeemAward", {"IdCouponCode": IdCouponCode});
                 $scope.valChangeDirectAward = true;
@@ -703,16 +704,18 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                   AwardDirecChange.Status = true;
                   AwardDirecChange.$save();
                 }).then(function() {
-                  if ($scope.valChangeDirectAward == false) {
-                    sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-                  }
+
                 })
               }
             })
 
       }
     }).then(function() {
-
+      console.log($scope.valChangeDirectAward);
+      if ($scope.valChangeDirectAward == false) {
+        console.log($scope.valChangeDirectAward);
+        sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+      }
 
     });
     setTimeout(function(){
@@ -729,6 +732,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.valChange = false;
     $scope.$parent.data = {
         heading: '',
+        image: 'img/icn-35.png',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
         backButton: true,
         toolsIcon: false,
@@ -806,7 +810,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           image: 'img/icn-35.png',
           footerIconColors: ['#A7A9AC', '#FF5252', '#A7A9AC', '#A7A9AC'],
           backButton: false,
-          toolsIcon: false,
+          toolsIcon: true,
           footer: true
       };
       $scope.$apply();

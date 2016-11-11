@@ -1,8 +1,8 @@
 <ion-view>
 	<ion-content class="generalBackgroundPoints">
-		<div ng-repeat = 'award in instantAdwardsDescription'>
-			<div ng-if = "idAwards == award.AwardID">
-				<div ng-if = "instantAdwardsDescription[$index].AwardID != instantAdwardsDescription[$index - 1].AwardID ">
+		<div ng-repeat = 'award in instantAdwardsDescription | filterAward:idAwards | limitTo: 1' >
+			<div >
+				<div >
 					<div id="GeneralPaddingCols0" class="row" style="height:200px" >
 			      <div id="GeneralPaddingCols0" class="col">
 			        <img class="awardDescriptionImage" ng-src="{{award.Award.Photo}}" ng-if="award.Award.Photo" alt="awardImage" />
@@ -26,7 +26,7 @@
 				          <!-- The direct styles doesn't work good in css file -->
 				          <input class="inputCodeVerificationStyle" type="text" placeholder="Ingresa Código de Verificación" name="name" style="width:75%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;font-size:24px !important;color:#A7A9AC;height:41px;float:left" ng-model = 'code'>
 				          <!-- Go Button for the Code Promotion exchanged -->
-				          <button ng-click="openModal('{{award.AwardID}}',code,'{{award.id}}','{{award.IdCouponCode}}','{{award.IdUserAward}}')" type="button" name="button" class="codeVerificationButton">CANJEAR</button>
+				          <button ng-click="openModal('{{award.AwardID}}',code,'{{award.id}}','{{award.IdCouponCode}}','{{award.IdUserAward}}')" type="button" name="button" class="goModalExchange">CANJEAR</button>
 				        </div>
 				      </div>
 			      </div>
