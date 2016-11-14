@@ -639,7 +639,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject) {
+.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject,$state) {
   $scope.idAwards = $stateParams.idAward;
   $scope.Date = moment().tz("America/Guatemala").format('DD/MM/YYYY');
 
@@ -720,6 +720,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
     setTimeout(function(){
       $scope.closeModal();
+      $state.go('app.regalos');
     }, 20000);
   };
 
