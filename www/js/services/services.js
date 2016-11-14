@@ -236,3 +236,16 @@ app.filter('getDate', function() {
     return date.format('DD/MM/YYYY');
   };
 });
+
+
+app.filter('filterAward', function() {
+  return function(Awards,id) {
+    var NewAwards = [];
+    Awards.map(function(value) {
+      if (value.AwardID == id) {
+        NewAwards.push(value)
+      }
+    })
+    return NewAwards;
+  };
+});
