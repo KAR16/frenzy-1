@@ -658,13 +658,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     var AwardChange = $firebaseArray(refUser.child('CrossPromotion').child(id).child('Award'))
     var codeval = $firebaseObject(refCrossPromotion.child(id))
     var actualHour = moment().tz("America/Guatemala").format('LLL');
-
+    $scope.Type;
     codeval.$loaded().then(function () {
       if (codeval.type == "points") {
         console.log("points");
         AwardChange.$loaded().then(function () {
           codeval.VerificationCodes.map(function(valueCodes) {
             if (valueCodes == code) {
+              console.log("es correcto----------------------------------------");
               $scope.valChange = true;
               $scope.FirstModals.show();
               AwardChange.map(function(valueAward) {
@@ -684,12 +685,16 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             }
           })
         }).then(function() {
+          console.log("then------------------------------------");
+          console.log($scope.valChange)
           if ($scope.valChange == false) {
+            console.log($scope.valChange);
             sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
           }
         });
       }else if (codeval.type == "directAward") {
         console.log("directAward");
+        $scope.Type =  "directAward"
         console.log($scope.valChangeDirectAward);
         var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
             codeval.VerificationCodes.map(function(valueCodes) {
@@ -703,8 +708,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                   AwardDirecChange.FechaHoraCanjeo = actualHour
                   AwardDirecChange.Status = true;
                   AwardDirecChange.$save();
-                }).then(function() {
-
                 })
               }
             })
@@ -712,7 +715,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }
     }).then(function() {
       console.log($scope.valChangeDirectAward);
-      if ($scope.valChangeDirectAward == false) {
+      if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
+        console.log("asdhagsjdhgasjdgajsdgajdgsjasdasd********************************");
         console.log($scope.valChangeDirectAward);
         sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
       }
