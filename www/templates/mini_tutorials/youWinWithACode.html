@@ -1,11 +1,11 @@
 <ion-modal-view>
   <ion-content style="background-color:#9C28B0;padding:10px 0px 10px 0px">
     <div class="row">
-      <div class="col col-20" ng-click="SecondModal.hide()">
+      <!--<div class="col col-20" ng-click="SecondModal.hide()">
         <div class="home" style="color:rgba(241, 242, 242, 0.61);font-size:50px">
           T
         </div>
-        </div>
+      </div>-->
       <div class="col"></div>
     </div>
     <br>
@@ -45,11 +45,35 @@
     <!-- Your Points has added -->
     <div class="row">
       <div class="col center">
-        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco" ng-if='modalInfo.type == "Points"'>Tus Puntos fueron agregados en <br> {{modalInfo.Name}}.</span>
-        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco" ng-if='modalInfo.type == "directAward"'>Puedes ver lo que has ganado en premios</span>
-
+        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco;padding-bottom: 10%;" ng-if='modalInfo.type == "Points"'>Tus Puntos fueron agregados en <br> {{modalInfo.Name}}.</span>
+        <span style="color:white;font-family:Roboto, Helvetica, San Fransisco;padding-bottom: 10%;" ng-if='modalInfo.type == "directAward"'>Puedes ver lo que has ganado en premios</span>
       </div>
     </div>
+    <!-- Redirect button Points -->
+    <div class="row" ng-if='modalInfo.type == "Points"'>
+      <div class="col col-20"></div>
+      <a href="#/app/points" style="text-decoration:none">
+        <div id="#GeneralPaddingCols0" class="col center fbLoginButton" ng-click="SecondModal.hide()">
+          <div id="FacebookTextCenter" class="FacebookTextLogin">
+            <span style="color:#263147 !important">Ir a Puntos &nbsp;</span><span class="icon ion-thumbsup toGoPointsIcon"></span>
+          </div>
+        </div>
+      </a>
+      <div class="col col-20"></div>
+    </div>
+    <!--Redirect Button Direct Award -->
+    <div class="row" ng-if='modalInfo.type == "directAward"'>
+      <div class="col col-20"></div>
+      <a href="#/app/regalos" style="text-decoration:none">
+        <div id="#GeneralPaddingCols0" class="col center fbLoginButton" ng-click="SecondModal.hide()">
+          <div id="FacebookTextCenter" class="FacebookTextLogin">
+            <span style="color:#263147 !important">Ir a Premios &nbsp;</span><span class="icon ion-thumbsup toGoPointsIcon"></span>
+          </div>
+        </div>
+      </a>
+      <div class="col col-20"></div>
+    </div>
+
   </ion-content>
 
 </ion-modal-view>

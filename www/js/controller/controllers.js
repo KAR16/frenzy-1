@@ -435,9 +435,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
               })
              })
         }else{
-          sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-          mixpanel.track("ClickCrossPromotion", {"type":"Invalid Code"});
-          $ionicLoading.hide()
+          console.log($scope.Valdiacion[valCode]);
+          if ($scope.Valdiacion[valCode] != undefined && $scope.Valdiacion[valCode].$value == true) {
+            sweetAlert('Lo sentimos', 'El Codigo que ingresaste ha sido canjeado.', 'warning');
+            $ionicLoading.hide()
+          }else {
+            sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+            mixpanel.track("ClickCrossPromotion", {"type":"Invalid Code"});
+            $ionicLoading.hide()
+          }
         }
       })
       }
@@ -665,7 +671,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         AwardChange.$loaded().then(function () {
           codeval.VerificationCodes.map(function(valueCodes) {
             if (valueCodes == code) {
-              console.log("es correcto----------------------------------------");
               $scope.valChange = true;
               $scope.FirstModals.show();
               AwardChange.map(function(valueAward) {
@@ -685,7 +690,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             }
           })
         }).then(function() {
-          console.log("then------------------------------------");
           console.log($scope.valChange)
           if ($scope.valChange == false) {
             console.log($scope.valChange);
@@ -716,7 +720,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }).then(function() {
       console.log($scope.valChangeDirectAward);
       if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
-        console.log("asdhagsjdhgasjdgajsdgajdgsjasdasd********************************");
         console.log($scope.valChangeDirectAward);
         sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
       }
@@ -762,6 +765,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.$on('$ionicView.enter', function() {
     $scope.$parent.data = {
         heading: '',
+        image: 'img/icn-35.png',
         footerIconColors: ['#A7A9AC', '#A7A9AC', '#A7A9AC', '#9C28B0'],
         backButton: true,
         toolsIcon: false,

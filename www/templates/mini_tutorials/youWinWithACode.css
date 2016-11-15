@@ -22,3 +22,8 @@
     50% {top: 10px;}
     100% {top: 20px;}
 }
+
+.toGoPointsIcon {
+  font-size:33px !important;
+  color:#3F51B5;
+}
