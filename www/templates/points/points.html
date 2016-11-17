@@ -14,7 +14,8 @@
     </div>
 		<!-- Customer Points Container -->
 		<div class="row rowForCustomerAward" ng-repeat= 'point in crossPromotion'>
-			<a class="styleRedirection" href="#/app/pointsDescription/{{point.$id}}" ng-if = "point.type == 'points' && point.Status == true">
+			<div class="styleRedirection"  ng-if = "point.type == 'points' && point.Status == true">
+			<a class="" href="#/app/pointsDescription/{{point.$id}}" >
 				<div class="col whiteAwardContainer" style="">
 					<!-- Logo With Name and Count of Gift for Exchange -->
 					<div class="row customerAwardDescriptionContainer">
@@ -36,12 +37,14 @@
 							</div>
 						</div>
 					</div>
+
 					<!-- Count of Points -->
 					<div class="row">
 						<div class="col">
 							<span class="PointsCountText">{{point.points}} puntos 	</span>
 						</div>
 					</div>
+
 					<!-- Status Bar of the Points -->
 					<div class="row">
 						<div class="col col-90 pointBarGray">
@@ -52,50 +55,19 @@
 							<span class="home iconStar">C</span>
 						</div>
 					</div>
+					</a>
 					<!-- See More Container -->
 					<div class="row seeMoreBar" style="">
 						<div class="col col-90 verticalCenteredObjects">
-							<span class="seeMoreText">VER MÁS</span>
+							<a href="#/app/pointsDescription/{{point.$id}}"><span class="seeMoreText">VER MÁS</span></a>
 						</div>
 						<div class="col spacingTop5">
 							<span class="home shareAwardIcon" ng-click='share("{{point.Logo}}","{{point.Nombre}}","")'>O</span>
 						</div>
 					</div>
 				</div>
-			</a>
-		</div>
-		<div class="row" style="padding:2%"></div>
 
-		<!--**********  TRIANGLES TOP  **********-->
-		<div class="pointsContainer zigzagPoints">
-			<div class="row" style="padding-top:12%">
-				<div class="col">
-					<span class="home center clownIcon">P</span>
-				</div>
-			</div>
-			<br>
-			<!-- Text -->
-			<div class="row">
-				<div class="col winAndChangePointsText open_sans verticalCentered">
-					¿No encontraste la marca que quieres?
-				</div>
-			</div>
-			<!-- Input Name Get Customer -->
-			<div class="row" style="padding-top:3%">
-				<div class="col">
-					<!-- The direct styles doesn't work good in css file -->
-          <input id="inputCodePromotionStyle" type="text" placeholder="Marca" ng-model='brand' name="name" style="width:90%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;color:#A7A9AC;height:41px">
-					<!-- Go Button for the Code Promotion exchanged -->
-          <button type="button" name="button" class="sendRequestCustomer" ng-click = 'sendBrand(brand) '>Enviar</button>
-				</div>
-			</div>
-			<!-- Feedback Text  -->
-			<div class="row" style="padding-top:3%">
-				<div class="col center">
-					<span style="color:white;font-family:Roboto, Helvetica,San Fransisco">¿Qué marca sugieres que Frenzy <br> debería tener?</span>
-				</div>
 			</div>
 		</div>
-		<!--**********  TRIANGLES DOWN  **********-->
 	</ion-content>
 </ion-view>

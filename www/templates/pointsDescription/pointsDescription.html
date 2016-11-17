@@ -39,12 +39,12 @@
     </div>
     <!-- Award Area -->
     <div class="row awardContainer" ng-repeat = "(key, award)  in pointsDescripcion.Award | orderObjectBy:'Points'">
-      <div class="col awardWhiteContainer" ng-click="openModal('{{award.key}}')" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
-        <div class="row" style="padding:0 !important">
+      <div class="col awardWhiteContainer"  ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
+        <div class="row" style="padding:0 !important" ng-click="openModal('{{award.key}}')">
            <img class="awardImage" ng-src="{{award.Photo}}" ng-if ='award.Photo' alt="" />
         </div>
         <!-- Logo With Name and Count of Gift for Exchange -->
-        <div class="row">
+        <div class="row" ng-click="openModal('{{award.key}}')">
           <!-- Name Customer And Gifts-->
           <div class="col">
             <!-- Name -->
