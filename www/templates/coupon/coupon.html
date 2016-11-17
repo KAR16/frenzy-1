@@ -111,7 +111,6 @@
 					</div>
 				</div>
 			</div>
-			<br><br>
 			<!-- Coupons without image -->
 			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!'}" ng-if="cupon.Status">
 				<!-- Offer Container without image -->
@@ -185,7 +184,6 @@
 					</div>
 				</div>
 			</div>
-			<br><br>
 		</div>
 
 		<div ng-if="!viewCoupons" style="padding-bottom:5%">
@@ -270,7 +268,6 @@
 					<!-- END Footer Box -->
 				</div>
 			</div>
-			<br><br>
 			<!-- Offers without image -->
 			<div ng-repeat="promotion in customerPromotions | filter: {Photo:'!'}" ng-if="promotion.Status">
 				<!-- Offer Container without image -->
@@ -340,7 +337,6 @@
 					</div>
 				</div>
 			</div>
-			<br><br>
 			<!-- If doesn't exist offers -->
 			<div ng-if="customerPromotions.length < 1" class="noExiste">
 				<div class="open_sans">

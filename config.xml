@@ -80,7 +80,6 @@
     <splash src="resources\android\splash\drawable-port-hdpi-screen.png" density="port-hdpi"/>
     <splash src="resources\android\splash\drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
     <splash src="resources\android\splash\drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
-    <splash src="resources\android\splash\drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
   <engine name="android" spec="~5.1.1"/>
   <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>

@@ -255,6 +255,7 @@ app.filter('orderObjectBy', function(){
     if (!angular.isObject(input)) return input;
     var array = [];
     for(var objectKey in input) {
+        input[objectKey]['key'] = objectKey;
         array.push(input[objectKey]);
     }
     array.sort(function(a, b){

@@ -39,7 +39,7 @@
     </div>
     <!-- Award Area -->
     <div class="row awardContainer" ng-repeat = "(key, award)  in pointsDescripcion.Award | orderObjectBy:'Points'">
-      <div class="col awardWhiteContainer" ng-click="openModal(key)" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
+      <div class="col awardWhiteContainer" ng-click="openModal('{{award.key}}')" ng-class = "pointsDescripcion.points >= award.Points ? 'borderPromotion' : ''" >
         <div class="row" style="padding:0 !important">
            <img class="awardImage" ng-src="{{award.Photo}}" ng-if ='award.Photo' alt="" />
         </div>
@@ -64,7 +64,7 @@
           </div>
           <div class="col spacingTop5">
 						<!-- Share Icon -->
-            <span class="home shareAwardIcon">O</span>
+            <span class="home shareAwardIcon" ng-click='share("{{award.Photo}}","{{award.Name}}","{{award.AwardDescription}}")'>O</span>
           </div>
         </div>
       </div>

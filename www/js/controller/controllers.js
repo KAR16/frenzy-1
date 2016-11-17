@@ -501,6 +501,18 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 //********************** POINTS CONTROLLER *****************************
 .controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User,requestStore) {
   // First Mini Tutorial html file. Ionic Modal
+  // *********** Share Facebook Function ********
+  $scope.share = function(image , name ,description ){
+    facebookConnectPlugin.showDialog({
+      method: "feed",
+      link: "http://www.frenzy.com.gt",
+      description: description,
+      caption: name,
+      picture: image
+    }, function(success) { }, function(error) { });
+
+  }
+
   $scope.requestStore = requestStore ;
   $scope.sendBrand = function (brand) {
     var actualHour = moment().tz("America/Guatemala").format('LLL');
@@ -547,7 +559,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 // Point Description Controller
 .controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray) {
+  // *********** Share Facebook Function ********
+  $scope.share = function(image , name ,description ){
+    facebookConnectPlugin.showDialog({
+      method: "feed",
+      link: "http://www.frenzy.com.gt",
+      description: description,
+      caption: name,
+      picture: image
+    }, function(success) { }, function(error) { });
 
+  }
   $ionicModal.fromTemplateUrl('templates/modal.html', {
      scope: $scope
     }).then(function(modal) {
@@ -596,7 +618,17 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 // Award Controller View
 .controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
+  // *********** Share Facebook Function ********
+  $scope.share = function(image , name ,description ){
+    facebookConnectPlugin.showDialog({
+      method: "feed",
+      link: "http://www.frenzy.com.gt",
+      description: description,
+      caption: name,
+      picture: image
+    }, function(success) { }, function(error) { });
 
+  }
   // Analytics
   mixpanel.track("view", {"type": "Awards"});
 
@@ -754,7 +786,23 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 
 })
+//********************** Compartir award     *****************************
+.controller('ShareCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
+  $scope.share = function(image , name ,description ){
+    facebookConnectPlugin.showDialog({
+      method: "feed",
+      link: "http://www.frenzy.com.gt",
+      description: description,
+      caption: name,
+      picture: image
+    }, function(success) { }, function(error) { });
 
+  }
+  $scope.$on('$ionicView.enter', function() {
+
+    $scope.$apply();
+  });
+})
 //********************** termsAndConditions award     *****************************
 .controller('termsAndConditionsAwardsCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
   $scope.instantAdwardsDescription.map(function(value) {
