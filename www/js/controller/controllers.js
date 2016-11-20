@@ -1066,7 +1066,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover) {
+.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover, $ionicModal) {
 
 
   $ionicPopover.fromTemplateUrl('templates/popover2.html', {
@@ -1074,6 +1074,13 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   }).then(function(popover) {
       $scope.popover = popover;
   });
+
+  $ionicModal.fromTemplateUrl('templates/modal.html', {
+     scope: $scope
+    }).then(function(modal) {
+
+     $scope.modal = modal;
+   });
 
   $scope.viewCoupons = true;
   $scope.setViewCoupons = function(bool) {

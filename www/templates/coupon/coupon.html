@@ -375,12 +375,13 @@
                     B
                 </spam>
             </a>
-						<a id="item" class="item" id="{{ customer.PhoneNumber }}" ng-href="tel:{{ customer.PhoneNumber }}" target="_blank">
-                Llamar
-                <spam class="home pageOffertsPopoverIconsDescrpition">
-                    Q
-                </spam>
-            </a>
+						<!-- Call -->
+						<a id="item" class="item" ng-click="modal.show()">
+								Tiendas
+								<spam class="home pageOffertsPopoverIconsDescrpition">
+										M
+								</spam>
+						</a>
 						<a id="item" class="item" id="{{customer.URL}}" ng-click='shopUrl(customer.URL,"web",customer.Name)' target="_blank" style="margin-top:0">
                 Ir a pagina Web
                 <spam class="home pageOffertsPopoverIconsDescrpition">
@@ -429,5 +430,79 @@
 				</div>
 			</ion-popover-view>
 		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<script id="templates/modal.html" type="text/ng-template">
+		      <ion-modal-view id="phoneModal">
+						<!-- Title -->
+						<ion-header-bar class="bar-positive">
+								<h1 class="title" style="text-align:center">Contáctanos</h1>
+						</ion-header-bar>
+						<!-- Modal Content -->
+						<ion-content style="padding:0;">
+							<ion-list style="border-bottom:1px solid red">
+								<ion-item>
+									<!-- Call Icon -->
+									<div class="row">
+										<div class="col col-20">
+											<span class="callSize home">Q</span>
+										</div>
+										<div class="col" style="margin-top:-2% !important">
+											<div class="open_sans CategoryNameText">Pradera Zona 10</div>
+											<div class="ng-binding">66384587</div>
+										</div>
+									</div>
+								</ion-item>
+
+							</ion-list>
+							<!-- Exit Button -->
+							<div class="row stickyfloat_element">
+								<div class="col"></div>
+								<div id="#GeneralPaddingCols0" class="col col-50 emailLoginButton verticalAndHorizontalCenteredObjects" ng-click="modal.hide()">
+									<div class="singupTitle open_sans">
+										Salir
+									</div>
+								</div>
+								<div class="col"></div>
+							</div>
+
+		        </ion-content>
+
+						<!-- <div class="exitButtonModal"> -->
+
+						<!-- </div> -->
+
+		      </ion-modal-view>
+		    </script>
+
+
+
+
+
 	</ion-content>
 </ion-view>
