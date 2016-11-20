@@ -432,31 +432,6 @@
 		</script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		<script id="templates/modal.html" type="text/ng-template">
 		      <ion-modal-view id="phoneModal">
 						<!-- Title -->
@@ -466,15 +441,15 @@
 						<!-- Modal Content -->
 						<ion-content style="padding:0;">
 							<ion-list style="border-bottom:1px solid red">
-								<ion-item>
+								<ion-item ng-repeat = "(key,Phone) in customer.Directory">
 									<!-- Call Icon -->
-									<div class="row">
+									<div class="row" >
 										<div class="col col-20">
 											<span class="callSize home">Q</span>
 										</div>
 										<div class="col" style="margin-top:-2% !important">
-											<div class="open_sans CategoryNameText">Pradera Zona 10</div>
-											<div class="ng-binding">66384587</div>
+											<div class="open_sans CategoryNameText">{{key}}</div>
+											<div class="ng-binding">{{Phone}}</div>
 										</div>
 									</div>
 								</ion-item>
