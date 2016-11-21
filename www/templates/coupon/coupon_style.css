@@ -315,7 +315,6 @@
 	color: #FF5252;
 }
 
-.stickyfloat_element {
-	position: fixed;
-	z-index: 9999;
+.exitButtonPhoneModal {
+	margin-left: 90%;
 }
