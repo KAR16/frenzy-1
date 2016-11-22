@@ -1069,6 +1069,22 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 .controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover, $ionicModal) {
 
 
+  // *************** CALL PHONE FUNCTION ***************
+      $scope.call= function(cell,name){
+          var NameUser = String(IdUsuario);
+          var Dimensions = {
+              name: 'Promotion_call'+name,
+              user: NameUser
+          };
+          mixpanel.track("ClickCall", {"Costumer" :name,"User":NameUser,"Gender":IdGender});
+          var a = cell.toString();
+          var b = 'tel:'
+          var callPhone = b + a;
+     //This action works for to do call
+        document.location.href = callPhone
+
+      }
+
   $ionicPopover.fromTemplateUrl('templates/popover2.html', {
       scope: $scope,
   }).then(function(popover) {

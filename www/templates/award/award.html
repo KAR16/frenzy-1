@@ -16,7 +16,7 @@
       </div>
     </div>
     <!-- Customer Points Container -->
-    <div class="row spacingAwardContainers" ng-repeat = 'award in instantAdwards'>
+    <div class="row spacingAwardContainers" ng-repeat = 'award in instantAdwards' ng-if='award.Status == true'>
       <div class="col awardContainerInAwardView">
         <!-- Logo With Name and Count of Gift for Exchange -->
         <div class="row">
