@@ -158,15 +158,25 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             // Call to Users Entity Firebase Data
             mainApp.database().ref('Users').once('value', function(snapshot) {
                 // If doesn't exist anything data then to save the new data
-                mixpanel.identify(firebase.auth().currentUser.uid);
-                mixpanel.people.set({
-                    "$email": email,
-                    "$gender": gender,
-                    "$birthday": dateBirthday,
-                    "$name": name,
-                    "$typeLogin": "Email"
 
-                });
+                  analytics.identify(firebase.auth().currentUser.uid, {
+                      email: email,
+                      gender: gender,
+                      birthday: birthday,
+                      name: name,
+                      typeLogin: "Email"
+
+                  });
+                //
+                // analytics.identify(firebase.auth().currentUser.uid);
+                // analytics.people.set({
+                //     "$email": email,
+                //     "$gender": gender,
+                //     "$birthday": dateBirthday,
+                //     "$name": name,
+                //     "$typeLogin": "Email"
+                //
+                // });
                 if (snapshot.val() === null) {
                     mainApp.database().ref('Users/' + user.uid).update({
                         Username: name,
@@ -222,7 +232,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     };
 
     $scope.loginWithEmail = function(user) {
-        mixpanel.track("LoginClick", {
+        analytics.track("LoginClick", {
             "loginButton": "Email"
         });
         if (typeof user === 'undefined') {
@@ -254,14 +264,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     } else if (user.Parse == undefined) {
                         $scope.VerifyEmail();
                     }
-                    // // Check if user has already been passed to new Mixpanel ID.
+                    // // Check if user has already been passed to new Mixpanel analytics ID.
                     try {
                       if(!user.config.analyticsAlias) {
-                          mixpanel.alias(firebase.auth().currentUser.uid);
+                          analytics.alias(firebase.auth().currentUser.uid);
                           user.config.analyticsAlias = true;
                           user.$save();
                       } else {
-                        mixpanel.identify(firebase.auth().currentUser.uid);
+                        analytics.identify(firebase.auth().currentUser.uid);
                       }
                     } catch (e) {
 
@@ -327,7 +337,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       ///////////////////////////////////////////////////////////
       $scope.modalInfo = {};
       $scope.getCodePromotion = function (code) {
-        mixpanel.track("ClickCrossPromotion", {"Code":code});
+        analytics.track("ClickCrossPromotion", {"Code":code});
         $scope.ref = firebase.database().ref('CouponCodes/'+ code);
         $scope.objCouponCode = $firebaseObject($scope.ref);
         $scope.Valdiacion = $firebaseArray($scope.ref);
@@ -354,7 +364,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                         objUserInfoService[ids] = {Points:0,Status:true,"Award": {"dahgshdgaASDJjssjd": {"AwardID": "-KTLUFOTkCHBSUOBHCSL","FechaDeSolicitud":"","Status":true,"CodigoCanjeoRedimido":"","FechaHoraCanjeo":""}}}
                       }
                     } finally {
-                        mixpanel.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id, "Points":$scope.objCouponCode.CouponValue, "Type": "Points"});
+                        analytics.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id, "Points":$scope.objCouponCode.CouponValue, "Type": "Points"});
                         objUserInfoService[ids].Points +=  $scope.objCouponCode.CouponValue;
                         if (objUserInfoService[ids].Points > Crossinfo.MaxPoints) {
                           objUserInfoService[ids].Points =  Crossinfo.MaxPoints
@@ -365,7 +375,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
                     }
                   }else if ($scope.objCouponCode.type == "directAward") {
-                    mixpanel.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id ,"Type": "directAward"});
+                    analytics.track("RedeemCrossPromotion", {"CrossPromotionId": Crossinfo.$id ,"Type": "directAward"});
                     var newAwardObjet = $firebaseObject(objUserInfoService.$ref().child(ids))
                     newAwardObjet.$loaded(function () {
                       if ($scope.objCouponCode.thanksParticipation == true) {
@@ -441,7 +451,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             $ionicLoading.hide()
           }else {
             sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-            mixpanel.track("ClickCrossPromotion", {"type":"Invalid Code"});
+            analytics.track("ClickCrossPromotion", {"type":"Invalid Code"});
             $ionicLoading.hide()
           }
         }
@@ -470,7 +480,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       };
       $scope.$apply();
 
-      mixpanel.track("view", {"type": "Categorys"});
+      analytics.track("view", {"type": "Categorys"});
     });
 
 })
@@ -552,7 +562,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$apply();
 
     // Analytics
-    mixpanel.track("view", {"type": "YourPoints"});
+    analytics.track("view", {"type": "YourPoints"});
 
   });
 })
@@ -611,7 +621,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.$apply();
 
       // Analytics
-      mixpanel.track("view", {"type": "PointsDescription"});
+      analytics.track("view", {"type": "PointsDescription"});
 
     });
 
@@ -630,7 +640,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   }
   // Analytics
-  mixpanel.track("view", {"type": "Awards"});
+  analytics.track("view", {"type": "Awards"});
 
   $scope.sendSms = function() {
     $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
@@ -707,7 +717,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
               $scope.FirstModals.show();
               AwardChange.map(function(valueAward) {
                 if (valueAward.AwardID == AwardID) {
-                  mixpanel.track("RedeemAward", {"AwardId": valueAward.AwardID});
+                  analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
                   var change = AwardChange.$ref()
                   var savechange = $firebaseObject(change.child(IdUserAward))
                   savechange.$loaded(function () {
@@ -736,7 +746,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             codeval.VerificationCodes.map(function(valueCodes) {
               console.log("dentro de valueCodes");
               if (valueCodes == code) {
-                mixpanel.track("RedeemAward", {"IdCouponCode": IdCouponCode});
+                analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
                 $scope.valChangeDirectAward = true;
                 AwardDirecChange.$loaded().then(function () {
                   $scope.FirstModals.show();
@@ -781,7 +791,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.$apply();
 
     // Analytics
-    mixpanel.track("view", {"type": "AwardDescription"});
+    analytics.track("view", {"type": "AwardDescription"});
 
   });
 
@@ -847,7 +857,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.favoritesCount += 1;
       }
     }
-    mixpanel.track("view", {"type": "YourFavorites", "#favorites": $scope.favoritesCount});
+    analytics.track("view", {"type": "YourFavorites", "#favorites": $scope.favoritesCount});
   };
 
   $scope.favoritesCount = 0;
@@ -932,7 +942,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }
       }
 
-      mixpanel.track("view", {"type": "PinSaved", "#pins": $scope.pinsCount});
+      analytics.track("view", {"type": "PinSaved", "#pins": $scope.pinsCount});
     };
 
     $scope.$on('$ionicView.enter', function() {
@@ -969,7 +979,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 
     // Analytics
-    mixpanel.track("ClickHeart", {"CustomerId": customerId, "Customer": $scope.favorites[customerId].Name });
+    analytics.track("ClickHeart", {"CustomerId": customerId, "Customer": $scope.favorites[customerId].Name });
 
   };
 })
@@ -994,7 +1004,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 
     // Analytics
-    mixpanel.track("ClickPin", {"PinId": id });
+    analytics.track("ClickPin", {"PinId": id });
   };
 
 })
@@ -1034,8 +1044,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         };
 
         // Analytics
-        mixpanel.track("view", {"type": "Customers", "Category":$scope.category});
-        mixpanel.track("ClickCategory", {"NameCategory": $scope.category});
+        analytics.track("view", {"type": "Customers", "Category":$scope.category});
+        analytics.track("ClickCategory", {"NameCategory": $scope.category});
     });
 })
 ///////////
@@ -1061,7 +1071,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             footer: true
         };
 
-        mixpanel.track("view", {"type": "PromotionsDescription", "PromotionId": $stateParams.promotionId});
+        analytics.track("view", {"type": "PromotionsDescription", "PromotionId": $stateParams.promotionId});
     });
 })
 
@@ -1076,7 +1086,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
               name: 'Promotion_call'+name,
               user: NameUser
           };
-          mixpanel.track("ClickCall", {"Costumer" :name,"User":NameUser,"Gender":IdGender});
+          analytics.track("ClickCall", {"Costumer" :name,"User":NameUser,"Gender":IdGender});
           var a = cell.toString();
           var b = 'tel:'
           var callPhone = b + a;
@@ -1120,7 +1130,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     }
     if ($scope.customerCoupons.length < 1) {
       $scope.viewCoupons = false;
-      mixpanel.track("view", {"type": "Promotion","Namepromotion": $scope.customerId});
+      analytics.track("view", {"type": "Promotion","Namepromotion": $scope.customerId});
     }
   });
 
@@ -1147,7 +1157,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
             console.log('error mensaje');
         });
-        mixpanel.track("ClickSMS", {"Customer": $scope.customer.Name})
+        analytics.track("ClickSMS", {"Customer": $scope.customer.Name})
     };
 
 
@@ -1160,12 +1170,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         };
 
         if (id == "web") {
-            mixpanel.track("ClickWeb", {
+            analytics.track("ClickWeb", {
                 "Costumer": name
             });
             window.open = cordova.InAppBrowser.open(url, '_blank', options);
         } else {
-            mixpanel.track("ClickCartShop", {
+            analytics.track("ClickCartShop", {
                 "Costumer": name
             });
             window.open = cordova.InAppBrowser.open(url, '_blank', options);
@@ -1219,7 +1229,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                         showConfirmButton: false,
 
                                     })
-                                    mixpanel.track("clickCanjear", {
+                                    analytics.track("clickCanjear", {
                                         "type": "fecha",
                                         "NameCoupon": id
                                     });
@@ -1260,7 +1270,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                             showConfirmButton: false,
                                             type: "success"
                                         });
-                                        mixpanel.track("clickCanjear", {
+                                        analytics.track("clickCanjear", {
                                             "type": "Cupon",
                                             "NameCoupon": id
                                         });
@@ -1345,8 +1355,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       };
 
       // Analytics
-      mixpanel.track("view", {"type": "copuns","CustomerId": $scope.customerId});
-      mixpanel.track("ClickCustomer", {"Name": $scope.customerId,"CustomerId": $scope.customerId});
+      analytics.track("view", {"type": "copuns","CustomerId": $scope.customerId});
+      analytics.track("ClickCustomer", {"Name": $scope.customerId,"CustomerId": $scope.customerId});
 
     });
 
@@ -1359,7 +1369,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.cupon = $firebaseObject(ref);
 
   // Analytics for view
-  mixpanel.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
+  analytics.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
 
   //
   // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
@@ -1382,7 +1392,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     });
 
 
-    mixpanel.track("clickCanjear", {
+    analytics.track("clickCanjear", {
         "type": "Cupon",
         "NameCoupon": $stateParams.couponId
     });
@@ -1458,7 +1468,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 .controller('PopoverNewCtrl', function($scope, $ionicPopover) {
 
     $scope.Analytics = function(id, nameShare) {
-      mixpanel.track("ClickShare", {"NameShareID": id});
+      analytics.track("ClickShare", {"NameShareID": id});
     };
     $ionicPopover.fromTemplateUrl('templates/popoverNew.html', {
         scope: $scope,
@@ -1564,7 +1574,7 @@ $scope.$on('$ionicView.enter', function() {
 .controller('tutorialController', ['$scope', '$state', 'Customer', '$ionicSlideBoxDelegate', '$timeout', function($scope, $state, Customer, $ionicSlideBoxDelegate, $timeout) {
   // IdUsuario of Facebook or Frenzy for Pines and hearts
   $scope.customers = Customer;
-  mixpanel.track("viewTurorial");
+  analytics.track("viewTurorial");
   // Disable slide Box into Tutorial
   $timeout(function(){
     $ionicSlideBoxDelegate.enableSlide(false);
@@ -1660,10 +1670,10 @@ $scope.$on('$ionicView.enter', function() {
   $scope.config = $firebaseObject(ref.child('config'));
 
   // Analytics Calls
-  mixpanel.track("view", {"type": "Tools"});
+  analytics.track("view", {"type": "Tools"});
 
   $scope.AnalyticsTools = function(id) {
-      mixpanel.track("ClickOtros", {"type": id});
+      analytics.track("ClickOtros", {"type": id});
   };
   $scope.logout = function() {
       firebase.auth().signOut().then(function() {
@@ -1707,7 +1717,7 @@ $scope.$on('$ionicView.enter', function() {
         };
         //===============LOGIN WITH FB==========//
         $scope.loginfb = function() {
-            mixpanel.track("LoginClick", {
+            analytics.track("LoginClick", {
                 "loginButton": "Facebook"
             });
             $ionicLoading.show({
@@ -1753,15 +1763,15 @@ $scope.$on('$ionicView.enter', function() {
                                 $cordovaFacebook.api('/me?fields=id,name,birthday,email,gender,hometown&access_token=' + success.authResponse.accessToken, null)
                                     .then(function(success) {
 
-                                        mixpanel.identify(UserUID);
-                                        mixpanel.people.set({
-                                            "$email": success.email,
-                                            "$gender": success.gender,
-                                            "$birthday": success.birthday,
-                                            "$name": success.name,
-                                            "$typeLogin": "Facebook"
+                                        analytics.identify(UserUID, {
+                                            email: success.email,
+                                            gender: success.gender,
+                                            birthday: success.birthday,
+                                            name: success.name,
+                                            typeLogin: "Facebook"
 
                                         });
+
                                         IdUsuario = UserUID;
                                         IdGender = success.gender;
                                         mainApp.database().ref('Users/' + UserUID).update({
@@ -1787,7 +1797,7 @@ $scope.$on('$ionicView.enter', function() {
                   try {
 
                     if(!user.config.analyticsAlias) {
-                      mixpanel.alias(firebase.auth().currentUser.uid);
+                      analytics.alias(firebase.auth().currentUser.uid);
                       user.config.analyticsAlias = true;
                       user.$save();
                     }
