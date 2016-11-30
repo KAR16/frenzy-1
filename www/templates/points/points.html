@@ -3,7 +3,7 @@
 
     <div class="row" style="padding-top:5%;padding-bottom:7%" ng-if="config.tutorial" >
       <div class="col center">
-        <a class="styleRedirection" nav-transition="android" ng-click="FirstModal.show()">
+        <a class="styleRedirection" nav-transition="android" ng-click="FirstModal.show()" style="text-decoration:none">
           <div class="winAndChangePoints center">
             <div class="winAndChangePointsText open_sans verticalCentered">
               ¿Cómo gano y cambio puntos?
@@ -14,8 +14,8 @@
     </div>
 		<!-- Customer Points Container -->
 		<div class="row rowForCustomerAward" ng-repeat= 'point in crossPromotion'>
-			<div class="styleRedirection"  ng-if = "point.type == 'points' && point.Status == true">
-			<a class="" href="#/app/pointsDescription/{{point.$id}}" >
+			<div class="styleRedirection"  ng-if = "point.type == 'points' && point.Status == true" style="text-decoration:none">
+			<a class="" href="#/app/pointsDescription/{{point.$id}}" style="text-decoration:none">
 				<div class="col whiteAwardContainer" style="">
 					<!-- Logo With Name and Count of Gift for Exchange -->
 					<div class="row customerAwardDescriptionContainer">
@@ -59,7 +59,7 @@
 					<!-- See More Container -->
 					<div class="row seeMoreBar" style="">
 						<div class="col col-90 verticalCenteredObjects">
-							<a href="#/app/pointsDescription/{{point.$id}}"><span class="seeMoreText">VER MÁS</span></a>
+							<a href="#/app/pointsDescription/{{point.$id}}" style="text-decoration:none"><span class="seeMoreText">VER MÁS</span></a>
 						</div>
 						<div class="col spacingTop5">
 							<span class="home shareAwardIcon" ng-click='share("{{point.Logo}}","{{point.Nombre}}","")'>O</span>
@@ -67,6 +67,22 @@
 					</div>
 				</div>
 
+			</div>
+		</div>
+		<!-- If doesn't exist offers -->
+		<div ng-if="crossPromotion.length < 1" class="noExiste">
+			<div class="open_sans">
+				<!-- Uh-uh Icon -->
+				<p class="home savedPageNoItemsIcon">
+					f
+				</p>
+				<!-- Description -->
+				<p class="savedPageNoItemsTitle">
+					Uh-uH
+				</p>
+				<p class="savedPageNoItemsDescription">
+					Pronto te tendremos las mejores promociones en establecimientos participantes
+				</p>
 			</div>
 		</div>
 	</ion-content>

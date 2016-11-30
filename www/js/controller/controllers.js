@@ -209,7 +209,32 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 // ************************* LOGIN WITH FRENZY *************************
 .controller('LoginCtrlEmail', function($scope, $state, $rootScope, $ionicLoading, $firebaseObject) {
+  $scope.forgot = function() {
+  			$scope.userChoice = prompt("Enter your email")
+  			$scope.loading = $ionicLoading.show({
+  					content: 'Sending',
+  					animation: 'fade-in',
+  					showBackdrop: true,
+  					maxWidth: 200,
+  					showDelay: 0
+  			});
 
+        var auth = mainApp.auth();
+        auth.sendPasswordResetEmail($scope.userChoice).then(function() {
+          // Email sent.
+          $ionicLoading.hide();
+        }, function(error) {
+          $ionicLoading.hide();
+          console.log(error);
+          if (error.code == "auth/invalid-email") {
+            sweetAlert('Ha ocurrido un Error', 'Por favor intentelo nuevamente', 'error');
+
+          }else {
+            	sweetAlert('Ha ocurrido un Error', 'La direccón de correo electrónico no existe', 'error');
+          }
+          // An error happened.
+        });
+  		};
     // Verify Email with Firebase
     $scope.VerifyEmail = function() {
         mainApp.auth().onAuthStateChanged(function(user) {
