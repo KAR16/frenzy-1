@@ -251,7 +251,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     }
                 });
             } else {
-                sweetAlert('Oops', 'Por favor verifica tu correo electrónico e intenta nuevamente.', 'warning');
+                user.sendEmailVerification();
+                sweetAlert('Oops', 'no has verificado tu cuenta se te ha enviado la correo de verificacion de nuevo', 'warning');
             }
         });
     };

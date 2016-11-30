@@ -102,7 +102,8 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
                                 ExchangePolicy:promotion.ExchangePolicy,
                                 PromotionDescription:promotion.PromotionDescription,
                                 id:promotion.$id,
-                                IdCouponCode:keyAward
+                                IdCouponCode:keyAward,
+                                Status:promotion.Status
                               })
                             }
                           } catch (e) {
@@ -126,7 +127,8 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
                                  ExchangePolicy:promotion.ExchangePolicy,
                                  PromotionDescription:promotion.PromotionDescription,
                                  id:promotion.$id,
-                                 IdUserAward: valAwardsUser
+                                 IdUserAward: valAwardsUser,
+                                 Status:promotion.Status
                                })
                              }
                            })
