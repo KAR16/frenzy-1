@@ -258,7 +258,7 @@
   width:180px;
   margin-top:45px !important;
   margin-left: -12px !important;
-  top: 89px !important;
+  top: 73px !important;
 }
 #list.list {
   line-height: 15px;
@@ -308,4 +308,14 @@
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.callSize {
+	font-size: 50px;
+	color: #FF5252;
+}
+
+.exitButtonPhoneModal {
+	margin-left: 90%;
+	margin-top: 2%;
 }

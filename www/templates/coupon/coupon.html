@@ -319,8 +319,6 @@
 						</spam>
 					</div>
 					<div class="col"></div>
-
-
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
 							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl( promotion.ShopOnline, 'cart', promotion.Name)">
@@ -360,7 +358,6 @@
 					</center>
 				</div>
 			</div>
-			<!-- Blue Popover -->
 		</div>
 
 		<!-- Blue Popover -->
@@ -375,12 +372,13 @@
                     B
                 </spam>
             </a>
-						<a id="item" class="item" id="{{ customer.PhoneNumber }}" ng-href="tel:{{ customer.PhoneNumber }}" target="_blank">
-                Llamar
-                <spam class="home pageOffertsPopoverIconsDescrpition">
-                    Q
-                </spam>
-            </a>
+						<!-- Call -->
+						<a id="item" class="item" ng-click="modal.show()" ng-if="customer.Directory != undefined || customer.Directory != null">
+								Directorio
+								<spam class="home pageOffertsPopoverIconsDescrpition">
+										M
+								</spam>
+						</a>
 						<a id="item" class="item" id="{{customer.URL}}" ng-click='shopUrl(customer.URL,"web",customer.Name)' target="_blank" style="margin-top:0">
                 Ir a pagina Web
                 <spam class="home pageOffertsPopoverIconsDescrpition">
@@ -429,5 +427,37 @@
 				</div>
 			</ion-popover-view>
 		</script>
+
+		<script id="templates/modal.html" type="text/ng-template">
+		      <ion-modal-view id="phoneModal">
+						<!-- Title -->
+						<ion-header-bar class="bar-positive" align-title="center" style="width:100%">
+								<h1 class="title">Contáctanos</h1>
+								<div class="exitButtonPhoneModal" ng-click="modal.hide()">
+									<span class="home exitButtonStyle">T</span>
+								</div>
+						</ion-header-bar>
+						<!-- Modal Content -->
+						<ion-content style="padding:0;">
+							<ion-list style="border-bottom:1px solid red">
+								<ion-item ng-repeat = "(key,Phone) in customer.Directory" ng-click='call("{{Phone}}","{{key}}")' target="_blank">
+									<!-- Call Icon -->
+									<div class="row" >
+										<div class="col col-20">
+											<span class="callSize home">Q</span>
+										</div>
+										<!-- Phone Number -->
+										<div class="col" style="margin-top:-2% !important">
+											<div class="open_sans CategoryNameText">{{key}}</div>
+											<div class="ng-binding">{{Phone}}</div>
+										</div>
+									</div>
+								</ion-item>
+							</ion-list>
+
+		        </ion-content>
+		      </ion-modal-view>
+		    </script>
+
 	</ion-content>
 </ion-view>

@@ -16,7 +16,7 @@
       </div>
     </div>
     <!-- Customer Points Container -->
-    <div class="row spacingAwardContainers" ng-repeat = 'award in instantAdwards'>
+    <div class="row spacingAwardContainers" ng-repeat = 'award in instantAdwards' ng-if='award.Status == true'>
       <div class="col awardContainerInAwardView">
         <!-- Logo With Name and Count of Gift for Exchange -->
         <div class="row">
@@ -69,6 +69,21 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- If doesn't exist offers -->
+    <div ng-if="instantAdwards.length < 1" class="noExiste">
+      <div class="open_sans">
+        <!-- Uh-uh Icon -->
+        <p class="home savedPageNoItemsIcon">
+          f
+        </p>
+        <!-- Description -->
+        <p class="savedPageNoItemsTitle">
+          Uh-uH
+        </p>
+        <p class="savedPageNoItemsDescription">
+          Sigue participando para poder ganar mas premios  </p>
       </div>
     </div>
     <br>
@@ -126,7 +141,7 @@
           </div>
           <div class="col verticalCenteredObjects friendsOfFacebook">
             <a class="secondPopoverText" href="javascript:var dir=window.document.URL;var tit=window.document.title;var tit2=encodeURIComponent(tit);var dir2= encodeURIComponent(dir); window.open=cordova.InAppBrowser.open('http://www.facebook.com/share.php?u=http://frenzy.com.gt/','_blank', 'location=yes');"
-                    style="text-decoration:none;">
+                    style="text-decoration:none;" ng-click = 'share(award.Award.Photo, award.Award.Name , award.Award.AwardDescription)'>
               Amigos de facebook
             </a>
           </div>

@@ -102,7 +102,8 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
                                 ExchangePolicy:promotion.ExchangePolicy,
                                 PromotionDescription:promotion.PromotionDescription,
                                 id:promotion.$id,
-                                IdCouponCode:keyAward
+                                IdCouponCode:keyAward,
+                                Status:promotion.Status
                               })
                             }
                           } catch (e) {
@@ -126,7 +127,8 @@ app.factory('Awards' ,function ($firebaseArray,Customer,User,$firebaseObject) {
                                  ExchangePolicy:promotion.ExchangePolicy,
                                  PromotionDescription:promotion.PromotionDescription,
                                  id:promotion.$id,
-                                 IdUserAward: valAwardsUser
+                                 IdUserAward: valAwardsUser,
+                                 Status:promotion.Status
                                })
                              }
                            })
@@ -248,4 +250,21 @@ app.filter('filterAward', function() {
     })
     return NewAwards;
   };
+});
+
+app.filter('orderObjectBy', function(){
+ return function(input, attribute) {
+    if (!angular.isObject(input)) return input;
+    var array = [];
+    for(var objectKey in input) {
+        input[objectKey]['key'] = objectKey;
+        array.push(input[objectKey]);
+    }
+    array.sort(function(a, b){
+        a = parseInt(a[attribute]);
+        b = parseInt(b[attribute]);
+        return b - a;
+    });
+    return array;
+ }
 });
