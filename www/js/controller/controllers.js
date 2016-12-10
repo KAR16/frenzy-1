@@ -3,18 +3,34 @@ var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
 var Check =  true
 /****FIREBASE***/
+// var config = {
+//     apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
+//     authDomain: "frenzyapplication.firebaseapp.com",
+//     databaseURL: "https://frenzyapplication.firebaseio.com",
+//     storageBucket: "frenzyapplication.appspot.com",
+// };
+//
+// var config2 = {
+//     apiKey: "AIzaSyDIbQh6IA6D9HHhfogQUZP63omtjwzAiBA",
+//     authDomain: "frenzydashboard.firebaseapp.com",
+//     databaseURL: "https://frenzydashboard.firebaseio.com",
+//     storageBucket: "frenzydashboard.appspot.com",
+// };
+/*firebase test*/
 var config = {
-    apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
-    authDomain: "frenzyapplication.firebaseapp.com",
-    databaseURL: "https://frenzyapplication.firebaseio.com",
-    storageBucket: "frenzyapplication.appspot.com",
+  apiKey: "AIzaSyAsHadZgASRIp4cJNV0Oqmcsxu1CsCAXtk",
+  authDomain: "frenzyapptest.firebaseapp.com",
+  databaseURL: "https://frenzyapptest.firebaseio.com",
+  storageBucket: "frenzyapptest.appspot.com",
+  messagingSenderId: "82404050336"
 };
 
 var config2 = {
-    apiKey: "AIzaSyDIbQh6IA6D9HHhfogQUZP63omtjwzAiBA",
-    authDomain: "frenzydashboard.firebaseapp.com",
-    databaseURL: "https://frenzydashboard.firebaseio.com",
-    storageBucket: "frenzydashboard.appspot.com",
+  apiKey: "AIzaSyAmtwbzIV2uSQis9_MaQCigV22NJ-n0Gvs",
+  authDomain: "frenzydashboardtest.firebaseapp.com",
+  databaseURL: "https://frenzydashboardtest.firebaseio.com",
+  storageBucket: "frenzydashboardtest.appspot.com",
+  messagingSenderId: "220906314847"
 };
 
 var mainApp = firebase.initializeApp(config);
@@ -535,7 +551,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 })
 //********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User,requestStore) {
+.controller('yourPointsCtrl',function($scope,$ionicLoading,$ionicModal,CrossPromotionAcumulatePoints,User,requestStore) {
   // First Mini Tutorial html file. Ionic Modal
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
@@ -607,7 +623,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   }
   $ionicModal.fromTemplateUrl('templates/modal.html', {
-     scope: $scope
+     scope: $scope,backdropClickToClose: false
     }).then(function(modal) {
 
      $scope.modal = modal;
@@ -631,8 +647,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       }, 1000);
   };
 
-   $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope}).then(function(modal2) {
+   $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope,backdropClickToClose: false}).then(function(modal2) {
       $scope.modal2 = modal2;
+
+
     });
     $scope.$on('$ionicView.enter', function() {
       $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
@@ -1149,8 +1167,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   //When all coupons are loaded, filter only coupons of current customer
   coupons.$loaded(function(){
+    console.log(coupons);
     for (var i in coupons) {
-      if(coupons[i].Provider == $scope.customerId && coupons[i].Status === true) {
+      if(coupons[i].IdCustomer == $scope.customerId && coupons[i].Status === true) {
+
         $scope.customerCoupons.push(coupons[i]);
       }
     }
@@ -1162,8 +1182,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   //When all promotions are loaded, filter only promotions of current customer
   promotions.$loaded(function(){
+    console.log(promotions);
+    console.log($scope.customerId);
     for (var i in promotions) {
-      if(promotions[i].Provider == $scope.customerId && promotions[i].Status === true) {
+      if(promotions[i].IdCustomer == $scope.customerId && promotions[i].Status === true) {
+              console.log($scope.customerId);
         $scope.customerPromotions.push(promotions[i]);
       }
     }
@@ -1171,9 +1194,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   // Select current customer
   customers.$loaded(function(){
+    console.log(Customer);
     for (var i in customers) {
-      if(customers[i].Name == $scope.customerId) {
+      if(customers[i].$id == $scope.customerId) {
         $scope.customer = customers[i];
+        console.log($scope.customer);
         break;
       }
     }
@@ -1372,7 +1397,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     $scope.$on('$ionicView.enter', function() {
       $scope.$parent.data = {
-          heading: $scope.customerId,
+          heading: $scope.customer.Name,
           image: '',
           footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
           backButton: true,
