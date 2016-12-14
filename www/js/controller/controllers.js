@@ -532,6 +532,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footer: true
     };
     $scope.$apply();
+
+    analytics.track("view", {"type": "Terms And Conditions: Points"});
   });
 })
 //********************** POINTS CONTROLLER *****************************
@@ -547,6 +549,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       picture: image
     }, function(success) { }, function(error) { });
 
+    analytics.track("ClickShare", {"View":"YourPoints", "Name": name, "Description": description});
   }
 
   $scope.requestStore = requestStore ;
@@ -560,6 +563,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     })
     $scope.brand = '' ;
+
+    console.log('Click sendBrand');
+    // TODO. analytics.track("ClickPointsShare", {"Name": name, "Description": description});
   }
   $scope.TutorialActives = {checked: Check};
   $scope.pushNotificationChange = function() {
@@ -589,7 +595,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     // Analytics
     analytics.track("view", {"type": "YourPoints"});
-
   });
 })
 
@@ -605,6 +610,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       picture: image
     }, function(success) { }, function(error) { });
 
+    analytics.track("ClickShare", {"View":"PointsDescription", "Name": name, "Description": description});
   }
   $ionicModal.fromTemplateUrl('templates/modal.html', {
      scope: $scope
@@ -618,17 +624,23 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.dataAward = $scope.pointsDescripcion.Award[key];
     $scope.dataAward['key'] = key;
     $scope.modal.show();
+
+    analytics.track("ClickPrize", {"View":"PointsDescription", "Key": key, "Award": $scope.dataAward});
   };
   $scope.$parent.exchangeArray =  [];
   $scope.exchange = function (dataAward , changeModal) {
     $scope.user = UserSave.get($stateParams.idPromotion,dataAward);
     $scope.goAdwards = changeModal;
+
+    analytics.track("ClickPointsExchange", {"View":"PointsDescription", "Award": dataAward});
   };
   $scope.closeModal = function () {
      $scope.modal.hide();
      $timeout(function() {
         $scope.goAdwards =  !$scope.goAdwards ;
       }, 1000);
+
+    analytics.track("ClickClose", {"Modal":"Prize", "View":"PointsDescription", "Key": $scope.dataAward['key']});
   };
 
    $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope}).then(function(modal2) {
@@ -654,6 +666,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 // Award Controller View
 .controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
+  var viewName = "Awards";
+
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
     facebookConnectPlugin.showDialog({
@@ -664,14 +678,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       picture: image
     }, function(success) { }, function(error) { });
 
+    analytics.track("ClickShare", {"View": viewName, "Name": name, "Description": description});
   }
-  // Analytics
-  analytics.track("view", {"type": "Awards"});
 
   $scope.sendSms = function() {
     $cordovaSocialSharing.shareViaSMS('Visitanos en: http://frenzy.com.gt para encontrar las mejores ofertas :)', '').then(function(result) {}, function(err) {
       console.log('error mensaje');
     });
+
+    analytics.track("ClickSMS", {"View": viewName});
   };
 
   // First Mini Tutorial html file. Ionic Modal
@@ -692,10 +707,14 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     $scope.awardid = id;
     $scope.awardName = Nombre;
     $scope.modal.show();
+
+    analytics.track("ClickPrize", {"View": viewName, "Key": id, "Name": Nombre});
   };
 
   $scope.closeModal = function() {
     $scope.modal.hide();
+
+    analytics.track("ClickClose", {"View": viewName, "Modal":"Prize", "Key": $scope.awardid});
   };
   $scope.$on('$ionicView.enter', function() {
     $scope.instantAdwards = Awards.get();
@@ -709,6 +728,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footer: true
     };
     $scope.$apply();
+
+    // Analytics
+    analytics.track("view", {"type": viewName});
   });
 
 })
@@ -726,6 +748,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
    });
 
   $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
+
+    analytics.track("ClickAward", {"View":"AwardDescription", "Key": AwardID, "Code": code, "Id": id, "IdCouponCode":IdCouponCode});
+
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
@@ -743,7 +768,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
               $scope.FirstModals.show();
               AwardChange.map(function(valueAward) {
                 if (valueAward.AwardID == AwardID) {
-                  analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
+
                   var change = AwardChange.$ref()
                   var savechange = $firebaseObject(change.child(IdUserAward))
                   savechange.$loaded(function () {
@@ -752,6 +777,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     savechange.CodigoCanjeoRedimido = code;
                     savechange.$save()
                   });
+
+                  analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
                 }
               })
               //
@@ -762,6 +789,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           if ($scope.valChange == false) {
             console.log($scope.valChange);
             sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+            analytics.track("RedeemAwardFail");
           }
         });
       }else if (codeval.type == "directAward") {
@@ -772,7 +800,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             codeval.VerificationCodes.map(function(valueCodes) {
               console.log("dentro de valueCodes");
               if (valueCodes == code) {
-                analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
+
                 $scope.valChangeDirectAward = true;
                 AwardDirecChange.$loaded().then(function () {
                   $scope.FirstModals.show();
@@ -781,6 +809,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                   AwardDirecChange.Status = true;
                   AwardDirecChange.$save();
                 })
+
+                analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
               }
             })
 
@@ -790,6 +820,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
         console.log($scope.valChangeDirectAward);
         sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+
+        analytics.track("RedeemAwardFail");
       }
 
     });
@@ -801,6 +833,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   $scope.closeModal = function() {
     $scope.FirstModals.hide();
+
+    analytics.track("ClickClose", {"View":"AwardDescription", "Modal":"Award"});
   };
 
   $scope.$on('$ionicView.enter', function() {
@@ -833,6 +867,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       picture: image
     }, function(success) { }, function(error) { });
 
+    analytics.track("ClickShare", {"Name": name, "Description": description});
+
   }
   $scope.$on('$ionicView.enter', function() {
 
@@ -856,6 +892,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         footer: false
     };
     $scope.$apply();
+
+    analytics.track("view", {"type": "TermsAndConditionsAward"});
   });
 })
 // ******************* YOUR FAVORITE CONTROLLER ***************************
@@ -883,7 +921,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $scope.favoritesCount += 1;
       }
     }
-    analytics.track("view", {"type": "YourFavorites", "#favorites": $scope.favoritesCount});
+    analytics.track("FavoriteCount", {"View": "YourFavorites", "#favorites": $scope.favoritesCount});
   };
 
   $scope.favoritesCount = 0;
@@ -907,6 +945,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footer: true
       };
       $scope.$apply();
+
+      analytics.track("view", {"type": "YourFavorites"});
     });
 
 })
@@ -968,7 +1008,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         }
       }
 
-      analytics.track("view", {"type": "PinSaved", "#pins": $scope.pinsCount});
+      analytics.track("PinCount", {"View": "PinSaved", "#pins": $scope.pinsCount});
     };
 
     $scope.$on('$ionicView.enter', function() {
@@ -981,6 +1021,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           footer: true
       };
       $scope.$apply();
+
+      analytics.track("view", {"type": "PinSaved"});
     });
 
 })
@@ -1071,7 +1113,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
         // Analytics
         analytics.track("view", {"type": "Customers", "Category":$scope.category});
-        analytics.track("ClickCategory", {"NameCategory": $scope.category});
     });
 })
 ///////////
@@ -1382,7 +1423,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
       // Analytics
       analytics.track("view", {"type": "copuns","CustomerId": $scope.customerId});
-      analytics.track("ClickCustomer", {"Name": $scope.customerId,"CustomerId": $scope.customerId});
 
     });
 
@@ -1393,9 +1433,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   var ref = mainApp.database().ref('Coupon').child($stateParams.couponId);
   $scope.cupon = $firebaseObject(ref);
-
-  // Analytics for view
-  analytics.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
 
   //
   // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
@@ -1477,6 +1514,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         toolsIcon: false,
         footer: true
     };
+
+    // Analytics for view
+    analytics.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
 
   });
 })
@@ -1695,9 +1735,6 @@ $scope.$on('$ionicView.enter', function() {
   var ref = firebase.database().ref('User/' + firebase.auth().currentUser.uid);
   $scope.config = $firebaseObject(ref.child('config'));
 
-  // Analytics Calls
-  analytics.track("view", {"type": "Tools"});
-
   $scope.AnalyticsTools = function(id) {
       analytics.track("ClickOtros", {"type": id});
   };
@@ -1708,6 +1745,9 @@ $scope.$on('$ionicView.enter', function() {
           // An error happened.
       });
       $state.go('loginAndRegister');
+
+      // Analytics Calls
+      analytics.track("ClickLogout");
   };
 
   // ***** CHANGE COLOR FOOTER FUNCTION AND $ON SCOPE TO REFRESH MENU CONTROLLER *****
@@ -1722,6 +1762,9 @@ $scope.$on('$ionicView.enter', function() {
         footer: true
     };
     $scope.$apply();
+
+    // Analytics Calls
+    analytics.track("view", {"type": "Tools"});
   });
 })
     /**********************  FACEBOOK LOGIN CONTROLLER  **********************************/
