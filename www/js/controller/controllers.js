@@ -1182,11 +1182,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   //When all promotions are loaded, filter only promotions of current customer
   promotions.$loaded(function(){
-    console.log(promotions);
-    console.log($scope.customerId);
+
     for (var i in promotions) {
       if(promotions[i].IdCustomer == $scope.customerId && promotions[i].Status === true) {
-              console.log($scope.customerId);
+              console.log(promotions[i]);
         $scope.customerPromotions.push(promotions[i]);
       }
     }
@@ -1224,12 +1223,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             analytics.track("ClickWeb", {
                 "Costumer": name
             });
-            window.open = cordova.InAppBrowser.open(url, '_blank', options);
+            window.open = cordova.InAppBrowser.open(url, '_blank','location=yes');
         } else {
             analytics.track("ClickCartShop", {
                 "Costumer": name
             });
-            window.open = cordova.InAppBrowser.open(url, '_blank', options);
+            window.open = cordova.InAppBrowser.open(url, '_blank','location=yes');
         }
     };
     // *********** Share Facebook Function ********

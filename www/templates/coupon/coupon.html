@@ -98,7 +98,7 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(cupon.ShopOnline, 'cart', cupon.Presentation)">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}', 'cart', '{{cupon.Presentation}}')">
 								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
@@ -171,7 +171,7 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(cupon.ShopOnline,'cart',cupon.Presentation)" style="display:{{cupon.Display}}">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{cupon.ShopOnline}}','cart','{{cupon.Presentation}}')" style="display:{{cupon.Display}}">
 								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
@@ -254,7 +254,7 @@
 						</div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl(promotion.ShopOnline, 'cart', promotion.Name)" ng-if="promotion.ShopOnline">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{promotion.ShopOnline}}', 'cart','{{promotion.Name}}')" ng-if="promotion.ShopOnline">
 								j
 							</spam>
 							<spam class="home pageOffertsShareIcon" ng-click="popover.show($event)" ng-controller="PopoverNewCtrl">
@@ -321,7 +321,7 @@
 					<div class="col"></div>
 						<!-- Icons Promotion -->
 						<div class="col iconsFooterBox">
-							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl( promotion.ShopOnline, 'cart', promotion.Name)">
+							<spam class="home pageOffertsShareIcon" ng-controller="PopoverNewCtrl" ng-click="shopUrl('{{promotion.ShopOnline}}','cart','{{promotion.Name}}')">
 								j
 							</spam>
 							<!-- ng-click="popover.show($event)" -->
