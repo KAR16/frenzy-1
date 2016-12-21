@@ -610,7 +610,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // Point Description Controller
-.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray) {
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray,$cordovaNetwork,$rootScope) {
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
     facebookConnectPlugin.showDialog({
@@ -631,9 +631,16 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   $scope.dataAward = [];
   $scope.goAward = false ;
   $scope.openModal = function (key , goAward) {
-    $scope.dataAward = $scope.pointsDescripcion.Award[key];
-    $scope.dataAward['key'] = key;
-    $scope.modal.show();
+    // listen for Online event
+    var isOnline = $cordovaNetwork.isOnline();
+    if (isOnline == true) {
+      $scope.dataAward = $scope.pointsDescripcion.Award[key];
+      $scope.dataAward['key'] = key;
+      $scope.modal.show();
+    }else {
+      alert('Lo sentimos necesitas conectarte a internet para poder canjear tus puntos')
+    }
+
   };
   $scope.$parent.exchangeArray =  [];
   $scope.exchange = function (dataAward , changeModal) {
@@ -731,7 +738,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 
-.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject,$state) {
+.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject,$state,$cordovaNetwork,$rootScope) {
+
+
   $scope.idAwards = $stateParams.idAward;
   $scope.Date = moment().tz("America/Guatemala").format('DD/MM/YYYY');
 
@@ -744,6 +753,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
    });
 
   $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
+    var isOnline = $cordovaNetwork.isOnline();
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
@@ -751,70 +761,75 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     var codeval = $firebaseObject(refCrossPromotion.child(id))
     var actualHour = moment().tz("America/Guatemala").format('LLL');
     $scope.Type;
-    codeval.$loaded().then(function () {
-      if (codeval.type == "points") {
-        console.log("points");
-        AwardChange.$loaded().then(function () {
-          codeval.VerificationCodes.map(function(valueCodes) {
-            if (valueCodes == code) {
-              $scope.valChange = true;
-              $scope.FirstModals.show();
-              AwardChange.map(function(valueAward) {
-                if (valueAward.AwardID == AwardID) {
-                  analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
-                  var change = AwardChange.$ref()
-                  var savechange = $firebaseObject(change.child(IdUserAward))
-                  savechange.$loaded(function () {
-                    savechange.FechaHoraCanjeo = actualHour;
-                    savechange.Status = true;
-                    savechange.CodigoCanjeoRedimido = code;
-                    savechange.$save()
-                  });
-                }
-              })
-              //
-            }
-          })
-        }).then(function() {
-          console.log($scope.valChange)
-          if ($scope.valChange == false) {
-            console.log($scope.valChange);
-            sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-          }
-        });
-      }else if (codeval.type == "directAward") {
-        console.log("directAward");
-        $scope.Type =  "directAward"
-        console.log($scope.valChangeDirectAward);
-        var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
+    if (isOnline == true) {
+      codeval.$loaded().then(function () {
+        if (codeval.type == "points") {
+          console.log("points");
+          AwardChange.$loaded().then(function () {
             codeval.VerificationCodes.map(function(valueCodes) {
-              console.log("dentro de valueCodes");
               if (valueCodes == code) {
-                analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
-                $scope.valChangeDirectAward = true;
-                AwardDirecChange.$loaded().then(function () {
-                  $scope.FirstModals.show();
-                  AwardDirecChange.CodigoCanjeoRedimido = code
-                  AwardDirecChange.FechaHoraCanjeo = actualHour
-                  AwardDirecChange.Status = true;
-                  AwardDirecChange.$save();
+                $scope.valChange = true;
+                $scope.FirstModals.show();
+                AwardChange.map(function(valueAward) {
+                  if (valueAward.AwardID == AwardID) {
+                    analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
+                    var change = AwardChange.$ref()
+                    var savechange = $firebaseObject(change.child(IdUserAward))
+                    savechange.$loaded(function () {
+                      savechange.FechaHoraCanjeo = actualHour;
+                      savechange.Status = true;
+                      savechange.CodigoCanjeoRedimido = code;
+                      savechange.$save()
+                    });
+                  }
                 })
+                //
               }
             })
+          }).then(function() {
+            console.log($scope.valChange)
+            if ($scope.valChange == false) {
+              console.log($scope.valChange);
+              sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+            }
+          });
+        }else if (codeval.type == "directAward") {
+          console.log("directAward");
+          $scope.Type =  "directAward"
+          console.log($scope.valChangeDirectAward);
+          var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
+              codeval.VerificationCodes.map(function(valueCodes) {
+                console.log("dentro de valueCodes");
+                if (valueCodes == code) {
+                  analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
+                  $scope.valChangeDirectAward = true;
+                  AwardDirecChange.$loaded().then(function () {
+                    $scope.FirstModals.show();
+                    AwardDirecChange.CodigoCanjeoRedimido = code
+                    AwardDirecChange.FechaHoraCanjeo = actualHour
+                    AwardDirecChange.Status = true;
+                    AwardDirecChange.$save();
+                  })
+                }
+              })
 
-      }
-    }).then(function() {
-      console.log($scope.valChangeDirectAward);
-      if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
+        }
+      }).then(function() {
         console.log($scope.valChangeDirectAward);
-        sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-      }
+        if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
+          console.log($scope.valChangeDirectAward);
+          sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+        }
 
-    });
-    setTimeout(function(){
-      $scope.closeModal();
-      $state.go('app.regalos');
-    }, 20000);
+      });
+      setTimeout(function(){
+        $scope.closeModal();
+        $state.go('app.regalos');
+      }, 20000);
+
+    }else {
+      alert('Lo sentimos necesitas conectarte a internet para poder canjear tu Premio')
+    }
   };
 
   $scope.closeModal = function() {
@@ -1121,8 +1136,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 // ********************* CUPON CONTROLLER *********************************
 .controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover, $ionicModal) {
-
-
   // *************** CALL PHONE FUNCTION ***************
       $scope.call= function(cell,name){
           var NameUser = String(IdUsuario);
@@ -1167,7 +1180,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   //When all coupons are loaded, filter only coupons of current customer
   coupons.$loaded(function(){
-    console.log(coupons);
+    //console.log(coupons);
     for (var i in coupons) {
       if(coupons[i].IdCustomer == $scope.customerId && coupons[i].Status === true) {
 
@@ -1178,6 +1191,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.viewCoupons = false;
       analytics.track("view", {"type": "Promotion","Namepromotion": $scope.customerId});
     }
+    console.log($scope.customerCoupons);
   });
 
   //When all promotions are loaded, filter only promotions of current customer
@@ -1300,6 +1314,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
                     } else if (snapshot.val()[x].TypeCoupon === 'Cupon') {
                         if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
+                          console.log("------------------------------------------------------000");
+                          console.log($scope.cupons);
                             $scope.cupons[0][0].QuantityExchanged += 1;
                             swal({
                                     title: "Estas Seguro?",

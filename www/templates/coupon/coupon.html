@@ -46,9 +46,9 @@
 			<div ng-repeat="cupon in customerCoupons | filter:{PhotoCoupon:'!!'}" ng-if="cupon.Status">
 				<div class="OffersContainer">
 					<!-- Label Price -->
-					<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+					<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label"  ng-if="cupon.TypeOfExchange != 'SpecialPromotion'">
 					<!-- Price Text Offers -->
-					<div class="row BoxPriceLabel">
+					<div class="row BoxPriceLabel" ng-if="cupon.TypeOfExchange != 'SpecialPromotion'">
 						<div class="col col-33 BoxLabel">
 							<p id="NothingSpace" class="AhorraTextLabel">
 								Canjea
@@ -118,7 +118,7 @@
 					<a href="#/app/descripcionCupones/{{cupon.$id}}" ng-click="llenar2()" style="text-decoration:none">
 						<div class="row">
 							<!-- Purple label and Saving Price -->
-							<div class="col col-33">
+							<div class="col col-33" ng-if="cupon.TypeOfExchange != 'SpecialPromotion'">
 								<!-- Purple Label -->
 								<div class="row pageOffertsWithoutImageLabel">
 									<div class="col labelPriceDescription">
@@ -166,7 +166,7 @@
 						<!-- Rest Day -->
 						<div class="col-33 colPrice">
 							<spam class="pageOffertExchance">
-								{{cupon.DaysToFinalize}}&nbsp; DÍas
+								{{cupon.EndDate | timeDifference }}&nbsp; Días
 							</spam>
 						</div>
 						<!-- Icons Promotion -->
