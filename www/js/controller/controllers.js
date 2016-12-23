@@ -678,7 +678,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 // Award Controller View
-.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
+.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints,Promotion) {
+
+  Promotion
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
     facebookConnectPlugin.showDialog({
@@ -762,7 +765,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     var actualHour = moment().tz("America/Guatemala").format('LLL');
     //var CountCrossPromotion =
     $scope.Type;
-  //  if (isOnline == true) {
+    if (isOnline == true) {
       codeval.$loaded().then(function () {
         if (codeval.type == "points") {
           console.log("points");
@@ -833,9 +836,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $state.go('app.regalos');
       }, 20000);
 
-    // }else {
-    //   alert('Lo sentimos necesitas conectarte a internet para poder canjear tu Premio')
-    // }
+    }else {
+      alert('Lo sentimos necesitas conectarte a internet para poder canjear tu Premio')
+    }
   };
 
   $scope.closeModal = function() {
