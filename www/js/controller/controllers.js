@@ -753,21 +753,25 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
    });
 
   $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
-    var isOnline = $cordovaNetwork.isOnline();
+    //var isOnline = $cordovaNetwork.isOnline();
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
     var AwardChange = $firebaseArray(refUser.child('CrossPromotion').child(id).child('Award'))
     var codeval = $firebaseObject(refCrossPromotion.child(id))
     var actualHour = moment().tz("America/Guatemala").format('LLL');
+    //var CountCrossPromotion =
     $scope.Type;
-    if (isOnline == true) {
+  //  if (isOnline == true) {
       codeval.$loaded().then(function () {
         if (codeval.type == "points") {
           console.log("points");
           AwardChange.$loaded().then(function () {
+            //console.log(AwardChange);
             codeval.VerificationCodes.map(function(valueCodes) {
               if (valueCodes == code) {
+                codeval.Award[AwardID]["QuantityRedeem"] = codeval.Award[AwardID]["QuantityRedeem"] + 1;
+                codeval.$save();
                 $scope.valChange = true;
                 $scope.FirstModals.show();
                 AwardChange.map(function(valueAward) {
@@ -810,6 +814,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     AwardDirecChange.Status = true;
                     AwardDirecChange.$save();
                   })
+                  codeval.Award[AwardID]["QuantityRedeem"] = codeval.Award[AwardID]["QuantityRedeem"] + 1;
+                  codeval.$save();
                 }
               })
 
@@ -827,9 +833,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
         $state.go('app.regalos');
       }, 20000);
 
-    }else {
-      alert('Lo sentimos necesitas conectarte a internet para poder canjear tu Premio')
-    }
+    // }else {
+    //   alert('Lo sentimos necesitas conectarte a internet para poder canjear tu Premio')
+    // }
   };
 
   $scope.closeModal = function() {
