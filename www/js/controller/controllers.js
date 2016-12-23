@@ -1141,7 +1141,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover, $ionicModal) {
+.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, CouponObject, $ionicPopover, $ionicModal) {
+  $scope.CouponDB = CouponObject;
+
   // *************** CALL PHONE FUNCTION ***************
       $scope.call= function(cell,name){
           var NameUser = String(IdUsuario);
@@ -1291,6 +1293,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             },
                             function(isConfirm) {
                                 if (isConfirm) {
+                                  $scope.CouponDB[id].QuantityExchanged += 1;
+                                  $scope.CouponDB.$save();
+
                                     swal({
                                         title: 'Perfecto!',
                                         text: 'Has cambiado tu Cupón',
@@ -1303,10 +1308,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                         "type": "fecha",
                                         "NameCoupon": id
                                     });
-                                    QuantityExchangedSuma = snapshot.val()[id].QuantityExchanged + 1
-                                    mainApp.database().ref('Coupon/' + id).update({
-                                        QuantityExchanged: QuantityExchangedSuma
-                                    });
+
 
                                     var couponPages = "#/app/descripcionCupones/";
                                     location.href = couponPages + id;
@@ -1320,9 +1322,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
                     } else if (snapshot.val()[x].TypeCoupon === 'Cupon') {
                         if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
-                          console.log("------------------------------------------------------000");
-                          console.log($scope.cupons);
-                            $scope.cupons[0][0].QuantityExchanged += 1;
                             swal({
                                     title: "Estas Seguro?",
                                     text: "Quieres canjear este cupon?",
@@ -1335,6 +1334,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                 },
                                 function(isConfirm) {
                                     if (isConfirm) {
+                                      $scope.CouponDB[id].QuantityExchanged += 1;
+                                      $scope.CouponDB.$save();
                                         swal({
                                             title: 'Perfecto!',
                                             text: 'Has cambiado tu Cupón',
@@ -1347,29 +1348,21 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                             "NameCoupon": id
                                         });
 
-                                        var element = document.getElementById("QuantityExchangedText");
-                                        element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
                                         var couponPages = "#/app/descripcionCupones/";
                                         // IdPromotion with redirection page
                                         couponPages = couponPages + id;
                                         location.href = couponPages;
-
-                                        QuantityExchangedSuma = snapshot.val()[x].QuantityExchanged + 1
-                                        mainApp.database().ref('Coupon/' + x).update({
-                                            QuantityExchanged: QuantityExchangedSuma
-                                        });
+                                        $(".botonCanjear").hide();
+                                        $(".exchangeBoxBarCode").show();
                                     } else {
-                                        $scope.cupons[0][0].QuantityExchanged -= 1;
-                                        var element = document.getElementById("QuantityExchangedText");
-                                        element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
-                                    }
+                                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
+
+                                    };
                                 });
                         } else {
-                            $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
+                            $scope.CouponDB[id].Status = false;
+                            $scope.CouponDB.$save();
 
-                            mainApp.database().ref('Coupon/' + x).update({
-                                Status: false
-                            });
                             swal({
                                     title: 'Lo sentimos!',
                                     text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
@@ -1435,15 +1428,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
-.controller('DescriptionCuponCtrl', function($scope, $state, $stateParams, $ionicLoading, $firebaseObject) {
-
+.controller('DescriptionCuponCtrl', function($scope, $state, $stateParams, CouponObject, $ionicLoading, $firebaseObject) {
   var ref = mainApp.database().ref('Coupon').child($stateParams.couponId);
   $scope.cupon = $firebaseObject(ref);
+
+  $scope.CouponDB = CouponObject;
 
   // Analytics for view
   analytics.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
 
-  //
   // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
   $scope.buttonCash = function() {
       $('.botonCanjear').click(function() {
@@ -1458,8 +1451,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   var updateCupon = function() {
 
-    $scope.cupon.QuantityExchanged += 1;
-    $scope.cupon.$save(function(data){
+    $scope.CouponDB[$stateParams.couponId].QuantityExchanged += 1;
+    $scope.CouponDB.$save(function(data){
       console.log(data);
     });
 
@@ -1480,10 +1473,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   $scope.countCoupon = function() {
 
-
-    if ($scope.cupon.TypeCoupon == "Coupon" && ($scope.cupon.QuantityExchanged < $scope.cupon.QuantityCoupons))  {
+    console.log($scope.CouponDB[$stateParams.couponId]);
+    if ($scope.CouponDB[$stateParams.couponId].TypeCoupon == "Cupon" && ($scope.CouponDB[$stateParams.couponId].QuantityExchanged <$scope.CouponDB[$stateParams.couponId].QuantityCoupons))  {
       updateCupon();
-    } else if($scope.cupon.TypeCoupon == 'Fecha') {
+    } else if($scope.CouponDB[$stateParams.couponId].TypeCoupon == 'Fecha') {
       updateCupon();
     } else {
       swal({
@@ -1506,9 +1499,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           });
     }
 
-    if ($scope.cupon.QuantityExchanged >= $scope.cupon.QuantityCoupons && $scope.cupon.TypeCoupon == "Coupon") {
-      $scope.cupon.Status = false;
-      $scope.cupon.$save(function(data){
+    if ($scope.CouponDB[$stateParams.couponId].QuantityExchanged >= $scope.CouponDB[$stateParams.couponId].QuantityCoupons && $scope.CouponDB[$stateParams.couponId].TypeCoupon == "Cupon") {
+      $scope.CouponDB[$stateParams.couponId].Status = false;
+      $scope.CouponDB.$save(function(data){
         console.log(data);
       });
     }

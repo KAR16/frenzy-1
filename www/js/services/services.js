@@ -28,6 +28,13 @@ app.factory('Coupon', ['$firebaseArray', function($firebaseArray) {
 
 }]);
 
+app.factory('CouponObject', ['$firebaseObject', function($firebaseObject) {
+
+	var ref = firebase.database().ref('Coupon');
+	return $firebaseObject(ref);
+
+}]);
+
 app.factory('Favorite', ['$firebaseObject', function($firebaseObject) {
 
 	var user = firebase.auth().currentUser;
