@@ -30,34 +30,36 @@
   <!-- BODY OF PAGE START -->
   <ion-content  nav-transition="none" locking="false">
     <div class="firstContainerZigzag">
-      <div class="row" style="padding-top:3%" ng-if="config.tutorial" >
-        <div class="col center">
-          <!-- Code Promotion Tutorial Button  -->
-          <!-- href="#/app/getUpCodePromotionTutorial" -->
-          <!-- ng-click="triggerModal()" -->
-          <a  style="text-decoration:none;width:100%" nav-transition="android" ng-click="FirstModal.show()">
-            <div class="codePromotionButton center">
-              <div class="codePromotionButtonText open_sans verticalCentered">
-                ¿Dónde consigo el Código de Promoción?
+      <div style="height:100%;display:table-cell;vertical-align:middle">
+        <div class="row" style="padding-top:3%" ng-if="config.tutorial" >
+          <div class="col center">
+            <!-- Code Promotion Tutorial Button  -->
+            <!-- href="#/app/getUpCodePromotionTutorial" -->
+            <!-- ng-click="triggerModal()" -->
+            <a  style="text-decoration:none;width:100%" nav-transition="android" ng-click="FirstModal.show()">
+              <div class="codePromotionButton center">
+                <div class="codePromotionButtonText open_sans verticalCentered">
+                  ¿Dónde consigo el Código de Promoción?
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
-      </div>
-      <!-- Win Points and Gifts Text -->
-      <div class="row" style="padding-top:2%">
-        <div class="col center">
-          <span class="open_sans winPointsText">¡Gana Puntos y Premios a lo loco!</span>
+        <!-- Win Points and Gifts Text -->
+        <div class="row" style="padding-top:2%">
+          <div class="col center">
+            <img src="img/copa.png" alt="awardImage" style="width:200px"/>
+          </div>
         </div>
-      </div>
-      <!-- Input Change -->
-      <div class="row" style="padding-top:2%">
-        <div class="col">
-          <!-- Input Code Promotion -->
-          <!-- The direct styles doesn't work good in css file -->
-          <input id="inputCodePromotionStyle" class="inputCodePromotionStyle" type="text" placeholder="Ingresa el Código de Promoción" name="name" style="width:90%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;color:#A7A9AC;height:41px" ng-model = 'codePromotion'>
-          <!-- Go Button for the Code Promotion exchanged -->
-          <button ng-click="getCodePromotion(codePromotion)" type="button" name="button" class="goButtonCodePromotion">Go!</button>
+        <!-- Input Change -->
+        <div class="row" style="padding-top:2%">
+          <div class="col">
+            <!-- Input Code Promotion -->
+            <!-- The direct styles doesn't work good in css file -->
+            <input id="inputCodePromotionStyle" class="inputCodePromotionStyle" type="text" placeholder="Ingresa el Código de Promoción" name="name" style="width:90%;display:inline-block;border-radius:10px 0px 0px 10px;font-family:Roboto;color:#A7A9AC;height:41px" ng-model = 'codePromotion'>
+            <!-- Go Button for the Code Promotion exchanged -->
+            <button ng-click="getCodePromotion(codePromotion)" type="button" name="button" class="goButtonCodePromotion">Go!</button>
+          </div>
         </div>
       </div>
     </div>
