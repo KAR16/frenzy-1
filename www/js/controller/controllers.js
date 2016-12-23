@@ -678,10 +678,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
 })
 // Award Controller View
-.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints,Promotion) {
-
-  Promotion
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.controller('awardCtrl',function($scope, $state, $ionicModal,$stateParams,Awards,CrossPromotionAcumulatePoints) {
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
     facebookConnectPlugin.showDialog({
