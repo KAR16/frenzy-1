@@ -47,3 +47,45 @@
 - On the gulp file modify the task create-signing-propieties and  add storePassword and keyPassword
 - On the gulp file modify task zipalign and add the path were is located the file zipalign and the path where is located the signed apk.
 - For deploy run the command gulp deploy-android
+
+
+### Analytics Events
+
+#### Home HOME
+- X Click "Go" Gana puntos => "ClickCrossPromotion"
+- Click "Settings" =>
+- Click "Home", "Favoritos", "Puntos", "Premios"
+- Click "Category"
+
+### Category
+- Click "Client"
+- Click "Heart"
+
+### Client
+- Click "Client Options"
+- Click "Ofertas Tab"
+- Click "Promociones Tab"
+- Click specific "Promotion" or "Coupon"
+- Click "Share" Promotion/Coupon
+- Click "Save" Promotion/Coupon
+
+### Favorites
+- Click "Mis Marcas Tab"
+- Click "Mis Promociones"
+- Click "Pin" in specific Promotion/Coupon
+
+### Puntos
+- Click "Ver Mas"
+- X Click "Share" => "ClickSharePoints"
+- X Click specific "Premio" => "ClickPointsPrize"
+
+### Premios
+- Click specific "Premio"
+
+### Settings
+- Click "Terminos"
+- Click "Condiciones"
+- Click "Contactos"
+- Click "Tutorial"
+- Click "Cerrar Sesion"
+-------------
