@@ -3,35 +3,35 @@ var FirebaseFavorite = [];
 var FirebasePromotionSaved = [];
 var Check =  true
 /****FIREBASE***/
-// var config = {
-//     apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
-//     authDomain: "frenzyapplication.firebaseapp.com",
-//     databaseURL: "https://frenzyapplication.firebaseio.com",
-//     storageBucket: "frenzyapplication.appspot.com",
-// };
-//
-// var config2 = {
-//     apiKey: "AIzaSyDIbQh6IA6D9HHhfogQUZP63omtjwzAiBA",
-//     authDomain: "frenzydashboard.firebaseapp.com",
-//     databaseURL: "https://frenzydashboard.firebaseio.com",
-//     storageBucket: "frenzydashboard.appspot.com",
-// };
-/*firebase test*/
 var config = {
-  apiKey: "AIzaSyAsHadZgASRIp4cJNV0Oqmcsxu1CsCAXtk",
-  authDomain: "frenzyapptest.firebaseapp.com",
-  databaseURL: "https://frenzyapptest.firebaseio.com",
-  storageBucket: "frenzyapptest.appspot.com",
-  messagingSenderId: "82404050336"
+    apiKey: "AIzaSyCCkqPKuZh8QtKM_tU2nFDAcjjzufcVX6c",
+    authDomain: "frenzyapplication.firebaseapp.com",
+    databaseURL: "https://frenzyapplication.firebaseio.com",
+    storageBucket: "frenzyapplication.appspot.com",
 };
 
 var config2 = {
-  apiKey: "AIzaSyAmtwbzIV2uSQis9_MaQCigV22NJ-n0Gvs",
-  authDomain: "frenzydashboardtest.firebaseapp.com",
-  databaseURL: "https://frenzydashboardtest.firebaseio.com",
-  storageBucket: "frenzydashboardtest.appspot.com",
-  messagingSenderId: "220906314847"
+    apiKey: "AIzaSyDIbQh6IA6D9HHhfogQUZP63omtjwzAiBA",
+    authDomain: "frenzydashboard.firebaseapp.com",
+    databaseURL: "https://frenzydashboard.firebaseio.com",
+    storageBucket: "frenzydashboard.appspot.com",
 };
+/*firebase test*/
+// var config = {
+//   apiKey: "AIzaSyAsHadZgASRIp4cJNV0Oqmcsxu1CsCAXtk",
+//   authDomain: "frenzyapptest.firebaseapp.com",
+//   databaseURL: "https://frenzyapptest.firebaseio.com",
+//   storageBucket: "frenzyapptest.appspot.com",
+//   messagingSenderId: "82404050336"
+// };
+//
+// var config2 = {
+//   apiKey: "AIzaSyAmtwbzIV2uSQis9_MaQCigV22NJ-n0Gvs",
+//   authDomain: "frenzydashboardtest.firebaseapp.com",
+//   databaseURL: "https://frenzydashboardtest.firebaseio.com",
+//   storageBucket: "frenzydashboardtest.appspot.com",
+//   messagingSenderId: "220906314847"
+// };
 
 var mainApp = firebase.initializeApp(config);
 var secondaryApp = firebase.initializeApp(config2, "Secondary");
@@ -751,9 +751,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
      animation: 'slide-in-left',
      focusFirstInput: false
    });
-
+   console.log($scope.instantAdwardsDescription);
   $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
-    //var isOnline = $cordovaNetwork.isOnline();
+    var isOnline = $cordovaNetwork.isOnline();
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
@@ -770,6 +770,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             //console.log(AwardChange);
             codeval.VerificationCodes.map(function(valueCodes) {
               if (valueCodes == code) {
+                angular.forEach($scope.instantAdwardsDescription, function(value, key) {
+                  if (AwardID == value.AwardID) {
+                    $scope.instantAdwardsDescription[key].Award.QuantityRedeem =  $scope.instantAdwardsDescription[key].Award.QuantityRedeem + 1;
+                  }
+                });
                 codeval.Award[AwardID]["QuantityRedeem"] = codeval.Award[AwardID]["QuantityRedeem"] + 1;
                 codeval.$save();
                 $scope.valChange = true;
@@ -814,6 +819,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                     AwardDirecChange.Status = true;
                     AwardDirecChange.$save();
                   })
+                  angular.forEach($scope.instantAdwardsDescription, function(value, key) {
+                    if (AwardID == value.AwardID) {
+                      $scope.instantAdwardsDescription[key].Award.QuantityRedeem =  $scope.instantAdwardsDescription[key].Award.QuantityRedeem + 1;
+                    }
+                  });
                   codeval.Award[AwardID]["QuantityRedeem"] = codeval.Award[AwardID]["QuantityRedeem"] + 1;
                   codeval.$save();
                 }
