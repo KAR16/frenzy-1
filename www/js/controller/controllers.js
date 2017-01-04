@@ -16,6 +16,22 @@ var config2 = {
     databaseURL: "https://frenzydashboard.firebaseio.com",
     storageBucket: "frenzydashboard.appspot.com",
 };
+/*firebase test*/
+// var config = {
+//   apiKey: "AIzaSyAsHadZgASRIp4cJNV0Oqmcsxu1CsCAXtk",
+//   authDomain: "frenzyapptest.firebaseapp.com",
+//   databaseURL: "https://frenzyapptest.firebaseio.com",
+//   storageBucket: "frenzyapptest.appspot.com",
+//   messagingSenderId: "82404050336"
+// };
+//
+// var config2 = {
+//   apiKey: "AIzaSyAmtwbzIV2uSQis9_MaQCigV22NJ-n0Gvs",
+//   authDomain: "frenzydashboardtest.firebaseapp.com",
+//   databaseURL: "https://frenzydashboardtest.firebaseio.com",
+//   storageBucket: "frenzydashboardtest.appspot.com",
+//   messagingSenderId: "220906314847"
+// };
 
 var mainApp = firebase.initializeApp(config);
 var secondaryApp = firebase.initializeApp(config2, "Secondary");
@@ -537,7 +553,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 })
 //********************** POINTS CONTROLLER *****************************
-.controller('yourPointsCtrl',function($scope,$ionicLoading, $ionicModal,CrossPromotionAcumulatePoints,User,requestStore) {
+.controller('yourPointsCtrl',function($scope,$ionicLoading,$ionicModal,CrossPromotionAcumulatePoints,User,requestStore) {
   // First Mini Tutorial html file. Ionic Modal
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
@@ -599,7 +615,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // Point Description Controller
-.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray) {
+.controller('pointsDescriptionCtrl', function($scope,$state,$ionicLoading,$timeout,$ionicModal,$stateParams,pointsDescripcion,UserSave,$firebaseArray,$cordovaNetwork,$rootScope) {
   // *********** Share Facebook Function ********
   $scope.share = function(image , name ,description ){
     facebookConnectPlugin.showDialog({
@@ -613,19 +629,26 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     analytics.track("ClickShare", {"View":"PointsDescription", "Name": name, "Description": description});
   }
   $ionicModal.fromTemplateUrl('templates/modal.html', {
-     scope: $scope
+     scope: $scope,backdropClickToClose: false
     }).then(function(modal) {
 
      $scope.modal = modal;
    });
+
   $scope.dataAward = [];
   $scope.goAward = false ;
-  $scope.openModal = function (key , goAward) {
-    $scope.dataAward = $scope.pointsDescripcion.Award[key];
-    $scope.dataAward['key'] = key;
-    $scope.modal.show();
 
-    analytics.track("ClickPrize", {"View":"PointsDescription", "Key": key, "Award": $scope.dataAward});
+  $scope.openModal = function (key , goAward) {
+    // listen for Online event
+    var isOnline = $cordovaNetwork.isOnline();
+    if (isOnline == true) {
+      $scope.dataAward = $scope.pointsDescripcion.Award[key];
+      $scope.dataAward['key'] = key;
+      $scope.modal.show();
+      analytics.track("ClickPrize", {"View":"PointsDescription", "Key": key, "Award": $scope.dataAward});
+    }else {
+      alert('Lo sentimos necesitas conectarte a internet para poder canjear tus puntos')
+    }
   };
   $scope.$parent.exchangeArray =  [];
   $scope.exchange = function (dataAward , changeModal) {
@@ -643,8 +666,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     analytics.track("ClickClose", {"Modal":"Prize", "View":"PointsDescription", "Key": $scope.dataAward['key']});
   };
 
-   $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope}).then(function(modal2) {
+   $ionicModal.fromTemplateUrl('templates/modal2.html', {scope: $scope,backdropClickToClose: false}).then(function(modal2) {
       $scope.modal2 = modal2;
+
+
     });
     $scope.$on('$ionicView.enter', function() {
       $scope.pointsDescripcion  = pointsDescripcion.get($stateParams.idPromotion,$scope.dataPromotion)
@@ -732,10 +757,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
     // Analytics
     analytics.track("view", {"type": viewName});
   });
-
 })
-
-.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject,$state) {
+.controller('awardDescriptionCtrl',function($scope, $ionicModal,$stateParams,$firebaseArray,$firebaseObject,$state,$cordovaNetwork,$rootScope) {
   $scope.idAwards = $stateParams.idAward;
   $scope.Date = moment().tz("America/Guatemala").format('DD/MM/YYYY');
 
@@ -746,95 +769,105 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
      animation: 'slide-in-left',
      focusFirstInput: false
    });
-
+   console.log($scope.instantAdwardsDescription);
   $scope.openModal = function(AwardID,code,id,IdCouponCode,IdUserAward) {
-
-    analytics.track("ClickAward", {"View":"AwardDescription", "Key": AwardID, "Code": code, "Id": id, "IdCouponCode":IdCouponCode});
-
+    var isOnline = $cordovaNetwork.isOnline();
     var user = firebase.auth().currentUser;
     var refUser = firebase.database().ref('Users/'+ IdUsuario)
     var refCrossPromotion = firebase.database().ref('CrossPromotion')
     var AwardChange = $firebaseArray(refUser.child('CrossPromotion').child(id).child('Award'))
     var codeval = $firebaseObject(refCrossPromotion.child(id))
     var actualHour = moment().tz("America/Guatemala").format('LLL');
+    //var CountCrossPromotion =
     $scope.Type;
-    codeval.$loaded().then(function () {
-      if (codeval.type == "points") {
-        console.log("points");
-        AwardChange.$loaded().then(function () {
-          codeval.VerificationCodes.map(function(valueCodes) {
-            if (valueCodes == code) {
-              $scope.valChange = true;
-              $scope.FirstModals.show();
-              AwardChange.map(function(valueAward) {
-                if (valueAward.AwardID == AwardID) {
-
-                  var change = AwardChange.$ref()
-                  var savechange = $firebaseObject(change.child(IdUserAward))
-                  savechange.$loaded(function () {
-                    savechange.FechaHoraCanjeo = actualHour;
-                    savechange.Status = true;
-                    savechange.CodigoCanjeoRedimido = code;
-                    savechange.$save()
-                  });
-
-                  analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
-                }
-              })
-              //
-            }
-          })
-        }).then(function() {
-          console.log($scope.valChange)
-          if ($scope.valChange == false) {
-            console.log($scope.valChange);
-            sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
-            analytics.track("RedeemAwardFail");
-          }
-        });
-      }else if (codeval.type == "directAward") {
-        console.log("directAward");
-        $scope.Type =  "directAward"
-        console.log($scope.valChangeDirectAward);
-        var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
+    if (isOnline == true) {
+      codeval.$loaded().then(function () {
+        if (codeval.type == "points") {
+          console.log("points");
+          AwardChange.$loaded().then(function () {
+            //console.log(AwardChange);
             codeval.VerificationCodes.map(function(valueCodes) {
-              console.log("dentro de valueCodes");
               if (valueCodes == code) {
-
-                $scope.valChangeDirectAward = true;
-                AwardDirecChange.$loaded().then(function () {
-                  $scope.FirstModals.show();
-                  AwardDirecChange.CodigoCanjeoRedimido = code
-                  AwardDirecChange.FechaHoraCanjeo = actualHour
-                  AwardDirecChange.Status = true;
-                  AwardDirecChange.$save();
+                angular.forEach($scope.instantAdwardsDescription, function(value, key) {
+                  if (AwardID == value.AwardID) {
+                    $scope.instantAdwardsDescription[key].Award.QuantityRedeem =  $scope.instantAdwardsDescription[key].Award.QuantityRedeem + 1;
+                  }
+                });
+                codeval.Award[AwardID]["QuantityRedeem"] = codeval.Award[AwardID]["QuantityRedeem"] + 1;
+                codeval.$save();
+                $scope.valChange = true;
+                $scope.FirstModals.show();
+                AwardChange.map(function(valueAward) {
+                  if (valueAward.AwardID == AwardID) {
+                    analytics.track("RedeemAward", {"AwardId": valueAward.AwardID});
+                    var change = AwardChange.$ref()
+                    var savechange = $firebaseObject(change.child(IdUserAward))
+                    savechange.$loaded(function () {
+                      savechange.FechaHoraCanjeo = actualHour;
+                      savechange.Status = true;
+                      savechange.CodigoCanjeoRedimido = code;
+                      savechange.$save()
+                    });
+                  }
                 })
-
-                analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
+                //
               }
             })
+          }).then(function() {
+            console.log($scope.valChange)
+            if ($scope.valChange == false) {
+              console.log($scope.valChange);
+              sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+            }
+          });
+        }else if (codeval.type == "directAward") {
+          console.log("directAward");
+          $scope.Type =  "directAward"
+          console.log($scope.valChangeDirectAward);
+          var AwardDirecChange = $firebaseObject(refUser.child('CrossPromotion').child(id).child(IdCouponCode))
+              codeval.VerificationCodes.map(function(valueCodes) {
+                console.log("dentro de valueCodes");
+                if (valueCodes == code) {
+                  analytics.track("RedeemAward", {"IdCouponCode": IdCouponCode});
+                  $scope.valChangeDirectAward = true;
+                  AwardDirecChange.$loaded().then(function () {
+                    $scope.FirstModals.show();
+                    AwardDirecChange.CodigoCanjeoRedimido = code
+                    AwardDirecChange.FechaHoraCanjeo = actualHour
+                    AwardDirecChange.Status = true;
+                    AwardDirecChange.$save();
+                  })
+                  angular.forEach($scope.instantAdwardsDescription, function(value, key) {
+                    if (AwardID == value.AwardID) {
+                      $scope.instantAdwardsDescription[key].Award.QuantityRedeem =  $scope.instantAdwardsDescription[key].Award.QuantityRedeem + 1;
+                    }
+                  });
+                  codeval.Award[AwardID]["QuantityRedeem"] = codeval.Award[AwardID]["QuantityRedeem"] + 1;
+                  codeval.$save();
+                }
+              })
 
-      }
-    }).then(function() {
-      console.log($scope.valChangeDirectAward);
-      if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
+        }
+      }).then(function() {
         console.log($scope.valChangeDirectAward);
-        sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+        if ($scope.valChangeDirectAward == false && $scope.Type == "directAward") {
+          console.log($scope.valChangeDirectAward);
+          sweetAlert('Lo sentimos', 'El Codigo que ingresaste no es valido', 'error');
+        }
 
-        analytics.track("RedeemAwardFail");
-      }
+      });
+      setTimeout(function(){
+        $scope.closeModal();
+        $state.go('app.regalos');
+      }, 20000);
 
-    });
-    setTimeout(function(){
-      $scope.closeModal();
-      $state.go('app.regalos');
-    }, 20000);
+    }else {
+      alert('Lo sentimos necesitas conectarte a internet para poder canjear tu Premio')
+    }
   };
 
   $scope.closeModal = function() {
     $scope.FirstModals.hide();
-
-    analytics.track("ClickClose", {"View":"AwardDescription", "Modal":"Award"});
   };
 
   $scope.$on('$ionicView.enter', function() {
@@ -856,6 +889,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
   });
 
 })
+
 //********************** Compartir award     *****************************
 .controller('ShareCtrl',function($scope,$ionicLoading, $ionicModal,$stateParams) {
   $scope.share = function(image , name ,description ){
@@ -1143,8 +1177,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON CONTROLLER *********************************
-.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, $ionicPopover, $ionicModal) {
-
+.controller('CuponCtrl', function($scope, $stateParams,  $cordovaFacebook, $ionicLoading, $cordovaSocialSharing, $cordovaInAppBrowser, Coupon, Promotion, Customer, Favorite, CouponObject, $ionicPopover, $ionicModal) {
+  $scope.CouponDB = CouponObject;
 
   // *************** CALL PHONE FUNCTION ***************
       $scope.call= function(cell,name){
@@ -1190,8 +1224,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   //When all coupons are loaded, filter only coupons of current customer
   coupons.$loaded(function(){
+    //console.log(coupons);
     for (var i in coupons) {
-      if(coupons[i].Provider == $scope.customerId && coupons[i].Status === true) {
+      if(coupons[i].IdCustomer == $scope.customerId && coupons[i].Status === true) {
+
         $scope.customerCoupons.push(coupons[i]);
       }
     }
@@ -1199,12 +1235,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
       $scope.viewCoupons = false;
       analytics.track("view", {"type": "Promotion","Namepromotion": $scope.customerId});
     }
+    console.log($scope.customerCoupons);
   });
 
   //When all promotions are loaded, filter only promotions of current customer
   promotions.$loaded(function(){
+
     for (var i in promotions) {
-      if(promotions[i].Provider == $scope.customerId && promotions[i].Status === true) {
+      if(promotions[i].IdCustomer == $scope.customerId && promotions[i].Status === true) {
+              console.log(promotions[i]);
         $scope.customerPromotions.push(promotions[i]);
       }
     }
@@ -1212,9 +1251,11 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   // Select current customer
   customers.$loaded(function(){
+    console.log(Customer);
     for (var i in customers) {
-      if(customers[i].Name == $scope.customerId) {
+      if(customers[i].$id == $scope.customerId) {
         $scope.customer = customers[i];
+        console.log($scope.customer);
         break;
       }
     }
@@ -1240,12 +1281,12 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
             analytics.track("ClickWeb", {
                 "Costumer": name
             });
-            window.open = cordova.InAppBrowser.open(url, '_blank', options);
+            window.open = cordova.InAppBrowser.open(url, '_blank','location=yes');
         } else {
             analytics.track("ClickCartShop", {
                 "Costumer": name
             });
-            window.open = cordova.InAppBrowser.open(url, '_blank', options);
+            window.open = cordova.InAppBrowser.open(url, '_blank','location=yes');
         }
     };
     // *********** Share Facebook Function ********
@@ -1288,6 +1329,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                             },
                             function(isConfirm) {
                                 if (isConfirm) {
+                                  $scope.CouponDB[id].QuantityExchanged += 1;
+                                  $scope.CouponDB.$save();
+
                                     swal({
                                         title: 'Perfecto!',
                                         text: 'Has cambiado tu Cupón',
@@ -1300,10 +1344,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                         "type": "fecha",
                                         "NameCoupon": id
                                     });
-                                    QuantityExchangedSuma = snapshot.val()[id].QuantityExchanged + 1
-                                    mainApp.database().ref('Coupon/' + id).update({
-                                        QuantityExchanged: QuantityExchangedSuma
-                                    });
+
 
                                     var couponPages = "#/app/descripcionCupones/";
                                     location.href = couponPages + id;
@@ -1317,7 +1358,6 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
                     } else if (snapshot.val()[x].TypeCoupon === 'Cupon') {
                         if (parseInt(snapshot.val()[x].QuantityExchanged) < parseInt(snapshot.val()[x].QuantityCoupons)) {
-                            $scope.cupons[0][0].QuantityExchanged += 1;
                             swal({
                                     title: "Estas Seguro?",
                                     text: "Quieres canjear este cupon?",
@@ -1330,6 +1370,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                 },
                                 function(isConfirm) {
                                     if (isConfirm) {
+                                      $scope.CouponDB[id].QuantityExchanged += 1;
+                                      $scope.CouponDB.$save();
                                         swal({
                                             title: 'Perfecto!',
                                             text: 'Has cambiado tu Cupón',
@@ -1342,29 +1384,21 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
                                             "NameCoupon": id
                                         });
 
-                                        var element = document.getElementById("QuantityExchangedText");
-                                        element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
                                         var couponPages = "#/app/descripcionCupones/";
                                         // IdPromotion with redirection page
                                         couponPages = couponPages + id;
                                         location.href = couponPages;
-
-                                        QuantityExchangedSuma = snapshot.val()[x].QuantityExchanged + 1
-                                        mainApp.database().ref('Coupon/' + x).update({
-                                            QuantityExchanged: QuantityExchangedSuma
-                                        });
+                                        $(".botonCanjear").hide();
+                                        $(".exchangeBoxBarCode").show();
                                     } else {
-                                        $scope.cupons[0][0].QuantityExchanged -= 1;
-                                        var element = document.getElementById("QuantityExchangedText");
-                                        element.innerHTML = "Cupones Canjeados: " + $scope.cupons[0][0].QuantityExchanged + " de " + snapshot.val()[x].QuantityCoupons;
-                                    }
+                                        swal("Cancelado", "Esperamos que luego puedas disfrutar de nuestros cupones", "error");
+
+                                    };
                                 });
                         } else {
-                            $scope.cupons[0].QuantityExchanged = parseInt(snapshot.val()[x].QuantityCoupons);
+                            $scope.CouponDB[id].Status = false;
+                            $scope.CouponDB.$save();
 
-                            mainApp.database().ref('Coupon/' + x).update({
-                                Status: false
-                            });
                             swal({
                                     title: 'Lo sentimos!',
                                     text: 'En estos momentos no contamos con mas cupones, Espera un momento mientras actualizamos la informacion',
@@ -1413,7 +1447,7 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
     $scope.$on('$ionicView.enter', function() {
       $scope.$parent.data = {
-          heading: $scope.customerId,
+          heading: $scope.customer.Name,
           image: '',
           footerIconColors: ['#00DDC1', '#A7A9AC', '#A7A9AC', '#A7A9AC'],
           backButton: true,
@@ -1429,12 +1463,15 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 })
 
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
-.controller('DescriptionCuponCtrl', function($scope, $state, $stateParams, $ionicLoading, $firebaseObject) {
-
+.controller('DescriptionCuponCtrl', function($scope, $state, $stateParams, CouponObject, $ionicLoading, $firebaseObject) {
   var ref = mainApp.database().ref('Coupon').child($stateParams.couponId);
   $scope.cupon = $firebaseObject(ref);
 
-  //
+  $scope.CouponDB = CouponObject;
+
+  // Analytics for view
+  analytics.track("view", {"type": "DescriptionCupon", "CouponId": $stateParams.couponId});
+
   // // ***************  EXCHANGE BUTTON DISPLAY NONE********************
   $scope.buttonCash = function() {
       $('.botonCanjear').click(function() {
@@ -1449,8 +1486,8 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   var updateCupon = function() {
 
-    $scope.cupon.QuantityExchanged += 1;
-    $scope.cupon.$save(function(data){
+    $scope.CouponDB[$stateParams.couponId].QuantityExchanged += 1;
+    $scope.CouponDB.$save(function(data){
       console.log(data);
     });
 
@@ -1471,10 +1508,10 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
 
   $scope.countCoupon = function() {
 
-
-    if ($scope.cupon.TypeCoupon == "Coupon" && ($scope.cupon.QuantityExchanged < $scope.cupon.QuantityCoupons))  {
+    console.log($scope.CouponDB[$stateParams.couponId]);
+    if ($scope.CouponDB[$stateParams.couponId].TypeCoupon == "Cupon" && ($scope.CouponDB[$stateParams.couponId].QuantityExchanged <$scope.CouponDB[$stateParams.couponId].QuantityCoupons))  {
       updateCupon();
-    } else if($scope.cupon.TypeCoupon == 'Fecha') {
+    } else if($scope.CouponDB[$stateParams.couponId].TypeCoupon == 'Fecha') {
       updateCupon();
     } else {
       swal({
@@ -1497,9 +1534,9 @@ angular.module('starter.controllers', ['ionic', 'firebase'])
           });
     }
 
-    if ($scope.cupon.QuantityExchanged >= $scope.cupon.QuantityCoupons && $scope.cupon.TypeCoupon == "Coupon") {
-      $scope.cupon.Status = false;
-      $scope.cupon.$save(function(data){
+    if ($scope.CouponDB[$stateParams.couponId].QuantityExchanged >= $scope.CouponDB[$stateParams.couponId].QuantityCoupons && $scope.CouponDB[$stateParams.couponId].TypeCoupon == "Cupon") {
+      $scope.CouponDB[$stateParams.couponId].Status = false;
+      $scope.CouponDB.$save(function(data){
         console.log(data);
       });
     }

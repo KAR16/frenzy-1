@@ -24,8 +24,10 @@
 /*Background color container zigzag*/
 .firstContainerZigzag {
   background: #00DDC1;
-  height: auto !important;
+  display: table;
+  height: 50% !important;
   padding-bottom: 5% !important;
+  width: 100%;
 }
 /*Zigzag Top*/
 .firstContainerZigzag:before {

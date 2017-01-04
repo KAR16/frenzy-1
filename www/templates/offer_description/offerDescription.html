@@ -16,7 +16,8 @@
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="full-image" src="{{promotion.Photo}}" alt="PhotoOffersFrenzy">
+		<img class="full-image" ng-src="{{promotion.Photo}}"  ng-if="promotion.Photo"  alt="PhotoOffersFrenzy">
+		<img class="full-image" ng-src="img/frenzy_back2.png" ng-if="!promotion.Photo" alt="awardImage"  alt="frenzy" >
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">

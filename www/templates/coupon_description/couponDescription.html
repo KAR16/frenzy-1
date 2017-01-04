@@ -7,10 +7,10 @@ box-shadow: 0 0 0px white;
 <ion-view>
 	<ion-content id="CouponScroll" style="background-color:#F1F2F2;">
 		<!-- Label Price -->
-		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" >
+		<img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label" ng-if="cupon.TypeOfExchange != 'SpecialPromotion'">
 		<!-- Price Text Offers -->
 		<div class="row BoxPriceLabel">
-			<div id="GeneralPaddingCols0" class="col col-33 BoxLabel">
+			<div id="GeneralPaddingCols0" class="col col-33 BoxLabel" ng-if="cupon.TypeOfExchange != 'SpecialPromotion'">
 				<p id="NothingSpace" class="cuponsDescriptionsLabelExchance">
 					Canjea
 				</p>
@@ -23,7 +23,8 @@ box-shadow: 0 0 0px white;
 			</div>
 		</div>
 		<!-- Coupon Image -->
-		<img class="full-image" src="{{cupon.PhotoCoupon}}" alt="frenzy" >
+		<img class="full-image" ng-src="{{cupon.PhotoCoupon}}" ng-if="cupon.PhotoCoupon" alt="frenzy" >
+		<img class="full-image" ng-src="img/frenzy_back2.png" ng-if="!cupon.PhotoCoupon" alt="awardImage"  alt="frenzy" >
 		<!-- Purple Container -->
 		<div class="PurpleCouponsDescription">
 			<div class="row">
@@ -70,7 +71,7 @@ box-shadow: 0 0 0px white;
 		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Fecha'">
 			Del {{cupon.PublicationDate | getDate}} Al {{cupon.EndDate | getDate}}
 		</div>
-		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Coupon'">
+		<div class="availableCupones open_sans" ng-if="cupon.TypeCoupon == 'Cupon'">
 			{{cupon.QuantityExchanged}} cupones canjeados de {{cupon.QuantityCoupons}}
 		</div>
 		<!-- Button Coupon Exchanged -->
